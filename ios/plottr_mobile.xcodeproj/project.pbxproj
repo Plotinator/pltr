@@ -8,31 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* plottr_mobileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* plottr_mobileTests.m */; };
+		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-		211FE21B246CB5620021E9EB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 211FE21A246CB5620021E9EB /* Main.storyboard */; };
-		211FE21D246CB60B0021E9EB /* Launch Screen2.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 211FE21C246CB60B0021E9EB /* Launch Screen2.storyboard */; };
-		211FE21F246CB6570021E9EB /* splashscreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 211FE21E246CB6570021E9EB /* splashscreen.png */; };
-		211FE223246CB8030021E9EB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211FE222246CB8030021E9EB /* AppDelegate.swift */; };
-		21CD09FA246D7AD2009EA5E3 /* DocumentBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CD09F9246D7AD2009EA5E3 /* DocumentBrowserViewController.swift */; };
-		21CD09FC246D7B82009EA5E3 /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CD09FB246D7B82009EA5E3 /* Document.swift */; };
-		21CD09FE246D7C2B009EA5E3 /* DocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CD09FD246D7C2B009EA5E3 /* DocumentViewController.swift */; };
-		21CD0A00246D7EB6009EA5E3 /* DocumentBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 21CD09FF246D7EB6009EA5E3 /* DocumentBridge.m */; };
-		21CD0A02246D8052009EA5E3 /* plottr_logo_10.png in Resources */ = {isa = PBXBuildFile; fileRef = 21CD0A01246D8052009EA5E3 /* plottr_logo_10.png */; };
-		21CD0A04246D8060009EA5E3 /* plottr_logo_04.png in Resources */ = {isa = PBXBuildFile; fileRef = 21CD0A03246D8060009EA5E3 /* plottr_logo_04.png */; };
-		21CD0A09246D8077009EA5E3 /* PlottrDocumentIcon320.png in Resources */ = {isa = PBXBuildFile; fileRef = 21CD0A05246D8076009EA5E3 /* PlottrDocumentIcon320.png */; };
-		21CD0A0A246D8077009EA5E3 /* PlottrDocumentIcon58.png in Resources */ = {isa = PBXBuildFile; fileRef = 21CD0A06246D8077009EA5E3 /* PlottrDocumentIcon58.png */; };
-		21CD0A0B246D8077009EA5E3 /* PlottrDocumentIcon29.png in Resources */ = {isa = PBXBuildFile; fileRef = 21CD0A07246D8077009EA5E3 /* PlottrDocumentIcon29.png */; };
-		21CD0A0C246D8077009EA5E3 /* PlottrDocumentIcon64.png in Resources */ = {isa = PBXBuildFile; fileRef = 21CD0A08246D8077009EA5E3 /* PlottrDocumentIcon64.png */; };
-		21CD5442246D8114009EA5E3 /* PlottrDocumentIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 21CD0A1C246D809D009EA5E3 /* PlottrDocumentIcon.png */; };
-		21CD633C246D8431009EA5E3 /* EventEmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CD633B246D8431009EA5E3 /* EventEmitter.swift */; };
-		21CD633E246D846E009EA5E3 /* ReactNativeEventEmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21CD633D246D846E009EA5E3 /* ReactNativeEventEmitter.swift */; };
-		21CD6340246D84A8009EA5E3 /* ReactNativeEventEmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 21CD633F246D84A8009EA5E3 /* ReactNativeEventEmitter.m */; };
+		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* plottr_mobileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* plottr_mobileTests.m */; };
-		43004F79153A250D337DBF66 /* libPods-plottr_mobile-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D20C48F858662483E59E8A8D /* libPods-plottr_mobile-tvOSTests.a */; };
-		68A83C32054AE98F643C1429 /* libPods-plottr_mobile-plottr_mobileTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 90F7E2B5E5759313A62535C6 /* libPods-plottr_mobile-plottr_mobileTests.a */; };
-		95BCB32F9F48BFA0EB544C1A /* libPods-plottr_mobile-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F7A9BDB5D5B2DB34DC4333AE /* libPods-plottr_mobile-tvOS.a */; };
-		C905225C9B6B9C6D3C3B7105 /* libPods-plottr_mobile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A059FC0F335D148DFE3DD92 /* libPods-plottr_mobile.a */; };
+		729B47D165435C5A3266E14C /* libPods-plottr_mobile-plottr_mobileTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B1669A7619F8B5ED1E7149C /* libPods-plottr_mobile-plottr_mobileTests.a */; };
+		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		B469F776E227EC4611C9044A /* libPods-plottr_mobile-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EA7D50C633B2012F1CA91362 /* libPods-plottr_mobile-tvOSTests.a */; };
+		BA24EE1E3229D40D5B4B980C /* libPods-plottr_mobile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B8B711D0EDAFF2FCB0E25A17 /* libPods-plottr_mobile.a */; };
+		CC3DA438AAC7912A3DC9C53D /* libPods-plottr_mobile-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 14FF529FC062FED0B28A4CDF /* libPods-plottr_mobile-tvOS.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,48 +41,32 @@
 
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
+		00E356EE1AD99517003FC87E /* plottr_mobileTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = plottr_mobileTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* plottr_mobileTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = plottr_mobileTests.m; sourceTree = "<group>"; };
-		0EB20F8B195095A7673362BE /* Pods-plottr_mobile-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-plottr_mobile-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-plottr_mobile-tvOS/Pods-plottr_mobile-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* plottr_mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = plottr_mobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = plottr_mobile/AppDelegate.h; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = plottr_mobile/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = plottr_mobile/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = plottr_mobile/Info.plist; sourceTree = "<group>"; };
-		2064A69EEFFF35AA20B9D74B /* Pods-plottr_mobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-plottr_mobile.debug.xcconfig"; path = "Target Support Files/Pods-plottr_mobile/Pods-plottr_mobile.debug.xcconfig"; sourceTree = "<group>"; };
-		211FE21A246CB5620021E9EB /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		211FE21C246CB60B0021E9EB /* Launch Screen2.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen2.storyboard"; sourceTree = "<group>"; };
-		211FE21E246CB6570021E9EB /* splashscreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splashscreen.png; sourceTree = "<group>"; };
-		211FE220246CB7640021E9EB /* plottr_mobile.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = plottr_mobile.entitlements; sourceTree = "<group>"; };
-		211FE221246CB8030021E9EB /* plottr_mobile-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "plottr_mobile-Bridging-Header.h"; sourceTree = "<group>"; };
-		211FE222246CB8030021E9EB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		21CD09F9246D7AD2009EA5E3 /* DocumentBrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentBrowserViewController.swift; sourceTree = "<group>"; };
-		21CD09FB246D7B82009EA5E3 /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
-		21CD09FD246D7C2B009EA5E3 /* DocumentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentViewController.swift; sourceTree = "<group>"; };
-		21CD09FF246D7EB6009EA5E3 /* DocumentBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DocumentBridge.m; sourceTree = "<group>"; };
-		21CD0A01246D8052009EA5E3 /* plottr_logo_10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plottr_logo_10.png; sourceTree = "<group>"; };
-		21CD0A03246D8060009EA5E3 /* plottr_logo_04.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plottr_logo_04.png; sourceTree = "<group>"; };
-		21CD0A05246D8076009EA5E3 /* PlottrDocumentIcon320.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PlottrDocumentIcon320.png; sourceTree = "<group>"; };
-		21CD0A06246D8077009EA5E3 /* PlottrDocumentIcon58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PlottrDocumentIcon58.png; sourceTree = "<group>"; };
-		21CD0A07246D8077009EA5E3 /* PlottrDocumentIcon29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PlottrDocumentIcon29.png; sourceTree = "<group>"; };
-		21CD0A08246D8077009EA5E3 /* PlottrDocumentIcon64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PlottrDocumentIcon64.png; sourceTree = "<group>"; };
-		21CD0A1C246D809D009EA5E3 /* PlottrDocumentIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PlottrDocumentIcon.png; sourceTree = "<group>"; };
-		21CD633B246D8431009EA5E3 /* EventEmitter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventEmitter.swift; sourceTree = "<group>"; };
-		21CD633D246D846E009EA5E3 /* ReactNativeEventEmitter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactNativeEventEmitter.swift; sourceTree = "<group>"; };
-		21CD633F246D84A8009EA5E3 /* ReactNativeEventEmitter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReactNativeEventEmitter.m; sourceTree = "<group>"; };
-		21CD6341246D9BF0009EA5E3 /* Plottr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Plottr.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		21CD6345246D9E9C009EA5E3 /* plottr_mobileTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = plottr_mobileTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		21CD6346246D9E9C009EA5E3 /* plottr_mobile-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "plottr_mobile-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		21CD6347246D9E9C009EA5E3 /* plottr_mobile-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "plottr_mobile-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		305B1273C66C8EEE1C9E107B /* Pods-plottr_mobile-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-plottr_mobile-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-plottr_mobile-tvOSTests/Pods-plottr_mobile-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
-		3A059FC0F335D148DFE3DD92 /* libPods-plottr_mobile.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-plottr_mobile.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		404905D764184CE69640BE66 /* Pods-plottr_mobile-plottr_mobileTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-plottr_mobile-plottr_mobileTests.debug.xcconfig"; path = "Target Support Files/Pods-plottr_mobile-plottr_mobileTests/Pods-plottr_mobile-plottr_mobileTests.debug.xcconfig"; sourceTree = "<group>"; };
-		895F2A02ED3712EB6FC4C7A2 /* Pods-plottr_mobile-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-plottr_mobile-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-plottr_mobile-tvOSTests/Pods-plottr_mobile-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
-		90F7E2B5E5759313A62535C6 /* libPods-plottr_mobile-plottr_mobileTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-plottr_mobile-plottr_mobileTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		AFA04D853031EACC32AD1DFA /* Pods-plottr_mobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-plottr_mobile.release.xcconfig"; path = "Target Support Files/Pods-plottr_mobile/Pods-plottr_mobile.release.xcconfig"; sourceTree = "<group>"; };
-		B871BF61286009C13294A959 /* Pods-plottr_mobile-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-plottr_mobile-tvOS.release.xcconfig"; path = "Target Support Files/Pods-plottr_mobile-tvOS/Pods-plottr_mobile-tvOS.release.xcconfig"; sourceTree = "<group>"; };
-		C7C3E34528BAE2A9585B6461 /* Pods-plottr_mobile-plottr_mobileTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-plottr_mobile-plottr_mobileTests.release.xcconfig"; path = "Target Support Files/Pods-plottr_mobile-plottr_mobileTests/Pods-plottr_mobile-plottr_mobileTests.release.xcconfig"; sourceTree = "<group>"; };
-		D20C48F858662483E59E8A8D /* libPods-plottr_mobile-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-plottr_mobile-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = plottr_mobile/main.m; sourceTree = "<group>"; };
+		14FF529FC062FED0B28A4CDF /* libPods-plottr_mobile-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-plottr_mobile-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		25E04417557472983D62CAC3 /* Pods-plottr_mobile-plottr_mobileTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-plottr_mobile-plottr_mobileTests.release.xcconfig"; path = "Target Support Files/Pods-plottr_mobile-plottr_mobileTests/Pods-plottr_mobile-plottr_mobileTests.release.xcconfig"; sourceTree = "<group>"; };
+		2D02E47B1E0B4A5D006451C7 /* plottr_mobile-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "plottr_mobile-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D02E4901E0B4A5D006451C7 /* plottr_mobile-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "plottr_mobile-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A4BC125BCC028219857D74E /* Pods-plottr_mobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-plottr_mobile.debug.xcconfig"; path = "Target Support Files/Pods-plottr_mobile/Pods-plottr_mobile.debug.xcconfig"; sourceTree = "<group>"; };
+		4B1669A7619F8B5ED1E7149C /* libPods-plottr_mobile-plottr_mobileTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-plottr_mobile-plottr_mobileTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F69BF56FA7267400CB75BE8 /* Pods-plottr_mobile-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-plottr_mobile-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-plottr_mobile-tvOSTests/Pods-plottr_mobile-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		5D734D53B9E2ABCD7043B6EA /* Pods-plottr_mobile-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-plottr_mobile-tvOS.release.xcconfig"; path = "Target Support Files/Pods-plottr_mobile-tvOS/Pods-plottr_mobile-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		75EFFAB8A673D9E1D544192C /* Pods-plottr_mobile-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-plottr_mobile-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-plottr_mobile-tvOSTests/Pods-plottr_mobile-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		7695F4BAD6856B590C444107 /* Pods-plottr_mobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-plottr_mobile.release.xcconfig"; path = "Target Support Files/Pods-plottr_mobile/Pods-plottr_mobile.release.xcconfig"; sourceTree = "<group>"; };
+		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = plottr_mobile/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A0C25A63EA39471EB1171725 /* Pods-plottr_mobile-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-plottr_mobile-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-plottr_mobile-tvOS/Pods-plottr_mobile-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		B8B711D0EDAFF2FCB0E25A17 /* libPods-plottr_mobile.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-plottr_mobile.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BC47959765C7647E29A3611D /* Pods-plottr_mobile-plottr_mobileTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-plottr_mobile-plottr_mobileTests.debug.xcconfig"; path = "Target Support Files/Pods-plottr_mobile-plottr_mobileTests/Pods-plottr_mobile-plottr_mobileTests.debug.xcconfig"; sourceTree = "<group>"; };
+		EA7D50C633B2012F1CA91362 /* libPods-plottr_mobile-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-plottr_mobile-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
-		F7A9BDB5D5B2DB34DC4333AE /* libPods-plottr_mobile-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-plottr_mobile-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,7 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				68A83C32054AE98F643C1429 /* libPods-plottr_mobile-plottr_mobileTests.a in Frameworks */,
+				729B47D165435C5A3266E14C /* libPods-plottr_mobile-plottr_mobileTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -111,7 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C905225C9B6B9C6D3C3B7105 /* libPods-plottr_mobile.a in Frameworks */,
+				BA24EE1E3229D40D5B4B980C /* libPods-plottr_mobile.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,7 +90,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				95BCB32F9F48BFA0EB544C1A /* libPods-plottr_mobile-tvOS.a in Frameworks */,
+				CC3DA438AAC7912A3DC9C53D /* libPods-plottr_mobile-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -127,7 +98,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				43004F79153A250D337DBF66 /* libPods-plottr_mobile-tvOSTests.a in Frameworks */,
+				B469F776E227EC4611C9044A /* libPods-plottr_mobile-tvOSTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -154,39 +125,15 @@
 		13B07FAE1A68108700A75B9A /* plottr_mobile */ = {
 			isa = PBXGroup;
 			children = (
-				211FE222246CB8030021E9EB /* AppDelegate.swift */,
-				21CD09F9246D7AD2009EA5E3 /* DocumentBrowserViewController.swift */,
-				21CD09FD246D7C2B009EA5E3 /* DocumentViewController.swift */,
-				21CD09FF246D7EB6009EA5E3 /* DocumentBridge.m */,
-				21CD09FB246D7B82009EA5E3 /* Document.swift */,
-				21CD633B246D8431009EA5E3 /* EventEmitter.swift */,
-				21CD633D246D846E009EA5E3 /* ReactNativeEventEmitter.swift */,
-				21CD633F246D84A8009EA5E3 /* ReactNativeEventEmitter.m */,
-				211FE221246CB8030021E9EB /* plottr_mobile-Bridging-Header.h */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
-				13B07FB61A68108700A75B9A /* Info.plist */,
-				211FE21A246CB5620021E9EB /* Main.storyboard */,
-				211FE21C246CB60B0021E9EB /* Launch Screen2.storyboard */,
-				211FE220246CB7640021E9EB /* plottr_mobile.entitlements */,
+				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
+				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
-				211FE21E246CB6570021E9EB /* splashscreen.png */,
-				21CD0A01246D8052009EA5E3 /* plottr_logo_10.png */,
-				21CD0A03246D8060009EA5E3 /* plottr_logo_04.png */,
-				21CD0A1C246D809D009EA5E3 /* PlottrDocumentIcon.png */,
-				21CD0A07246D8077009EA5E3 /* PlottrDocumentIcon29.png */,
-				21CD0A06246D8077009EA5E3 /* PlottrDocumentIcon58.png */,
-				21CD0A08246D8077009EA5E3 /* PlottrDocumentIcon64.png */,
-				21CD0A05246D8076009EA5E3 /* PlottrDocumentIcon320.png */,
+				13B07FB61A68108700A75B9A /* Info.plist */,
+				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
+				13B07FB71A68108700A75B9A /* main.m */,
 			);
 			name = plottr_mobile;
-			sourceTree = "<group>";
-		};
-		21CD6324246D8173009EA5E3 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Resources;
-			path = "New Group";
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
@@ -194,27 +141,12 @@
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
-				3A059FC0F335D148DFE3DD92 /* libPods-plottr_mobile.a */,
-				90F7E2B5E5759313A62535C6 /* libPods-plottr_mobile-plottr_mobileTests.a */,
-				F7A9BDB5D5B2DB34DC4333AE /* libPods-plottr_mobile-tvOS.a */,
-				D20C48F858662483E59E8A8D /* libPods-plottr_mobile-tvOSTests.a */,
+				B8B711D0EDAFF2FCB0E25A17 /* libPods-plottr_mobile.a */,
+				4B1669A7619F8B5ED1E7149C /* libPods-plottr_mobile-plottr_mobileTests.a */,
+				14FF529FC062FED0B28A4CDF /* libPods-plottr_mobile-tvOS.a */,
+				EA7D50C633B2012F1CA91362 /* libPods-plottr_mobile-tvOSTests.a */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		58E632618F37C4D0FD7A6FCC /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				2064A69EEFFF35AA20B9D74B /* Pods-plottr_mobile.debug.xcconfig */,
-				AFA04D853031EACC32AD1DFA /* Pods-plottr_mobile.release.xcconfig */,
-				404905D764184CE69640BE66 /* Pods-plottr_mobile-plottr_mobileTests.debug.xcconfig */,
-				C7C3E34528BAE2A9585B6461 /* Pods-plottr_mobile-plottr_mobileTests.release.xcconfig */,
-				0EB20F8B195095A7673362BE /* Pods-plottr_mobile-tvOS.debug.xcconfig */,
-				B871BF61286009C13294A959 /* Pods-plottr_mobile-tvOS.release.xcconfig */,
-				895F2A02ED3712EB6FC4C7A2 /* Pods-plottr_mobile-tvOSTests.debug.xcconfig */,
-				305B1273C66C8EEE1C9E107B /* Pods-plottr_mobile-tvOSTests.release.xcconfig */,
-			);
-			path = Pods;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -227,21 +159,43 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				21CD6324246D8173009EA5E3 /* Resources */,
 				13B07FAE1A68108700A75B9A /* plottr_mobile */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* plottr_mobileTests */,
+				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-				58E632618F37C4D0FD7A6FCC /* Pods */,
-				21CD6341246D9BF0009EA5E3 /* Plottr.app */,
-				21CD6345246D9E9C009EA5E3 /* plottr_mobileTests.xctest */,
-				21CD6346246D9E9C009EA5E3 /* plottr_mobile-tvOS.app */,
-				21CD6347246D9E9C009EA5E3 /* plottr_mobile-tvOSTests.xctest */,
+				95436360514DEFE289EB583A /* Pods */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
 			tabWidth = 2;
 			usesTabs = 0;
+		};
+		83CBBA001A601CBA00E9B192 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				13B07F961A680F5B00A75B9A /* plottr_mobile.app */,
+				00E356EE1AD99517003FC87E /* plottr_mobileTests.xctest */,
+				2D02E47B1E0B4A5D006451C7 /* plottr_mobile-tvOS.app */,
+				2D02E4901E0B4A5D006451C7 /* plottr_mobile-tvOSTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		95436360514DEFE289EB583A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3A4BC125BCC028219857D74E /* Pods-plottr_mobile.debug.xcconfig */,
+				7695F4BAD6856B590C444107 /* Pods-plottr_mobile.release.xcconfig */,
+				BC47959765C7647E29A3611D /* Pods-plottr_mobile-plottr_mobileTests.debug.xcconfig */,
+				25E04417557472983D62CAC3 /* Pods-plottr_mobile-plottr_mobileTests.release.xcconfig */,
+				A0C25A63EA39471EB1171725 /* Pods-plottr_mobile-tvOS.debug.xcconfig */,
+				5D734D53B9E2ABCD7043B6EA /* Pods-plottr_mobile-tvOS.release.xcconfig */,
+				4F69BF56FA7267400CB75BE8 /* Pods-plottr_mobile-tvOSTests.debug.xcconfig */,
+				75EFFAB8A673D9E1D544192C /* Pods-plottr_mobile-tvOSTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
@@ -250,11 +204,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "plottr_mobileTests" */;
 			buildPhases = (
-				25758F37E3801C526AD72721 /* [CP] Check Pods Manifest.lock */,
+				57DFA329DA1098B3BF731902 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				EC2267C106BA499FE8C1A311 /* [CP] Copy Pods Resources */,
+				FDB766087081559073C9A648 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -263,20 +217,20 @@
 			);
 			name = plottr_mobileTests;
 			productName = plottr_mobileTests;
-			productReference = 21CD6345246D9E9C009EA5E3 /* plottr_mobileTests.xctest */;
+			productReference = 00E356EE1AD99517003FC87E /* plottr_mobileTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		13B07F861A680F5B00A75B9A /* plottr_mobile */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "plottr_mobile" */;
 			buildPhases = (
-				740E8A31F74C67336F22545B /* [CP] Check Pods Manifest.lock */,
+				99C66A8D4853CA13E03BF6AE /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				6F34F287D28950366C15AF6E /* [CP] Copy Pods Resources */,
+				B3F3C9F33CF3F3539A9F2819 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -284,14 +238,14 @@
 			);
 			name = plottr_mobile;
 			productName = plottr_mobile;
-			productReference = 21CD6341246D9BF0009EA5E3 /* Plottr.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* plottr_mobile.app */;
 			productType = "com.apple.product-type.application";
 		};
 		2D02E47A1E0B4A5D006451C7 /* plottr_mobile-tvOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "plottr_mobile-tvOS" */;
 			buildPhases = (
-				E53402F65005200F5C989D5A /* [CP] Check Pods Manifest.lock */,
+				F9C569C4778EF6685F92C639 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F122414F3F0027D42C /* Start Packager */,
 				2D02E4771E0B4A5D006451C7 /* Sources */,
 				2D02E4781E0B4A5D006451C7 /* Frameworks */,
@@ -304,14 +258,14 @@
 			);
 			name = "plottr_mobile-tvOS";
 			productName = "plottr_mobile-tvOS";
-			productReference = 21CD6346246D9E9C009EA5E3 /* plottr_mobile-tvOS.app */;
+			productReference = 2D02E47B1E0B4A5D006451C7 /* plottr_mobile-tvOS.app */;
 			productType = "com.apple.product-type.application";
 		};
 		2D02E48F1E0B4A5D006451C7 /* plottr_mobile-tvOSTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "plottr_mobile-tvOSTests" */;
 			buildPhases = (
-				48DBE674B2DA2C49AD34784E /* [CP] Check Pods Manifest.lock */,
+				4B156679635758B1F6A31634 /* [CP] Check Pods Manifest.lock */,
 				2D02E48C1E0B4A5D006451C7 /* Sources */,
 				2D02E48D1E0B4A5D006451C7 /* Frameworks */,
 				2D02E48E1E0B4A5D006451C7 /* Resources */,
@@ -323,7 +277,7 @@
 			);
 			name = "plottr_mobile-tvOSTests";
 			productName = "plottr_mobile-tvOSTests";
-			productReference = 21CD6347246D9E9C009EA5E3 /* plottr_mobile-tvOSTests.xctest */;
+			productReference = 2D02E4901E0B4A5D006451C7 /* plottr_mobile-tvOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -339,8 +293,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = XUSV2KF89D;
-						LastSwiftMigration = 1130;
+						LastSwiftMigration = 1120;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -362,7 +315,7 @@
 				Base,
 			);
 			mainGroup = 83CBB9F61A601CBA00E9B192;
-			productRefGroup = 83CBB9F61A601CBA00E9B192;
+			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -386,16 +339,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				21CD0A02246D8052009EA5E3 /* plottr_logo_10.png in Resources */,
-				211FE21B246CB5620021E9EB /* Main.storyboard in Resources */,
-				211FE21F246CB6570021E9EB /* splashscreen.png in Resources */,
-				21CD0A09246D8077009EA5E3 /* PlottrDocumentIcon320.png in Resources */,
-				21CD0A04246D8060009EA5E3 /* plottr_logo_04.png in Resources */,
-				21CD5442246D8114009EA5E3 /* PlottrDocumentIcon.png in Resources */,
-				21CD0A0B246D8077009EA5E3 /* PlottrDocumentIcon29.png in Resources */,
-				21CD0A0A246D8077009EA5E3 /* PlottrDocumentIcon58.png in Resources */,
-				211FE21D246CB60B0021E9EB /* Launch Screen2.storyboard in Resources */,
-				21CD0A0C246D8077009EA5E3 /* PlottrDocumentIcon64.png in Resources */,
+				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -432,28 +376,6 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
-		25758F37E3801C526AD72721 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-plottr_mobile-plottr_mobileTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -468,7 +390,7 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
-		48DBE674B2DA2C49AD34784E /* [CP] Check Pods Manifest.lock */ = {
+		4B156679635758B1F6A31634 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -490,45 +412,29 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		6F34F287D28950366C15AF6E /* [CP] Copy Pods Resources */ = {
+		57DFA329DA1098B3BF731902 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-plottr_mobile/Pods-plottr_mobile-resources.sh",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Entypo.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Feather.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Foundation.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Octicons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Zocial.ttf",
+			inputFileListPaths = (
 			);
-			name = "[CP] Copy Pods Resources";
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Entypo.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EvilIcons.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Feather.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Foundation.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Ionicons.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MaterialCommunityIcons.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MaterialIcons.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Octicons.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SimpleLineIcons.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Zocial.ttf",
+				"$(DERIVED_FILE_DIR)/Pods-plottr_mobile-plottr_mobileTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-plottr_mobile/Pods-plottr_mobile-resources.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		740E8A31F74C67336F22545B /* [CP] Check Pods Manifest.lock */ = {
+		99C66A8D4853CA13E03BF6AE /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -550,7 +456,25 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E53402F65005200F5C989D5A /* [CP] Check Pods Manifest.lock */ = {
+		B3F3C9F33CF3F3539A9F2819 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-plottr_mobile/Pods-plottr_mobile-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-plottr_mobile/Pods-plottr_mobile-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F9C569C4778EF6685F92C639 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -570,44 +494,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		EC2267C106BA499FE8C1A311 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-plottr_mobile-plottr_mobileTests/Pods-plottr_mobile-plottr_mobileTests-resources.sh",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Entypo.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Feather.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Foundation.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Octicons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf",
-				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Zocial.ttf",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Entypo.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EvilIcons.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Feather.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/FontAwesome.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Foundation.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Ionicons.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MaterialCommunityIcons.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MaterialIcons.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Octicons.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SimpleLineIcons.ttf",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Zocial.ttf",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-plottr_mobile-plottr_mobileTests/Pods-plottr_mobile-plottr_mobileTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -648,6 +534,24 @@
 			shellScript = "export RCT_METRO_PORT=\"${RCT_METRO_PORT:=8081}\"\necho \"export RCT_METRO_PORT=${RCT_METRO_PORT}\" > \"${SRCROOT}/../node_modules/react-native/scripts/.packager.env\"\nif [ -z \"${RCT_NO_LAUNCH_PACKAGER+xxx}\" ] ; then\n  if nc -w 5 -z localhost ${RCT_METRO_PORT} ; then\n    if ! curl -s \"http://localhost:${RCT_METRO_PORT}/status\" | grep -q \"packager-status:running\" ; then\n      echo \"Port ${RCT_METRO_PORT} already in use, packager is either not running or not running correctly\"\n      exit 2\n    fi\n  else\n    open \"$SRCROOT/../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\n  fi\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		FDB766087081559073C9A648 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-plottr_mobile-plottr_mobileTests/Pods-plottr_mobile-plottr_mobileTests-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/AccessibilityResources.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AccessibilityResources.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-plottr_mobile-plottr_mobileTests/Pods-plottr_mobile-plottr_mobileTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -663,14 +567,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				21CD09FA246D7AD2009EA5E3 /* DocumentBrowserViewController.swift in Sources */,
-				21CD633E246D846E009EA5E3 /* ReactNativeEventEmitter.swift in Sources */,
-				21CD633C246D8431009EA5E3 /* EventEmitter.swift in Sources */,
-				21CD0A00246D7EB6009EA5E3 /* DocumentBridge.m in Sources */,
-				21CD09FE246D7C2B009EA5E3 /* DocumentViewController.swift in Sources */,
-				211FE223246CB8030021E9EB /* AppDelegate.swift in Sources */,
-				21CD6340246D84A8009EA5E3 /* ReactNativeEventEmitter.m in Sources */,
-				21CD09FC246D7B82009EA5E3 /* Document.swift in Sources */,
+				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -678,6 +576,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */,
+				2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -707,16 +607,15 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 404905D764184CE69640BE66 /* Pods-plottr_mobile-plottr_mobileTests.debug.xcconfig */;
+			baseConfigurationReference = BC47959765C7647E29A3611D /* Pods-plottr_mobile-plottr_mobileTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = plottr_mobileTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -731,13 +630,12 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C7C3E34528BAE2A9585B6461 /* Pods-plottr_mobile-plottr_mobileTests.release.xcconfig */;
+			baseConfigurationReference = 25E04417557472983D62CAC3 /* Pods-plottr_mobile-plottr_mobileTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = plottr_mobileTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -752,44 +650,22 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2064A69EEFFF35AA20B9D74B /* Pods-plottr_mobile.debug.xcconfig */;
+			baseConfigurationReference = 3A4BC125BCC028219857D74E /* Pods-plottr_mobile.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = XUSV2KF89D;
 				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/ios/Pods/Crashlytics",
-					"$(PROJECT_DIR)/ios/Pods/Crashlytics/iOS",
-					"$(PROJECT_DIR)/ios/Pods/Fabric",
-					"$(PROJECT_DIR)/ios/Pods/Fabric/iOS",
-					"$(PROJECT_DIR)/ios/Build/Products/Debug-iphonesimulator/DoubleConversion",
-					"$(PROJECT_DIR)/ios/Build/Products/Debug-iphonesimulator/yoga",
-					"$(PROJECT_DIR)/ios/Build/Products/Debug-iphonesimulator/GLog",
-					"$(PROJECT_DIR)/ios/Build/Products/Debug-iphonesimulator",
-					"$(PROJECT_DIR)/ios/Build/Products/Debug-iphonesimulator/React",
-					"$(PROJECT_DIR)/ios/Build/Products/Debug-iphonesimulator/Folly",
-					"$(PROJECT_DIR)/ios/Build/Products/Debug-iphonesimulator/RNVectorIcons",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					"FB_SONARKIT_ENABLED=1",
-				);
 				INFOPLIST_FILE = plottr_mobile/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.clouiss.plottr-native";
-				PRODUCT_NAME = Plottr;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG FB_SONARKIT_ENABLED";
-				SWIFT_OBJC_BRIDGING_HEADER = "plottr_mobile-Bridging-Header.h";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = plottr_mobile;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -799,38 +675,21 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AFA04D853031EACC32AD1DFA /* Pods-plottr_mobile.release.xcconfig */;
+			baseConfigurationReference = 7695F4BAD6856B590C444107 /* Pods-plottr_mobile.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = XUSV2KF89D;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/ios/Pods/Crashlytics",
-					"$(PROJECT_DIR)/ios/Pods/Crashlytics/iOS",
-					"$(PROJECT_DIR)/ios/Pods/Fabric",
-					"$(PROJECT_DIR)/ios/Pods/Fabric/iOS",
-					"$(PROJECT_DIR)/ios/Build/Products/Debug-iphonesimulator/DoubleConversion",
-					"$(PROJECT_DIR)/ios/Build/Products/Debug-iphonesimulator/yoga",
-					"$(PROJECT_DIR)/ios/Build/Products/Debug-iphonesimulator/GLog",
-					"$(PROJECT_DIR)/ios/Build/Products/Debug-iphonesimulator",
-					"$(PROJECT_DIR)/ios/Build/Products/Debug-iphonesimulator/React",
-					"$(PROJECT_DIR)/ios/Build/Products/Debug-iphonesimulator/Folly",
-					"$(PROJECT_DIR)/ios/Build/Products/Debug-iphonesimulator/RNVectorIcons",
-				);
 				INFOPLIST_FILE = plottr_mobile/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 2.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.clouiss.plottr-native";
-				PRODUCT_NAME = Plottr;
-				SWIFT_OBJC_BRIDGING_HEADER = "plottr_mobile-Bridging-Header.h";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = plottr_mobile;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -839,7 +698,7 @@
 		};
 		2D02E4971E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0EB20F8B195095A7673362BE /* Pods-plottr_mobile-tvOS.debug.xcconfig */;
+			baseConfigurationReference = A0C25A63EA39471EB1171725 /* Pods-plottr_mobile-tvOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -861,13 +720,13 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 9.2;
+				TVOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Debug;
 		};
 		2D02E4981E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B871BF61286009C13294A959 /* Pods-plottr_mobile-tvOS.release.xcconfig */;
+			baseConfigurationReference = 5D734D53B9E2ABCD7043B6EA /* Pods-plottr_mobile-tvOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -889,13 +748,13 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 9.2;
+				TVOS_DEPLOYMENT_TARGET = 10.0;
 			};
 			name = Release;
 		};
 		2D02E4991E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 895F2A02ED3712EB6FC4C7A2 /* Pods-plottr_mobile-tvOSTests.debug.xcconfig */;
+			baseConfigurationReference = 4F69BF56FA7267400CB75BE8 /* Pods-plottr_mobile-tvOSTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -922,7 +781,7 @@
 		};
 		2D02E49A1E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 305B1273C66C8EEE1C9E107B /* Pods-plottr_mobile-tvOSTests.release.xcconfig */;
+			baseConfigurationReference = 75EFFAB8A673D9E1D544192C /* Pods-plottr_mobile-tvOSTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -994,7 +853,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "/usr/lib/swift $(inherited)";
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
@@ -1047,7 +906,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "/usr/lib/swift $(inherited)";
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
