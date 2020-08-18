@@ -8,12 +8,25 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* plottr_mobileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* plottr_mobileTests.m */; };
-		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
+		21B1C2C224EB365E00DD973F /* DocumentBrowserBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 21B1C2C124EB365E00DD973F /* DocumentBrowserBridge.m */; };
+		21B1C2C524EB384500DD973F /* DocumentBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B1C2C424EB384500DD973F /* DocumentBrowser.swift */; };
+		21B1C2C724EB3D9C00DD973F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B1C2C624EB3D9C00DD973F /* AppDelegate.swift */; };
+		21B1C2C924EB49D300DD973F /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B1C2C824EB49D300DD973F /* Document.swift */; };
+		21B1C2CB24EB4A4900DD973F /* DocumentViewControllerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 21B1C2CA24EB4A4900DD973F /* DocumentViewControllerBridge.m */; };
+		21B1C2CD24EB4A7700DD973F /* DocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B1C2CC24EB4A7700DD973F /* DocumentViewController.swift */; };
+		21B1C2CF24EB4F9E00DD973F /* DocEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B1C2CE24EB4F9E00DD973F /* DocEvents.swift */; };
+		21B1C2D124EB530B00DD973F /* ReactNativeEventsBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 21B1C2D024EB530B00DD973F /* ReactNativeEventsBridge.m */; };
+		21B1C2D424EC1C5200DD973F /* splashscreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 21B1C2D324EC1C5200DD973F /* splashscreen.png */; };
+		21B1C2DC24EC1C7700DD973F /* plottr_logo_10.png in Resources */ = {isa = PBXBuildFile; fileRef = 21B1C2D524EC1C7600DD973F /* plottr_logo_10.png */; };
+		21B1C2DD24EC1C7700DD973F /* PlottrDocumentIcon58.png in Resources */ = {isa = PBXBuildFile; fileRef = 21B1C2D624EC1C7600DD973F /* PlottrDocumentIcon58.png */; };
+		21B1C2DE24EC1C7700DD973F /* PlottrDocumentIcon320.png in Resources */ = {isa = PBXBuildFile; fileRef = 21B1C2D724EC1C7600DD973F /* PlottrDocumentIcon320.png */; };
+		21B1C2DF24EC1C7700DD973F /* PlottrDocumentIcon64.png in Resources */ = {isa = PBXBuildFile; fileRef = 21B1C2D824EC1C7700DD973F /* PlottrDocumentIcon64.png */; };
+		21B1C2E024EC1C7700DD973F /* plottr_logo_04.png in Resources */ = {isa = PBXBuildFile; fileRef = 21B1C2D924EC1C7700DD973F /* plottr_logo_04.png */; };
+		21B1C2E124EC1C7700DD973F /* PlottrDocumentIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 21B1C2DA24EC1C7700DD973F /* PlottrDocumentIcon.png */; };
+		21B1C2E224EC1C7700DD973F /* PlottrDocumentIcon29.png in Resources */ = {isa = PBXBuildFile; fileRef = 21B1C2DB24EC1C7700DD973F /* PlottrDocumentIcon29.png */; };
+		21B1C2E424EC20B300DD973F /* ReactNativeEventEmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B1C2E324EC20B300DD973F /* ReactNativeEventEmitter.swift */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* plottr_mobileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* plottr_mobileTests.m */; };
 		729B47D165435C5A3266E14C /* libPods-plottr_mobile-plottr_mobileTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B1669A7619F8B5ED1E7149C /* libPods-plottr_mobile-plottr_mobileTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
@@ -45,12 +58,27 @@
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* plottr_mobileTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = plottr_mobileTests.m; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* plottr_mobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = plottr_mobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = plottr_mobile/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = plottr_mobile/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = plottr_mobile/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = plottr_mobile/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = plottr_mobile/main.m; sourceTree = "<group>"; };
 		14FF529FC062FED0B28A4CDF /* libPods-plottr_mobile-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-plottr_mobile-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		21B1C2C124EB365E00DD973F /* DocumentBrowserBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = DocumentBrowserBridge.m; path = plottr_mobile/DocumentBrowserBridge.m; sourceTree = "<group>"; };
+		21B1C2C324EB384500DD973F /* plottr_mobile-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "plottr_mobile-Bridging-Header.h"; sourceTree = "<group>"; };
+		21B1C2C424EB384500DD973F /* DocumentBrowser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DocumentBrowser.swift; path = plottr_mobile/DocumentBrowser.swift; sourceTree = "<group>"; };
+		21B1C2C624EB3D9C00DD973F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = plottr_mobile/AppDelegate.swift; sourceTree = "<group>"; };
+		21B1C2C824EB49D300DD973F /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Document.swift; path = plottr_mobile/Document.swift; sourceTree = "<group>"; };
+		21B1C2CA24EB4A4900DD973F /* DocumentViewControllerBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = DocumentViewControllerBridge.m; path = plottr_mobile/DocumentViewControllerBridge.m; sourceTree = "<group>"; };
+		21B1C2CC24EB4A7700DD973F /* DocumentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DocumentViewController.swift; path = plottr_mobile/DocumentViewController.swift; sourceTree = "<group>"; };
+		21B1C2CE24EB4F9E00DD973F /* DocEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DocEvents.swift; path = plottr_mobile/DocEvents.swift; sourceTree = "<group>"; };
+		21B1C2D024EB530B00DD973F /* ReactNativeEventsBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ReactNativeEventsBridge.m; path = plottr_mobile/ReactNativeEventsBridge.m; sourceTree = "<group>"; };
+		21B1C2D324EC1C5200DD973F /* splashscreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splashscreen.png; sourceTree = "<group>"; };
+		21B1C2D524EC1C7600DD973F /* plottr_logo_10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plottr_logo_10.png; sourceTree = "<group>"; };
+		21B1C2D624EC1C7600DD973F /* PlottrDocumentIcon58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PlottrDocumentIcon58.png; sourceTree = "<group>"; };
+		21B1C2D724EC1C7600DD973F /* PlottrDocumentIcon320.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PlottrDocumentIcon320.png; sourceTree = "<group>"; };
+		21B1C2D824EC1C7700DD973F /* PlottrDocumentIcon64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PlottrDocumentIcon64.png; sourceTree = "<group>"; };
+		21B1C2D924EC1C7700DD973F /* plottr_logo_04.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plottr_logo_04.png; sourceTree = "<group>"; };
+		21B1C2DA24EC1C7700DD973F /* PlottrDocumentIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PlottrDocumentIcon.png; sourceTree = "<group>"; };
+		21B1C2DB24EC1C7700DD973F /* PlottrDocumentIcon29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PlottrDocumentIcon29.png; sourceTree = "<group>"; };
+		21B1C2E324EC20B300DD973F /* ReactNativeEventEmitter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReactNativeEventEmitter.swift; path = plottr_mobile/ReactNativeEventEmitter.swift; sourceTree = "<group>"; };
 		25E04417557472983D62CAC3 /* Pods-plottr_mobile-plottr_mobileTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-plottr_mobile-plottr_mobileTests.release.xcconfig"; path = "Target Support Files/Pods-plottr_mobile-plottr_mobileTests/Pods-plottr_mobile-plottr_mobileTests.release.xcconfig"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* plottr_mobile-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "plottr_mobile-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* plottr_mobile-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "plottr_mobile-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -125,15 +153,38 @@
 		13B07FAE1A68108700A75B9A /* plottr_mobile */ = {
 			isa = PBXGroup;
 			children = (
-				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
-				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
-				13B07FB01A68108700A75B9A /* AppDelegate.m */,
-				13B07FB51A68108700A75B9A /* Images.xcassets */,
+				21B1C2C024EB35ED00DD973F /* Bridges */,
+				21B1C2C624EB3D9C00DD973F /* AppDelegate.swift */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
+				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
+				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
-				13B07FB71A68108700A75B9A /* main.m */,
+				21B1C2D324EC1C5200DD973F /* splashscreen.png */,
+				21B1C2D924EC1C7700DD973F /* plottr_logo_04.png */,
+				21B1C2D524EC1C7600DD973F /* plottr_logo_10.png */,
+				21B1C2DA24EC1C7700DD973F /* PlottrDocumentIcon.png */,
+				21B1C2DB24EC1C7700DD973F /* PlottrDocumentIcon29.png */,
+				21B1C2D624EC1C7600DD973F /* PlottrDocumentIcon58.png */,
+				21B1C2D824EC1C7700DD973F /* PlottrDocumentIcon64.png */,
+				21B1C2D724EC1C7600DD973F /* PlottrDocumentIcon320.png */,
 			);
 			name = plottr_mobile;
+			sourceTree = "<group>";
+		};
+		21B1C2C024EB35ED00DD973F /* Bridges */ = {
+			isa = PBXGroup;
+			children = (
+				21B1C2C124EB365E00DD973F /* DocumentBrowserBridge.m */,
+				21B1C2C424EB384500DD973F /* DocumentBrowser.swift */,
+				21B1C2C324EB384500DD973F /* plottr_mobile-Bridging-Header.h */,
+				21B1C2C824EB49D300DD973F /* Document.swift */,
+				21B1C2CA24EB4A4900DD973F /* DocumentViewControllerBridge.m */,
+				21B1C2CC24EB4A7700DD973F /* DocumentViewController.swift */,
+				21B1C2CE24EB4F9E00DD973F /* DocEvents.swift */,
+				21B1C2D024EB530B00DD973F /* ReactNativeEventsBridge.m */,
+				21B1C2E324EC20B300DD973F /* ReactNativeEventEmitter.swift */,
+			);
+			name = Bridges;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
@@ -293,7 +344,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1160;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -339,7 +390,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21B1C2DE24EC1C7700DD973F /* PlottrDocumentIcon320.png in Resources */,
+				21B1C2E124EC1C7700DD973F /* PlottrDocumentIcon.png in Resources */,
+				21B1C2D424EC1C5200DD973F /* splashscreen.png in Resources */,
+				21B1C2E224EC1C7700DD973F /* PlottrDocumentIcon29.png in Resources */,
+				21B1C2DF24EC1C7700DD973F /* PlottrDocumentIcon64.png in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
+				21B1C2DC24EC1C7700DD973F /* plottr_logo_10.png in Resources */,
+				21B1C2E024EC1C7700DD973F /* plottr_logo_04.png in Resources */,
+				21B1C2DD24EC1C7700DD973F /* PlottrDocumentIcon58.png in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -567,8 +626,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
-				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				21B1C2D124EB530B00DD973F /* ReactNativeEventsBridge.m in Sources */,
+				21B1C2CF24EB4F9E00DD973F /* DocEvents.swift in Sources */,
+				21B1C2E424EC20B300DD973F /* ReactNativeEventEmitter.swift in Sources */,
+				21B1C2C924EB49D300DD973F /* Document.swift in Sources */,
+				21B1C2C224EB365E00DD973F /* DocumentBrowserBridge.m in Sources */,
+				21B1C2CB24EB4A4900DD973F /* DocumentViewControllerBridge.m in Sources */,
+				21B1C2CD24EB4A7700DD973F /* DocumentViewController.swift in Sources */,
+				21B1C2C724EB3D9C00DD973F /* AppDelegate.swift in Sources */,
+				21B1C2C524EB384500DD973F /* DocumentBrowser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -576,8 +642,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */,
-				2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -609,6 +673,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = BC47959765C7647E29A3611D /* Pods-plottr_mobile-plottr_mobileTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -632,6 +697,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 25E04417557472983D62CAC3 /* Pods-plottr_mobile-plottr_mobileTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = plottr_mobileTests/Info.plist;
@@ -657,7 +723,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = plottr_mobile/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -666,6 +732,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = plottr_mobile;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "FB_SONARKIT_ENABLED DEBUG";
+				SWIFT_OBJC_BRIDGING_HEADER = "plottr_mobile-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -681,7 +749,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = plottr_mobile/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -690,6 +758,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = plottr_mobile;
+				SWIFT_OBJC_BRIDGING_HEADER = "plottr_mobile-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";

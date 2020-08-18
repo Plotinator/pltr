@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React from 'react'
 import {
   SafeAreaView,
   StyleSheet,
@@ -14,7 +14,9 @@ import {
   View,
   Text,
   StatusBar,
-} from 'react-native';
+  NativeModules,
+  NativeEventEmitter,
+} from 'react-native'
 
 import {
   Header,
@@ -22,9 +24,27 @@ import {
   Colors,
   DebugInstructions,
   ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+} from 'react-native/Libraries/NewAppScreen'
 
-const App: () => React$Node = () => {
+console.log(NativeModules.ReactNativeEventEmitter)
+const DocumentEvents = new NativeEventEmitter(
+  NativeModules.ReactNativeEventEmitter
+)
+DocumentEvents.addListener('onOpenDocument', data => {
+  NativeModules.DocumentBrowser.closeBrowser()
+  console.log('onOpenDocument', data)
+  const filePath = data.documentURL
+  const json = data.data
+  if (json.newFile) {
+    // creating a new file
+  } else {
+  }
+})
+
+const App = () => {
+  setTimeout(() => NativeModules.DocumentBrowser.openBrowser(), 1000)
+  // setTimeout(() => NativeModules.DocumentBrowser.closeBrowser(), 3000)
+
   return (
     <>
       <StatusBar barStyle="dark-content" />
@@ -69,8 +89,8 @@ const App: () => React$Node = () => {
         </ScrollView>
       </SafeAreaView>
     </>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -109,6 +129,6 @@ const styles = StyleSheet.create({
     paddingRight: 12,
     textAlign: 'right',
   },
-});
+})
 
-export default App;
+export default App
