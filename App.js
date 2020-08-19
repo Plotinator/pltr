@@ -6,30 +6,15 @@
  * @flow strict-local
  */
 
-import React from 'react'
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-  NativeModules,
-  NativeEventEmitter,
-} from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { StyleSheet, View, StatusBar, NativeModules, NativeEventEmitter } from 'react-native'
+import { Container, Content, Text, H1, H2, Form, Item, Input, Button, Label, Spinner } from 'native-base'
+import { Col, Row, Grid } from 'react-native-easy-grid'
+import AsyncStorage from '@react-native-community/async-storage'
+import { checkForActiveLicense, getUser } from './src/utils/user_info'
+import { EDD_KEY } from 'react-native-dotenv'
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen'
-
-console.log(NativeModules.ReactNativeEventEmitter)
-const DocumentEvents = new NativeEventEmitter(
-  NativeModules.ReactNativeEventEmitter
-)
+const DocumentEvents = new NativeEventEmitter(NativeModules.ReactNativeEventEmitter)
 DocumentEvents.addListener('onOpenDocument', data => {
   NativeModules.DocumentBrowser.closeBrowser()
   console.log('onOpenDocument', data)
@@ -42,92 +27,78 @@ DocumentEvents.addListener('onOpenDocument', data => {
 })
 
 const App = () => {
-  setTimeout(() => NativeModules.DocumentBrowser.openBrowser(), 1000)
-  // setTimeout(() => NativeModules.DocumentBrowser.closeBrowser(), 3000)
+  // setTimeout(() => NativeModules.DocumentBrowser.openBrowser(), 1000)
+  const [userInfo, setUserInfo] = useState(null)
+  const [email, setEmail] = useState('')
+  const [verifying, setVerifying] = useState(false)
+
+  useEffect(() => {
+    let ignore = false
+
+    async function fetchUserInfo() {
+      const info = await getUser()
+      console.log('user info', info)
+      if (!ignore) setUserInfo(info)
+    }
+
+    fetchUserInfo(ignore)
+    return () => {
+      ignore = true
+    }
+  }, [])
+
+  const verifyLicense = async () => {
+    setVerifying(true)
+    const userInfo = await checkForActiveLicense(email)
+    console.log(userInfo)
+  }
 
   return (
     <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
+      <StatusBar barStyle='dark-content' />
+      <Container>
+        <Content style={styles.content}>
+          <H1 style={styles.header}>Welcome to Plottr!</H1>
+          <H2 style={styles.header}>Let's verify your license</H2>
+          <Form style={styles.form}>
+            <Item inlineLabel last regular style={styles.label}>
+              <Label>Email</Label>
+              <Input
+                onChangeText={text => setEmail(text)}
+                autoCapitalize='none'
+                autoCompleteType='email'
+                keyboardType='email-address'
+              />
+            </Item>
+            <Button block success onPress={verifyLicense}>
+              <Text onPress={verifyLicense}>Verify</Text>
+              {verifying ? <Spinner color='orange' /> : null}
+            </Button>
+          </Form>
+          <Text>This will send you an email with a code</Text>
+        </Content>
+      </Container>
     </>
   )
 }
 
 const styles = StyleSheet.create({
   scrollView: {
-    backgroundColor: Colors.lighter,
+    backgroundColor: 'white',
   },
-  engine: {
-    position: 'absolute',
-    right: 0,
+  content: {
+    padding: 16,
   },
-  body: {
-    backgroundColor: Colors.white,
+  header: {
+    textAlign: 'center',
+    marginTop: 10,
+    marginBottom: 10,
   },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  label: {
+    marginBottom: 16,
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
+  form: {
+    marginVertical: 16,
   },
 })
 
