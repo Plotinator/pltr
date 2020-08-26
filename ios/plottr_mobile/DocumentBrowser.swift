@@ -76,6 +76,7 @@ class DocumentBrowserViewController: UIDocumentBrowserViewController, UIDocument
         let fileURL = documentDirectory.appendingPathComponent(escapedFileName)
 
         let doc = PlottrDocument(fileURL: fileURL)
+        DocumentViewController._sharedInstance?.document = doc
         let basicJSON = "{\"storyName\":\"\(name)\", \"newFile\":true}"
         doc.updateStringContents(data: basicJSON)
         doc.save(to: fileURL, for: .forCreating, completionHandler: { (saved) in
@@ -94,6 +95,8 @@ class DocumentBrowserViewController: UIDocumentBrowserViewController, UIDocument
     print(sourceURL.absoluteString)
     
     let doc = PlottrDocument(fileURL: sourceURL)
+    DocumentViewController._sharedInstance?.document = doc
+    print("picked:", DocumentViewController._sharedInstance?.document)
     
     // Access the document
     doc.open(completionHandler: { (success) in

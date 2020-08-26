@@ -35,10 +35,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     initializeFlipper(with: application)
     
-//    guard let documentPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first else { return true }
-
-//    let localDocumentsDirectoryURL = URL(fileURLWithPath: documentPath)
+    // set shared instance for DocumentViewController
+    DocumentViewController.setSharedInstance(instance: DocumentViewController())
     
+    // load react-native
     let rootView = RCTRootView(bundleURL: self.sourceURL(), moduleName: "plottr_mobile", initialProperties: nil, launchOptions: launchOptions)
 
     self.window = UIWindow(frame: UIScreen.main.bounds)

@@ -86,5 +86,5 @@ function apiURL (path = '', otherKeys) {
 }
 
 function newUserInfoTemplate (sales, idToVerify) {
-  return { verified: false, chancesLeft: 3, sales, idToVerify }
+  return { verified: false, chancesLeft: 3, isV2: true, sales, idToVerify }
 }

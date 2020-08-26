@@ -4,7 +4,8 @@
 
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, View, StatusBar } from 'react-native'
-import { Container, Content, Text, H1, H2, Form, Item, Input, Button, Label, Spinner, Toast, Root } from 'native-base'
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
+import { Content, Text, H1, H2, Form, Item, Input, Button, Label, Spinner, Toast, Root, Container } from 'native-base'
 import { checkForActiveLicense, getUserVerification, verifyUser, reset } from '../utils/user_info'
 import Main from './Main'
 
@@ -121,7 +122,7 @@ const App = () => {
 
   // no userInfo -> enter email
   // userInfo but not verified -> verification
-  // verified -> the app
+  // verified -> Main
   const renderBody = () => {
     if (!userInfo) {
       return renderEnterEmail()
@@ -131,17 +132,18 @@ const App = () => {
       return renderVerification()
     }
 
-    console.log('renderBody', userInfo)
     if (userInfo && userInfo.verified) {
-      return <Main />
+      return <Main v2={userInfo.isV2} />
     }
   }
 
   return (
-    <Root>
-      <StatusBar barStyle='dark-content' />
-      {renderBody()}
-    </Root>
+    <SafeAreaProvider>
+      <Root>
+        <StatusBar barStyle='dark-content' />
+        {renderBody()}
+      </Root>
+    </SafeAreaProvider>
   )
 }
 
