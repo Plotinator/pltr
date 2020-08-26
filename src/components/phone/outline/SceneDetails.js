@@ -55,6 +55,47 @@ class SceneDetails extends Component {
     this.setState({card: {...this.state.card, lineId: val}, changes: true})
   }
 
+  navigateToAttachmentSelector = (type, selectedIds) => {
+    this.props.navigation.navigate('AttachmentSelectorModal', {item: this.state.card, itemType: 'card', type, selectedIds})
+  }
+
+  renderAttachments () {
+    const { card, isNewCard } = this.state
+    if (isNewCard) return null
+
+    return <View>
+      <List>
+        <ListItem button onPress={() => this.navigateToAttachmentSelector('characters', card.characters)}>
+          <Left>
+            <Badge style={styles.badge} info><Text>{card.characters.length}</Text></Badge>
+            <Text>{i18n('Characters')}</Text>
+          </Left>
+          <Right>
+            <Icon type='FontAwesome5' name='chevron-right'/>
+          </Right>
+        </ListItem>
+        <ListItem button onPress={() => this.navigateToAttachmentSelector('places', card.places)}>
+          <Left>
+            <Badge style={styles.badge} info><Text>{card.places.length}</Text></Badge>
+            <Text>{i18n('Places')}</Text>
+          </Left>
+          <Right>
+            <Icon type='FontAwesome5' name='chevron-right'/>
+          </Right>
+        </ListItem>
+        <ListItem button onPress={() => this.navigateToAttachmentSelector('tags', card.tags)}>
+          <Left>
+            <Badge style={styles.badge} info><Text>{card.tags.length}</Text></Badge>
+            <Text>{i18n('Tags')}</Text>
+          </Left>
+          <Right>
+            <Icon type='FontAwesome5' name='chevron-right'/>
+          </Right>
+        </ListItem>
+      </List>
+    </View>
+  }
+
   render () {
     const { card, isNewCard } = this.state
     return <Container>
@@ -77,37 +118,7 @@ class SceneDetails extends Component {
             <Label>{i18n('Plotline')}</Label>
             <LinePicker selectedId={card.lineId} onChange={this.changeLine} />
           </Item>
-          <View>
-            <List>
-              <ListItem>
-                <Left>
-                  <Badge style={styles.badge} info><Text>{card.characters.length}</Text></Badge>
-                  <Text>{i18n('Characters')}</Text>
-                </Left>
-                <Right>
-                  <Icon type='FontAwesome5' name='chevron-right'/>
-                </Right>
-              </ListItem>
-              <ListItem>
-                <Left>
-                  <Badge style={styles.badge} info><Text>{card.places.length}</Text></Badge>
-                  <Text>{i18n('Places')}</Text>
-                </Left>
-                <Right>
-                  <Icon type='FontAwesome5' name='chevron-right'/>
-                </Right>
-              </ListItem>
-              <ListItem>
-                <Left>
-                  <Badge style={styles.badge} info><Text>{card.tags.length}</Text></Badge>
-                  <Text>{i18n('Tags')}</Text>
-                </Left>
-                <Right>
-                  <Icon type='FontAwesome5' name='chevron-right'/>
-                </Right>
-              </ListItem>
-            </List>
-          </View>
+          { this.renderAttachments() }
           <Item inlineLabel last regular style={[styles.label, styles.afterList]}>
             <Label>{i18n('Description')}</Label>
           </Item>
@@ -143,11 +154,6 @@ SceneDetails.propTypes = {
   lines: PropTypes.array.isRequired,
   chapters: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired,
-  tags: PropTypes.array.isRequired,
-  characters: PropTypes.array.isRequired,
-  places: PropTypes.array.isRequired,
-  ui: PropTypes.object.isRequired,
-  books: PropTypes.object.isRequired,
   isSeries: PropTypes.bool.isRequired,
   positionOffset: PropTypes.number.isRequired,
   navigation: PropTypes.object.isRequired,
@@ -158,11 +164,6 @@ function mapStateToProps (state) {
   return {
     chapters: selectors.chapters.sortedChaptersByBookSelector(state),
     lines: selectors.lines.sortedLinesByBookSelector(state),
-    tags: selectors.tags.sortedTagsSelector(state),
-    characters: selectors.characters.charactersSortedAtoZSelector(state),
-    places: selectors.places.placesSortedAtoZSelector(state),
-    ui: state.ui,
-    books: state.books,
     isSeries: selectors.ui.isSeriesSelector(state),
     positionOffset: selectors.chapters.positionOffsetSelector(state),
   }
