@@ -1,9 +1,12 @@
 import React from 'react'
 import { SafeAreaView } from 'react-native'
-import { Text } from 'native-base'
+import ErrorBoundary from '../../ErrorBoundary'
+import NotesList from './NotesList'
 
 export default function NotesHome (props) {
   return <SafeAreaView>
-    <Text>Notes</Text>
+    <ErrorBoundary>
+      <NotesList navigation={props.navigation}/>
+    </ErrorBoundary>
   </SafeAreaView>
 }

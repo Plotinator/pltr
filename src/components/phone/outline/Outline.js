@@ -67,7 +67,6 @@ class Outline extends Component {
       renderItem={({item}) => this.renderChapter(item, cardMap)}
       keyExtractor={item => item.id}
       contentContainerStyle={styles.content}
-
     />
   }
 }

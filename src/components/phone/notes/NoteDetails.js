@@ -1,0 +1,139 @@
+import { cloneDeep } from 'lodash'
+import React, { Component } from 'react'
+import PropTypes from 'react-proptypes'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import i18n from 'format-message'
+import { Text, Container, Content, H1, H2, Form, Input, Label, Item, Button, Picker, List, Left, Right, Badge, View, ListItem, Body, Icon } from 'native-base'
+import { actions, selectors, initialState } from 'pltr/v2'
+import { StyleSheet } from 'react-native'
+import SaveButton from '../../ui/SaveButton'
+import AttachmentList from '../attachments/AttachmentList'
+
+class NoteDetails extends Component {
+  constructor (props) {
+    super(props)
+    const { route } = props
+    const { isNewNote, note } = route.params
+    this.state = {
+      isNewNote: isNewNote,
+      note: isNewNote ? {...cloneDeep(initialState.note)} : note,
+      changes: isNewNote,
+    }
+  }
+
+  componentDidMount () {
+    this.setSaveButton()
+  }
+
+  componentDidUpdate () {
+    this.setSaveButton()
+  }
+
+  setSaveButton = () => {
+    this.props.navigation.setOptions({
+      headerRight: () => <SaveButton changes={this.state.changes} onPress={this.saveChanges} />
+    })
+  }
+
+  saveChanges = () => {
+    const { changes, isNewNote, note} = this.state
+    if (!changes) return
+    if (isNewNote) {
+      this.props.actions.addNoteWithValues(note.title, note.content)
+      this.props.navigation.setParams({isNewNote: false})
+    } else {
+      this.props.actions.editNote(note.id, note)
+    }
+    this.setState({isNewNote: false, changes: false})
+  }
+
+
+  navigateToAttachmentSelector = (type, selectedIds) => {
+    this.props.navigation.navigate('AttachmentSelectorModal', {item: this.state.note, itemType: 'note', type, selectedIds})
+  }
+
+  renderAttachments () {
+    const { note, isNewNote } = this.state
+    if (isNewNote) return null
+
+    return <AttachmentList
+      itemType='note'
+      item={note}
+      navigate={this.props.navigation.navigate}
+    />
+  }
+
+  render () {
+    const { note, isNewNote } = this.state
+    return <Container>
+      <Content style={styles.content}>
+        <Form style={styles.form}>
+          <Item inlineLabel last regular style={styles.label}>
+            <Label>{i18n('Title')}</Label>
+            <Input
+              value={note.title}
+              onChangeText={text => this.setState({note: {...note, title: text}, changes: true})}
+              autoCapitalize='sentences'
+              placeholder={isNewNote ? i18n('Note Title') : ''}
+            />
+          </Item>
+          { this.renderAttachments() }
+          <Item inlineLabel last regular style={[styles.label, styles.afterList]}>
+            <Label>{i18n('Content')}</Label>
+          </Item>
+        </Form>
+      </Content>
+    </Container>
+  }
+}
+
+const styles = StyleSheet.create({
+  content: {
+    padding: 16,
+  },
+  label: {
+    marginBottom: 16,
+  },
+  afterList: {
+    marginTop: 16,
+  },
+  form: {
+    marginVertical: 16,
+  },
+  badge: {
+    marginRight: 8,
+  }
+})
+
+NoteDetails.propTypes = {
+  note: PropTypes.object.isRequired,
+  editing: PropTypes.bool.isRequired,
+  startEditing: PropTypes.func.isRequired,
+  stopEditing: PropTypes.func.isRequired,
+  characters: PropTypes.array.isRequired,
+  places: PropTypes.array.isRequired,
+  tags: PropTypes.array.isRequired,
+  actions: PropTypes.object.isRequired,
+  ui: PropTypes.object.isRequired,
+}
+
+function mapStateToProps (state) {
+  return {
+    tags: selectors.tags.sortedTagsSelector(state),
+    characters: selectors.characters.charactersSortedAtoZSelector(state),
+    places: selectors.places.placesSortedAtoZSelector(state),
+    ui: state.ui,
+  }
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    actions: bindActionCreators(actions.noteActions, dispatch)
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NoteDetails)

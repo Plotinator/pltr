@@ -1,6 +1,7 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import PlacesHome from '../places/PlacesHome'
+import AddButton from '../../ui/AddButton'
 
 const Stack = createStackNavigator()
 

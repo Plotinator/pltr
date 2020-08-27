@@ -10,6 +10,7 @@ import { H3, Icon, Card, CardItem, View, Button, Text } from 'native-base'
 import { SwipeRow } from 'react-native-swipe-list-view'
 import SceneCard from './SceneCard'
 import { StyleSheet } from 'react-native'
+import AddButton from '../../ui/AddButton'
 
 class Chapter extends Component {
 
@@ -76,7 +77,6 @@ class Chapter extends Component {
   }
 
   renderCards () {
-    console.log('SORTED CARDS', this.state.sortedCards)
     return this.state.sortedCards.map((c, idx) => <SceneCard key={c.id} card={c} index={idx} reorder={this.reorderCards} navigation={this.props.navigation}/>)
   }
 
@@ -89,12 +89,13 @@ class Chapter extends Component {
       <View>
         <SwipeRow>
           <View style={styles.sliderRow}>
-            <Button><Text>Rename</Text></Button>
+            <Button><Text>{i18n('Rename')}</Text></Button>
+            <Button danger><Text>{i18n('Delete')}</Text></Button>
           </View>
           <View style={styles.chapterView}>
             <View style={styles.title}>
               <H3>{chapterHelpers.chapterTitle(chapter, positionOffset, isSeries)}</H3>
-              <Button transparent light rounded onPress={this.navigateToNewCard}><Icon type='FontAwesome5' name='plus' style={styles.addScene}/></Button>
+              <AddButton onPress={this.navigateToNewCard} iconStyle={styles.addScene} />
             </View>
             { this.renderManualSort() }
           </View>
@@ -112,6 +113,9 @@ const styles = StyleSheet.create({
   },
   sliderRow: {
     padding: 8,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
   },
   title: {
     flexDirection: 'row',

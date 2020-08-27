@@ -6,6 +6,7 @@ import SceneDetails from '../outline/SceneDetails'
 import { Button, Icon } from 'native-base'
 import { getStore } from '../../../store/configureStore'
 import { actions } from 'pltr/v2'
+import AddButton from '../../ui/AddButton'
 
 const Stack = createStackNavigator()
 
@@ -24,7 +25,7 @@ export default function OutlineStack (props) {
     <Stack.Screen name='OutlineHome' component={OutlineHome}
       options={{
         title: i18n('Outline'),
-        headerRight: () => <Button transparent light onPress={addChapter}><Icon type='FontAwesome5' name='plus' /></Button>
+        headerRight: () => <AddButton onPress={addChapter} />
       }}
     />
     <Stack.Screen name='SceneDetails' component={SceneDetails} options={{ title: i18n('Scene Details') }}/>

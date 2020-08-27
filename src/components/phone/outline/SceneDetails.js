@@ -9,6 +9,8 @@ import { StyleSheet } from 'react-native'
 import i18n from 'format-message'
 import ChapterPicker from './ChapterPicker'
 import LinePicker from './LinePicker'
+import SaveButton from '../../ui/SaveButton'
+import AttachmentList from '../attachments/AttachmentList'
 
 // cooresponds to CardDialog in desktop
 
@@ -34,17 +36,20 @@ class SceneDetails extends Component {
   }
 
   setSaveButton = () => {
-    const { changes } = this.state
-    const savedText = changes ? i18n('Save') : i18n('Saved')
     this.props.navigation.setOptions({
-      headerRight: () => <Button success={!changes} warning={changes} transparent onPress={this.saveChanges}><Text>{savedText}</Text></Button>
+      headerRight: () => <SaveButton changes={this.state.changes} onPress={this.saveChanges} />
     })
   }
 
   saveChanges = () => {
     if (!this.state.changes) return
-    this.props.actions.addCard({...this.state.card, lineId: 1}) // TODO: remove lineId 1
-    this.props.navigation.pop()
+    if (this.state.isNewCard) {
+      this.props.actions.addCard({...this.state.card, lineId: 1}) // TODO: remove lineId 1
+      this.props.navigation.setParams({isNewCard: false})
+    } else {
+      // TODO: save an existing card
+    }
+    this.setState({isNewCard: false, changes: false})
   }
 
   changeChapter = (val) => {
@@ -63,37 +68,11 @@ class SceneDetails extends Component {
     const { card, isNewCard } = this.state
     if (isNewCard) return null
 
-    return <View>
-      <List>
-        <ListItem button onPress={() => this.navigateToAttachmentSelector('characters', card.characters)}>
-          <Left>
-            <Badge style={styles.badge} info><Text>{card.characters.length}</Text></Badge>
-            <Text>{i18n('Characters')}</Text>
-          </Left>
-          <Right>
-            <Icon type='FontAwesome5' name='chevron-right'/>
-          </Right>
-        </ListItem>
-        <ListItem button onPress={() => this.navigateToAttachmentSelector('places', card.places)}>
-          <Left>
-            <Badge style={styles.badge} info><Text>{card.places.length}</Text></Badge>
-            <Text>{i18n('Places')}</Text>
-          </Left>
-          <Right>
-            <Icon type='FontAwesome5' name='chevron-right'/>
-          </Right>
-        </ListItem>
-        <ListItem button onPress={() => this.navigateToAttachmentSelector('tags', card.tags)}>
-          <Left>
-            <Badge style={styles.badge} info><Text>{card.tags.length}</Text></Badge>
-            <Text>{i18n('Tags')}</Text>
-          </Left>
-          <Right>
-            <Icon type='FontAwesome5' name='chevron-right'/>
-          </Right>
-        </ListItem>
-      </List>
-    </View>
+    return <AttachmentList
+      itemType='card'
+      item={card}
+      navigate={this.props.navigation.navigate}
+    />
   }
 
   render () {

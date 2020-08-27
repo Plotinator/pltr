@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { selectors } from 'pltr/v2'
 import i18n from 'format-message'
 
-class ChapterPicker extends Component {
+class LinePicker extends Component {
   renderItems () {
     return this.props.lines.map(l => {
       return <Picker.Item label={l.title} value={l.id} />
@@ -27,7 +27,7 @@ class ChapterPicker extends Component {
   }
 }
 
-ChapterPicker.propTypes = {
+LinePicker.propTypes = {
   lines: PropTypes.array.isRequired,
   selectedId: PropTypes.number,
   onChange: PropTypes.func.isRequired,
@@ -46,4 +46,4 @@ function mapDispatchToProps (dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ChapterPicker)
+)(LinePicker)
