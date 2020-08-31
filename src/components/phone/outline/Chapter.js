@@ -141,9 +141,9 @@ Chapter.propTypes = {
 function mapStateToProps (state) {
   return {
     ui: state.ui,
-    lines: selectors.lines.sortedLinesByBookSelector(state),
-    isSeries: selectors.ui.isSeriesSelector(state),
-    positionOffset: selectors.chapters.positionOffsetSelector(state),
+    lines: selectors.sortedLinesByBookSelector(state),
+    isSeries: selectors.isSeriesSelector(state),
+    positionOffset: selectors.positionOffsetSelector(state),
   }
 }
 

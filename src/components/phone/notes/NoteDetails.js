@@ -48,11 +48,6 @@ class NoteDetails extends Component {
     this.setState({isNewNote: false, changes: false})
   }
 
-
-  navigateToAttachmentSelector = (type, selectedIds) => {
-    this.props.navigation.navigate('AttachmentSelectorModal', {item: this.state.note, itemType: 'note', type, selectedIds})
-  }
-
   renderAttachments () {
     const { note, isNewNote } = this.state
     if (isNewNote) return null
@@ -61,11 +56,12 @@ class NoteDetails extends Component {
       itemType='note'
       item={note}
       navigate={this.props.navigation.navigate}
+      books
     />
   }
 
   render () {
-    const { note, isNewNote } = this.state
+    const { note } = this.state
     return <Container>
       <Content style={styles.content}>
         <Form style={styles.form}>
@@ -75,7 +71,6 @@ class NoteDetails extends Component {
               value={note.title}
               onChangeText={text => this.setState({note: {...note, title: text}, changes: true})}
               autoCapitalize='sentences'
-              placeholder={isNewNote ? i18n('Note Title') : ''}
             />
           </Item>
           { this.renderAttachments() }
@@ -120,9 +115,9 @@ NoteDetails.propTypes = {
 
 function mapStateToProps (state) {
   return {
-    tags: selectors.tags.sortedTagsSelector(state),
-    characters: selectors.characters.charactersSortedAtoZSelector(state),
-    places: selectors.places.placesSortedAtoZSelector(state),
+    tags: selectors.sortedTagsSelector(state),
+    characters: selectors.charactersSortedAtoZSelector(state),
+    places: selectors.placesSortedAtoZSelector(state),
     ui: state.ui,
   }
 }

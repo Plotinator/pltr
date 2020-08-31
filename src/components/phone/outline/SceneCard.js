@@ -58,7 +58,7 @@ SceneCard.propTypes = {
 
 function mapStateToProps (state, ownProps) {
   let line = null
-  let isSeries = selectors.ui.isSeriesSelector(state)
+  let isSeries = selectors.isSeriesSelector(state)
   if (isSeries) {
     // get the right seriesLines
     line = state.seriesLines.find(sl => sl.id === ownProps.card.seriesLineId)

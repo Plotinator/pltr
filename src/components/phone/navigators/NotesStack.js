@@ -2,7 +2,6 @@ import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import i18n from 'format-message'
 import NotesHome from '../notes/NotesHome'
-import { Button, Icon } from 'native-base'
 import NoteDetails from '../notes/NoteDetails'
 import AddButton from '../../ui/AddButton'
 

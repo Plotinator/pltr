@@ -79,7 +79,6 @@ class AttachmentSelectorModal extends Component {
   }
 
   render () {
-    console.log('RENDER', this.props.characters)
     return <View style={styles.container}>
       <FlatList
         data={this.props[this.state.type]}
@@ -108,9 +107,9 @@ AttachmentSelectorModal.propTypes = {
 
 function mapStateToProps (state, ownProps) {
   return {
-    characters: selectors.characters.charactersSortedAtoZSelector(state),
-    places: selectors.places.placesSortedAtoZSelector(state),
-    tags: selectors.tags.sortedTagsSelector(state),
+    characters: selectors.charactersSortedAtoZSelector(state),
+    places: selectors.placesSortedAtoZSelector(state),
+    tags: selectors.sortedTagsSelector(state),
   }
 }
 

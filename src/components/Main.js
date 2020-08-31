@@ -42,23 +42,19 @@ const Main = props => {
     )
   }
 
-  const renderMain = () => {
-    if (!document) {
-      return (
-        <Container>
-          <Content>
-            <Spinner color='orange' />
-          </Content>
-        </Container>
-      )
-    }
-
-    if (props.v2) return renderV2()
-
-    return renderV1()
+  if (!document) {
+    return (
+      <Container>
+        <Content>
+          <Spinner color='orange' />
+        </Content>
+      </Container>
+    )
   }
 
-  return renderMain()
+  if (props.v2) return renderV2()
+
+  return renderV1()
 }
 
 export default Main

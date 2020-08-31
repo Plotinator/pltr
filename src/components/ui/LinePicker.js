@@ -35,7 +35,7 @@ LinePicker.propTypes = {
 
 function mapStateToProps (state) {
   return {
-    lines: selectors.lines.sortedLinesByBookSelector(state),
+    lines: selectors.sortedLinesByBookSelector(state),
   }
 }
 

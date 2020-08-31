@@ -2,14 +2,15 @@ import React, { Component } from 'react'
 import { Picker, Icon } from 'native-base'
 import PropTypes from 'react-proptypes'
 import { connect } from 'react-redux'
-import { selectors, chapterHelpers } from 'pltr/v2'
+import { selectors } from 'pltr/v2'
 import i18n from 'format-message'
 
-class ChapterPicker extends Component {
+class CategoryPicker extends Component {
   renderItems () {
-    const { positionOffset, isSeries } = this.props
-    return this.props.chapters.map(ch => {
-      return <Picker.Item label={chapterHelpers.chapterTitle(ch, positionOffset, isSeries)} value={ch.id} />
+    const { categories, type } = this.props
+
+    return categories[type].map(cat => {
+      return <Picker.Item label={cat.name} value={cat.id} />
     })
   }
 
@@ -17,8 +18,8 @@ class ChapterPicker extends Component {
     const { selectedId, onChange } = this.props
     return <Picker
       iosIcon={<Icon type='FontAwesome5' name='chevron-down' style={{fontSize: 12}}/>}
-      iosHeader={selectedId ? '' : i18n('Select a Chapter')}
-      placeholder={selectedId ? '' : i18n('Select a Chapter')}
+      iosHeader={selectedId ? '' : i18n('Select a Category')}
+      placeholder={selectedId ? '' : i18n('Select a Category')}
       mode='dialog'
       selectedValue={selectedId}
       onValueChange={onChange}
@@ -28,19 +29,16 @@ class ChapterPicker extends Component {
   }
 }
 
-ChapterPicker.propTypes = {
-  chapters: PropTypes.array.isRequired,
-  isSeries: PropTypes.bool.isRequired,
-  positionOffset: PropTypes.number.isRequired,
+CategoryPicker.propTypes = {
+  categories: PropTypes.array.isRequired,
+  type: PropTypes.string.isRequired,
   selectedId: PropTypes.number,
   onChange: PropTypes.func.isRequired,
 }
 
 function mapStateToProps (state) {
   return {
-    chapters: selectors.chapters.sortedChaptersByBookSelector(state),
-    isSeries: selectors.ui.isSeriesSelector(state),
-    positionOffset: selectors.chapters.positionOffsetSelector(state),
+    categories: state.categories,
   }
 }
 
@@ -51,4 +49,4 @@ function mapDispatchToProps (dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ChapterPicker)
+)(CategoryPicker)

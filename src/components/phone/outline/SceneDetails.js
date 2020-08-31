@@ -7,8 +7,8 @@ import { Text, Container, Content, H1, H2, Form, Input, Label, Item, Button, Pic
 import { selectors, actions, initialState } from 'pltr/v2'
 import { StyleSheet } from 'react-native'
 import i18n from 'format-message'
-import ChapterPicker from './ChapterPicker'
-import LinePicker from './LinePicker'
+import ChapterPicker from '../../ui/ChapterPicker'
+import LinePicker from '../../ui/LinePicker'
 import SaveButton from '../../ui/SaveButton'
 import AttachmentList from '../attachments/AttachmentList'
 
@@ -76,7 +76,7 @@ class SceneDetails extends Component {
   }
 
   render () {
-    const { card, isNewCard } = this.state
+    const { card } = this.state
     return <Container>
       <Content style={styles.content}>
         <Form style={styles.form}>
@@ -86,7 +86,6 @@ class SceneDetails extends Component {
               value={card.title}
               onChangeText={text => this.setState({card: {...card, title: text}, changes: true})}
               autoCapitalize='sentences'
-              placeholder={isNewCard ? i18n('Scene Title') : ''}
             />
           </Item>
           <Item fixedLabel style={styles.label}>
@@ -141,10 +140,10 @@ SceneDetails.propTypes = {
 
 function mapStateToProps (state) {
   return {
-    chapters: selectors.chapters.sortedChaptersByBookSelector(state),
-    lines: selectors.lines.sortedLinesByBookSelector(state),
-    isSeries: selectors.ui.isSeriesSelector(state),
-    positionOffset: selectors.chapters.positionOffsetSelector(state),
+    chapters: selectors.sortedChaptersByBookSelector(state),
+    lines: selectors.sortedLinesByBookSelector(state),
+    isSeries: selectors.isSeriesSelector(state),
+    positionOffset: selectors.positionOffsetSelector(state),
   }
 }
 

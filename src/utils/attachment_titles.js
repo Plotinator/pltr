@@ -8,6 +8,9 @@ export function attachmentHeaderTitles (type) {
       return i18n('Attach Places')
     case 'tags':
       return i18n('Attach Tags')
+    case 'books':
+    case 'bookIds':
+      return i18n('Attach Books')
   }
 }
 
@@ -19,5 +22,8 @@ export function attachmentItemText (type) {
       return i18n('Places')
     case 'tags':
       return i18n('Tags')
+    case 'books':
+    case 'bookIds':
+      return i18n('Books')
   }
 }

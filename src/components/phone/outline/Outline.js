@@ -90,12 +90,12 @@ Outline.propTypes = {
 
 function mapStateToProps (state) {
   return {
-    chapters: selectors.chapters.sortedChaptersByBookSelector(state),
-    lines: selectors.lines.sortedLinesByBookSelector(state),
-    card2Dmap: selectors.cards.cardMapSelector(state),
+    chapters: selectors.sortedChaptersByBookSelector(state),
+    lines: selectors.sortedLinesByBookSelector(state),
+    card2Dmap: selectors.cardMapSelector(state),
     file: state.file,
     ui: state.ui,
-    isSeries: selectors.ui.isSeriesSelector(state),
+    isSeries: selectors.isSeriesSelector(state),
   }
 }
 

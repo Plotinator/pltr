@@ -4,7 +4,7 @@ import ErrorBoundary from '../../ErrorBoundary'
 import Outline from './Outline'
 
 export default function OutlineHome (props) {
-  return <SafeAreaView>
+  return <SafeAreaView style={{flex: 1}}>
     <ErrorBoundary>
       <Outline navigation={props.navigation}/>
     </ErrorBoundary>

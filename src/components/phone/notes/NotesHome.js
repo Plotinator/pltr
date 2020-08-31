@@ -4,7 +4,7 @@ import ErrorBoundary from '../../ErrorBoundary'
 import NotesList from './NotesList'
 
 export default function NotesHome (props) {
-  return <SafeAreaView>
+  return <SafeAreaView style={{flex: 1}}>
     <ErrorBoundary>
       <NotesList navigation={props.navigation}/>
     </ErrorBoundary>
