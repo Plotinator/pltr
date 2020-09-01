@@ -89,8 +89,7 @@ CharactersList.propTypes = {
   customAttributesThatCanChange: PropTypes.array,
   ui: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired,
-  customAttributeActions: PropTypes.object.isRequired,
-  uiActions: PropTypes.object.isRequired,
+  navigation: PropTypes.object.isRequired,
 }
 
 function mapStateToProps (state) {
@@ -108,8 +107,6 @@ function mapStateToProps (state) {
 function mapDispatchToProps (dispatch) {
   return {
     actions: bindActionCreators(actions.characterActions, dispatch),
-    customAttributeActions: bindActionCreators(actions.customAttributeActions, dispatch),
-    uiActions: bindActionCreators(actions.uiActions, dispatch),
   }
 }
 

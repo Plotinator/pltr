@@ -11,7 +11,6 @@ export default function AttachmentList (props) {
   let attachments = only || defaultAttachments
   if (books) attachments.unshift('bookIds')
 
-
   const navigateToAttachmentSelector = (type, selectedIds) => {
     navigate('AttachmentSelectorModal', {item, itemType, type, selectedIds})
   }

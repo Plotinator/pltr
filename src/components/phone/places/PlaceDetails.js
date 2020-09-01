@@ -4,36 +4,27 @@ import PropTypes from 'react-proptypes'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import i18n from 'format-message'
-import { Text, Container, Content, H1, H2, Form, Input, Label, Item, Button, Picker, List, Left, Right, Badge, View, ListItem, Body, Icon } from 'native-base'
+import { Container, Content, Form, Input, Label, Item } from 'native-base'
 import { actions, selectors, initialState } from 'pltr/v2'
 import { StyleSheet } from 'react-native'
 import SaveButton from '../../ui/SaveButton'
 import AttachmentList from '../attachments/AttachmentList'
-import CategoryPicker from '../../ui/CategoryPicker'
 
-class CharacterDetails extends Component {
+class PlaceDetails extends Component {
   constructor (props) {
     super(props)
     const { route, customAttributes } = props
-    const { isNewCharacter, character } = route.params
-    let characterObj = isNewCharacter ? {...cloneDeep(initialState.character)} : character
+    const { isNewPlace, place } = route.params
+    let placeObj = isNewPlace ? {...cloneDeep(initialState.place)} : place
     let customAttrs = customAttributes.reduce((acc, attr) => {
-      acc[attr.name] = characterObj[attr.name]
-      return acc
-    }, {})
-    let templateAttrs = characterObj.templates.reduce((acc, t) =>{
-      acc[t.id] = t.attributes.reduce((obj, attr) => {
-        obj[attr.name] = attr.value
-        return obj
-      }, {})
+      acc[attr.name] = placeObj[attr.name]
       return acc
     }, {})
     this.state = {
-      isNewCharacter: isNewCharacter,
-      templateAttrs: templateAttrs,
+      isNewPlace: isNewPlace,
+      place: placeObj,
       customAttrs: customAttrs,
-      character: characterObj,
-      changes: isNewCharacter,
+      changes: isNewPlace,
     }
   }
 
@@ -52,60 +43,33 @@ class CharacterDetails extends Component {
   }
 
   saveChanges = () => {
-    const { changes, isNewCharacter, character, customAttrs, templates } = this.state
+    const { changes, isNewPlace, place, customAttrs } = this.state
     if (!changes) return
     const values = {
-      name: character.name,
-      description: character.description,
-      notes: character.notes,
-      categoryId: character.categoryId,
-      templates: templates,
+      name: place.name,
+      description: place.description,
+      notes: place.notes,
       ...customAttrs,
     }
-    if (isNewCharacter) {
-      this.props.actions.addCharacterWithValues(values)
-      this.props.navigation.setParams({isNewCharacter: false})
+    if (isNewPlace) {
+      this.props.actions.addPlaceWithValues(values)
+      this.props.navigation.setParams({isNewPlace: false})
     } else {
-      this.props.actions.editCharacter(character.id, values)
+      this.props.actions.editPlace(place.id, values)
     }
-    this.setState({isNewCharacter: false, changes: false})
-  }
-
-  changeCategory = (val) => {
-    this.setState({character: {...this.state.character, categoryId: val}, changes: true})
+    this.setState({isNewPlace: false, changes: false})
   }
 
   renderAttachments () {
-    const { character, isNewCharacter } = this.state
-    if (isNewCharacter) return null
+    const { place, isNewPlace } = this.state
+    if (isNewPlace) return null
 
     return <AttachmentList
-      itemType='character'
-      item={character}
+      itemType='place'
+      item={place}
       navigate={this.props.navigation.navigate}
       only={['bookIds', 'tags']}
     />
-  }
-
-  renderTemplates () {
-    return this.state.character.templates.flatMap(t => {
-      return t.attributes.map(attr => {
-        if (attr.type == 'paragraph') {
-          return <Item key={attr.name} inlineLabel last regular style={styles.label}>
-            <Label>{attr.name}{' RCE'}</Label>
-          </Item>
-        } else {
-          return <Item key={attr.name} inlineLabel last regular style={styles.label}>
-            <Label>{attr.name}</Label>
-            <Input
-              value={attr.value}
-              onChangeText={text => this.setState({templateAttrs: {...templateAttrs, [attr.name]: text}, changes: true})}
-              autoCapitalize='sentences'
-            />
-          </Item>
-        }
-      })
-    })
   }
 
   renderCustomAttributes () {
@@ -131,35 +95,30 @@ class CharacterDetails extends Component {
   }
 
   render () {
-    const { character } = this.state
+    const { place } = this.state
     return <Container>
       <Content style={styles.content}>
         <Form style={styles.form}>
-          <Item inlineLabel last regular style={styles.label}>
+        <Item inlineLabel last regular style={styles.label}>
             <Label>{i18n('Name')}</Label>
             <Input
-              value={character.name}
-              onChangeText={text => this.setState({character: {...character, name: text}, changes: true})}
+              value={place.name}
+              onChangeText={text => this.setState({place: {...place, name: text}, changes: true})}
               autoCapitalize='words'
             />
           </Item>
           <Item inlineLabel last regular style={styles.label}>
             <Label>{i18n('Description')}</Label>
             <Input
-              value={character.description}
-              onChangeText={text => this.setState({character: {...character, description: text}, changes: true})}
+              value={place.description}
+              onChangeText={text => this.setState({place: {...place, description: text}, changes: true})}
               autoCapitalize='sentences'
             />
-          </Item>
-          <Item fixedLabel style={styles.label}>
-            <Label>{i18n('Category')}</Label>
-            <CategoryPicker type='characters' selectedId={character.categoryId} onChange={this.changeCategory} />
           </Item>
           { this.renderAttachments() }
           <Item inlineLabel last regular style={[styles.label, styles.afterList]}>
             <Label>{i18n('Notes')}{' RCE'}</Label>
           </Item>
-          { this.renderTemplates() }
           { this.renderCustomAttributes() }
         </Form>
       </Content>
@@ -185,14 +144,14 @@ const styles = StyleSheet.create({
   }
 })
 
-CharacterDetails.propTypes = {
+PlaceDetails.propTypes = {
   note: PropTypes.object.isRequired,
   editing: PropTypes.bool.isRequired,
   startEditing: PropTypes.func.isRequired,
   stopEditing: PropTypes.func.isRequired,
-  tags: PropTypes.array.isRequired,
   characters: PropTypes.array.isRequired,
   places: PropTypes.array.isRequired,
+  tags: PropTypes.array.isRequired,
   customAttributes: PropTypes.array.isRequired,
   ui: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired,
@@ -203,18 +162,18 @@ function mapStateToProps (state) {
     tags: selectors.sortedTagsSelector(state),
     characters: selectors.charactersSortedAtoZSelector(state),
     places: selectors.placesSortedAtoZSelector(state),
-    customAttributes: state.customAttributes.characters,
+    customAttributes: state.customAttributes.places,
     ui: state.ui,
   }
 }
 
 function mapDispatchToProps (dispatch) {
   return {
-    actions: bindActionCreators(actions.characterActions, dispatch)
+    actions: bindActionCreators(actions.placeActions, dispatch)
   }
 }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CharacterDetails)
+)(PlaceDetails)
