@@ -11,6 +11,8 @@ import { SwipeRow } from 'react-native-swipe-list-view'
 import SceneCard from './SceneCard'
 import { StyleSheet } from 'react-native'
 import AddButton from '../../ui/AddButton'
+import TrashButton from '../../ui/TrashButton'
+import RenameButton from '../../ui/RenameButton'
 
 class Chapter extends Component {
 
@@ -87,10 +89,10 @@ class Chapter extends Component {
     const klasses = cx('outline__scene-title', {darkmode: ui.darkMode})
     return (
       <View>
-        <SwipeRow>
+        <SwipeRow leftOpenValue={75} rightOpenValue={-100}>
           <View style={styles.sliderRow}>
-            <Button><Text>{i18n('Rename')}</Text></Button>
-            <Button danger><Text>{i18n('Delete')}</Text></Button>
+            <TrashButton buttonStyle={{flex: 0, height: '100%'}}/>
+            <RenameButton buttonStyle={{flex: 0, height: '100%', width: 100}}/>
           </View>
           <View style={styles.chapterView}>
             <View style={styles.title}>
@@ -112,7 +114,7 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   sliderRow: {
-    padding: 8,
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center'

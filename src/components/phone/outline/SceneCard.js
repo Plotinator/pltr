@@ -23,7 +23,7 @@ class SceneCard extends Component {
       </CardItem>
       <CardItem button onPress={this.navigateToDetails}>
         <Body>
-          <Text>Description</Text>
+          <Text note>Description</Text>
         </Body>
       </CardItem>
     </Card>
@@ -33,6 +33,7 @@ class SceneCard extends Component {
 const styles = StyleSheet.create({
   card: {
     marginLeft: 20,
+    marginRight: 8,
   },
   cardTitle: {
     flexDirection: 'row',

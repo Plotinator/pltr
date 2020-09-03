@@ -15,7 +15,7 @@ class PlaceDetails extends Component {
     super(props)
     const { route, customAttributes } = props
     const { isNewPlace, place } = route.params
-    let placeObj = isNewPlace ? {...cloneDeep(initialState.place)} : place
+    let placeObj = isNewPlace ? cloneDeep(initialState.place) : place
     let customAttrs = customAttributes.reduce((acc, attr) => {
       acc[attr.name] = placeObj[attr.name]
       return acc

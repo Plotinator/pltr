@@ -6,12 +6,19 @@ import MainTabs from './MainTabs'
 import FileDrawer from '../FileDrawer'
 import AttachmentSelectorModal from '../attachments/AttachmentSelectorModal'
 import { attachmentHeaderTitles } from '../../../utils/attachment_titles'
+import CustomAttributesModal from '../customAttributes/CustomAttributesModal'
 
 const RootStack = createStackNavigator()
 
 export default function RootPhoneNavigator (props) {
   return <RootStack.Navigator mode='modal'>
     <RootStack.Screen name='Main' component={RootDrawerNavigator} options={{ headerShown: false }}/>
+    <RootStack.Screen name='CustomAttributesModal' component={CustomAttributesModal}
+      options={({route}) => ({
+        title: i18n('Custom Attributes'),
+        headerBackTitle: i18n('Done'),
+      })}
+    />
     <RootStack.Screen name='AttachmentSelectorModal' component={AttachmentSelectorModal}
       options={({route}) => ({
         title: attachmentHeaderTitles(route.params.type),

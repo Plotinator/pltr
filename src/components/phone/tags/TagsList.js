@@ -1,0 +1,84 @@
+import React, { Component } from 'react'
+import { SwipeListView } from 'react-native-swipe-list-view'
+import { StyleSheet } from 'react-native'
+import PropTypes from 'react-proptypes'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { actions, selectors } from 'pltr/v2'
+import { ListItem, Icon, Left, Right, H3, View, Badge, Text } from 'native-base'
+import i18n from 'format-message'
+import TrashButton from '../../ui/TrashButton'
+
+class TagsList extends Component {
+
+  deleteTag = (id) => {
+    this.props.actions.deleteTag(id)
+  }
+
+  navigateToDetails = (tag) => {
+    this.props.navigation.navigate('TagDetails', { tag })
+  }
+
+  renderTag = ({item}) => {
+    return <ListItem noIndent button style={styles.row} onPress={() => this.navigateToDetails(item)}>
+      <Left>
+        <View style={styles.rowView}>
+          <H3 style={styles.title}>{item.title || i18n('New Tag')}</H3>
+          <Badge style={[styles.badge, {backgroundColor: item.color}]}><Text>{item.color}</Text></Badge>
+        </View>
+      </Left>
+      <Right>
+        <Icon type='FontAwesome5' name='chevron-right'/>
+      </Right>
+    </ListItem>
+  }
+
+  render () {
+    return <SwipeListView
+      data={this.props.tags}
+      renderItem={this.renderTag}
+      renderHiddenItem={ (data, rowMap) => <TrashButton onPress={() => this.deleteTag(data.item.id)} />}
+      keyExtractor={item => item.id}
+      leftOpenValue={75}
+    />
+  }
+}
+
+const styles = StyleSheet.create({
+  row: {
+    backgroundColor: 'white',
+  },
+  title: {
+    paddingVertical: 4,
+  },
+  rowView: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  badge: {
+    marginTop: 5,
+    marginLeft: 20,
+  },
+})
+
+TagsList.propTypes = {
+  tags: PropTypes.array.isRequired,
+  actions: PropTypes.object.isRequired,
+}
+
+function mapStateToProps (state) {
+  return {
+    tags: selectors.sortedTagsSelector(state),
+  }
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    actions: bindActionCreators(actions.tagActions, dispatch)
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TagsList)

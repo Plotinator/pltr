@@ -12,7 +12,7 @@ export default function DocumentRoot (props) {
 
   useEffect(() => {
     loadDocument()
-  }, [])
+  }, [props.document])
 
   const loadDocument = () => {
     const store = getStore()

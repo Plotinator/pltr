@@ -8,6 +8,7 @@ import { bindActionCreators } from 'redux'
 import { selectors, actions } from 'pltr/v2'
 import { View, ListItem, Icon, Left, Right, H3, Text, Button } from 'native-base'
 import i18n from 'format-message'
+import TrashButton from '../../ui/TrashButton'
 
 class PlacesList extends Component {
 
@@ -34,12 +35,7 @@ class PlacesList extends Component {
     return <SwipeListView
       data={this.props.visiblePlaces}
       renderItem={this.renderPlace}
-      renderHiddenItem={ (data, rowMap) => {
-        const place = data.item
-        return <Button full danger style={[ { flex: 1, width: 75 } ]} onPress={() => this.deletePlace(place.id)} >
-          <Icon type='FontAwesome5' name='trash'/>
-        </Button>
-      }}
+      renderHiddenItem={ (data, rowMap) => <TrashButton onPress={() => this.deletePlace(data.item.id)} />}
       keyExtractor={item => item.id}
       leftOpenValue={75}
     />

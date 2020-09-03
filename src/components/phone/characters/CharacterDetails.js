@@ -16,7 +16,7 @@ class CharacterDetails extends Component {
     super(props)
     const { route, customAttributes } = props
     const { isNewCharacter, character } = route.params
-    let characterObj = isNewCharacter ? {...cloneDeep(initialState.character)} : character
+    let characterObj = isNewCharacter ? cloneDeep(initialState.character) : character
     let customAttrs = customAttributes.reduce((acc, attr) => {
       acc[attr.name] = characterObj[attr.name]
       return acc

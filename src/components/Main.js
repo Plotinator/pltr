@@ -21,7 +21,7 @@ const Main = props => {
 
     DocumentEvents.addListener('onOpenDocument', data => {
       NativeModules.DocumentBrowser.closeBrowser()
-      console.log('onOpenDocument', data)
+      console.log('onOpenDocument', data.documentURL, JSON.parse(data.data))
       setDocument(data)
     })
 

@@ -73,7 +73,6 @@ class Outline extends Component {
 
 const styles = StyleSheet.create({
   content: {
-    paddingHorizontal: 16,
     paddingVertical: 8,
   },
 })

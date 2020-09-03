@@ -4,6 +4,7 @@ import OutlineStack from './OutlineStack'
 import NotesStack from './NotesStack'
 import CharactersStack from './CharactersStack'
 import PlacesStack from './PlacesStack'
+import TagsStack from './TagsStack'
 import { chooseIcon, tabBarOptions } from '../../../utils/tab_icons'
 import { Icon } from 'native-base'
 
@@ -23,5 +24,6 @@ export default function MainTabs (props) {
     <Tab.Screen name='Notes' component={NotesStack} />
     <Tab.Screen name='Characters' component={CharactersStack} />
     <Tab.Screen name='Places' component={PlacesStack} />
+    <Tab.Screen name='Tags' component={TagsStack} />
   </Tab.Navigator>
 }

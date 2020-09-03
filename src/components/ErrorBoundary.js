@@ -16,8 +16,8 @@ export default class ErrorBoundary extends Component {
     if (process.env.NODE_ENV !== 'development') {
       // log.error(error, errorInfo)
       // rollbar.error(error, errorInfo)
-      console.error(error, errorInfo)
     }
+    console.error(error, errorInfo)
   }
 
   render () {

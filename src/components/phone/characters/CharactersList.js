@@ -39,6 +39,10 @@ class CharactersList extends Component {
     this.props.navigation.navigate('CharacterDetails', { character })
   }
 
+  navigateToCustomAttributes = () => {
+    this.props.navigation.navigate('CustomAttributesModal', {type: 'characters'})
+  }
+
   renderCharacter = ({item}) => {
     return <ListItem noIndent button style={styles.row} onPress={() => this.navigateToDetails(item)}>
       <Left>
@@ -57,13 +61,16 @@ class CharactersList extends Component {
   }
 
   render () {
-    return <SectionList
-      sections={this.state.data}
-      renderSectionHeader={this.renderSectionHeader}
-      renderItem={this.renderCharacter}
-      keyExtractor={item => item.id}
-      ListEmptyComponent={<H1>{i18n('No Characters')}</H1>}
-    />
+    return <View style={{flex: 1}}>
+      <SectionList
+        sections={this.state.data}
+        renderSectionHeader={this.renderSectionHeader}
+        renderItem={this.renderCharacter}
+        keyExtractor={item => item.id}
+        ListEmptyComponent={<H1>{i18n('No Characters')}</H1>}
+      />
+      <Button full info onPress={this.navigateToCustomAttributes}><Text>{i18n('Custom Attributes')}</Text></Button>
+    </View>
   }
 }
 

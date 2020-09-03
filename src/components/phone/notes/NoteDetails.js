@@ -17,7 +17,7 @@ class NoteDetails extends Component {
     const { isNewNote, note } = route.params
     this.state = {
       isNewNote: isNewNote,
-      note: isNewNote ? {...cloneDeep(initialState.note)} : note,
+      note: isNewNote ? cloneDeep(initialState.note) : note,
       changes: isNewNote,
     }
   }
@@ -37,7 +37,7 @@ class NoteDetails extends Component {
   }
 
   saveChanges = () => {
-    const { changes, isNewNote, note} = this.state
+    const { changes, isNewNote, note } = this.state
     if (!changes) return
     if (isNewNote) {
       this.props.actions.addNoteWithValues(note.title, note.content)

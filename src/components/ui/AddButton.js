@@ -1,6 +1,5 @@
 import React from 'react'
 import { Button, Icon } from 'native-base'
-import i18n from 'format-message'
 
 export default function AddButton (props) {
   const noop = () => {}
