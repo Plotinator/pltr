@@ -3,32 +3,33 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { actions, selectors } from 'pltr/v2'
-import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native'
-import { Icon, H1 } from 'native-base'
+import { StyleSheet, FlatList } from 'react-native'
+import { Icon, H1, H3, Container, Content, ListItem, CheckBox, Body, Text, View, Badge } from 'native-base'
 import i18n from 'format-message'
 
 class AttachmentSelectorModal extends Component {
-  constructor (props) {
-    super(props)
-    const { route } = props
-    const { type, item, itemType, selectedIds } = route.params
-    this.state = { type, item, itemType, selectedIds }
-  }
 
-  componentWillReceiveProps (newProps) {
-    let selected = newProps.item[this.state.type] || []
-    this.setState({ selected })
+  static getDerivedStateFromProps (props, state) {
+    const { route } = props
+    const { type, item, itemType } = route.params
+    const connectedItem = props[`${itemType}s`].find(things => things.id == item.id)
+    return { type, item: connectedItem, itemType, selected: connectedItem[type] }
   }
 
   addIt = (id) => {
     const { actions } = this.props
-    switch (this.state.type) {
+    const { type, item } = this.state
+    switch (type) {
       case 'characters':
-        return actions.addCharacter(this.state.item.id, id)
+        return actions.addCharacter(item.id, id)
       case 'places':
-        return actions.addPlace(this.state.item.id, id)
+        return actions.addPlace(item.id, id)
       case 'tags':
-        return actions.addTag(this.state.item.id, id)
+        return actions.addTag(item.id, id)
+      case 'bookIds':
+        return actions.addBook(item.id, id)
+      default:
+        return
     }
   }
 
@@ -41,11 +42,15 @@ class AttachmentSelectorModal extends Component {
         return actions.removePlace(this.state.item.id, id)
       case 'tags':
         return actions.removeTag(this.state.item.id, id)
+      case 'bookIds':
+        return actions.removeBook(this.state.item.id, id)
+      default:
+        return
     }
   }
 
   toggleItem = (id) => {
-    let ids = this.state.selectedIds
+    let ids = this.state.selected
     if (ids.includes(id)) {
       this.removeIt(id)
     } else {
@@ -53,41 +58,34 @@ class AttachmentSelectorModal extends Component {
     }
   }
 
-  renderCheck = (id) => {
-    if (this.state.selectedIds.includes(id)) {
-      return <Icon type='FontAwesome5' name='check' style={{color: 'green', fontSize: 12}} />
-    } else {
-      return null
-    }
-  }
-
   renderItem = ({ item }) => {
+    const { type, selected } = this.state
     let color = {}
-    let type = this.state.type
-    if (type === 'tags') color = {color: item.color}
+    if (type == 'tags') color = {backgroundColor: item.color}
     let defaultTitle = `New ${type.substr(0,1).toUpperCase()}${type.substr(1, type.length - 2)}`
-    return <View key={`item-${item.id}`} style={styles.listItem}>
-      <TouchableOpacity onPress={() => this.toggleItem(item.id)}>
-        <View style={[styles.touchableItem, {height: 60}]}>
-          <View>
-            <Text style={[styles.titleText, color]}>{item.name || item.title || defaultTitle}</Text>
-          </View>
-          {this.renderCheck(item.id)}
+    return <ListItem noIndent button key={`item-${item.id}`} style={styles.listItem} onPress={() => this.toggleItem(item.id)}>
+      <CheckBox checked={selected.includes(item.id)} />
+      <Body>
+        <View style={styles.rowView}>
+          <H3 style={styles.title}>{item.name || item.title || defaultTitle}</H3>
+          {type == 'tags' ? <Badge style={[styles.badge, color]}><Text>{item.color}</Text></Badge> : null}
         </View>
-      </TouchableOpacity>
-    </View>
+      </Body>
+    </ListItem>
   }
 
   render () {
-    return <View style={styles.container}>
-      <FlatList
-        data={this.props[this.state.type]}
-        ListEmptyComponent={<H1 style={styles.h1}>{i18n('None to choose')}</H1>}
-        extraData={{selected: this.state.selectedIds}}
-        keyExtractor={(item) => item.id}
-        renderItem={this.renderItem}
-      />
-    </View>
+    return <Container>
+      <Content>
+        <FlatList
+          data={this.props[this.state.type]}
+          ListEmptyComponent={<H1 style={styles.h1}>{i18n('None to choose')}</H1>}
+          extraData={{selected: this.state.selected}}
+          keyExtractor={(item) => item.id}
+          renderItem={this.renderItem}
+        />
+      </Content>
+    </Container>
   }
 }
 
@@ -95,21 +93,39 @@ const styles = StyleSheet.create({
   h1: {
     textAlign: 'center',
     marginVertical: 20,
-  }
+  },
+  title: {
+    paddingVertical: 4,
+  },
+  rowView: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingLeft: 10,
+  },
+  badge: {
+    marginTop: 5,
+    marginLeft: 20,
+  },
 })
 
 AttachmentSelectorModal.propTypes = {
   characters: PropTypes.array.isRequired,
   places: PropTypes.array.isRequired,
   tags: PropTypes.array.isRequired,
+  books: PropTypes.object.isRequired,
+  cards: PropTypes.array.isRequired,
+  notes: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired,
 }
 
-function mapStateToProps (state, ownProps) {
+function mapStateToProps (state) {
   return {
     characters: selectors.charactersSortedAtoZSelector(state),
     places: selectors.placesSortedAtoZSelector(state),
     tags: selectors.sortedTagsSelector(state),
+    books: state.books,
+    cards: state.cards,
+    notes: state.notes,
   }
 }
 
@@ -121,6 +137,10 @@ function mapDispatchToProps (dispatch, ownProps) {
       return {actions: bindActionCreators(actions.cardActions, dispatch)}
     case 'note':
       return {actions: bindActionCreators(actions.noteActions, dispatch)}
+    case 'character':
+      return {actions: bindActionCreators(actions.characterActions, dispatch)}
+    case 'place':
+      return {actions: bindActionCreators(actions.placeActions, dispatch)}
     default:
       break
   }

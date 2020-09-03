@@ -15,14 +15,13 @@ import AttachmentList from '../attachments/AttachmentList'
 // cooresponds to CardDialog in desktop
 
 class SceneDetails extends Component {
-  constructor (props) {
-    super(props)
-    const { route } = props
+  static getDerivedStateFromProps (props, state) {
+    const { route, cards } = props
     const { isNewCard, card, chapterId } = route.params
-    this.state = {
+    return {
       isNewCard: isNewCard,
       chapterId: chapterId,
-      card: isNewCard ? {...cloneDeep(initialState.card), chapterId: chapterId} : card,
+      card: isNewCard ? {...cloneDeep(initialState.card), chapterId: chapterId} : cards.find(c => c.id == card.id),
       changes: isNewCard,
     }
   }
@@ -134,6 +133,7 @@ SceneDetails.propTypes = {
   actions: PropTypes.object.isRequired,
   isSeries: PropTypes.bool.isRequired,
   positionOffset: PropTypes.number.isRequired,
+  cards: PropTypes.array.isRequired,
   navigation: PropTypes.object.isRequired,
   route: PropTypes.object.isRequired,
 }
@@ -144,6 +144,7 @@ function mapStateToProps (state) {
     lines: selectors.sortedLinesByBookSelector(state),
     isSeries: selectors.isSeriesSelector(state),
     positionOffset: selectors.positionOffsetSelector(state),
+    cards: state.cards,
   }
 }
 

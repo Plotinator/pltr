@@ -11,13 +11,12 @@ import SaveButton from '../../ui/SaveButton'
 import AttachmentList from '../attachments/AttachmentList'
 
 class NoteDetails extends Component {
-  constructor (props) {
-    super(props)
-    const { route } = props
+  static getDerivedStateFromProps (props, state) {
+    const { route, notes } = props
     const { isNewNote, note } = route.params
-    this.state = {
+    return {
       isNewNote: isNewNote,
-      note: isNewNote ? cloneDeep(initialState.note) : note,
+      note: isNewNote ? cloneDeep(initialState.note) : notes.find(n => n.id == note.id),
       changes: isNewNote,
     }
   }
@@ -109,8 +108,8 @@ NoteDetails.propTypes = {
   characters: PropTypes.array.isRequired,
   places: PropTypes.array.isRequired,
   tags: PropTypes.array.isRequired,
+  notes: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired,
-  ui: PropTypes.object.isRequired,
 }
 
 function mapStateToProps (state) {
@@ -118,7 +117,7 @@ function mapStateToProps (state) {
     tags: selectors.sortedTagsSelector(state),
     characters: selectors.charactersSortedAtoZSelector(state),
     places: selectors.placesSortedAtoZSelector(state),
-    ui: state.ui,
+    notes: state.notes,
   }
 }
 

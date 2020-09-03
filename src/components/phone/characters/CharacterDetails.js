@@ -12,11 +12,10 @@ import AttachmentList from '../attachments/AttachmentList'
 import CategoryPicker from '../../ui/CategoryPicker'
 
 class CharacterDetails extends Component {
-  constructor (props) {
-    super(props)
-    const { route, customAttributes } = props
+  static getDerivedStateFromProps (props, state) {
+    const { route, customAttributes, characters } = props
     const { isNewCharacter, character } = route.params
-    let characterObj = isNewCharacter ? cloneDeep(initialState.character) : character
+    let characterObj = isNewCharacter ? cloneDeep(initialState.character) : characters.find(ch => ch.id == character.id)
     let customAttrs = customAttributes.reduce((acc, attr) => {
       acc[attr.name] = characterObj[attr.name]
       return acc
@@ -28,7 +27,7 @@ class CharacterDetails extends Component {
       }, {})
       return acc
     }, {})
-    this.state = {
+    return {
       isNewCharacter: isNewCharacter,
       templateAttrs: templateAttrs,
       customAttrs: customAttrs,

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import i18n from 'format-message'
 import { View, Left, Right, Icon, Badge, Text, List, ListItem } from 'native-base'
 import { StyleSheet } from 'react-native'
@@ -8,18 +8,23 @@ const defaultAttachments = ['characters', 'places', 'tags']
 
 export default function AttachmentList (props) {
   const { item, itemType, navigate, only, books } = props
-  let attachments = only || defaultAttachments
-  if (books) attachments.unshift('bookIds')
+  const [attachments, setAttachments] = useState(only || defaultAttachments)
 
-  const navigateToAttachmentSelector = (type, selectedIds) => {
-    navigate('AttachmentSelectorModal', {item, itemType, type, selectedIds})
+  useEffect(() => {
+    if (books && !attachments.includes('bookIds')) {
+      setAttachments(state => ['bookIds', ...state])
+    }
+  }, [books])
+
+  const navigateToAttachmentSelector = (type) => {
+    navigate('AttachmentSelectorModal', {item, itemType, type})
   }
 
   const renderAttachments = () => {
     return attachments.map(type => {
-      return <ListItem key={type} button onPress={() => navigateToAttachmentSelector(type, item[type])}>
+      return <ListItem key={type} button onPress={() => navigateToAttachmentSelector(type)}>
         <Left>
-          <Badge style={styles.badge} info><Text>{item[type].length}</Text></Badge>
+          <Badge info style={styles.badge}><Text>{item[type].length}</Text></Badge>
           <Text>{attachmentItemText(type)}</Text>
         </Left>
         <Right>

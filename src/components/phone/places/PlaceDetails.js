@@ -11,16 +11,15 @@ import SaveButton from '../../ui/SaveButton'
 import AttachmentList from '../attachments/AttachmentList'
 
 class PlaceDetails extends Component {
-  constructor (props) {
-    super(props)
-    const { route, customAttributes } = props
+  static getDerivedStateFromProps (props, state) {
+    const { route, customAttributes, places } = props
     const { isNewPlace, place } = route.params
-    let placeObj = isNewPlace ? cloneDeep(initialState.place) : place
+    let placeObj = isNewPlace ? cloneDeep(initialState.place) : places.find(pl => pl.id == place.id)
     let customAttrs = customAttributes.reduce((acc, attr) => {
       acc[attr.name] = placeObj[attr.name]
       return acc
     }, {})
-    this.state = {
+    return {
       isNewPlace: isNewPlace,
       place: placeObj,
       customAttrs: customAttrs,

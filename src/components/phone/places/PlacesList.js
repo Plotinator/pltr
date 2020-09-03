@@ -20,6 +20,10 @@ class PlacesList extends Component {
     this.props.navigation.navigate('PlaceDetails', { place })
   }
 
+  navigateToCustomAttributes = () => {
+    this.props.navigation.navigate('CustomAttributesModal', {type: 'places'})
+  }
+
   renderPlace = ({item}) => {
     return <ListItem noIndent button style={styles.row} onPress={() => this.navigateToDetails(item)}>
       <Left>
@@ -32,13 +36,16 @@ class PlacesList extends Component {
   }
 
   render () {
-    return <SwipeListView
-      data={this.props.visiblePlaces}
-      renderItem={this.renderPlace}
-      renderHiddenItem={ (data, rowMap) => <TrashButton onPress={() => this.deletePlace(data.item.id)} />}
-      keyExtractor={item => item.id}
-      leftOpenValue={75}
-    />
+    return <View style={{flex: 1}}>
+      <SwipeListView
+        data={this.props.visiblePlaces}
+        renderItem={this.renderPlace}
+        renderHiddenItem={ (data, rowMap) => <TrashButton onPress={() => this.deletePlace(data.item.id)} />}
+        keyExtractor={item => item.id}
+        leftOpenValue={75}
+      />
+      <Button full info onPress={this.navigateToCustomAttributes}><Text>{i18n('Custom Attributes')}</Text></Button>
+    </View>
   }
 }
 

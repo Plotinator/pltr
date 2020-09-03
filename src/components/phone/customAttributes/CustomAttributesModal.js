@@ -27,7 +27,7 @@ class CustomAttributesModal extends Component {
     const { actions, restrictedValues } = this.props
     if (text == '' || restrictedValues.includes(text)) return
 
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.spring)
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
     if (type == 'characters') {
       actions.addCharacterAttr({name: text, type: 'text'})
     }
@@ -40,11 +40,12 @@ class CustomAttributesModal extends Component {
   deleteAttr = (attr) => {
     const { type } = this.state
     const { actions } = this.props
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
     if (type == 'characters') {
-      actions.removeCharacterAttr(attr)
+      actions.removeCharacterAttr(attr.name)
     }
     if (type == 'places') {
-      actions.removePlaceAttr(attr)
+      actions.removePlaceAttr(attr.name)
     }
   }
 
