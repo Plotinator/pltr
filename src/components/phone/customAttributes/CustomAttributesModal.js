@@ -6,7 +6,7 @@ import { actions, selectors } from 'pltr/v2'
 import { StyleSheet, View, FlatList, TouchableOpacity, LayoutAnimation, Platform } from 'react-native'
 import { Icon, H1, Item, Input, Button, Label, Container, Content, Text, ListItem, Left, Switch, Body, Right } from 'native-base'
 import { SwipeListView } from 'react-native-swipe-list-view'
-import i18n from 'format-message'
+import t from 'format-message'
 import RenameButton from '../../ui/RenameButton'
 import TrashButton from '../../ui/TrashButton'
 
@@ -83,7 +83,7 @@ class CustomAttributesModal extends Component {
         <Input defaultValue={item.name} onChangeText={text => this.editAttr(text, item, index)}/>
       </Left>
       <Body>
-        <Text>{i18n('Paragraph?')}</Text>
+        <Text>{t('Paragraph?')}</Text>
       </Body>
       <Right>
         <Switch value={item.type == 'paragraph'} onValueChange={val => this.toggleAttr(val, item, index)}/>
@@ -96,10 +96,10 @@ class CustomAttributesModal extends Component {
       <Content padder>
         <View style={styles.container}>
           <Item floatingLabel>
-            <Label>{i18n('New Attribute')}</Label>
+            <Label>{t('New Attribute')}</Label>
             <Input value={this.state.text} onChangeText={text => this.setState({text})}/>
           </Item>
-          <Button full success onPress={this.add}><Text>{i18n('Add')}</Text></Button>
+          <Button full success onPress={this.add}><Text>{t('Add')}</Text></Button>
           <SwipeListView
             data={this.props.customAttributes}
             keyExtractor={(item) => item.name}

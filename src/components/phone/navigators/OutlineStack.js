@@ -1,6 +1,6 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import i18n from 'format-message'
+import t from 'format-message'
 import OutlineHome from '../outline/OutlineHome'
 import ProjectHome from '../project/ProjectHome'
 import SceneDetails from '../outline/SceneDetails'
@@ -30,18 +30,18 @@ export default function OutlineStack (props) {
   return <Stack.Navigator>
     <Stack.Screen name='ProjectHome' component={ProjectHome}
       options={{
-        title: i18n('Project'),
+        title: t('Project'),
         headerRight: () => <AddButton onPress={addBook} />,
-        headerLeft: () => <DrawerButton navigation={props.navigation} />,
+        headerLeft: () => <DrawerButton openDrawer={props.route?.params?.openDrawer} />,
       }}
     />
     <Stack.Screen name='SeriesDetails' component={SeriesDetails}/>
     <Stack.Screen name='OutlineHome' component={OutlineHome}
       options={{
-        title: i18n('Outline'),
+        title: t('Outline'),
         headerRight: () => <AddButton onPress={addChapter} />,
       }}
     />
-    <Stack.Screen name='SceneDetails' component={SceneDetails} options={{ title: i18n('Scene Details') }}/>
+    <Stack.Screen name='SceneDetails' component={SceneDetails} options={{ title: t('Scene Details') }}/>
   </Stack.Navigator>
 }

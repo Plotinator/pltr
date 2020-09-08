@@ -3,7 +3,7 @@ import PropTypes from 'react-proptypes'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { sortBy } from 'lodash'
-import i18n from 'format-message'
+import t from 'format-message'
 import cx from 'classnames'
 import { selectors, actions, cardHelpers, listHelpers, chapterHelpers } from 'pltr/v2'
 import { H3, Icon, Card, CardItem, View, Button, Text } from 'native-base'
@@ -75,7 +75,7 @@ class Chapter extends Component {
   renderManualSort () {
     if (this.props.chapter.autoOutlineSort) return null
 
-    return <Text onClick={this.autoSortChapter}>{i18n('Manually Sorted')}{' '}<Icon name='ios-close-circle-outline'/></Text>
+    return <Text onClick={this.autoSortChapter}>{t('Manually Sorted')}{' '}<Icon name='ios-close-circle-outline'/></Text>
   }
 
   renderCards () {

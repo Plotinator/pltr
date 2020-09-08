@@ -3,25 +3,36 @@
  */
 
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, View, NativeModules, NativeEventEmitter } from 'react-native'
+import { NativeModules, NativeEventEmitter, Platform } from 'react-native'
 import { Provider } from 'react-redux'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import { Content, Spinner, Container } from 'native-base'
-import { Col, Row, Grid } from 'react-native-easy-grid'
 import DocumentRoot from './DocumentRoot'
 import { configureStore } from '../store/configureStore'
+const { DocumentViewController, Document, ReactNativeEventEmitter, DocumentBrowser } = NativeModules
 
-const DocumentEvents = new NativeEventEmitter(NativeModules.ReactNativeEventEmitter)
+const DocumentEvents = new NativeEventEmitter(ReactNativeEventEmitter)
+const storeV2 = configureStore({})
 
 const Main = props => {
   const [document, setDocument] = useState(null)
 
+  const closeFile = () => {
+    setDocument(null)
+    setTimeout(() => {
+      if (Platform.OS === 'ios') {
+        DocumentViewController.closeDocument()
+        DocumentBrowser.openBrowser()
+      } else if (Platform.OS === 'android') {
+        Document.closeDocument()
+      }
+    }, 500)
+  }
+
   useEffect(() => {
-    if (!document) NativeModules.DocumentBrowser.openBrowser()
+    if (!document) DocumentBrowser.openBrowser()
 
     DocumentEvents.addListener('onOpenDocument', data => {
-      NativeModules.DocumentBrowser.closeBrowser()
-      console.log('onOpenDocument', data.documentURL, JSON.parse(data.data))
+      DocumentBrowser.closeBrowser()
       setDocument(data)
     })
 
@@ -34,10 +45,9 @@ const Main = props => {
   }
 
   const renderV2 = () => {
-    const store = configureStore({})
     return (
-      <Provider store={store}>
-        <DocumentRoot document={document} />
+      <Provider store={storeV2}>
+        <DocumentRoot document={document} closeFile={closeFile} />
       </Provider>
     )
   }

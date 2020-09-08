@@ -1,5 +1,5 @@
 import React from 'react'
-import i18n from 'format-message'
+import t from 'format-message'
 import { createStackNavigator } from '@react-navigation/stack'
 import PlacesHome from '../places/PlacesHome'
 import PlaceDetails from '../places/PlaceDetails'
@@ -16,9 +16,9 @@ export default function PlacesStack (props) {
   return <Stack.Navigator>
     <Stack.Screen name='PlacesHome' component={PlacesHome}
       options={{
-        title: i18n('Places'),
+        title: t('Places'),
         headerRight: () => <AddButton onPress={addPlace} />,
-        headerLeft: () => <DrawerButton navigation={props.navigation} />,
+        headerLeft: () => <DrawerButton openDrawer={props.route?.params?.openDrawer} />,
       }}
     />
     <Stack.Screen name='PlaceDetails' component={PlaceDetails} />

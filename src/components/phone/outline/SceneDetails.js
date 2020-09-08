@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux'
 import { Text, Container, Content, H1, H2, Form, Input, Label, Item, Button, Picker, List, Left, Right, Badge, View, ListItem, Body, Icon } from 'native-base'
 import { selectors, actions, initialState } from 'pltr/v2'
 import { StyleSheet } from 'react-native'
-import i18n from 'format-message'
+import t from 'format-message'
 import ChapterPicker from '../../ui/ChapterPicker'
 import LinePicker from '../../ui/LinePicker'
 import SaveButton from '../../ui/SaveButton'
@@ -80,7 +80,7 @@ class SceneDetails extends Component {
       <Content style={styles.content}>
         <Form style={styles.form}>
           <Item inlineLabel last regular style={styles.label}>
-            <Label>{i18n('Title')}</Label>
+            <Label>{t('Title')}</Label>
             <Input
               value={card.title}
               onChangeText={text => this.setState({card: {...card, title: text}, changes: true})}
@@ -88,16 +88,16 @@ class SceneDetails extends Component {
             />
           </Item>
           <Item fixedLabel style={styles.label}>
-            <Label>{i18n('Chapter')}</Label>
+            <Label>{t('Chapter')}</Label>
             <ChapterPicker selectedId={card.chapterId} onChange={this.changeChapter} />
           </Item>
           <Item fixedLabel style={styles.label}>
-            <Label>{i18n('Plotline')}</Label>
+            <Label>{t('Plotline')}</Label>
             <LinePicker selectedId={card.lineId} onChange={this.changeLine} />
           </Item>
           { this.renderAttachments() }
           <Item inlineLabel last regular style={[styles.label, styles.afterList]}>
-            <Label>{i18n('Description')}</Label>
+            <Label>{t('Description')}</Label>
           </Item>
         </Form>
       </Content>

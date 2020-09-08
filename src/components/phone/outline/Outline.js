@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'react-proptypes'
 import { connect } from 'react-redux'
-import { ScrollView, StyleSheet, FlatList } from 'react-native'
-import i18n from 'format-message'
+import { StyleSheet, FlatList } from 'react-native'
+import t from 'format-message'
 import cx from 'classnames'
 import { selectors, cardHelpers } from 'pltr/v2'
-import { View, Text, Content, Container, Card } from 'native-base'
+import { View, Text, Button } from 'native-base'
 import ErrorBoundary from '../../ErrorBoundary'
 import Chapter from './Chapter'
 
@@ -15,43 +15,9 @@ class Outline extends Component {
     this.state = {currentLine: null}
   }
 
-  filterItem = (id) => {
-    if (this.state.currentLine === id) {
-      this.setState({currentLine: null})
-    } else {
-      this.setState({currentLine: id})
-    }
+  navigateToPlotlines = () => {
+    this.props.navigation.navigate('PlotlinesModal')
   }
-
-  removeFilter = () => {
-    this.setState({currentLine: null})
-  }
-
-  // ///////////////
-  //  rendering   //
-  // //////////////
-
-  // renderFilterList () {
-  //   var items = this.props.lines.map((i) => {
-  //     return this.renderFilterItem(i)
-  //   })
-  //   return (
-  //     <ul className='filter-list__list'>
-  //       {items}
-  //     </ul>
-  //   )
-  // }
-
-  // renderFilterItem (item) {
-  //   var placeholder = <span className='filter-list__placeholder'></span>
-  //   if (this.state.currentLine === item.id) {
-  //     placeholder = <Glyphicon glyph='eye-open' />
-  //   }
-  //   return (<li key={item.id} onMouseDown={() => this.filterItem(item.id)}>
-  //       {placeholder}{" "}{item.title}
-  //     </li>
-  //   )
-  // }
 
   renderChapter (chapter, cardMap) {
     return <ErrorBoundary key={chapter.id}>
@@ -62,12 +28,15 @@ class Outline extends Component {
   render () {
     const { chapters, lines, card2Dmap } = this.props
     const cardMap = cardHelpers.cardMapping(chapters, lines, card2Dmap, this.state.currentLine)
-    return <FlatList
-      data={chapters}
-      renderItem={({item}) => this.renderChapter(item, cardMap)}
-      keyExtractor={item => item.id}
-      contentContainerStyle={styles.content}
-    />
+    return <View style={{flex: 1}}>
+      <FlatList
+        data={chapters}
+        renderItem={({item}) => this.renderChapter(item, cardMap)}
+        keyExtractor={item => item.id.toString()}
+        contentContainerStyle={styles.content}
+      />
+      <Button full info onPress={this.navigateToPlotlines}><Text>{t('Plotlines')}</Text></Button>
+    </View>
   }
 }
 

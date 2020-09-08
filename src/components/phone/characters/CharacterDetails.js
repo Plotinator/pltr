@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import PropTypes from 'react-proptypes'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import i18n from 'format-message'
+import t from 'format-message'
 import { Text, Container, Content, H1, H2, Form, Input, Label, Item, Button, Picker, List, Left, Right, Badge, View, ListItem, Body, Icon } from 'native-base'
 import { actions, selectors, initialState } from 'pltr/v2'
 import { StyleSheet } from 'react-native'
@@ -135,7 +135,7 @@ class CharacterDetails extends Component {
       <Content style={styles.content}>
         <Form style={styles.form}>
           <Item inlineLabel last regular style={styles.label}>
-            <Label>{i18n('Name')}</Label>
+            <Label>{t('Name')}</Label>
             <Input
               value={character.name}
               onChangeText={text => this.setState({character: {...character, name: text}, changes: true})}
@@ -143,7 +143,7 @@ class CharacterDetails extends Component {
             />
           </Item>
           <Item inlineLabel last regular style={styles.label}>
-            <Label>{i18n('Description')}</Label>
+            <Label>{t('Description')}</Label>
             <Input
               value={character.description}
               onChangeText={text => this.setState({character: {...character, description: text}, changes: true})}
@@ -151,12 +151,12 @@ class CharacterDetails extends Component {
             />
           </Item>
           <Item fixedLabel style={styles.label}>
-            <Label>{i18n('Category')}</Label>
+            <Label>{t('Category')}</Label>
             <CategoryPicker type='characters' selectedId={character.categoryId} onChange={this.changeCategory} />
           </Item>
           { this.renderAttachments() }
           <Item inlineLabel last regular style={[styles.label, styles.afterList]}>
-            <Label>{i18n('Notes')}{' RCE'}</Label>
+            <Label>{t('Notes')}{' RCE'}</Label>
           </Item>
           { this.renderTemplates() }
           { this.renderCustomAttributes() }

@@ -1,29 +1,29 @@
-import i18n from 'format-message'
+import t from 'format-message'
 
 export function attachmentHeaderTitles (type) {
   switch (type) {
     case 'characters':
-      return i18n('Attach Characters')
+      return t('Attach Characters')
     case 'places':
-      return i18n('Attach Places')
+      return t('Attach Places')
     case 'tags':
-      return i18n('Attach Tags')
+      return t('Attach Tags')
     case 'books':
     case 'bookIds':
-      return i18n('Attach Books')
+      return t('Attach Books')
   }
 }
 
 export function attachmentItemText (type) {
   switch (type) {
     case 'characters':
-      return i18n('Characters')
+      return t('Characters')
     case 'places':
-      return i18n('Places')
+      return t('Places')
     case 'tags':
-      return i18n('Tags')
+      return t('Tags')
     case 'books':
     case 'bookIds':
-      return i18n('Books')
+      return t('Books')
   }
 }

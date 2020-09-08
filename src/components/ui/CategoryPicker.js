@@ -3,7 +3,7 @@ import { Picker, Icon } from 'native-base'
 import PropTypes from 'react-proptypes'
 import { connect } from 'react-redux'
 import { selectors } from 'pltr/v2'
-import i18n from 'format-message'
+import t from 'format-message'
 
 class CategoryPicker extends Component {
   renderItems () {
@@ -18,8 +18,8 @@ class CategoryPicker extends Component {
     const { selectedId, onChange } = this.props
     return <Picker
       iosIcon={<Icon type='FontAwesome5' name='chevron-down' style={{fontSize: 12}}/>}
-      iosHeader={selectedId ? '' : i18n('Select a Category')}
-      placeholder={selectedId ? '' : i18n('Select a Category')}
+      iosHeader={selectedId ? '' : t('Select a Category')}
+      placeholder={selectedId ? '' : t('Select a Category')}
       mode='dialog'
       selectedValue={selectedId}
       onValueChange={onChange}

@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import PropTypes from 'react-proptypes'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import i18n from 'format-message'
+import t from 'format-message'
 import { Container, Content, Form, Input, Label, Item } from 'native-base'
 import { actions, selectors, initialState } from 'pltr/v2'
 import { StyleSheet } from 'react-native'
@@ -65,7 +65,7 @@ class NoteDetails extends Component {
       <Content style={styles.content}>
         <Form style={styles.form}>
           <Item inlineLabel last regular style={styles.label}>
-            <Label>{i18n('Title')}</Label>
+            <Label>{t('Title')}</Label>
             <Input
               value={note.title}
               onChangeText={text => this.setState({note: {...note, title: text}, changes: true})}
@@ -74,7 +74,7 @@ class NoteDetails extends Component {
           </Item>
           { this.renderAttachments() }
           <Item inlineLabel last regular style={[styles.label, styles.afterList]}>
-            <Label>{i18n('Content')}</Label>
+            <Label>{t('Content')}</Label>
           </Item>
         </Form>
       </Content>

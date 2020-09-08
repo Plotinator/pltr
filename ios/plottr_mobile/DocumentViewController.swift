@@ -64,13 +64,6 @@ class DocumentViewController: UIViewController {
   @objc func closeDocument() -> Void {
     guard let docViewController = DocumentViewController._sharedInstance else { return }
     docViewController.document?.close(completionHandler: nil)
-
-    DispatchQueue.main.async {
-      guard let docBrowser = docViewController.parent as? DocumentBrowserViewController else { return }
-      docBrowser.closeDocument()
-      let appDelegate = UIApplication.shared.delegate as! AppDelegate
-      appDelegate.openDocumentBrowser()
-    }
   }
 }
 

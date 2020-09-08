@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import PropTypes from 'react-proptypes'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import i18n from 'format-message'
+import t from 'format-message'
 import { Container, Content, Form, Input, Label, Item } from 'native-base'
 import { actions, selectors, initialState } from 'pltr/v2'
 import { StyleSheet, Dimensions, View, ScrollView } from 'react-native'
@@ -70,7 +70,7 @@ class TagDetails extends Component {
     //   <Content style={styles.content}>
     //     <Form style={styles.form}>
     //       <Item inlineLabel last regular style={styles.label}>
-    //         <Label>{i18n('Title')}</Label>
+    //         <Label>{t('Title')}</Label>
     //         <Input
     //           value={title}
     //           onChangeText={text => this.setState({title: text, changes: true})}
@@ -78,13 +78,13 @@ class TagDetails extends Component {
     //         />
     //       </Item>
     //       <Item inlineLabel last regular style={[styles.label, styles.afterList]}>
-    //         <Label>{i18n('Color')}</Label>
+    //         <Label>{t('Color')}</Label>
     //         <View style={[styles.currentColor, {backgroundColor: color}]}></View>
     //       </Item>
     //     </Form>
     //   </Content>
     //   <View style={{flex: 1}}>
-    //     <Label>{i18n('Change Color:')}</Label>
+    //     <Label>{t('Change Color:')}</Label>
     //     <ColorWheel
     //       initialColor={color}
     //       onColorChangeComplete={this.setNewColor}
@@ -97,7 +97,7 @@ class TagDetails extends Component {
     return <Container>
       <Form style={styles.form}>
         <Item inlineLabel last regular style={styles.label}>
-          <Label>{i18n('Title')}</Label>
+          <Label>{t('Title')}</Label>
           <Input
             value={title}
             onChangeText={text => this.setState({title: text, changes: true})}
@@ -105,12 +105,12 @@ class TagDetails extends Component {
           />
         </Item>
         <Item inlineLabel last regular style={[styles.label, styles.afterList]}>
-          <Label>{i18n('Color')}</Label>
+          <Label>{t('Color')}</Label>
           <View style={[styles.currentColor, {backgroundColor: color}]}></View>
         </Item>
       </Form>
       <View style={{flex: 1}}>
-        <Label style={styles.content}>{i18n('Change Color:')}</Label>
+        <Label style={styles.content}>{t('Change Color:')}</Label>
         <ColorWheel
           initialColor={color}
           onColorChange={this.setNewColor}

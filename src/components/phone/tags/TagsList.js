@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { actions, selectors } from 'pltr/v2'
 import { ListItem, Icon, Left, Right, H3, View, Badge, Text } from 'native-base'
-import i18n from 'format-message'
+import t from 'format-message'
 import TrashButton from '../../ui/TrashButton'
 
 class TagsList extends Component {
@@ -23,7 +23,7 @@ class TagsList extends Component {
     return <ListItem noIndent button style={styles.row} onPress={() => this.navigateToDetails(item)}>
       <Left>
         <View style={styles.rowView}>
-          <H3 style={styles.title}>{item.title || i18n('New Tag')}</H3>
+          <H3 style={styles.title}>{item.title || t('New Tag')}</H3>
           <Badge style={[styles.badge, {backgroundColor: item.color}]}><Text>{item.color}</Text></Badge>
         </View>
       </Left>

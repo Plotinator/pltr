@@ -1,5 +1,5 @@
 import React from 'react'
-import i18n from 'format-message'
+import t from 'format-message'
 import { createStackNavigator } from '@react-navigation/stack'
 import CharactersHome from '../characters/CharactersHome'
 import AddButton from '../../ui/AddButton'
@@ -16,9 +16,9 @@ export default function CharactersStack (props) {
   return <Stack.Navigator>
     <Stack.Screen name='CharactersHome' component={CharactersHome}
       options={{
-        title: i18n('Characters'),
+        title: t('Characters'),
         headerRight: () => <AddButton onPress={addCharacter} />,
-        headerLeft: () => <DrawerButton navigation={props.navigation} />,
+        headerLeft: () => <DrawerButton openDrawer={props.route?.params?.openDrawer} />,
       }}
     />
     <Stack.Screen name='CharacterDetails' component={CharacterDetails} />

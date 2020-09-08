@@ -8,14 +8,14 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { actions, selectors } from 'pltr/v2'
 import { View, ListItem, Icon, Left, Right, H3, Text, Button, H1, Fab, Container, Content, Body } from 'native-base'
-import i18n from 'format-message'
+import t from 'format-message'
 
 class CharactersList extends Component {
   state = { data: [] }
 
   static getDerivedStateFromProps (props, state) {
     let categories = [...props.categories]
-    categories.push({id: null, name: i18n('Uncategorized')})
+    categories.push({id: null, name: t('Uncategorized')})
 
     const data = categories.map(cat => {
       let characters = []
@@ -46,7 +46,7 @@ class CharactersList extends Component {
   renderCharacter = ({item}) => {
     return <ListItem noIndent button style={styles.row} onPress={() => this.navigateToDetails(item)}>
       <Left>
-        <H3 style={styles.title}>{item.name || i18n('New Character')}</H3>
+        <H3 style={styles.title}>{item.name || t('New Character')}</H3>
       </Left>
       <Right>
         <Icon type='FontAwesome5' name='chevron-right'/>
@@ -67,9 +67,9 @@ class CharactersList extends Component {
         renderSectionHeader={this.renderSectionHeader}
         renderItem={this.renderCharacter}
         keyExtractor={item => item.id}
-        ListEmptyComponent={<H1>{i18n('No Characters')}</H1>}
+        ListEmptyComponent={<H1>{t('No Characters')}</H1>}
       />
-      <Button full info onPress={this.navigateToCustomAttributes}><Text>{i18n('Custom Attributes')}</Text></Button>
+      <Button full info onPress={this.navigateToCustomAttributes}><Text>{t('Custom Attributes')}</Text></Button>
     </View>
   }
 }

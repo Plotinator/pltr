@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import PropTypes from 'react-proptypes'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import i18n from 'format-message'
+import t from 'format-message'
 import { Container, Content, Form, Input, Label, Item } from 'native-base'
 import { actions, selectors, initialState } from 'pltr/v2'
 import { StyleSheet, Dimensions, View, ScrollView } from 'react-native'
@@ -33,7 +33,7 @@ class SeriesDetails extends Component {
   }
 
   componentDidMount () {
-    const title = this.state.id == 'series' ? i18n('Series') : i18n('Book Details')
+    const title = this.state.id == 'series' ? t('Series') : t('Book Details')
     this.props.navigation.setOptions({title})
     this.setSaveButton()
   }
@@ -78,7 +78,7 @@ class SeriesDetails extends Component {
       <Content style={styles.content}>
         <Form style={styles.form}>
           <Item inlineLabel last regular style={styles.label}>
-            <Label>{id == 'series' ? i18n('Name') : i18n('Title')}</Label>
+            <Label>{id == 'series' ? t('Name') : t('Title')}</Label>
             <Input
               value={id == 'series' ? book.name : book.title}
               onChangeText={text => {
@@ -92,7 +92,7 @@ class SeriesDetails extends Component {
             />
           </Item>
           <Item inlineLabel last regular style={styles.label}>
-            <Label>{i18n('Genre')}</Label>
+            <Label>{t('Genre')}</Label>
             <Input
               value={book.genre}
               onChangeText={text => this.setState({book: {...book, genre: text}, changes: true})}
@@ -100,7 +100,7 @@ class SeriesDetails extends Component {
             />
           </Item>
           <Item inlineLabel last regular style={styles.label}>
-            <Label>{i18n('Premise')}</Label>
+            <Label>{t('Premise')}</Label>
             <Input
               value={book.premise}
               onChangeText={text => this.setState({book: {...book, premise: text}, changes: true})}
@@ -108,7 +108,7 @@ class SeriesDetails extends Component {
             />
           </Item>
           <Item inlineLabel last regular style={styles.label}>
-            <Label>{i18n('Theme')}</Label>
+            <Label>{t('Theme')}</Label>
             <Input
               value={book.theme}
               onChangeText={text => this.setState({book: {...book, theme: text}, changes: true})}

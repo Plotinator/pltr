@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { actions } from 'pltr/v2'
 import { View, ListItem, Icon, Left, Right, H3, Text, Button } from 'native-base'
-import i18n from 'format-message'
+import t from 'format-message'
 import TrashButton from '../../ui/TrashButton'
 
 class NotesList extends Component {
@@ -23,7 +23,7 @@ class NotesList extends Component {
   renderNote = ({item}) => {
     return <ListItem noIndent button style={styles.row} onPress={() => this.navigateToDetails(item)}>
       <Left>
-        <H3 style={styles.title}>{item.title || i18n('New Note')}</H3>
+        <H3 style={styles.title}>{item.title || t('New Note')}</H3>
       </Left>
       <Right>
         <Icon type='FontAwesome5' name='chevron-right'/>

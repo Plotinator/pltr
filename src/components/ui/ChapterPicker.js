@@ -3,7 +3,7 @@ import { Picker, Icon } from 'native-base'
 import PropTypes from 'react-proptypes'
 import { connect } from 'react-redux'
 import { selectors, chapterHelpers } from 'pltr/v2'
-import i18n from 'format-message'
+import t from 'format-message'
 
 class ChapterPicker extends Component {
   renderItems () {
@@ -17,8 +17,8 @@ class ChapterPicker extends Component {
     const { selectedId, onChange } = this.props
     return <Picker
       iosIcon={<Icon type='FontAwesome5' name='chevron-down' style={{fontSize: 12}}/>}
-      iosHeader={selectedId ? '' : i18n('Select a Chapter')}
-      placeholder={selectedId ? '' : i18n('Select a Chapter')}
+      iosHeader={selectedId ? '' : t('Select a Chapter')}
+      placeholder={selectedId ? '' : t('Select a Chapter')}
       mode='dialog'
       selectedValue={selectedId}
       onValueChange={onChange}

@@ -1,6 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
-import i18n from 'format-message'
+import t from 'format-message'
 import NotesHome from '../notes/NotesHome'
 import NoteDetails from '../notes/NoteDetails'
 import AddButton from '../../ui/AddButton'
@@ -16,9 +16,9 @@ export default function NotesStack (props) {
   return <Stack.Navigator>
     <Stack.Screen name='NotesHome' component={NotesHome}
       options={{
-        title: i18n('Notes'),
+        title: t('Notes'),
         headerRight: () => <AddButton onPress={addNote} />,
-        headerLeft: () => <DrawerButton navigation={props.navigation} />,
+        headerLeft: () => <DrawerButton openDrawer={props.route?.params?.openDrawer} />,
       }}
     />
     <Stack.Screen name='NoteDetails' component={NoteDetails} />

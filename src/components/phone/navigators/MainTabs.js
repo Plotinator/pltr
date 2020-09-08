@@ -20,10 +20,10 @@ export default function MainTabs (props) {
     })}
     tabBarOptions={tabBarOptions}
   >
-    <Tab.Screen name='Outline' component={OutlineStack} />
-    <Tab.Screen name='Notes' component={NotesStack} />
-    <Tab.Screen name='Characters' component={CharactersStack} />
-    <Tab.Screen name='Places' component={PlacesStack} />
-    <Tab.Screen name='Tags' component={TagsStack} />
+    <Tab.Screen name='Outline' component={OutlineStack} initialParams={{openDrawer: props.route?.params?.openDrawer}} />
+    <Tab.Screen name='Notes' component={NotesStack} initialParams={{openDrawer: props.route?.params?.openDrawer}} />
+    <Tab.Screen name='Characters' component={CharactersStack} initialParams={{openDrawer: props.route?.params?.openDrawer}} />
+    <Tab.Screen name='Places' component={PlacesStack} initialParams={{openDrawer: props.route?.params?.openDrawer}} />
+    <Tab.Screen name='Tags' component={TagsStack} initialParams={{openDrawer: props.route?.params?.openDrawer}} />
   </Tab.Navigator>
 }

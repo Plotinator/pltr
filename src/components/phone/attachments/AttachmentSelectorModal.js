@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux'
 import { actions, selectors } from 'pltr/v2'
 import { StyleSheet, FlatList } from 'react-native'
 import { Icon, H1, H3, Container, Content, ListItem, CheckBox, Body, Text, View, Badge } from 'native-base'
-import i18n from 'format-message'
+import t from 'format-message'
 
 class AttachmentSelectorModal extends Component {
 
@@ -79,7 +79,7 @@ class AttachmentSelectorModal extends Component {
       <Content>
         <FlatList
           data={this.props[this.state.type]}
-          ListEmptyComponent={<H1 style={styles.h1}>{i18n('None to choose')}</H1>}
+          ListEmptyComponent={<H1 style={styles.h1}>{t('None to choose')}</H1>}
           extraData={{selected: this.state.selected}}
           keyExtractor={(item) => item.id}
           renderItem={this.renderItem}

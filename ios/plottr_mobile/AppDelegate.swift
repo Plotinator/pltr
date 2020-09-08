@@ -93,7 +93,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func openDocumentBrowser() {
     guard let window = self.window else { return }
-    UIView.transition(with: window, duration: 0.3, options: .transitionCurlDown, animations: {
+    UIView.transition(with: window, duration: 0.5, options: .transitionCurlDown, animations: {
       window.rootViewController = DocumentBrowserViewController()
     }, completion:nil)
 //    window.rootViewController?.present(DocumentBrowserViewController(), animated: true, completion: nil)
@@ -101,7 +101,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   func closeDocumentBrowser() {
     guard let window = self.window else { return }
-    UIView.transition(with: window, duration: 0.3, options: .transitionCurlUp, animations: {
+    UIView.transition(with: window, duration: 0.5, options: .transitionCurlUp, animations: {
       window.rootViewController = self.rootViewController
     }, completion:nil)
   }

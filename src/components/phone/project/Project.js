@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux'
 import { actions, selectors } from 'pltr/v2'
 import { SwipeRow } from 'react-native-swipe-list-view'
 import { ListItem, Icon, Left, Right, H2, H3, View, Badge, Text, Card, CardItem, Button, H1 } from 'native-base'
-import i18n from 'format-message'
+import t from 'format-message'
 import TrashButton from '../../ui/TrashButton'
 import EditButton from '../../ui/EditButton'
 
@@ -47,7 +47,7 @@ class Project extends Component {
       <View>
         <ListItem noIndent button style={styles.row} onPress={() => this.navigateToOutline(series.id)}>
           <Left>
-            <H3 style={styles.title}>{i18n('Series')}</H3>
+            <H3 style={styles.title}>{t('Series')}</H3>
           </Left>
           <Right>
             <Icon type='FontAwesome5' name='chevron-right'/>
@@ -64,8 +64,8 @@ class Project extends Component {
         <View style={styles.card}>
           <H1 style={styles.bookTitle}>{book.title}</H1>
           <View style={styles.footer}>
-            <Button light onPress={() => this.navigateToDetails(book.id)} style={styles.buttons}><Text>{i18n('Edit')}</Text></Button>
-            <Button light onPress={() => this.navigateToOutline(book.id)} style={styles.buttons}><Text>{i18n('Outline')}</Text></Button>
+            <Button light onPress={() => this.navigateToDetails(book.id)} style={styles.buttons}><Text>{t('Edit')}</Text></Button>
+            <Button light onPress={() => this.navigateToOutline(book.id)} style={styles.buttons}><Text>{t('Outline')}</Text></Button>
           </View>
         </View>
       </View>
@@ -82,7 +82,7 @@ class Project extends Component {
     return <FlatList
       data={this.state.data}
       renderItem={this.renderItem}
-      keyExtractor={item => item.id}
+      keyExtractor={item => item.id.toString()}
     />
   }
 }
@@ -116,14 +116,14 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderBottomWidth: 4,
     borderRadius: 4,
-    borderColor: '#48647f',
+    borderColor: '#62B1F6', // same color as info buttons
     backgroundColor: 'white',
     justifyContent: 'space-between',
   },
   backbone: {
     width: 20,
     height: 300,
-    backgroundColor: '#48647f',
+    backgroundColor: '#62B1F6', // same color as info buttons
     borderTopLeftRadius: 2,
     borderBottomLeftRadius: 2,
   },

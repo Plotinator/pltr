@@ -17,16 +17,18 @@ export default function DocumentRoot (props) {
   const loadDocument = () => {
     const store = getStore()
     const { document } = props
-    const filePath = document.documentURL
-    const json = JSON.parse(document.data)
-    if (json.newFile) {
-      // creating a new file
-      const name = json.storyName.replace('.pltr', '')
-      const newFile = newFileState(name, APP_VERSION)
-      store.dispatch(actions.uiActions.loadFile(filePath, false, newFile, APP_VERSION))
-    } else {
-      // opening existing file
-      store.dispatch(actions.uiActions.loadFile(filePath, false, json, json.file.version))
+    if (document) {
+      const filePath = document.documentURL
+      const json = JSON.parse(document.data)
+      if (json.newFile) {
+        // creating a new file
+        const name = json.storyName.replace('.pltr', '')
+        const newFile = newFileState(name, APP_VERSION)
+        store.dispatch(actions.uiActions.loadFile(filePath, false, newFile, APP_VERSION))
+      } else {
+        // opening existing file
+        store.dispatch(actions.uiActions.loadFile(filePath, false, json, json.file.version))
+      }
     }
   }
 
@@ -37,7 +39,7 @@ export default function DocumentRoot (props) {
   }
 
   const renderPhone = () => {
-    return <RootPhoneNavigator />
+    return <RootPhoneNavigator closeFile={props.closeFile}/>
   }
 
   const renderTablet = () => {

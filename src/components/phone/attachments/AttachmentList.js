@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import i18n from 'format-message'
+import t from 'format-message'
 import { View, Left, Right, Icon, Badge, Text, List, ListItem } from 'native-base'
 import { StyleSheet } from 'react-native'
 import { attachmentItemText } from '../../../utils/attachment_titles'

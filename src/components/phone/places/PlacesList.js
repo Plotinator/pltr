@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { selectors, actions } from 'pltr/v2'
 import { View, ListItem, Icon, Left, Right, H3, Text, Button } from 'native-base'
-import i18n from 'format-message'
+import t from 'format-message'
 import TrashButton from '../../ui/TrashButton'
 
 class PlacesList extends Component {
@@ -27,7 +27,7 @@ class PlacesList extends Component {
   renderPlace = ({item}) => {
     return <ListItem noIndent button style={styles.row} onPress={() => this.navigateToDetails(item)}>
       <Left>
-        <H3 style={styles.title}>{item.name || i18n('New Place')}</H3>
+        <H3 style={styles.title}>{item.name || t('New Place')}</H3>
       </Left>
       <Right>
         <Icon type='FontAwesome5' name='chevron-right'/>
@@ -44,7 +44,7 @@ class PlacesList extends Component {
         keyExtractor={item => item.id}
         leftOpenValue={75}
       />
-      <Button full info onPress={this.navigateToCustomAttributes}><Text>{i18n('Custom Attributes')}</Text></Button>
+      <Button full info onPress={this.navigateToCustomAttributes}><Text>{t('Custom Attributes')}</Text></Button>
     </View>
   }
 }

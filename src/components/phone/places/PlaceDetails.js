@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import PropTypes from 'react-proptypes'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import i18n from 'format-message'
+import t from 'format-message'
 import { Container, Content, Form, Input, Label, Item } from 'native-base'
 import { actions, selectors, initialState } from 'pltr/v2'
 import { StyleSheet } from 'react-native'
@@ -99,7 +99,7 @@ class PlaceDetails extends Component {
       <Content style={styles.content}>
         <Form style={styles.form}>
         <Item inlineLabel last regular style={styles.label}>
-            <Label>{i18n('Name')}</Label>
+            <Label>{t('Name')}</Label>
             <Input
               value={place.name}
               onChangeText={text => this.setState({place: {...place, name: text}, changes: true})}
@@ -107,7 +107,7 @@ class PlaceDetails extends Component {
             />
           </Item>
           <Item inlineLabel last regular style={styles.label}>
-            <Label>{i18n('Description')}</Label>
+            <Label>{t('Description')}</Label>
             <Input
               value={place.description}
               onChangeText={text => this.setState({place: {...place, description: text}, changes: true})}
@@ -116,7 +116,7 @@ class PlaceDetails extends Component {
           </Item>
           { this.renderAttachments() }
           <Item inlineLabel last regular style={[styles.label, styles.afterList]}>
-            <Label>{i18n('Notes')}{' RCE'}</Label>
+            <Label>{t('Notes')}{' RCE'}</Label>
           </Item>
           { this.renderCustomAttributes() }
         </Form>
