@@ -16,8 +16,8 @@ if (Platform.OS === "android" && UIManager.setLayoutAnimationEnabledExperimental
 class PlotlinesModal extends Component {
   state = {text: ''}
 
-  navigateToDetails = (id) => {
-    this.props.navigation.navigate('PlotlineDetails', { id })
+  navigateToDetails = (line) => {
+    this.props.navigation.navigate('PlotlineDetails', { line })
   }
 
   add = () => {
@@ -35,7 +35,7 @@ class PlotlinesModal extends Component {
   }
 
   renderItem = ({ item }) => {
-    return <ListItem noIndent button style={styles.row} onPress={() => this.navigateToDetails(item.id)}>
+    return <ListItem noIndent button style={styles.row} onPress={() => this.navigateToDetails(item)}>
       <Left>
         <View style={styles.rowView}>
           <H3 style={styles.title}>{item.title || t('New Plotline')}</H3>
@@ -61,7 +61,7 @@ class PlotlinesModal extends Component {
             data={this.props.lines}
             keyExtractor={(item) => item.id.toString()}
             renderItem={this.renderItem}
-            renderHiddenItem={ (data, rowMap) => <TrashButton onPress={() => this.deleteAttr(data.item.id)} />}
+            renderHiddenItem={ (data, rowMap) => <TrashButton onPress={() => this.delete(data.item.id)} />}
             leftOpenValue={75}
           />
         </View>

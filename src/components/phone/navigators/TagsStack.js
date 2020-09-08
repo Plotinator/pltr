@@ -14,7 +14,7 @@ export default function TagsStack (props) {
   }
 
   return <Stack.Navigator>
-    <Stack.Screen name='NotesHome' component={TagsHome}
+    <Stack.Screen name='TagsHome' component={TagsHome}
       options={{
         title: t('Tags'),
         headerRight: () => <AddButton onPress={addTag} />,

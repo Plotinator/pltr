@@ -11,19 +11,16 @@ import SaveButton from '../../ui/SaveButton'
 import { ColorWheel } from 'react-native-color-wheel'
 import tinycolor from 'tinycolor2'
 
-class TagDetails extends Component {
+class PlotlineDetails extends Component {
   constructor (props) {
     super(props)
-    const { route, tags } = props
-    const { isNewTag, tag } = route.params
-    const tagObj = isNewTag ? cloneDeep(initialState.tag) : tag
-    const color = tinycolor(tagObj.color)
+    const { route } = props
+    const { line } = route.params
+    const color = tinycolor(line.color)
     console.log('color.toHexString()', color.toHexString())
     this.state = {
-      isNewTag: isNewTag,
-      changes: isNewTag,
-      id: tagObj.id,
-      title: tagObj.title,
+      changes: false,
+      line: line,
       color: color.toHexString(),
     }
   }
@@ -37,26 +34,21 @@ class TagDetails extends Component {
   }
 
   setSaveButton = () => {
+    console.log('setSaveButton', this.state)
     this.props.navigation.setOptions({
       headerRight: () => <SaveButton changes={this.state.changes} onPress={this.saveChanges} />
     })
   }
 
   saveChanges = () => {
-    const { changes, isNewTag, id, title, color } = this.state
-    console.log('SAVE CHANGES', this.state)
+    const { changes, line, color } = this.state
     if (!changes) return
-    if (isNewTag) {
-      this.props.actions.addTagWithValues(title, color)
-      this.props.navigation.setParams({isNewTag: false})
-    } else {
-      this.props.actions.editTag(id, title, color)
-    }
-    this.setState({isNewTag: false, changes: false})
+    this.props.actions.editLine(line.id, line.title, color)
+    this.setState({changes: false})
   }
 
   setNewColor = (hsvColor) => {
-    // TODO: Fix this & fix in PlotlineDetails
+    // TODO: Fix this
     console.log('HSV before', hsvColor.h)
     if (hsvColor.h < 0) hsvColor.h = hsvColor.h * -1 + 100
     console.log('HSV after', hsvColor.h)
@@ -65,42 +57,16 @@ class TagDetails extends Component {
   }
 
   render () {
-    const { title, color } = this.state
-    // return <Container>
-    //   <Content style={styles.content}>
-    //     <Form style={styles.form}>
-    //       <Item inlineLabel last regular style={styles.label}>
-    //         <Label>{t('Title')}</Label>
-    //         <Input
-    //           value={title}
-    //           onChangeText={text => this.setState({title: text, changes: true})}
-    //           autoCapitalize='sentences'
-    //         />
-    //       </Item>
-    //       <Item inlineLabel last regular style={[styles.label, styles.afterList]}>
-    //         <Label>{t('Color')}</Label>
-    //         <View style={[styles.currentColor, {backgroundColor: color}]}></View>
-    //       </Item>
-    //     </Form>
-    //   </Content>
-    //   <View style={{flex: 1}}>
-    //     <Label>{t('Change Color:')}</Label>
-    //     <ColorWheel
-    //       initialColor={color}
-    //       onColorChangeComplete={this.setNewColor}
-    //       style={styles.colorWheel}
-    //       thumbStyle={{ height: 30, width: 30, borderRadius: 30 }}
-    //       thumbSize={30}
-    //     />
-    //   </View>
-    // </Container>
+    const { line, color } = this.state
+    // copied from TagDetails
+    // TODO: when I fix it there, i'll need to fix it here too
     return <Container>
       <Form style={styles.form}>
         <Item inlineLabel last regular style={styles.label}>
           <Label>{t('Title')}</Label>
           <Input
-            value={title}
-            onChangeText={text => this.setState({title: text, changes: true})}
+            value={line.title}
+            onChangeText={text => this.setState({line: {...this.state.line, title: text}, changes: true})}
             autoCapitalize='sentences'
           />
         </Item>
@@ -147,34 +113,24 @@ const styles = StyleSheet.create({
   },
 })
 
-TagDetails.propTypes = {
-  note: PropTypes.object.isRequired,
-  editing: PropTypes.bool.isRequired,
-  startEditing: PropTypes.func.isRequired,
-  stopEditing: PropTypes.func.isRequired,
-  characters: PropTypes.array.isRequired,
-  places: PropTypes.array.isRequired,
-  tags: PropTypes.array.isRequired,
+PlotlineDetails.propTypes = {
+  lines: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired,
-  ui: PropTypes.object.isRequired,
 }
 
 function mapStateToProps (state) {
   return {
-    tags: selectors.sortedTagsSelector(state),
-    characters: selectors.charactersSortedAtoZSelector(state),
-    places: selectors.placesSortedAtoZSelector(state),
-    ui: state.ui,
+    lines: state.lines,
   }
 }
 
 function mapDispatchToProps (dispatch) {
   return {
-    actions: bindActionCreators(actions.tagActions, dispatch)
+    actions: bindActionCreators(actions.lineActions, dispatch)
   }
 }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(TagDetails)
+)(PlotlineDetails)
