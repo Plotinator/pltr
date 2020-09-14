@@ -13,7 +13,8 @@ export default function SideBar (props) {
     Linking.openURL('https://getplottr.com/support')
   }
 
-  return <View style={{flex: 1, backgroundColor: 'white'}}>
+  //gray-9
+  return <View style={{flex: 1, backgroundColor: 'hsl(210, 36%, 96%)'}}>
     <SafeAreaView style={{flex: 1}}>
       <View style={styles.wrapper}>
         <H3>{t('Plottr')}</H3>

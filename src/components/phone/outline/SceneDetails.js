@@ -15,14 +15,22 @@ import AttachmentList from '../attachments/AttachmentList'
 // cooresponds to CardDialog in desktop
 
 class SceneDetails extends Component {
+  state = {}
+
   static getDerivedStateFromProps (props, state) {
     const { route, cards } = props
     const { isNewCard, card, chapterId } = route.params
+    let cardObj = {}
+    if (isNewCard) {
+      cardObj = {...cloneDeep(initialState.card), chapterId: chapterId}
+    } else {
+      cardObj = state.card || cards.find(c => c.id == card.id)
+    }
     return {
-      isNewCard: isNewCard,
+      isNewCard: state.isNewCard === undefined ? isNewCard : state.isNewCard,
       chapterId: chapterId,
-      card: isNewCard ? {...cloneDeep(initialState.card), chapterId: chapterId} : cards.find(c => c.id == card.id),
-      changes: isNewCard,
+      card: cardObj,
+      changes: state.changes === undefined ? isNewCard : state.changes,
     }
   }
 
@@ -41,22 +49,27 @@ class SceneDetails extends Component {
   }
 
   saveChanges = () => {
-    if (!this.state.changes) return
-    if (this.state.isNewCard) {
-      this.props.actions.addCard({...this.state.card, lineId: 1}) // TODO: remove lineId 1
+    const { changes, isNewCard, card } = this.state
+    if (!changes) return
+    if (isNewCard) {
+      this.props.actions.addCard({...card, lineId: 1}) // TODO: remove lineId 1
       this.props.navigation.setParams({isNewCard: false})
     } else {
-      // TODO: save an existing card
+      this.props.actions.editCard(card.id, card.title, card.description)
     }
     this.setState({isNewCard: false, changes: false})
   }
 
   changeChapter = (val) => {
-    this.setState({card: {...this.state.card, chapterId: val}, changes: true})
+    const { card } = this.state
+    this.setState({card: {...card, chapterId: val}})
+    this.props.actions.changeScene(card.id, val, this.props.bookId)
   }
 
   changeLine = (val) => {
-    this.setState({card: {...this.state.card, lineId: val}, changes: true})
+    const { card } = this.state
+    this.setState({card: {...card, lineId: val}})
+    this.props.actions.changeLine(card.id, val, this.props.bookId)
   }
 
   navigateToAttachmentSelector = (type, selectedIds) => {
@@ -134,6 +147,7 @@ SceneDetails.propTypes = {
   isSeries: PropTypes.bool.isRequired,
   positionOffset: PropTypes.number.isRequired,
   cards: PropTypes.array.isRequired,
+  bookId: PropTypes.number.isRequired,
   navigation: PropTypes.object.isRequired,
   route: PropTypes.object.isRequired,
 }
@@ -145,6 +159,7 @@ function mapStateToProps (state) {
     isSeries: selectors.isSeriesSelector(state),
     positionOffset: selectors.positionOffsetSelector(state),
     cards: state.cards,
+    bookId: selectors.currentTimelineSelector(state),
   }
 }
 

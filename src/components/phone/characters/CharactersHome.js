@@ -4,7 +4,8 @@ import ErrorBoundary from '../../ErrorBoundary'
 import CharactersList from './CharactersList'
 
 export default function CharactersHome (props) {
-  return <SafeAreaView style={{flex: 1}}>
+  //gray-9
+  return <SafeAreaView style={{flex: 1, backgroundColor: 'hsl(210, 36%, 96%)'}}>
     <ErrorBoundary>
       <CharactersList navigation={props.navigation}/>
     </ErrorBoundary>
