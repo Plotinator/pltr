@@ -8,7 +8,7 @@ import { Container, Content, Form, Input, Label, Item } from 'native-base'
 import { actions, selectors, initialState } from 'pltr/v2'
 import { StyleSheet } from 'react-native'
 import SaveButton from '../../ui/SaveButton'
-import AttachmentList from '../attachments/AttachmentList'
+import AttachmentList from '../../ui/attachments/AttachmentList'
 
 class PlaceDetails extends Component {
   static getDerivedStateFromProps (props, state) {

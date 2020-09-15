@@ -19,7 +19,7 @@ class SeriesPicker extends Component {
     const { bookIds, books } = this.props
     return bookIds.map(id => {
       const book = books[`${id}`]
-      return <Picker.Item label={book.title || t('Untitled')} value={id} />
+      return <Picker.Item key={book.id} label={book.title || t('Untitled')} value={id} />
     })
   }
 

@@ -23,9 +23,7 @@ class TimelineWrapper extends Component {
 }
 
 const styles = StyleSheet.create({
-  content: {
-    paddingVertical: 8,
-  },
+
 })
 
 TimelineWrapper.propTypes = {
