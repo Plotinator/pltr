@@ -1,7 +1,7 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import MainTabs from './MainTabs'
-import AttachmentSelectorModal from '../../ui/attachments/AttachmentSelectorModal'
+import AttachmentSelectorModal from '../../shared/attachments/AttachmentSelectorModal'
 
 const RootStack = createStackNavigator()
 

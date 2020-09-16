@@ -2,12 +2,16 @@ import React, { Component } from 'react'
 import PropTypes from 'react-proptypes'
 import { connect } from 'react-redux'
 import { StyleSheet, FlatList } from 'react-native'
+import { SwipeRow } from 'react-native-swipe-list-view'
+import { View, Text, Button, H3 } from 'native-base'
 import t from 'format-message'
 import cx from 'classnames'
 import { selectors, cardHelpers } from 'pltr/v2'
-import { View, Text, Button } from 'native-base'
 import ErrorBoundary from '../../ErrorBoundary'
-import Chapter from './Chapter'
+import Chapter from '../../shared/outline/Chapter'
+import TrashButton from '../../ui/TrashButton'
+import RenameButton from '../../ui/RenameButton'
+import AddButton from '../../ui/AddButton'
 
 class Outline extends Component {
   constructor (props) {
@@ -19,9 +23,32 @@ class Outline extends Component {
     this.props.navigation.navigate('PlotlinesModal')
   }
 
+  renderChapterInner = (chapterTitle, cards, manualSort, navigateToNewCard) => {
+    return <View>
+      <SwipeRow leftOpenValue={75} rightOpenValue={-100}>
+        <View style={styles.sliderRow}>
+          <TrashButton buttonStyle={{flex: 0, height: '100%'}}/>
+          <RenameButton buttonStyle={{flex: 0, height: '100%', width: 100}}/>
+        </View>
+        <View style={styles.chapterView}>
+          <View style={styles.title}>
+            <H3>{chapterTitle}</H3>
+            <AddButton onPress={navigateToNewCard} iconStyle={styles.addScene} />
+          </View>
+          { manualSort }
+        </View>
+      </SwipeRow>
+      { cards }
+    </View>
+  }
+
   renderChapter (chapter, cardMap) {
     return <ErrorBoundary key={chapter.id}>
-      <Chapter chapter={chapter} cards={cardMap[chapter.id]} activeFilter={!!this.state.currentLine} navigation={this.props.navigation} />
+      <Chapter chapter={chapter} cards={cardMap[chapter.id]}
+        activeFilter={!!this.state.currentLine}
+        navigation={this.props.navigation}
+        render={this.renderChapterInner}
+      />
     </ErrorBoundary>
   }
 
@@ -43,6 +70,24 @@ class Outline extends Component {
 const styles = StyleSheet.create({
   content: {
     paddingVertical: 8,
+  },
+  addScene: {
+    fontSize: 16,
+  },
+  chapterView: {
+    backgroundColor: 'white',
+    padding: 8,
+  },
+  sliderRow: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  title: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 })
 

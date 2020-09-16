@@ -7,7 +7,7 @@ import { View, Text, Container, Content, Form, Input, Label, Item, Button, Icon 
 import { selectors, actions, initialState } from 'pltr/v2'
 import { StyleSheet, Modal, KeyboardAvoidingView, InputAccessoryView } from 'react-native'
 import t from 'format-message'
-import AttachmentList from '../../ui/attachments/AttachmentList'
+import AttachmentList from '../../shared/attachments/AttachmentList'
 import ChapterPicker from '../../ui/ChapterPicker'
 import LinePicker from '../../ui/LinePicker'
 

@@ -8,7 +8,7 @@ import { Text, Container, Content, H1, H2, Form, Input, Label, Item, Button, Pic
 import { actions, selectors, initialState } from 'pltr/v2'
 import { StyleSheet } from 'react-native'
 import SaveButton from '../../ui/SaveButton'
-import AttachmentList from '../../ui/attachments/AttachmentList'
+import AttachmentList from '../../shared/attachments/AttachmentList'
 import CategoryPicker from '../../ui/CategoryPicker'
 
 class CharacterDetails extends Component {

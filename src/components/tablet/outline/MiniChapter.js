@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'react-proptypes'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, TouchableHighlight } from 'react-native'
 import { View, Text, Button } from 'native-base'
 import { cardHelpers, chapterHelpers } from 'pltr/v2'
 import cx from 'classnames'
@@ -34,21 +34,26 @@ function MiniChapter (props) {
     })
   }
 
-  return <View style={styles.container}>
+  return <TouchableHighlight onPress={props.onPress}>
     <View style={styles.container}>
-      <Text style={styles.indexText}>{`${idx + 1}.  `}</Text>
-      <Text style={styles.titleText}>{chapterHelpers.chapterTitle(chapter, positionOffset, isSeries)}</Text>
+      <View style={[styles.container, styles.chapterWrapper]}>
+        <Text style={styles.indexText}>{`${idx + 1}.  `}</Text>
+        <Text style={styles.titleText}>{chapterHelpers.chapterTitle(chapter, positionOffset, isSeries)}</Text>
+      </View>
+      <View style={[styles.container, styles.dotWrapper]}>
+        { renderCardDots() }
+      </View>
     </View>
-    <View style={[styles.container, styles.dotWrapper]}>
-      { renderCardDots() }
-    </View>
-  </View>
+  </TouchableHighlight>
 }
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  chapterWrapper: {
+    paddingVertical: 6,
   },
   indexText: {
     color: 'hsl(210, 83%, 53%)', //blue-5

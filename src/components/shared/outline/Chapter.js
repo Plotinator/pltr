@@ -8,7 +8,7 @@ import cx from 'classnames'
 import { selectors, actions, cardHelpers, listHelpers, chapterHelpers } from 'pltr/v2'
 import { H3, Icon, Card, CardItem, View, Button, Text } from 'native-base'
 import { SwipeRow } from 'react-native-swipe-list-view'
-import SceneCard from './SceneCard'
+import SceneCard from '../../phone/outline/SceneCard'
 import { StyleSheet } from 'react-native'
 import AddButton from '../../ui/AddButton'
 import TrashButton from '../../ui/TrashButton'
@@ -83,28 +83,13 @@ class Chapter extends Component {
   }
 
   render () {
-    const { chapter, ui, cards, activeFilter, positionOffset, isSeries } = this.props
+    const { chapter, cards, activeFilter, positionOffset, isSeries } = this.props
     if (activeFilter && !cards.length) return null
 
-    const klasses = cx('outline__scene-title', {darkmode: ui.darkMode})
-    return (
-      <View>
-        <SwipeRow leftOpenValue={75} rightOpenValue={-100}>
-          <View style={styles.sliderRow}>
-            <TrashButton buttonStyle={{flex: 0, height: '100%'}}/>
-            <RenameButton buttonStyle={{flex: 0, height: '100%', width: 100}}/>
-          </View>
-          <View style={styles.chapterView}>
-            <View style={styles.title}>
-              <H3>{chapterHelpers.chapterTitle(chapter, positionOffset, isSeries)}</H3>
-              <AddButton onPress={this.navigateToNewCard} iconStyle={styles.addScene} />
-            </View>
-            { this.renderManualSort() }
-          </View>
-        </SwipeRow>
-        { this.renderCards() }
-      </View>
-    )
+    const chapterTitle = chapterHelpers.chapterTitle(chapter, positionOffset, isSeries)
+    const renderedCards = this.renderCards()
+    const manualSort = this.renderManualSort()
+    return this.props.render(chapterTitle, renderedCards, manualSort, this.navigateToNewCard)
   }
 }
 
@@ -138,6 +123,7 @@ Chapter.propTypes = {
   isSeries: PropTypes.bool.isRequired,
   positionOffset: PropTypes.number.isRequired,
   navigation: PropTypes.object.isRequired,
+  render: PropTypes.func.isRequired,
 }
 
 function mapStateToProps (state) {
