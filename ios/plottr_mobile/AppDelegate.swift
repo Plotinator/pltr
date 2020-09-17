@@ -38,6 +38,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // set shared instance for DocumentViewController
     DocumentViewController.setSharedInstance(instance: DocumentViewController())
     
+    // print out document directory
+//    guard let documentPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first else { return true }
+//    let localDocumentsDirectoryURL = URL(fileURLWithPath: documentPath)
+//    print("DOCUMENTS", localDocumentsDirectoryURL)
+    
     // load react-native
     let rootView = RCTRootView(bundleURL: self.sourceURL(), moduleName: "plottr_mobile", initialProperties: nil, launchOptions: launchOptions)
 
@@ -94,7 +99,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func openDocumentBrowser() {
     guard let window = self.window else { return }
     UIView.transition(with: window, duration: 0.5, options: .transitionCurlDown, animations: {
-      window.rootViewController = DocumentBrowserViewController()
+//      let config = DocumentBrowserConfig.init(requiringSecureCoding: false)
+//      window.rootViewController = DocumentBrowserViewController(coder: config)
+      window.rootViewController = DocumentBrowserViewController(forOpeningFilesWithContentTypes: ["text/plain"])
     }, completion:nil)
 //    window.rootViewController?.present(DocumentBrowserViewController(), animated: true, completion: nil)
   }

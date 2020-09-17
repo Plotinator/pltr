@@ -68,6 +68,7 @@ isActiveLicense = async (license, productId) => {
     let json = await response.json()
     return json.success
   } catch (error) {
+    console.error(error)
     return false // maybe not?
   }
 }

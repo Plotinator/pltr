@@ -7,10 +7,12 @@ import { StyleSheet, FlatList } from 'react-native'
 import t from 'format-message'
 import cx from 'classnames'
 import { selectors, actions } from 'pltr/v2'
-import { View, H3, Text, Button, H1 } from 'native-base'
+import { View, H3, Text, Button, H1, Icon, Content } from 'native-base'
 import { Col, Grid } from 'react-native-easy-grid'
 import ErrorBoundary from '../../ErrorBoundary'
 import Toolbar from '../../ui/Toolbar'
+import TrashButton from '../../ui/TrashButton'
+import Note from './Note'
 
 class Notes extends Component {
   constructor (props) {
@@ -88,16 +90,27 @@ class Notes extends Component {
     return visible
   }
 
+  deleteNote = (id) => {
+
+  }
+
   renderNoteItem ({item}) {
-    return <View>
-      <Text>{item.title}</Text>
-    </View>
+    return <Grid style={[{flex: 1}, styles.noteItem]}>
+      <Col size={9}>
+        <Text>{item.title}</Text>
+      </Col>
+      <Col size={3}>
+        <Button small light bordered onPress={() => this.deleteNote(item.id)}>
+          <Icon type='FontAwesome5' name='trash' />
+        </Button>
+      </Col>
+    </Grid>
   }
 
   renderNoteList () {
     const { notes } = this.props
     return <View style={styles.noteList}>
-      <H1>{t('Notes')}</H1>
+      <H1 style={styles.title}>{t('Notes')}</H1>
       <FlatList
         data={notes}
         renderItem={this.renderNoteItem}
@@ -107,9 +120,13 @@ class Notes extends Component {
   }
 
   renderNoteDetail () {
-    return <View>
-      <Text>Details</Text>
-    </View>
+    if (this.state.noteDetailId == null) return null
+    let note = this.props.notes.find(n => n.id === this.state.noteDetailId )
+    if (!note) note = this.state.viewableNotes[0]
+
+    return <ErrorBoundary>
+      <Note note={note} navigation={this.props.navigation}/>
+    </ErrorBoundary>
   }
 
   render () {
@@ -118,10 +135,10 @@ class Notes extends Component {
         <Button bordered><Text>{t('New')}</Text></Button>
       </Toolbar>
       <Grid style={{flex: 1}}>
-        <Col size={3}>
+        <Col size={4}>
           { this.renderNoteList() }
         </Col>
-        <Col size={9}>
+        <Col size={10}>
           { this.renderNoteDetail() }
         </Col>
       </Grid>
@@ -132,16 +149,25 @@ class Notes extends Component {
 const styles = StyleSheet.create({
   noteList: {
     height: '100%',
-    padding: 16,
+    padding: 8,
+  },
+  title: {
+    textAlign: 'center',
+    marginBottom: 8,
+  },
+  noteItem: {
     backgroundColor: 'white',
-    shadowColor: 'hsl(210, 36%, 96%)', //gray-9
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.20,
-    shadowRadius: 1.41,
-    elevation: 2,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    paddingVertical: 10,
+    paddingLeft: 8,
+    borderColor: 'hsl(210, 36%, 96%)', //gray-9
+    borderWidth: 1,
+  },
+  buttonWrapper: {
+    flexDirection: 'row',
+    marginLeft: 'auto',
   },
 })
 

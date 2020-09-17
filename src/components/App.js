@@ -8,6 +8,7 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 import { Content, Text, H1, H2, Form, Item, Input, Button, Label, Spinner, Toast, Root, Container } from 'native-base'
 import { checkForActiveLicense, getUserVerification, verifyUser, reset } from '../utils/user_info'
 import Main from './Main'
+import ErrorBoundary from './ErrorBoundary'
 
 const App = () => {
   const [userInfo, setUserInfo] = useState(null)
@@ -141,7 +142,7 @@ const App = () => {
     <SafeAreaProvider>
       <Root>
         <StatusBar barStyle='dark-content' />
-        {renderBody()}
+        <ErrorBoundary>{renderBody()}</ErrorBoundary>
       </Root>
     </SafeAreaProvider>
   )

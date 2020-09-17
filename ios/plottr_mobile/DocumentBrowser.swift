@@ -25,7 +25,7 @@ class DocumentBrowserViewController: UIDocumentBrowserViewController, UIDocument
 
     // Update the style of the UIDocumentBrowserViewController
     //  browserUserInterfaceStyle = .dark
-     view.tintColor = .orange
+    view.tintColor = .orange
   }
   
   @objc func openBrowser() -> Void {

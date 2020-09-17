@@ -148,6 +148,7 @@ const styles = StyleSheet.create({
   buttonFooter: {
     marginTop: 16,
     marginRight: 16,
+    marginBottom: 8,
   },
   button: {
     // backgroundColor: '#f4f4f4',
