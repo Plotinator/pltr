@@ -1,12 +1,13 @@
 import React from 'react'
 import { SafeAreaView } from 'react-native'
 import ErrorBoundary from '../../ErrorBoundary'
-import { Text } from 'native-base'
+import Places from './Places'
 
 export default function PlacesHome (props) {
-  return <SafeAreaView>
+  //gray-9
+  return <SafeAreaView style={{flex: 1, backgroundColor: 'hsl(210, 36%, 96%)'}}>
     <ErrorBoundary>
-      <Text>Places</Text>
+      <Places navigation={props.navigation} />
     </ErrorBoundary>
   </SafeAreaView>
 }

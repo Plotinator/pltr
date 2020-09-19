@@ -11,7 +11,6 @@
 		12EBA0C7817941F1A61CE988 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1420E17BE28C42608F85D3ED /* Zocial.ttf */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		1854EE101B374B63B398262D /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 06D00DB9C5E942F08CB91BEC /* FontAwesome.ttf */; };
-		21A3A5E92513B1C000828CF6 /* DocumentBrowserConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A3A5E82513B1C000828CF6 /* DocumentBrowserConfig.swift */; };
 		21B1C2C224EB365E00DD973F /* DocumentBrowserBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 21B1C2C124EB365E00DD973F /* DocumentBrowserBridge.m */; };
 		21B1C2C524EB384500DD973F /* DocumentBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B1C2C424EB384500DD973F /* DocumentBrowser.swift */; };
 		21B1C2C724EB3D9C00DD973F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B1C2C624EB3D9C00DD973F /* AppDelegate.swift */; };
@@ -86,7 +85,6 @@
 		14FF529FC062FED0B28A4CDF /* libPods-plottr_mobile-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-plottr_mobile-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		16F7F680687A475592AA5205 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/native-base/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
 		210A560525141FB5009849CE /* plottr_mobile.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = plottr_mobile.entitlements; sourceTree = "<group>"; };
-		21A3A5E82513B1C000828CF6 /* DocumentBrowserConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DocumentBrowserConfig.swift; path = plottr_mobile/DocumentBrowserConfig.swift; sourceTree = "<group>"; };
 		21B1C2C124EB365E00DD973F /* DocumentBrowserBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = DocumentBrowserBridge.m; path = plottr_mobile/DocumentBrowserBridge.m; sourceTree = "<group>"; };
 		21B1C2C324EB384500DD973F /* plottr_mobile-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "plottr_mobile-Bridging-Header.h"; sourceTree = "<group>"; };
 		21B1C2C424EB384500DD973F /* DocumentBrowser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DocumentBrowser.swift; path = plottr_mobile/DocumentBrowser.swift; sourceTree = "<group>"; };
@@ -198,7 +196,6 @@
 			children = (
 				21B1C2C024EB35ED00DD973F /* Bridges */,
 				21B1C2C624EB3D9C00DD973F /* AppDelegate.swift */,
-				21A3A5E82513B1C000828CF6 /* DocumentBrowserConfig.swift */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -724,7 +721,6 @@
 				21B1C2CF24EB4F9E00DD973F /* DocEvents.swift in Sources */,
 				21B1C2E424EC20B300DD973F /* ReactNativeEventEmitter.swift in Sources */,
 				21B1C2C924EB49D300DD973F /* Document.swift in Sources */,
-				21A3A5E92513B1C000828CF6 /* DocumentBrowserConfig.swift in Sources */,
 				21B1C2C224EB365E00DD973F /* DocumentBrowserBridge.m in Sources */,
 				21B1C2CB24EB4A4900DD973F /* DocumentViewControllerBridge.m in Sources */,
 				21B1C2CD24EB4A7700DD973F /* DocumentViewController.swift in Sources */,
@@ -1021,7 +1017,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "/usr/lib/swift $(inherited)";
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
@@ -1074,7 +1070,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "/usr/lib/swift $(inherited)";
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",

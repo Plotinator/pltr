@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import PropTypes from 'react-proptypes'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { StyleSheet, FlatList } from 'react-native'
+import { StyleSheet, FlatList, TouchableOpacity, Alert } from 'react-native'
 import t from 'format-message'
 import cx from 'classnames'
 import { selectors, actions } from 'pltr/v2'
@@ -15,14 +15,11 @@ import TrashButton from '../../ui/TrashButton'
 import Note from './Note'
 
 class Notes extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      noteDetailId: null,
-      filter: null,
-      viewableNotes: [],
-      editingSelected: false,
-    }
+  state = {
+    activeNote: null,
+    filter: null,
+    viewableNotes: [],
+    editingSelected: false,
   }
 
   static getDerivedStateFromProps (props, state) {
@@ -30,7 +27,7 @@ class Notes extends Component {
     const { notes } = props
     const viewableNotes = Notes.viewableNotes(notes, state.filter)
     returnVal.viewableNotes = viewableNotes
-    returnVal.noteDetailId = Notes.detailID(viewableNotes, state.noteDetailId)
+    returnVal.activeNote = Notes.findActiveNote(viewableNotes, state.activeNote)
 
     return returnVal
   }
@@ -46,18 +43,18 @@ class Notes extends Component {
     return sortedNotes
   }
 
-  static detailID (notes, noteDetailId) {
+  static findActiveNote (notes, activeNote) {
     if (notes.length == 0) return null
 
-    let id = notes[0].id
+    let returnNote = notes[0]
 
     // check for the currently active one
-    if (noteDetailId != null) {
-      let activeNote = notes.find(n => n.id === noteDetailId)
-      if (activeNote) id = activeNote.id
+    if (activeNote != null) {
+      let existingNote = notes.find(n => n.id === activeNote.id)
+      if (existingNote) returnNote = existingNote
     }
 
-    return id
+    return returnNote
   }
 
   // this is a hack for now
@@ -90,14 +87,20 @@ class Notes extends Component {
     return visible
   }
 
-  deleteNote = (id) => {
-
+  saveNote = (id, title) => {
+    this.props.actions.editNote(id, {title})
   }
 
-  renderNoteItem ({item}) {
+  deleteNote = (id) => {
+    this.props.actions.deleteNote(id)
+  }
+
+  renderNoteItem = ({item}) => {
     return <Grid style={[{flex: 1}, styles.noteItem]}>
       <Col size={9}>
-        <Text>{item.title}</Text>
+        <TouchableOpacity onPress={() => this.setState({activeNote: item})}>
+          <Text>{item.title}</Text>
+        </TouchableOpacity>
       </Col>
       <Col size={3}>
         <Button small light bordered onPress={() => this.deleteNote(item.id)}>
@@ -120,12 +123,12 @@ class Notes extends Component {
   }
 
   renderNoteDetail () {
-    if (this.state.noteDetailId == null) return null
-    let note = this.props.notes.find(n => n.id === this.state.noteDetailId )
+    let note = this.state.activeNote
     if (!note) note = this.state.viewableNotes[0]
+    if (!note) return null
 
     return <ErrorBoundary>
-      <Note note={note} navigation={this.props.navigation}/>
+      <Note key={note.id} note={note} onSave={this.saveNote} navigation={this.props.navigation}/>
     </ErrorBoundary>
   }
 

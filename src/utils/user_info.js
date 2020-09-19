@@ -64,7 +64,7 @@ export async function checkForActiveLicense (email) {
 isActiveLicense = async (license, productId) => {
   const url = licenseURL(license, productId)
   try {
-    let response = await fetch(url)
+    let response = await fetch(url, {headers: {'User-Agent': 'mobile;mobile-app'}})
     let json = await response.json()
     return json.success
   } catch (error) {

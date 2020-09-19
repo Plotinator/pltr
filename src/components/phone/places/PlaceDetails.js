@@ -98,7 +98,7 @@ class PlaceDetails extends Component {
     return <Container>
       <Content style={styles.content}>
         <Form style={styles.form}>
-        <Item inlineLabel last regular style={styles.label}>
+          <Item inlineLabel last regular style={styles.label}>
             <Label>{t('Name')}</Label>
             <Input
               value={place.name}

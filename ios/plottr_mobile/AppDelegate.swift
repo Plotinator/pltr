@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   var window: UIWindow?
   var bridge: RCTBridge!
-  var rootViewController: UIViewController!
+  var reactViewController: UIViewController!
 
   func sourceURL() -> URL {
     #if DEBUG
@@ -44,14 +44,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //    print("DOCUMENTS", localDocumentsDirectoryURL)
     
     // load react-native
-    let rootView = RCTRootView(bundleURL: self.sourceURL(), moduleName: "plottr_mobile", initialProperties: nil, launchOptions: launchOptions)
+    let reactView = RCTRootView(bundleURL: self.sourceURL(), moduleName: "plottr_mobile", initialProperties: nil, launchOptions: launchOptions)
 
     self.window = UIWindow(frame: UIScreen.main.bounds)
-    self.rootViewController = UIViewController()
+    self.reactViewController = UIViewController()
 
-    rootViewController.view = rootView
+    reactViewController.view = reactView
 
-    self.window!.rootViewController = rootViewController;
+    self.window!.rootViewController = reactViewController;
     self.window!.makeKeyAndVisible()
     
     return true
@@ -99,17 +99,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func openDocumentBrowser() {
     guard let window = self.window else { return }
     UIView.transition(with: window, duration: 0.5, options: .transitionCurlDown, animations: {
-//      let config = DocumentBrowserConfig.init(requiringSecureCoding: false)
-//      window.rootViewController = DocumentBrowserViewController(coder: config)
-      window.rootViewController = DocumentBrowserViewController(forOpeningFilesWithContentTypes: ["text/plain"])
+      window.rootViewController = DocumentBrowserViewController(forOpeningFilesWithContentTypes: nil)
     }, completion:nil)
-//    window.rootViewController?.present(DocumentBrowserViewController(), animated: true, completion: nil)
+//    window.rootViewController?.present(DocumentBrowserViewController(forOpeningFilesWithContentTypes: nil), animated: true, completion: nil)
   }
   
   func closeDocumentBrowser() {
     guard let window = self.window else { return }
     UIView.transition(with: window, duration: 0.5, options: .transitionCurlUp, animations: {
-      window.rootViewController = self.rootViewController
+      window.rootViewController = self.reactViewController
     }, completion:nil)
   }
   

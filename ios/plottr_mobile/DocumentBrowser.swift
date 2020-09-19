@@ -21,7 +21,8 @@ class DocumentBrowserViewController: UIDocumentBrowserViewController, UIDocument
 
     allowsDocumentCreation = true
     allowsPickingMultipleItems = false
-    shouldShowFileExtensions = true
+    shouldShowFileExtensions = false
+    localizedCreateDocumentActionTitle = "New Story"
 
     // Update the style of the UIDocumentBrowserViewController
     //  browserUserInterfaceStyle = .dark
@@ -46,7 +47,7 @@ class DocumentBrowserViewController: UIDocumentBrowserViewController, UIDocument
 
   func documentBrowser(_ controller: UIDocumentBrowserViewController, didRequestDocumentCreationWithHandler importHandler: @escaping (URL?, UIDocumentBrowserViewController.ImportMode) -> Void) {
     
-    print("IN DOCUMENT BROWSER: didRequestDocumentCreationWithHandler")
+//    print("IN DOCUMENT BROWSER: didRequestDocumentCreationWithHandler")
     // Make sure the importHandler is always called, even if the user cancels the creation request.
     let alert = UIAlertController(title: "What is the story's name?", message: nil, preferredStyle: .alert)
     alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
@@ -92,11 +93,11 @@ class DocumentBrowserViewController: UIDocumentBrowserViewController, UIDocument
   func documentBrowser(_ controller: UIDocumentBrowserViewController, didPickDocumentsAt documentURLs: [URL]) {
     print("didPickDocumentsAt")
     guard let sourceURL = documentURLs.first else { return }
-    print(sourceURL.absoluteString)
+//    print(sourceURL.absoluteString)
     
     let doc = PlottrDocument(fileURL: sourceURL)
     DocumentViewController._sharedInstance?.document = doc
-    print("picked:", DocumentViewController._sharedInstance?.document)
+//    print("picked:", DocumentViewController._sharedInstance?.document)
     
     // Access the document
     doc.open(completionHandler: { (success) in
@@ -106,7 +107,7 @@ class DocumentBrowserViewController: UIDocumentBrowserViewController, UIDocument
 
       } else {
         // Make sure to handle the failed import appropriately, e.g., by presenting an error message to the user.
-        print("failed import")
+        print("failed to open file")
       }
     })
   }

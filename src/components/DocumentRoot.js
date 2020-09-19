@@ -19,7 +19,7 @@ export default function DocumentRoot (props) {
     const { document } = props
     if (document) {
       const filePath = document.documentURL
-      console.log('PATH', filePath)
+      // console.log('PATH', filePath)
       const json = JSON.parse(document.data)
       if (json.newFile) {
         // creating a new file
