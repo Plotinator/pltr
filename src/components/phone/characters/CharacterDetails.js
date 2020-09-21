@@ -20,7 +20,7 @@ class CharacterDetails extends Component {
       acc[attr.name] = characterObj[attr.name]
       return acc
     }, {})
-    let templateAttrs = characterObj.templates.reduce((acc, t) =>{
+    let templateAttrs = characterObj.templates.reduce((acc, t) => {
       acc[t.id] = t.attributes.reduce((obj, attr) => {
         obj[attr.name] = attr.value
         return obj

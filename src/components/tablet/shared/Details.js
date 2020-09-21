@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Form, Label, Input } from 'native-base'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, ScrollView } from 'react-native'
 
 export function DetailsWrapper (props) {
 
@@ -18,7 +18,7 @@ export function DetailsWrapper (props) {
 }
 
 export function DetailsLeft (props) {
-  return <View style={styles.formLeft}>{ props.children }</View>
+  return <View style={styles.formLeft}><ScrollView>{ props.children }</ScrollView></View>
 }
 
 export function DetailsRight (props) {

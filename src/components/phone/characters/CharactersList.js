@@ -20,7 +20,9 @@ class CharactersList extends Component {
     const data = categories.map(cat => {
       let characters = []
       if (props.visibleCharactersByCategory[`${cat.id}`]) {
-        characters = props.visibleCharactersByCategory[`${cat.id}`].map(ch => ch)
+        characters = props.visibleCharactersByCategory[`${cat.id}`]
+        // i had it like this before, but i don't think the .map part is needed
+        // characters = props.visibleCharactersByCategory[`${cat.id}`].map(ch => ch)
       }
       return {
         title: cat.name,

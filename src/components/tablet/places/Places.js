@@ -3,39 +3,45 @@ import React, { Component } from 'react'
 import PropTypes from 'react-proptypes'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { StyleSheet, FlatList, TouchableOpacity, Alert } from 'react-native'
+import { StyleSheet, FlatList, TouchableOpacity } from 'react-native'
 import t from 'format-message'
 import cx from 'classnames'
-import { selectors, actions } from 'pltr/v2'
+import { selectors, actions, newIds } from 'pltr/v2'
 import { View, H3, Text, Button, H1, Icon, Content } from 'native-base'
 import { Col, Grid } from 'react-native-easy-grid'
 import ErrorBoundary from '../../ErrorBoundary'
 import Toolbar from '../../ui/Toolbar'
-import TrashButton from '../../ui/TrashButton'
 import Place from './Place'
+import NewButton from '../../ui/NewButton'
 
 class Places extends Component {
   state = {
-    activePlace: null,
+    activePlaceId: null,
   }
 
   static getDerivedStateFromProps (props, state) {
-    const activePlace = Places.findActivePlace(props.visiblePlaces, state.activePlace)
-    return { activePlace }
+    const activePlaceId = Places.findActivePlace(props.visiblePlaces, state.activePlaceId)
+    return { activePlaceId }
   }
 
-  static findActivePlace (places, activePlace) {
+  static findActivePlace (places, activePlaceId) {
     if (places.length == 0) return null
 
-    let returnPlace = places[0]
+    let newId = places[0].id
 
     // check for the currently active one
-    if (activePlace != null) {
-      let existingPlace = places.find(pl => pl.id === activePlace.id)
-      if (existingPlace) returnPlace = existingPlace
+    if (activePlaceId != null) {
+      let existingPlace = places.find(pl => pl.id === activePlaceId)
+      if (existingPlace) newId = existingPlace.id
     }
 
-    return returnPlace
+    return newId
+  }
+
+  createNewPlace = () => {
+    const id = newIds.nextId(this.props.places)
+    this.props.actions.addPlace()
+    this.setState({activePlaceId: id})
   }
 
   savePlace = (id, attributes) => {
@@ -47,10 +53,11 @@ class Places extends Component {
   }
 
   renderPlaceItem = ({item}) => {
-    return <Grid style={[{flex: 1}, styles.placeItem]}>
+    const isActive = item.id == this.state.activePlaceId
+    return <Grid style={[{flex: 1}, styles.placeItem, isActive ? styles.activeItem : {}]}>
       <Col size={9}>
-        <TouchableOpacity onPress={() => this.setState({activePlace: item})}>
-          <Text>{item.name}</Text>
+        <TouchableOpacity onPress={() => this.setState({activePlaceId: item.id})}>
+          <Text>{item.name || t('New Place')}</Text>
         </TouchableOpacity>
       </Col>
       <Col size={3}>
@@ -75,8 +82,7 @@ class Places extends Component {
 
   renderPlaceDetail () {
     const { visiblePlaces, customAttributes, navigation } = this.props
-    let place = this.state.activePlace
-    if (!place) place = visiblePlaces[0]
+    let place = visiblePlaces.find(pl => pl.id == this.state.activePlaceId)
     if (!place) return null
 
     return <ErrorBoundary>
@@ -87,7 +93,7 @@ class Places extends Component {
   render () {
     return <View style={{flex: 1}}>
       <Toolbar>
-        <Button bordered><Text>{t('New')}</Text></Button>
+        <NewButton onPress={this.createNewPlace}/>
       </Toolbar>
       <Grid style={{flex: 1}}>
         <Col size={4}>
@@ -119,6 +125,11 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
     borderColor: 'hsl(210, 36%, 96%)', //gray-9
     borderWidth: 1,
+  },
+  activeItem: {
+    borderColor: 'hsl(208, 88%, 62%)', //blue-6
+    backgroundColor: 'hsl(210, 31%, 80%)', //gray-7
+    borderStyle: 'dashed',
   },
   buttonWrapper: {
     flexDirection: 'row',

@@ -6,20 +6,19 @@ import { bindActionCreators } from 'redux'
 import { StyleSheet, FlatList, TouchableOpacity, Alert } from 'react-native'
 import t from 'format-message'
 import cx from 'classnames'
-import { selectors, actions } from 'pltr/v2'
+import { selectors, actions, newIds } from 'pltr/v2'
 import { View, H3, Text, Button, H1, Icon, Content } from 'native-base'
 import { Col, Grid } from 'react-native-easy-grid'
 import ErrorBoundary from '../../ErrorBoundary'
 import Toolbar from '../../ui/Toolbar'
-import TrashButton from '../../ui/TrashButton'
 import Note from './Note'
+import NewButton from '../../ui/NewButton'
 
 class Notes extends Component {
   state = {
-    activeNote: null,
+    activeNoteId: null,
     filter: null,
     viewableNotes: [],
-    editingSelected: false,
   }
 
   static getDerivedStateFromProps (props, state) {
@@ -27,7 +26,7 @@ class Notes extends Component {
     const { notes } = props
     const viewableNotes = Notes.viewableNotes(notes, state.filter)
     returnVal.viewableNotes = viewableNotes
-    returnVal.activeNote = Notes.findActiveNote(viewableNotes, state.activeNote)
+    returnVal.activeNoteId = Notes.findActiveNote(viewableNotes, state.activeNoteId)
 
     return returnVal
   }
@@ -43,18 +42,18 @@ class Notes extends Component {
     return sortedNotes
   }
 
-  static findActiveNote (notes, activeNote) {
+  static findActiveNote (notes, activeNoteId) {
     if (notes.length == 0) return null
 
-    let returnNote = notes[0]
+    let newId = notes[0].id
 
     // check for the currently active one
-    if (activeNote != null) {
-      let existingNote = notes.find(n => n.id === activeNote.id)
-      if (existingNote) returnNote = existingNote
+    if (activeNoteId != null) {
+      let existingNote = notes.find(n => n.id === activeNoteId)
+      if (existingNote) newId = existingNote.id
     }
 
-    return returnNote
+    return newId
   }
 
   // this is a hack for now
@@ -87,6 +86,12 @@ class Notes extends Component {
     return visible
   }
 
+  createNewNote = () => {
+    const id = newIds.nextId(this.props.notes)
+    this.props.actions.addNote()
+    this.setState({activeNoteId: id})
+  }
+
   saveNote = (id, title) => {
     this.props.actions.editNote(id, {title})
   }
@@ -96,10 +101,11 @@ class Notes extends Component {
   }
 
   renderNoteItem = ({item}) => {
-    return <Grid style={[{flex: 1}, styles.noteItem]}>
+    const isActive = item.id == this.state.activeNoteId
+    return <Grid style={[{flex: 1}, styles.noteItem, isActive ? styles.activeItem : {}]}>
       <Col size={9}>
-        <TouchableOpacity onPress={() => this.setState({activeNote: item})}>
-          <Text>{item.title}</Text>
+        <TouchableOpacity onPress={() => this.setState({activeNoteId: item.id})}>
+          <Text>{item.title || t('New Note')}</Text>
         </TouchableOpacity>
       </Col>
       <Col size={3}>
@@ -123,8 +129,7 @@ class Notes extends Component {
   }
 
   renderNoteDetail () {
-    let note = this.state.activeNote
-    if (!note) note = this.state.viewableNotes[0]
+    let note = this.props.notes.find(note => note.id == this.state.activeNoteId)
     if (!note) return null
 
     return <ErrorBoundary>
@@ -135,7 +140,7 @@ class Notes extends Component {
   render () {
     return <View style={{flex: 1}}>
       <Toolbar>
-        <Button bordered><Text>{t('New')}</Text></Button>
+        <NewButton onPress={this.createNewNote}/>
       </Toolbar>
       <Grid style={{flex: 1}}>
         <Col size={4}>
@@ -167,6 +172,11 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
     borderColor: 'hsl(210, 36%, 96%)', //gray-9
     borderWidth: 1,
+  },
+  activeItem: {
+    borderColor: 'hsl(208, 88%, 62%)', //blue-6
+    backgroundColor: 'hsl(210, 31%, 80%)', //gray-7
+    borderStyle: 'dashed',
   },
   buttonWrapper: {
     flexDirection: 'row',

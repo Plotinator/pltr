@@ -13,7 +13,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: 60,
     backgroundColor: 'hsl(212, 33%, 89%)', //gray-8
-    justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 16,
     borderWidth: StyleSheet.hairlineWidth,
