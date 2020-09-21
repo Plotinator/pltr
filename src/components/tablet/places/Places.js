@@ -10,7 +10,7 @@ import { selectors, actions, newIds } from 'pltr/v2'
 import { View, H3, Text, Button, H1, Icon, Content } from 'native-base'
 import { Col, Grid } from 'react-native-easy-grid'
 import ErrorBoundary from '../../ErrorBoundary'
-import Toolbar from '../../ui/Toolbar'
+import Toolbar from '../shared/Toolbar'
 import Place from './Place'
 import NewButton from '../../ui/NewButton'
 

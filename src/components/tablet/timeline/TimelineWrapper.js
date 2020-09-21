@@ -7,7 +7,7 @@ import cx from 'classnames'
 import { selectors, cardHelpers } from 'pltr/v2'
 import { View, Text, Button, Picker } from 'native-base'
 import ErrorBoundary from '../../ErrorBoundary'
-import Toolbar from '../../ui/Toolbar'
+import Toolbar from '../shared/Toolbar'
 import SeriesPicker from '../../ui/SeriesPicker'
 import Timeline from './Timeline'
 
