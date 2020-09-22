@@ -29,7 +29,7 @@ class SeriesPicker extends Component {
     const selectedTitle = currentTimeline == 'series' ? seriesText : (books[currentTimeline].title || t('Untitled'))
     return <Picker
       iosIcon={<Icon type='FontAwesome5' name='chevron-down' style={{fontSize: 12}}/>}
-      mode='dropdown'
+      mode='modal'
       iosHeader={selectedTitle}
       placeholder={selectedTitle}
       selectedValue={currentTimeline}

@@ -32,8 +32,10 @@ class Project extends Component {
 
   renderBooks () {
     const { books } = this.props
+    if (!books.allIds) return null
+
     return books.allIds.map(id => {
-      return <Book book={books[`${id}`]} navigateToOutline={this.navigateToTimeline} navigateToDetails={this.openEditModal} />
+      return <Book key={id} book={books[`${id}`]} navigateToOutline={this.navigateToTimeline} navigateToDetails={this.openEditModal} />
     })
   }
 

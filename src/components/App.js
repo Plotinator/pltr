@@ -9,6 +9,8 @@ import { Content, Text, H1, H2, Form, Item, Input, Button, Label, Spinner, Toast
 import { checkForActiveLicense, getUserVerification, verifyUser, reset } from '../utils/user_info'
 import Main from './Main'
 import ErrorBoundary from './ErrorBoundary'
+import { sendVerificationEmail } from '../utils/api'
+import t from 'format-message'
 
 const App = () => {
   const [userInfo, setUserInfo] = useState(null)
@@ -23,6 +25,7 @@ const App = () => {
       // DEV: use the following to reset user info/verification
       // await reset()
       const fetchedInfo = await getUserVerification()
+      // console.log('USER_INFO', fetchedInfo)
       if (!ignore) setUserInfo(fetchedInfo)
     }
 
@@ -36,15 +39,29 @@ const App = () => {
     setVerifying(false)
     if (userInfo) {
       Toast.show({
-        text: 'Success!',
+        text: t('Success!'),
         duration: 3000,
         type: 'success',
       })
       setUserInfo(userInfo)
 
       // TODO: send an email with userInfo.idToVerify
+      sendVerificationEmail(email, userInfo.idToVerify, error => {
+        if (error) {
+          Toast.show({
+            text: t('Error sending email! Try again or another email.'),
+            duration: 3000,
+            type: 'danger',
+          })
+          setUserInfo(null)
+        }
+      })
     } else {
-      // TODO: show an error about failing to verify and try again or another email address
+      Toast.show({
+        text: t("Error! That email didn't verify. Try again or another email."),
+        duration: 3000,
+        type: 'danger',
+      })
     }
   }
 
@@ -52,15 +69,20 @@ const App = () => {
     setVerifying(true)
     if (code == userInfo.idToVerify) {
       Toast.show({
-        text: 'Success!',
+        text: t('Success!'),
         duration: 3000,
         type: 'success',
       })
       const newUserInfo = verifyUser(userInfo)
-      console.log('newUserInfo', newUserInfo)
+      // console.log('newUserInfo', newUserInfo)
       setUserInfo({ ...newUserInfo })
     } else {
-      // TODO: show an error about trying again
+      Toast.show({
+        text: t("Error! That code didn't verify. Try again."),
+        duration: 3000,
+        type: 'danger',
+      })
+      setUserInfo(null)
     }
     setVerifying(false)
   }

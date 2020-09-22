@@ -50,7 +50,7 @@ export async function checkForActiveLicense (email) {
         }
       }))
       if (validSalesId) {
-        userInfo = newUserInfoTemplate(json.sales, validSalesId)
+        userInfo = newUserInfoTemplate(email, json.sales, validSalesId)
         AsyncStorage.setItem(USER_KEY, JSON.stringify(userInfo))
       }
     }
@@ -86,6 +86,6 @@ function apiURL (path = '', otherKeys) {
   return `${BASE_URL}/edd-api${path}?key=${Config.EDD_KEY}&token=${Config.EDD_TOKEN}&number=-1${otherKeys.map(k => `&${k[0]}=${k[1]}`)}`
 }
 
-function newUserInfoTemplate (sales, idToVerify) {
-  return { verified: false, chancesLeft: 3, isV2: true, sales, idToVerify }
+function newUserInfoTemplate (email, sales, idToVerify) {
+  return { email, verified: false, chancesLeft: 3, isV2: true, sales, idToVerify }
 }
