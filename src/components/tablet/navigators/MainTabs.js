@@ -22,7 +22,7 @@ export default function MainTabs (props) {
     })}
     tabBarOptions={{...tabBarOptions, style:{paddingBottom: 6}, safeAreaInsets:{bottom: 10}}}
   >
-    <Tab.Screen name='Project' component={ProjectHome} />
+    <Tab.Screen name='Project' component={ProjectHome} initialParams={{closeFile: props.route?.params?.closeFile}}/>
     <Tab.Screen name='Timeline' component={TimelineHome} />
     <Tab.Screen name='Outline' component={OutlineHome} />
     <Tab.Screen name='Notes' component={NotesHome} />

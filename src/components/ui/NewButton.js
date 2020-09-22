@@ -5,7 +5,7 @@ import t from 'format-message'
 
 export default function NewButton (props) {
   const defaultPress = () => {}
-  return <Button bordered style={styles.button} onPress={props.onPress ?? defaultPress}>
+  return <Button bordered iconLeft style={styles.button} onPress={props.onPress ?? defaultPress}>
     <Icon type='FontAwesome5' name='plus' style={styles.icon}/>
     <Text style={styles.text}>{t('New')}</Text>
   </Button>
@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
   },
   text: {
     color: 'hsl(209, 61%, 16%)', //gray-0
-    marginLeft: -16,
   },
   icon: {
     color: 'hsl(209, 61%, 16%)', //gray-0

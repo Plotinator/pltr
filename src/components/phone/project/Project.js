@@ -10,6 +10,7 @@ import { ListItem, Icon, Left, Right, H2, H3, View, Badge, Text, Card, CardItem,
 import t from 'format-message'
 import TrashButton from '../../ui/TrashButton'
 import EditButton from '../../ui/EditButton'
+import Book from '../../shared/project/Book'
 
 class Project extends Component {
   state = {data: []}
@@ -57,25 +58,10 @@ class Project extends Component {
     </SwipeRow>
   }
 
-  renderBook = (book) => {
-    return <TouchableHighlight onPress={() => this.navigateToOutline(book.id)}>
-      <View style={styles.cardView}>
-        <View style={styles.backbone}/>
-        <View style={styles.card}>
-          <H1 style={styles.bookTitle}>{book.title}</H1>
-          <View style={styles.footer}>
-            <Button light onPress={() => this.navigateToDetails(book.id)} style={styles.buttons}><Text>{t('Edit')}</Text></Button>
-            <Button light onPress={() => this.navigateToOutline(book.id)} style={styles.buttons}><Text>{t('Outline')}</Text></Button>
-          </View>
-        </View>
-      </View>
-    </TouchableHighlight>
-  }
-
   renderItem = ({item}) => {
     if (item.id == 'series') return this.renderSeries(item)
 
-    return this.renderBook(item)
+    return <Book book={item} navigateToOutline={navigateToOutline} navigateToDetails={this.navigateToDetails} />
   }
 
   render () {
@@ -94,46 +80,11 @@ const styles = StyleSheet.create({
   title: {
     paddingVertical: 4,
   },
-  bookTitle: {
-    textAlign: 'center',
-  },
   hiddenRow: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center'
-  },
-  cardView: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-    padding: 16,
-  },
-  card: {
-    height: 300,
-    width: Dimensions.get('window').width * 9/16,
-    marginLeft: -6,
-    borderWidth: 2,
-    borderBottomWidth: 4,
-    borderRadius: 4,
-    borderColor: '#62B1F6', // same color as info buttons
-    backgroundColor: 'white',
-    justifyContent: 'space-between',
-  },
-  backbone: {
-    width: 20,
-    height: 300,
-    backgroundColor: '#62B1F6', // same color as info buttons
-    borderTopLeftRadius: 2,
-    borderBottomLeftRadius: 2,
-  },
-  footer: {
-    flexDirection: 'row',
-    padding: 10,
-    justifyContent: 'space-around',
-  },
-  buttons: {
-    backgroundColor: '#F4F4F4',
   },
 })
 

@@ -40,11 +40,11 @@ export default function DocumentRoot (props) {
   }
 
   const renderPhone = () => {
-    return <RootPhoneNavigator closeFile={props.closeFile}/>
+    return <RootPhoneNavigator closeFile={props.closeFile} />
   }
 
   const renderTablet = () => {
-    return <RootTabletNavigator />
+    return <RootTabletNavigator closeFile={props.closeFile} />
   }
 
   return <NavigationContainer>
