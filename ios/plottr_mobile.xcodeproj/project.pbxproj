@@ -85,6 +85,7 @@
 		14FF529FC062FED0B28A4CDF /* libPods-plottr_mobile-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-plottr_mobile-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		16F7F680687A475592AA5205 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/native-base/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
 		210A560525141FB5009849CE /* plottr_mobile.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = plottr_mobile.entitlements; sourceTree = "<group>"; };
+		2137F2C3251B83F100D6A276 /* plottr_mobile.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = plottr_mobile.entitlements; path = plottr_mobile/plottr_mobile.entitlements; sourceTree = "<group>"; };
 		21B1C2C124EB365E00DD973F /* DocumentBrowserBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = DocumentBrowserBridge.m; path = plottr_mobile/DocumentBrowserBridge.m; sourceTree = "<group>"; };
 		21B1C2C324EB384500DD973F /* plottr_mobile-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "plottr_mobile-Bridging-Header.h"; sourceTree = "<group>"; };
 		21B1C2C424EB384500DD973F /* DocumentBrowser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DocumentBrowser.swift; path = plottr_mobile/DocumentBrowser.swift; sourceTree = "<group>"; };
@@ -194,6 +195,7 @@
 		13B07FAE1A68108700A75B9A /* plottr_mobile */ = {
 			isa = PBXGroup;
 			children = (
+				2137F2C3251B83F100D6A276 /* plottr_mobile.entitlements */,
 				21B1C2C024EB35ED00DD973F /* Bridges */,
 				21B1C2C624EB3D9C00DD973F /* AppDelegate.swift */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
@@ -524,7 +526,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "if [ \"${CONFIGURATION}\" == \"Debug\" ]; then\n  export SKIP_BUNDLING=true\nfi\n\nexport NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -811,6 +813,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = plottr_mobile/plottr_mobile.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = H8PJ35QS3D;
 				ENABLE_BITCODE = NO;
@@ -840,6 +843,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = plottr_mobile/plottr_mobile.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = H8PJ35QS3D;
 				INFOPLIST_FILE = plottr_mobile/Info.plist;

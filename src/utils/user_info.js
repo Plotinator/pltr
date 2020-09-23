@@ -6,6 +6,8 @@ const BASE_URL = 'http://getplottr.com'
 const PRODUCT_IDS = {mac:'11321', windows: '11322'}
 // const SUBSCRIPTION_ID = '10333'
 const NAME_PATTERN = /Plottr .* (Windows|Mac)/
+const TESTR_EMAIL = 'special_tester_email@getplottr.com'
+const TESTR_CODE = 735373
 
 export async function getUserVerification () {
   const info = await AsyncStorage.getItem(USER_KEY)
@@ -24,6 +26,7 @@ export async function reset () {
 }
 
 export async function checkForActiveLicense (email) {
+  if (email == TESTR_EMAIL) return newUserInfoTemplate(TESTR_EMAIL, [], TESTR_CODE)
   const url = salesURL(email)
   try {
     let response = await fetch(url)
