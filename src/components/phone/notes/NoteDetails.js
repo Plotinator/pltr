@@ -11,13 +11,14 @@ import SaveButton from '../../ui/SaveButton'
 import AttachmentList from '../../shared/attachments/AttachmentList'
 
 class NoteDetails extends Component {
+  state = {}
   static getDerivedStateFromProps (props, state) {
     const { route, notes } = props
     const { isNewNote, note } = route.params
     return {
-      isNewNote: isNewNote,
-      note: isNewNote ? cloneDeep(initialState.note) : notes.find(n => n.id == note.id),
-      changes: isNewNote,
+      isNewNote: state.isNewNote || isNewNote,
+      note: state.note || (isNewNote ? cloneDeep(initialState.note) : notes.find(n => n.id == note.id)),
+      changes: state.changes || isNewNote,
     }
   }
 
@@ -61,6 +62,7 @@ class NoteDetails extends Component {
 
   render () {
     const { note } = this.state
+    console.log('NOTE', note.title)
     return <Container>
       <Content style={styles.content}>
         <Form style={styles.form}>

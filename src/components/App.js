@@ -23,7 +23,7 @@ const App = () => {
 
     async function fetchUserInfo() {
       // DEV: use the following to reset user info/verification
-      await reset()
+      // await reset()
       const fetchedInfo = await getUserVerification()
       // console.log('USER_INFO', fetchedInfo)
       if (!ignore) setUserInfo(fetchedInfo)

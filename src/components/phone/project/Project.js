@@ -61,7 +61,7 @@ class Project extends Component {
   renderItem = ({item}) => {
     if (item.id == 'series') return this.renderSeries(item)
 
-    return <Book book={item} navigateToOutline={navigateToOutline} navigateToDetails={this.navigateToDetails} />
+    return <Book book={item} navigateToOutline={this.navigateToOutline} navigateToDetails={this.navigateToDetails} />
   }
 
   render () {

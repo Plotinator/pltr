@@ -1,8 +1,9 @@
 import React from 'react'
 import { H3, View, Text, Button, Icon } from 'native-base'
-import { SafeAreaView, StyleSheet, Linking } from 'react-native'
+import { SafeAreaView, StyleSheet, Linking, Image } from 'react-native'
 import { getVersion } from 'react-native-device-info'
 import t from 'format-message'
+import images from '../../../images'
 
 export default function SideBar (props) {
   const goToDocs = () => {
@@ -17,9 +18,8 @@ export default function SideBar (props) {
   return <View style={{flex: 1, backgroundColor: 'hsl(210, 36%, 96%)'}}>
     <SafeAreaView style={{flex: 1}}>
       <View style={styles.wrapper}>
-        <H3>{t('Plottr')}</H3>
         <View>
-          <Text>[Logo Here]</Text>
+          <Image source={images.logo23_small} />
         </View>
         <View style={styles.buttonWrapper}>
           <Button iconLeft info style={styles.button} onPress={props.closeFile}><Icon type='FontAwesome5' name='times-circle'/><Text>{t('Close File')}</Text></Button>
