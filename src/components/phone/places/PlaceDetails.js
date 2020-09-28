@@ -11,19 +11,20 @@ import SaveButton from '../../ui/SaveButton'
 import AttachmentList from '../../shared/attachments/AttachmentList'
 
 class PlaceDetails extends Component {
+  state = {}
   static getDerivedStateFromProps (props, state) {
     const { route, customAttributes, places } = props
     const { isNewPlace, place } = route.params
-    let placeObj = isNewPlace ? cloneDeep(initialState.place) : places.find(pl => pl.id == place.id)
-    let customAttrs = customAttributes.reduce((acc, attr) => {
+    let placeObj = state.place || (isNewPlace ? cloneDeep(initialState.place) : places.find(pl => pl.id == place.id))
+    let customAttrs = state.customAttrs || customAttributes.reduce((acc, attr) => {
       acc[attr.name] = placeObj[attr.name]
       return acc
     }, {})
     return {
-      isNewPlace: isNewPlace,
+      isNewPlace: state.isNewPlace || isNewPlace,
       place: placeObj,
       customAttrs: customAttrs,
-      changes: isNewPlace,
+      changes: state.changes || isNewPlace,
     }
   }
 

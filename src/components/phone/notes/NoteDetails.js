@@ -4,11 +4,12 @@ import PropTypes from 'react-proptypes'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import t from 'format-message'
-import { Container, Content, Form, Input, Label, Item } from 'native-base'
+import { Container, Content, Form, Input, Label, Item, View } from 'native-base'
 import { actions, selectors, initialState } from 'pltr/v2'
 import { StyleSheet } from 'react-native'
 import SaveButton from '../../ui/SaveButton'
 import AttachmentList from '../../shared/attachments/AttachmentList'
+import RichTextEditor from '../../ui/RichTextEditor'
 
 class NoteDetails extends Component {
   state = {}
@@ -62,9 +63,8 @@ class NoteDetails extends Component {
 
   render () {
     const { note } = this.state
-    console.log('NOTE', note.title)
-    return <Container>
-      <Content style={styles.content}>
+    return <Container style={{flex: 1}}>
+      <Content style={styles.content} contentContainerStyle={{flex: 1}}>
         <Form style={styles.form}>
           <Item inlineLabel last regular style={styles.label}>
             <Label>{t('Title')}</Label>
@@ -75,9 +75,14 @@ class NoteDetails extends Component {
             />
           </Item>
           { this.renderAttachments() }
-          <Item inlineLabel last regular style={[styles.label, styles.afterList]}>
+          <View style={[styles.afterList, { flex: 1 }]}>
             <Label>{t('Content')}</Label>
-          </Item>
+            <RichTextEditor
+              initialValue={note.content}
+              style={styles.rce}
+              onChange={val => this.setState({note: {...note, content: val}, changes: true}) }
+            />
+          </View>
         </Form>
       </Content>
     </Container>
@@ -95,11 +100,14 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   form: {
+    flex: 1,
     marginVertical: 16,
   },
   badge: {
     marginRight: 8,
-  }
+  },
+  rce: {
+  },
 })
 
 NoteDetails.propTypes = {

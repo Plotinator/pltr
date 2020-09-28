@@ -12,27 +12,20 @@ import AttachmentList from '../../shared/attachments/AttachmentList'
 import CategoryPicker from '../../ui/CategoryPicker'
 
 class CharacterDetails extends Component {
+  state = {}
   static getDerivedStateFromProps (props, state) {
     const { route, customAttributes, characters } = props
     const { isNewCharacter, character } = route.params
-    let characterObj = isNewCharacter ? cloneDeep(initialState.character) : characters.find(ch => ch.id == character.id)
-    let customAttrs = customAttributes.reduce((acc, attr) => {
+    let characterObj = state.character || (isNewCharacter ? cloneDeep(initialState.character) : characters.find(ch => ch.id == character.id))
+    let customAttrs = state.customAttrs || customAttributes.reduce((acc, attr) => {
       acc[attr.name] = characterObj[attr.name]
       return acc
     }, {})
-    let templateAttrs = characterObj.templates.reduce((acc, t) => {
-      acc[t.id] = t.attributes.reduce((obj, attr) => {
-        obj[attr.name] = attr.value
-        return obj
-      }, {})
-      return acc
-    }, {})
     return {
-      isNewCharacter: isNewCharacter,
-      templateAttrs: templateAttrs,
+      isNewCharacter: state.isNewCharacter || isNewCharacter,
       customAttrs: customAttrs,
       character: characterObj,
-      changes: isNewCharacter,
+      changes: state.changes || isNewCharacter,
     }
   }
 
@@ -51,14 +44,14 @@ class CharacterDetails extends Component {
   }
 
   saveChanges = () => {
-    const { changes, isNewCharacter, character, customAttrs, templates } = this.state
+    const { changes, isNewCharacter, character, customAttrs } = this.state
     if (!changes) return
     const values = {
       name: character.name,
       description: character.description,
       notes: character.notes,
       categoryId: character.categoryId,
-      templates: templates,
+      templates: character.templates,
       ...customAttrs,
     }
     if (isNewCharacter) {
@@ -68,6 +61,25 @@ class CharacterDetails extends Component {
       this.props.actions.editCharacter(character.id, values)
     }
     this.setState({isNewCharacter: false, changes: false})
+  }
+
+  updateTemplateValue = (tId, attr, newValue) => {
+    const { character } = this.state
+    const newTemplates = character.templates.map(t => {
+      if (t.id == tId) {
+        t.attributes = t.attributes.map(at => {
+          if (at.name == attr) {
+            at.value == newValue
+          } else {
+            return at
+          }
+        })
+      } else {
+        return t
+      }
+    })
+
+    this.setState({character: {...character, templates: newTemplates}, changes: true})
   }
 
   changeCategory = (val) => {
@@ -98,7 +110,7 @@ class CharacterDetails extends Component {
             <Label>{attr.name}</Label>
             <Input
               value={attr.value}
-              onChangeText={text => this.setState({templateAttrs: {...templateAttrs, [attr.name]: text}, changes: true})}
+              onChangeText={text => this.updateTemplateValue(t.id, attr.name, text)}
               autoCapitalize='sentences'
             />
           </Item>
