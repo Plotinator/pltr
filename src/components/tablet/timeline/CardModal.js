@@ -10,6 +10,8 @@ import t from 'format-message'
 import AttachmentList from '../../shared/attachments/AttachmentList'
 import ChapterPicker from '../../ui/ChapterPicker'
 import LinePicker from '../../ui/LinePicker'
+import RichTextEditor from '../../ui/RichTextEditor'
+import { DetailsWrapper, DetailsRight, DetailsLeft } from '../shared/Details'
 
 // cooresponds to CardDialog in desktop
 
@@ -74,46 +76,46 @@ class CardModal extends Component {
     return <Modal visible={true} animationType='slide' transparent={true} onDismiss={this.props.onClose} onRequestClose={this.props.onClose}>
       <View style={styles.centered} elevation={10}>
         <View style={styles.contentWrapper}>
-          <View style={styles.content} >
-            <Form style={styles.form}>
-              <View style={styles.formLeft}>
-                <Item inlineLabel last style={styles.label}>
-                  <Label>{t('Title')}</Label>
-                  <Input
-                    value={card.title}
-                    onChangeText={text => this.setState({card: {...card, title: text}, changes: true})}
-                    autoCapitalize='sentences'
-                  />
-                </Item>
-                <Item inlineLabel last regular style={[styles.label]}>
-                  <Label>{t('Description')}</Label>
-                </Item>
+          <DetailsWrapper>
+            <DetailsLeft contentContainerStyle={{flex: 1}}>
+              <Item inlineLabel last style={styles.label}>
+                <Label>{t('Title')}</Label>
+                <Input
+                  value={card.title}
+                  onChangeText={text => this.setState({card: {...card, title: text}, changes: true})}
+                  autoCapitalize='sentences'
+                />
+              </Item>
+              <View style={[styles.afterList, { flex: 1 }]}>
+                <Label>{t('Description')}</Label>
+                <RichTextEditor
+                  initialValue={card.description}
+                  onChange={val => this.setState({card: {...card, description: val}, changes: true}) }
+                />
               </View>
-              <View style={styles.formRight}>
-                <View style={styles.formRightInner}>
-                  <View>
-                    <View style={styles.buttonWrapper}>
-                      <Button rounded light style={styles.button} onPress={this.props.onClose}><Icon type='FontAwesome5' name='times'/></Button>
-                    </View>
-                    <View style={styles.formRightItems}>
-                      <Item fixedLabel style={styles.label}>
-                        <Label>{t('Chapter')}</Label>
-                        <ChapterPicker selectedId={card.chapterId} onChange={this.changeChapter} />
-                      </Item>
-                      <Item fixedLabel style={styles.label}>
-                        <Label>{t('Plotline')}</Label>
-                        <LinePicker selectedId={card.lineId} onChange={this.changeLine} />
-                      </Item>
-                      { this.renderAttachments() }
-                    </View>
-                  </View>
-                  <View style={styles.buttonFooter}>
-                    <Button block success disabled={!changes} onPress={this.saveChanges}><Text>{t('Save')}</Text></Button>
-                  </View>
+            </DetailsLeft>
+            <DetailsRight>
+              <View>
+                <View style={styles.buttonWrapper}>
+                  <Button rounded light style={styles.button} onPress={this.props.onClose}><Icon type='FontAwesome5' name='times'/></Button>
+                </View>
+                <View style={styles.formRightItems}>
+                  <Item fixedLabel style={styles.label}>
+                    <Label>{t('Chapter')}</Label>
+                    <ChapterPicker selectedId={card.chapterId} onChange={this.changeChapter} />
+                  </Item>
+                  <Item fixedLabel style={styles.label}>
+                    <Label>{t('Plotline')}</Label>
+                    <LinePicker selectedId={card.lineId} onChange={this.changeLine} />
+                  </Item>
+                  { this.renderAttachments() }
                 </View>
               </View>
-            </Form>
-          </View>
+              <View style={styles.buttonFooter}>
+                <Button block success disabled={!changes} onPress={this.saveChanges}><Text>{t('Save')}</Text></Button>
+              </View>
+            </DetailsRight>
+          </DetailsWrapper>
         </View>
       </View>
     </Modal>
@@ -130,15 +132,6 @@ const styles = StyleSheet.create({
   contentWrapper: {
     width: '85%',
     height: '80%',
-    backgroundColor: 'white',
-    borderRadius: 20,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
-    shadowOpacity: 0.34,
-    shadowRadius: 6.27,
   },
   buttonWrapper: {
     flexDirection: 'row',
@@ -162,7 +155,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   afterList: {
-    marginTop: 16,
+    marginTop: 4,
   },
   form: {
     flex: 1,

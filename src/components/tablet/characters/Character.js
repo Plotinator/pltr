@@ -4,6 +4,7 @@ import { View, Input, Label, Item, Text, Button } from 'native-base'
 import { StyleSheet, ScrollView } from 'react-native'
 import AttachmentList from '../../shared/attachments/AttachmentList'
 import { DetailsWrapper, DetailsLeft, DetailsRight } from '../shared/Details'
+import RichTextEditor from '../../ui/RichTextEditor'
 
 export default function Character (props) {
   const { character, customAttributes } = props
@@ -32,14 +33,12 @@ export default function Character (props) {
       if (t.id == tId) {
         t.attributes = t.attributes.map(at => {
           if (at.name == attr) {
-            at.value == newValue
-          } else {
-            return at
+            at.value = newValue
           }
+          return at
         })
-      } else {
-        return t
       }
+      return t
     })
 
     setWorkingCopy({...workingCopy, templates: newTemplates})
@@ -50,9 +49,14 @@ export default function Character (props) {
     return workingCopy.templates.flatMap(t => {
       return t.attributes.map(attr => {
         if (attr.type == 'paragraph') {
-          return <Item key={attr.name} inlineLabel last regular style={styles.label}>
-            <Label>{attr.name}{' RCE'}</Label>
-          </Item>
+          const height = attr.value ? 100 * attr.value.length : 150
+          return <View key={attr.name} style={[styles.afterList, { height: height, minHeight: 150, marginBottom: 32 }]}>
+            <Label>{attr.name}</Label>
+            <RichTextEditor
+              initialValue={attr.value}
+              onChange={val => updateTemplateValue(t.id, attr.name, val)}
+            />
+          </View>
         } else {
           return <Item key={attr.name} inlineLabel style={styles.label}>
             <Label>{attr.name}</Label>
@@ -71,9 +75,16 @@ export default function Character (props) {
     return customAttributes.map((attr, idx) => {
       const { name, type } = attr
       if (type == 'paragraph') {
-        return <Item key={idx} inlineLabel last regular style={styles.label}>
-          <Label>{name}{' RCE'}</Label>
-        </Item>
+        return <View key={idx} style={[styles.afterList, { height: 300, marginBottom: 32 }]}>
+          <Label>{name}</Label>
+          <RichTextEditor
+            initialValue={workingCA[name]}
+            onChange={val => {
+              setWorkingCA({...workingCA, [name]: val})
+              makeChanges(true)
+            }}
+          />
+        </View>
       } else {
         return <Item key={idx} inlineLabel style={styles.label}>
           <Label>{name}</Label>
@@ -123,9 +134,16 @@ export default function Character (props) {
           autoCapitalize='sentences'
         />
       </Item>
-      <Item inlineLabel last regular style={[styles.label, styles.afterList]}>
-        <Label>{t('Notes')}{' RCE'}</Label>
-      </Item>
+      <View style={[styles.afterList, { height: 100 * character.notes.length, minHeight: 150, marginBottom: 32 }]}>
+        <Label>{t('Notes')}</Label>
+        <RichTextEditor
+          initialValue={character.notes}
+          onChange={val => {
+            setWorkingCopy({...workingCopy, notes: val})
+            makeChanges(true)
+          }}
+        />
+      </View>
       { renderTemplates() }
       { renderCustomAttributes() }
     </DetailsLeft>

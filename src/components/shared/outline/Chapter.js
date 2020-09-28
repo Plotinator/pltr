@@ -8,7 +8,7 @@ import cx from 'classnames'
 import { selectors, actions, cardHelpers, listHelpers, chapterHelpers } from 'pltr/v2'
 import { H3, Icon, Card, CardItem, View, Button, Text } from 'native-base'
 import { SwipeRow } from 'react-native-swipe-list-view'
-import SceneCard from '../../phone/outline/SceneCard'
+import SceneCard from './SceneCard'
 import { StyleSheet } from 'react-native'
 import AddButton from '../../ui/AddButton'
 import TrashButton from '../../ui/TrashButton'
@@ -79,7 +79,9 @@ class Chapter extends Component {
   }
 
   renderCards () {
-    return this.state.sortedCards.map((c, idx) => <SceneCard key={c.id} card={c} index={idx} reorder={this.reorderCards} navigation={this.props.navigation}/>)
+    return this.state.sortedCards.map((c, idx) => {
+      return <SceneCard key={c.id} card={c} index={idx} reorder={this.reorderCards} navigation={this.props.navigation}/>
+    })
   }
 
   render () {

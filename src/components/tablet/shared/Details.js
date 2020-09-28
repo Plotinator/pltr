@@ -18,7 +18,7 @@ export function DetailsWrapper (props) {
 }
 
 export function DetailsLeft (props) {
-  return <View style={styles.formLeft}><ScrollView>{ props.children }</ScrollView></View>
+  return <View style={styles.formLeft}><ScrollView contentContainerStyle={props.contentContainerStyle}>{ props.children }</ScrollView></View>
 }
 
 export function DetailsRight (props) {

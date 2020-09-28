@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import PropTypes from 'react-proptypes'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Text, Container, Content, H1, H2, Form, Input, Label, Item, Button, Picker, List, Left, Right, Badge, View, ListItem, Body, Icon } from 'native-base'
+import { Container, Content, Form, Input, Label, Item, View } from 'native-base'
 import { selectors, actions, initialState } from 'pltr/v2'
 import { StyleSheet } from 'react-native'
 import t from 'format-message'
@@ -11,6 +11,7 @@ import ChapterPicker from '../../ui/ChapterPicker'
 import LinePicker from '../../ui/LinePicker'
 import SaveButton from '../../ui/SaveButton'
 import AttachmentList from '../../shared/attachments/AttachmentList'
+import RichTextEditor from '../../ui/RichTextEditor'
 
 // cooresponds to CardDialog in desktop
 
@@ -89,8 +90,8 @@ class SceneDetails extends Component {
 
   render () {
     const { card } = this.state
-    return <Container>
-      <Content style={styles.content}>
+    return <Container style={{flex: 1}}>
+      <Content style={styles.content} contentContainerStyle={{flex: 1}}>
         <Form style={styles.form}>
           <Item inlineLabel last regular style={styles.label}>
             <Label>{t('Title')}</Label>
@@ -109,9 +110,13 @@ class SceneDetails extends Component {
             <LinePicker selectedId={card.lineId} onChange={this.changeLine} />
           </Item>
           { this.renderAttachments() }
-          <Item inlineLabel last regular style={[styles.label, styles.afterList]}>
+          <View style={[styles.afterList, { flex: 1 }]}>
             <Label>{t('Description')}</Label>
-          </Item>
+            <RichTextEditor
+              initialValue={card.description}
+              onChange={val => this.setState({card: {...card, description: val}, changes: true}) }
+            />
+          </View>
         </Form>
       </Content>
     </Container>
@@ -129,6 +134,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   form: {
+    flex: 1,
     marginVertical: 16,
   },
   badge: {

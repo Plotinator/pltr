@@ -4,11 +4,12 @@ import PropTypes from 'react-proptypes'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import t from 'format-message'
-import { Container, Content, Form, Input, Label, Item } from 'native-base'
+import { Container, Content, Form, Input, Label, Item, View } from 'native-base'
 import { actions, selectors, initialState } from 'pltr/v2'
 import { StyleSheet } from 'react-native'
 import SaveButton from '../../ui/SaveButton'
 import AttachmentList from '../../shared/attachments/AttachmentList'
+import RichTextEditor from '../../ui/RichTextEditor'
 
 class PlaceDetails extends Component {
   state = {}
@@ -78,9 +79,13 @@ class PlaceDetails extends Component {
     return customAttributes.map((attr, idx) => {
       const { name, type } = attr
       if (type == 'paragraph') {
-        return <Item key={idx} inlineLabel last regular style={styles.label}>
-          <Label>{name}{' RCE'}</Label>
-        </Item>
+        return <View key={idx} style={[styles.afterList, { height: 300, marginBottom: 32 }]}>
+          <Label>{name}</Label>
+          <RichTextEditor
+            initialValue={customAttrs[name]}
+            onChange={val => this.setState({customAttrs: {...customAttrs, [name]: val}, changes: true}) }
+          />
+        </View>
       } else {
         return <Item key={idx} inlineLabel last regular style={styles.label}>
           <Label>{name}</Label>
@@ -96,7 +101,7 @@ class PlaceDetails extends Component {
 
   render () {
     const { place } = this.state
-    return <Container>
+    return <Container style={{flex: 1}}>
       <Content style={styles.content}>
         <Form style={styles.form}>
           <Item inlineLabel last regular style={styles.label}>
@@ -116,9 +121,13 @@ class PlaceDetails extends Component {
             />
           </Item>
           { this.renderAttachments() }
-          <Item inlineLabel last regular style={[styles.label, styles.afterList]}>
-            <Label>{t('Notes')}{' RCE'}</Label>
-          </Item>
+          <View style={[styles.afterList, { height: 100 * place.notes.length, minHeight: 150, marginBottom: 32 }]}>
+            <Label>{t('Notes')}</Label>
+            <RichTextEditor
+              initialValue={place.notes}
+              onChange={val => this.setState({place: {...place, notes: val}, changes: true}) }
+            />
+          </View>
           { this.renderCustomAttributes() }
         </Form>
       </Content>
@@ -137,6 +146,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   form: {
+    flex: 1,
     marginVertical: 16,
   },
   badge: {

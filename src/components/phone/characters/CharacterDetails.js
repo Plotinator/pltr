@@ -10,6 +10,7 @@ import { StyleSheet } from 'react-native'
 import SaveButton from '../../ui/SaveButton'
 import AttachmentList from '../../shared/attachments/AttachmentList'
 import CategoryPicker from '../../ui/CategoryPicker'
+import RichTextEditor from '../../ui/RichTextEditor'
 
 class CharacterDetails extends Component {
   state = {}
@@ -69,14 +70,12 @@ class CharacterDetails extends Component {
       if (t.id == tId) {
         t.attributes = t.attributes.map(at => {
           if (at.name == attr) {
-            at.value == newValue
-          } else {
-            return at
+            at.value = newValue
           }
+          return at
         })
-      } else {
-        return t
       }
+      return t
     })
 
     this.setState({character: {...character, templates: newTemplates}, changes: true})
@@ -102,9 +101,14 @@ class CharacterDetails extends Component {
     return this.state.character.templates.flatMap(t => {
       return t.attributes.map(attr => {
         if (attr.type == 'paragraph') {
-          return <Item key={attr.name} inlineLabel last regular style={styles.label}>
-            <Label>{attr.name}{' RCE'}</Label>
-          </Item>
+          const height = attr.value ? 100 * attr.value.length : 150
+          return <View key={attr.name} style={[styles.afterList, {height: height, minHeight: 150, marginBottom: 32}]}>
+            <Label>{attr.name}</Label>
+            <RichTextEditor
+              initialValue={attr.value}
+              onChange={val => this.updateTemplateValue(t.id, attr.name, val) }
+            />
+          </View>
         } else {
           return <Item key={attr.name} inlineLabel last regular style={styles.label}>
             <Label>{attr.name}</Label>
@@ -125,9 +129,14 @@ class CharacterDetails extends Component {
     return customAttributes.map((attr, idx) => {
       const { name, type } = attr
       if (type == 'paragraph') {
-        return <Item key={idx} inlineLabel last regular style={styles.label}>
-          <Label>{name}{' RCE'}</Label>
-        </Item>
+        return <View key={idx} style={[styles.afterList, {height: 300, marginBottom: 32}]}>
+          <Label>{name}</Label>
+          <RichTextEditor
+            initialValue={customAttrs[name]}
+            style={styles.rce}
+            onChange={val => this.setState({customAttrs: {...customAttrs, [name]: val}, changes: true}) }
+          />
+        </View>
       } else {
         return <Item key={idx} inlineLabel last regular style={styles.label}>
           <Label>{name}</Label>
@@ -143,7 +152,7 @@ class CharacterDetails extends Component {
 
   render () {
     const { character } = this.state
-    return <Container>
+    return <Container style={{flex: 1}}>
       <Content style={styles.content}>
         <Form style={styles.form}>
           <Item inlineLabel last regular style={styles.label}>
@@ -167,9 +176,13 @@ class CharacterDetails extends Component {
             <CategoryPicker type='characters' selectedId={character.categoryId} onChange={this.changeCategory} />
           </Item>
           { this.renderAttachments() }
-          <Item inlineLabel last regular style={[styles.label, styles.afterList]}>
-            <Label>{t('Notes')}{' RCE'}</Label>
-          </Item>
+          <View style={[styles.afterList, {height: 100 * character.notes.length, minHeight: 150, marginBottom: 32}]}>
+            <Label>{t('Notes')}</Label>
+            <RichTextEditor
+              initialValue={character.notes}
+              onChange={val => this.setState({character: {...character, notes: val}, changes: true}) }
+            />
+          </View>
           { this.renderTemplates() }
           { this.renderCustomAttributes() }
         </Form>
@@ -189,6 +202,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
   form: {
+    flex: 1,
     marginVertical: 16,
   },
   badge: {

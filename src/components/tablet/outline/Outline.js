@@ -89,6 +89,7 @@ class Outline extends Component {
       keyExtractor={item => item.id.toString()}
       contentContainerStyle={styles.outline}
       ref={(ref) => { this.outlineListRef = ref }}
+      initialNumToRender={2}
     />
   }
 

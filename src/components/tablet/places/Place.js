@@ -4,6 +4,7 @@ import { View, Input, Label, Item, Text, Button } from 'native-base'
 import { StyleSheet } from 'react-native'
 import AttachmentList from '../../shared/attachments/AttachmentList'
 import { DetailsWrapper, DetailsLeft, DetailsRight } from '../shared/Details'
+import RichTextEditor from '../../ui/RichTextEditor'
 
 export default function Place (props) {
   const { place, customAttributes } = props
@@ -30,9 +31,16 @@ export default function Place (props) {
     return customAttributes.map((attr, idx) => {
       const { name, type } = attr
       if (type == 'paragraph') {
-        return <Item key={idx} inlineLabel last regular style={styles.label}>
-          <Label>{name}{' RCE'}</Label>
-        </Item>
+        return <View key={idx} style={[styles.afterList, { height: 300, marginBottom: 32 }]}>
+          <Label>{name}</Label>
+          <RichTextEditor
+            initialValue={workingCA[name]}
+            onChange={val => {
+              setWorkingCA({...workingCA, [name]: val})
+              makeChanges(true)
+            }}
+          />
+        </View>
       } else {
         return <Item key={idx} inlineLabel style={styles.label}>
           <Label>{name}</Label>
@@ -82,9 +90,16 @@ export default function Place (props) {
           autoCapitalize='sentences'
         />
       </Item>
-      <Item inlineLabel last regular style={[styles.label, styles.afterList]}>
-        <Label>{t('Notes')}{' RCE'}</Label>
-      </Item>
+      <View style={[styles.afterList, { height: 100 * workingCopy.notes.length, minHeight: 150, marginBottom: 32 }]}>
+        <Label>{t('Notes')}</Label>
+        <RichTextEditor
+          initialValue={workingCopy.notes}
+          onChange={val => {
+            setWorkingCopy({...workingCopy, notes: val})
+            makeChanges(true)
+          }}
+        />
+      </View>
       { renderCustomAttributes() }
     </DetailsLeft>
     <DetailsRight>

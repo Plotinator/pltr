@@ -6,6 +6,10 @@ import t from 'format-message'
 import { selectors, actions } from 'pltr/v2'
 import { Card, CardItem, Text, View, Body, Left, Right } from 'native-base'
 import { StyleSheet } from 'react-native'
+import { isTablet } from 'react-native-device-info'
+import RichTextEditor from '../../ui/RichTextEditor'
+
+const isOnTablet = isTablet()
 
 class SceneCard extends Component {
 
@@ -13,19 +17,28 @@ class SceneCard extends Component {
     this.props.navigation.navigate('SceneDetails', {card: this.props.card})
   }
 
+  renderDescription () {
+    if (!isOnTablet) return null
+    const { card } = this.props
+
+    return <View style={{height: 100 * card.description.length, padding: 16}}>
+      <RichTextEditor
+        initialValue={card.description}
+        onChange={() => {}}
+        readOnly
+      />
+    </View>
+  }
+
   render () {
-    const { line, ui, card } = this.props
+    const { line, card } = this.props
     const lineColor = {color: line.color, fontSize: 12}
     return <Card style={[styles.card, {borderColor: line.color}]}>
-      <CardItem button onPress={this.navigateToDetails} style={styles.cardTitle}>
-        <Text>{card.title}</Text>
-        <Text style={lineColor}>({line.title})</Text>
+      <CardItem button={isOnTablet} onPress={isOnTablet ? null : this.navigateToDetails}>
+        <Left><Text>{card.title}</Text></Left>
+        <Right><Text style={lineColor}>({line.title})</Text></Right>
       </CardItem>
-      <CardItem button onPress={this.navigateToDetails}>
-        <Body>
-          <Text note>Description</Text>
-        </Body>
-      </CardItem>
+      { this.renderDescription() }
     </Card>
   }
 }
@@ -35,11 +48,6 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 8,
   },
-  cardTitle: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  }
 })
 
 SceneCard.propTypes = {

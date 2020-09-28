@@ -12,7 +12,7 @@ export function chooseIcon (routeName) {
     case 'Characters':
       return 'users'
     case 'Places':
-      return 'globe-europe'
+      return 'globe-americas'
     case 'Tags':
       return 'tags'
     default:
