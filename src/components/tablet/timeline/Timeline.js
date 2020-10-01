@@ -8,6 +8,8 @@ import ChapterTitleCell from './ChapterTitleCell'
 import { BlankCell } from './BlankCell'
 import { Cell } from '../../ui/Cell'
 import { CardCell } from './CardCell'
+import { TouchableOpacity } from 'react-native-gesture-handler'
+import ColorPickerModal from '../shared/ColorPickerModal'
 
 const CELL_WIDTH = 150
 const CELL_HEIGHT = 93
@@ -25,15 +27,25 @@ class Timeline extends Component {
       [{ nativeEvent: { contentOffset: { x: this.scrollPosition } } }],
       { useNativeDriver: false },
     )
-    this.state = {lineMapKeys: {}}
+    this.state = {lineMapKeys: {}, showColorPicker: false}
   }
 
   static getDerivedStateFromProps (props, state) {
     const { lineMap } = props
     return {
       lineMapKeys: Object.keys(lineMap),
+      showColorPicker: state.showColorPicker,
     }
   }
+
+  componentDidMount() {
+    this.listener = this.scrollPosition.addListener(position => {
+      this.headerScrollView.scrollTo({ x: position.value, animated: false })
+    })
+  }
+
+  showColorPicker = () => this.setState({showColorPicker: true})
+  hideColorPicker = () => this.setState({showColorPicker: false})
 
   handleScroll = e => {
     console.log('HANDLE SCROLL')
@@ -43,9 +55,17 @@ class Timeline extends Component {
     }
   }
 
+  renderColorPicker () {
+    if (!this.state.showColorPicker) return null
+
+    return <ColorPickerModal onClose={this.hideColorPicker} chooseColor={this.hideColorPicker}/>
+  }
+
   renderLineTitle (id, title) {
     return <Cell key={id} style={styles.lineTitleCell}>
-      <Text style={styles.lineTitle}>{title}</Text>
+      <TouchableOpacity onPress={this.showColorPicker}>
+        <Text style={styles.lineTitle}>{title}</Text>
+      </TouchableOpacity>
     </Cell>
   }
 
@@ -140,12 +160,6 @@ class Timeline extends Component {
     return item.render
   }
 
-  componentDidMount() {
-    this.listener = this.scrollPosition.addListener(position => {
-      this.headerScrollView.scrollTo({ x: position.value, animated: false })
-    })
-  }
-
   render () {
     let body = this.renderBody()
     let data = [{ key: "body", render: body }]
@@ -153,6 +167,7 @@ class Timeline extends Component {
     return (
       <View style={styles.container}>
         {this.renderChapterTitles()}
+        { this.renderColorPicker()}
         <FlatList
           data={data}
           renderItem={this.renderMainRow}

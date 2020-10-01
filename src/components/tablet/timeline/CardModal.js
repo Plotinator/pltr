@@ -3,9 +3,9 @@ import React, { Component } from 'react'
 import PropTypes from 'react-proptypes'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { View, Text, Container, Content, Form, Input, Label, Item, Button, Icon } from 'native-base'
+import { View, Text, Input, Label, Item, Button, Icon } from 'native-base'
 import { selectors, actions, initialState } from 'pltr/v2'
-import { StyleSheet, Modal, KeyboardAvoidingView, InputAccessoryView } from 'react-native'
+import { StyleSheet, Modal } from 'react-native'
 import t from 'format-message'
 import AttachmentList from '../../shared/attachments/AttachmentList'
 import ChapterPicker from '../../ui/ChapterPicker'
@@ -148,41 +148,15 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderColor: '#f4f4f4',
   },
-  content: {
-    flex: 1,
-  },
   label: {
     marginBottom: 16,
   },
   afterList: {
     marginTop: 4,
   },
-  form: {
-    flex: 1,
-    flexDirection: 'row',
-  },
-  formRight: {
-    flex: 0.25,
-    paddingLeft: 8,
-    borderTopRightRadius: 20,
-    borderBottomRightRadius: 20,
-    backgroundColor: 'hsl(210, 36%, 96%)', //gray-9
-  },
-  formRightInner: {
-    height: '100%',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-  },
   formRightItems: {
     paddingRight: 8,
   },
-  formLeft: {
-    flex: 0.75,
-    paddingHorizontal: 16,
-  },
-  badge: {
-    marginRight: 8,
-  }
 })
 
 CardModal.propTypes = {

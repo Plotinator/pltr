@@ -3,7 +3,8 @@
  */
 
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, View, StatusBar } from 'react-native'
+import { StyleSheet, View, StatusBar, Linking, NativeModules } from 'react-native'
+const { DocumentBrowser } = NativeModules
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 import { Content, Text, H1, H2, Form, Item, Input, Button, Label, Spinner, Toast, Root, Container } from 'native-base'
 import { checkForActiveLicense, getUserVerification, verifyUser, reset } from '../utils/user_info'
@@ -26,6 +27,10 @@ const App = () => {
       // await reset()
       const fetchedInfo = await getUserVerification()
       // console.log('USER_INFO', fetchedInfo)
+      if (!fetchedInfo) {
+        // TODO: handle Android
+        DocumentBrowser.closeBrowser()
+      }
       if (!ignore) setUserInfo(fetchedInfo)
     }
 
@@ -91,11 +96,11 @@ const App = () => {
     return (
       <Container>
         <Content style={styles.content}>
-          <H1 style={styles.header}>Welcome to Plottr!</H1>
-          <H2 style={styles.header}>Let's verify your license</H2>
+          <H1 style={styles.header}>{t('Welcome to Plottr!')}</H1>
+          <H2 style={styles.header}>{t("Let's verify your license")}</H2>
           <Form style={styles.form}>
             <Item inlineLabel last regular style={styles.label}>
-              <Label>Email</Label>
+              <Label>{t('Email')}</Label>
               <Input
                 key='email'
                 onChangeText={text => setEmail(text)}
@@ -105,11 +110,22 @@ const App = () => {
               />
             </Item>
             <Button block primary onPress={verifyLicense}>
-              <Text>Check</Text>
+              <Text>{t('Check')}</Text>
               {verifying ? <Spinner color='white' /> : null}
             </Button>
           </Form>
-          <Text>This will send you an email with a code</Text>
+          <Text>{t('This will send you an email with a code')}</Text>
+          <View style={styles.ourWebsiteWrapper}>
+            <Text style={styles.ourWebsiteText}>{t("Don't have a license? Go to our website to learn more")}</Text>
+            <Button
+              transparent
+              large
+              onPress={() => Linking.openURL('https://getplottr.com')}
+              style={styles.ourWebsiteButton}
+            >
+              <Text>{t('getplottr.com')}</Text>
+            </Button>
+          </View>
         </Content>
       </Container>
     )
@@ -119,11 +135,11 @@ const App = () => {
     return (
       <Container>
         <Content style={styles.content}>
-          <H1 style={styles.header}>Welcome to Plottr!</H1>
-          <H2 style={styles.header}>Enter your verification code</H2>
+          <H1 style={styles.header}>{t('Welcome to Plottr!')}</H1>
+          <H2 style={styles.header}>{t('Enter your verification code')}</H2>
           <Form style={styles.form}>
             <Item inlineLabel last regular style={styles.label}>
-              <Label>Code</Label>
+              <Label>{t('Code')}</Label>
               <Input
                 key='code'
                 onChangeText={text => setCode(text)}
@@ -133,11 +149,11 @@ const App = () => {
               />
             </Item>
             <Button block success onPress={verifyCode}>
-              <Text>Verify</Text>
+              <Text>{t('Verify')}</Text>
               {verifying ? <Spinner color='white' /> : null}
             </Button>
           </Form>
-          <Text>You should have received an email with a code</Text>
+          <Text>{t('You should have received an email with a code')}</Text>
         </Content>
       </Container>
     )
@@ -187,6 +203,17 @@ const styles = StyleSheet.create({
   },
   form: {
     marginVertical: 16,
+  },
+  ourWebsiteWrapper: {
+    marginTop: 64,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  ourWebsiteButton: {
+    alignSelf: 'center',
+  },
+  ourWebsiteText: {
+    fontSize: 20,
   },
 })
 

@@ -13,7 +13,7 @@ if (Platform.OS === "android" && UIManager.setLayoutAnimationEnabledExperimental
   UIManager.setLayoutAnimationEnabledExperimental(true)
 }
 
-class PlotlinesModal extends Component {
+class PlotlinesScreen extends Component {
   state = {text: ''}
 
   navigateToDetails = (line) => {
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
   },
 })
 
-PlotlinesModal.propTypes = {
+PlotlinesScreen.propTypes = {
   lines: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired,
 }
@@ -118,4 +118,4 @@ function mapDispatchToProps (dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PlotlinesModal)
+)(PlotlinesScreen)

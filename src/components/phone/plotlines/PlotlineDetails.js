@@ -4,24 +4,22 @@ import PropTypes from 'react-proptypes'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import t from 'format-message'
-import { Container, Content, Form, Input, Label, Item } from 'native-base'
-import { actions, selectors, initialState } from 'pltr/v2'
-import { StyleSheet, Dimensions, View, ScrollView } from 'react-native'
+import { Container, Form, Input, Label, Item, H3, Button, View, Text } from 'native-base'
+import { actions } from 'pltr/v2'
+import { StyleSheet } from 'react-native'
 import SaveButton from '../../ui/SaveButton'
-import { ColorWheel } from 'react-native-color-wheel'
 import tinycolor from 'tinycolor2'
 
 class PlotlineDetails extends Component {
-  constructor (props) {
-    super(props)
-    const { route } = props
+  state = {}
+  static getDerivedStateFromProps (props, state) {
+    const { route, lines } = props
     const { line } = route.params
-    const color = tinycolor(line.color)
-    console.log('color.toHexString()', color.toHexString())
-    this.state = {
-      changes: false,
-      line: line,
-      color: color.toHexString(),
+    const lineFromRedux = lines.find(l => l.id == line.id)
+    return {
+      line: state.changes && state.line ? state.line : lineFromRedux,
+      changes: state.changes,
+      colorFromRedux: lineFromRedux.color,
     }
   }
 
@@ -34,57 +32,55 @@ class PlotlineDetails extends Component {
   }
 
   setSaveButton = () => {
-    console.log('setSaveButton', this.state)
     this.props.navigation.setOptions({
       headerRight: () => <SaveButton changes={this.state.changes} onPress={this.saveChanges} />
     })
   }
 
   saveChanges = () => {
-    const { changes, line, color } = this.state
+    const { changes, line } = this.state
     if (!changes) return
-    this.props.actions.editLine(line.id, line.title, color)
+    this.props.actions.editLine(line.id, line.title, line.color)
     this.setState({changes: false})
   }
 
-  setNewColor = (hsvColor) => {
-    // TODO: Fix this
-    console.log('HSV before', hsvColor.h)
-    if (hsvColor.h < 0) hsvColor.h = hsvColor.h * -1 + 100
-    console.log('HSV after', hsvColor.h)
-    const color = tinycolor(hsvColor)
-    this.setState({color: color.toHexString(), changes: true})
+  navigateToColorPicker = () => {
+    const { line, colorFromRedux } = this.state
+    this.props.navigation.push('ColorPickerModal', {type: 'line', id: line.id})
+    // conscious trade-off here
+    // this wipes out their typed color changes
+    // but options are: 1. wipe out changes, 2. wipe out knowledge of changes (couldn't save), 3. don't show picked color
+    this.setState({changes: false, line: {...line, color: colorFromRedux}})
   }
 
   render () {
-    const { line, color } = this.state
-    // copied from TagDetails
-    // TODO: when I fix it there, i'll need to fix it here too
+    const { line } = this.state
+    const colorObj = tinycolor(line.color)
+    const backgroundColor = {backgroundColor: colorObj.toHexString()}
+
     return <Container>
       <Form style={styles.form}>
         <Item inlineLabel last regular style={styles.label}>
           <Label>{t('Title')}</Label>
           <Input
             value={line.title}
-            onChangeText={text => this.setState({line: {...this.state.line, title: text}, changes: true})}
+            onChangeText={text => this.setState({line: {...line, title: text}, changes: true})}
             autoCapitalize='sentences'
           />
         </Item>
-        <Item inlineLabel last regular style={[styles.label, styles.afterList]}>
+        <Item inlineLabel last regular style={styles.label}>
           <Label>{t('Color')}</Label>
-          <View style={[styles.currentColor, {backgroundColor: color}]}></View>
+          <Input
+            value={line.color}
+            onChangeText={text => this.setState({line: {...line, color: text}, changes: true})}
+          />
         </Item>
+        <View style={styles.colorWrapper}>
+          <H3>{t('Current Color')}</H3>
+          <View style={[styles.colorSwatch, backgroundColor]} />
+          <Button bordered light style={styles.button} onPress={this.navigateToColorPicker}><Text style={styles.buttonText}>{t('Choose Color')}</Text></Button>
+        </View>
       </Form>
-      <View style={{flex: 1}}>
-        <Label style={styles.content}>{t('Change Color:')}</Label>
-        <ColorWheel
-          initialColor={color}
-          onColorChange={this.setNewColor}
-          // onColorChangeComplete={this.setNewColor}
-          style={styles.colorWheel}
-          thumbSize={30}
-        />
-      </View>
     </Container>
   }
 }
@@ -107,15 +103,30 @@ const styles = StyleSheet.create({
     height: 50,
     width: 50,
   },
-  colorWheel: {
-    width: Dimensions.get('window').width,
-    elevation: 300,
+  colorWrapper: {
+    marginTop: 8,
+    alignItems: 'center',
   },
+  colorSwatch: {
+    width: 60,
+    height: 50,
+    margin: 8,
+    borderBottomRightRadius: 10,
+    borderTopLeftRadius: 10,
+  },
+  button: {
+    alignSelf: 'center',
+    marginTop: 16,
+  },
+  buttonText: {
+    color: 'black',
+  }
 })
 
 PlotlineDetails.propTypes = {
   lines: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired,
+  navigation: PropTypes.object.isRequired,
 }
 
 function mapStateToProps (state) {

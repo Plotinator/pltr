@@ -14,7 +14,7 @@ if (Platform.OS === "android" && UIManager.setLayoutAnimationEnabledExperimental
   UIManager.setLayoutAnimationEnabledExperimental(true)
 }
 
-class CustomAttributesModal extends Component {
+class CustomAttributesScreen extends Component {
   constructor (props) {
     super(props)
     const { route } = props
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
   },
 })
 
-CustomAttributesModal.propTypes = {
+CustomAttributesScreen.propTypes = {
   customAttributes: PropTypes.array.isRequired,
   customAttributesThatCanChange: PropTypes.array,
   restrictedValues: PropTypes.array,
@@ -170,4 +170,4 @@ function mapDispatchToProps (dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CustomAttributesModal)
+)(CustomAttributesScreen)

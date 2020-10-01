@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { Container } from 'native-base'
 import { isTablet } from 'react-native-device-info'
-import { newFileState, actions } from 'pltr/v2'
+import { newFileState, actions, migrateIfNeeded } from 'pltr/v2'
 import { getStore } from '../store/configureStore'
-import APP_VERSION from '../../version'
 import RootPhoneNavigator from './phone/navigators/RootPhoneNavigator'
 import RootTabletNavigator from './tablet/navigators/RootTabletNavigator'
+import { FILE_VERSION } from '../utils/constants'
 
 export default function DocumentRoot (props) {
 
@@ -24,11 +24,14 @@ export default function DocumentRoot (props) {
       if (json.newFile) {
         // creating a new file
         const name = json.storyName.replace('.pltr', '')
-        const newFile = newFileState(name, APP_VERSION)
-        store.dispatch(actions.uiActions.loadFile(filePath, false, newFile, APP_VERSION))
+        const newFile = newFileState(name, FILE_VERSION)
+        store.dispatch(actions.uiActions.loadFile(filePath, false, newFile, FILE_VERSION))
       } else {
         // opening existing file
-        store.dispatch(actions.uiActions.loadFile(filePath, false, json, json.file.version))
+        migrateIfNeeded(FILE_VERSION, json, filePath, null, (err, migrated, resultJson) => { // TODO: backup somehow?
+          if (err) console.error(err)
+          store.dispatch(actions.uiActions.loadFile(filePath, migrated, resultJson, resultJson.file.version))
+        })
       }
     }
   }
