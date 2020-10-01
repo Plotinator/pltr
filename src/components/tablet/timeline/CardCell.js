@@ -1,35 +1,72 @@
-import React, { Component } from 'react'
-import { View, Text } from 'native-base'
+import React, { useState, useEffect, useLayoutEffect } from 'react'
+import { View, Text, Button, Icon } from 'native-base'
 import tinycolor from 'tinycolor2'
-import { StyleSheet } from 'react-native'
-import { Cell } from '../shared/Cell'
+import { StyleSheet, PanResponder, Animated, TouchableOpacity } from 'react-native'
+import Cell from '../shared/Cell'
 import CardModal from './CardModal'
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
 
-export class CardCell extends Component {
-  state = {showModal: false}
+const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity)
 
-  showCardModal = () => {
-    this.setState({showModal: true})
+export default function CardCell (props) {
+  const [showModal, setModal] = useState(false)
+  const [pan, setPan] = useState(new Animated.ValueXY())
+  const [panResponder, setResponder] = useState(null)
+  useLayoutEffect(() => {
+    // Initialize PanResponder with move handling
+    resp = PanResponder.create({
+      onStartShouldSetPanResponder: (e, gesture) => true,
+      onPanResponderMove: Animated.event([
+        null, { dx: pan.x, dy: pan.y }
+      ], {useNativeDriver: false}),
+      onPanResponderRelease: (e, gesture) => {
+        Animated.spring(pan, {
+          toValue: { x: 0, y: 0 },
+          friction: 5,
+          useNativeDriver: false,
+        }).start()
+      },
+    })
+    setResponder(resp)
+  }, [])
+
+  useEffect(() => {
+    // Add a listener for the delta value change
+    this._val = { x:0, y:0 }
+    pan.addListener((value) => this._val = value);
+    // adjusting the delta value
+    pan.setValue({ x:0, y:0})
+  }, [])
+
+  if (!panResponder) return null
+
+  const showCardModal = () => {
+    setModal(true)
   }
 
-  renderModal () {
-    if (!this.state.showModal) return null
-
-    return <CardModal card={this.props.card} navigation={this.props.navigation} onClose={() => this.setState({showModal: false})}/>
+  const renderModal = () => {
+    if (!showModal) return null
+    return <CardModal card={props.card} navigation={props.navigation} onClose={() => setModal(false)}/>
   }
 
-  render () {
-    const { color, card } = this.props
-    const colorObj = tinycolor(color)
-    const borderColor = {borderColor: colorObj.toHexString()}
-    return <Cell style={styles.cell} onPress={this.showCardModal}>
-      <View style={[styles.coloredLine, borderColor]}/>
-      <View style={[styles.cardBox, borderColor]} elevation={5}>
+  const { color, card } = props
+  const colorObj = tinycolor(color)
+  const borderColor = {borderColor: colorObj.toHexString()}
+  const panStyle = {
+    transform: pan.getTranslateTransform()
+  }
+  return <Cell style={styles.cell}>
+    <View style={[styles.coloredLine, borderColor]}/>
+    <Animated.View {...panResponder.panHandlers} style={[styles.cardBox, panStyle, borderColor]} elevation={5}>
+      <View style={styles.cardInner}>
         <Text style={styles.cardText}>{card.title}</Text>
       </View>
-      { this.renderModal() }
-    </Cell>
-  }
+      <TouchableOpacity onPress={showCardModal} style={styles.cardButton} hitSlop={{top: 20, bottom: 25, left: 25, right: 25}}>
+        <Icon type="FontAwesome5" name='pen' style={{fontSize: 12}}/>
+      </TouchableOpacity>
+    </Animated.View>
+    { renderModal() }
+  </Cell>
 }
 
 const styles = StyleSheet.create({
@@ -59,8 +96,21 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+    overflow: 'hidden',
+  },
+  cardInner: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    width: 125,
+    paddingHorizontal: 2,
+    paddingRight: 10,
   },
   cardText: {
-    flexShrink: 1,
+    flex: 1,
+    flexWrap: 'wrap',
+  },
+  cardButton: {
+    marginTop: 'auto',
+    alignSelf: 'flex-end',
   },
 })

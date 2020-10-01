@@ -8,7 +8,7 @@ import cx from 'classnames'
 import { selectors, actions, cardHelpers, listHelpers, chapterHelpers } from 'pltr/v2'
 import { H3, Icon, Card, CardItem, View, Button, Text } from 'native-base'
 import { StyleSheet } from 'react-native'
-import { Cell } from '../shared/Cell'
+import Cell from '../shared/Cell'
 
 class Chapter extends Component {
 

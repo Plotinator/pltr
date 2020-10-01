@@ -100,11 +100,11 @@ class CardModal extends Component {
                   <Button rounded light style={styles.button} onPress={this.props.onClose}><Icon type='FontAwesome5' name='times'/></Button>
                 </View>
                 <View style={styles.formRightItems}>
-                  <Item fixedLabel style={styles.label}>
+                  <Item stackedLabel style={styles.label}>
                     <Label>{t('Chapter')}</Label>
                     <ChapterPicker selectedId={card.chapterId} onChange={this.changeChapter} />
                   </Item>
-                  <Item fixedLabel style={styles.label}>
+                  <Item stackedLabel style={styles.label}>
                     <Label>{t('Plotline')}</Label>
                     <LinePicker selectedId={card.lineId} onChange={this.changeLine} />
                   </Item>

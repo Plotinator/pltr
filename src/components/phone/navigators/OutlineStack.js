@@ -31,7 +31,6 @@ export default function OutlineStack (props) {
     <Stack.Screen name='ProjectHome' component={ProjectHome}
       options={{
         title: t('Project'),
-        headerRight: () => <AddButton onPress={addBook} />,
         headerLeft: () => <DrawerButton openDrawer={props.route?.params?.openDrawer} />,
       }}
     />
