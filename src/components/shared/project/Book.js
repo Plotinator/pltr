@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Dimensions, TouchableHighlight } from 'react-native'
+import { StyleSheet, Dimensions, TouchableOpacity } from 'react-native'
 import { View, Text, Button, H1 } from 'native-base'
 import { isTablet } from 'react-native-device-info'
 import t from 'format-message'
@@ -8,7 +8,7 @@ const bookWidth = isTablet() ? (Dimensions.get('window').width * 3/16) : (Dimens
 
 export default function Book (props) {
   const { book } = props
-  return <TouchableHighlight onPress={() => props.navigateToOutline(book.id)}>
+  return <TouchableOpacity onPress={() => props.navigateToOutline(book.id)}>
     <View style={styles.cardView}>
       <View style={styles.backbone}/>
       <View style={styles.card}>
@@ -19,7 +19,7 @@ export default function Book (props) {
         </View>
       </View>
     </View>
-  </TouchableHighlight>
+  </TouchableOpacity>
 }
 
 const styles = StyleSheet.create({

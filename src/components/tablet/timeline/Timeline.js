@@ -6,13 +6,11 @@ import { bindActionCreators } from 'redux'
 import { actions, selectors, newIds, cardHelpers } from 'pltr/v2'
 import ChapterTitleCell from './ChapterTitleCell'
 import { BlankCell } from './BlankCell'
-import { Cell } from '../../ui/Cell'
+import { Cell } from '../shared/Cell'
 import { CardCell } from './CardCell'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import ColorPickerModal from '../shared/ColorPickerModal'
-
-const CELL_WIDTH = 150
-const CELL_HEIGHT = 93
+import { CELL_HEIGHT, CELL_WIDTH } from '../../../utils/constants'
 
 const black = '#000'
 const white = '#fff'
@@ -76,7 +74,7 @@ class Timeline extends Component {
   }
 
   renderCornerCell () {
-    return <Cell key='corner-cell' />
+    return <Cell key='corner-cell' style={styles.cornerCell} />
   }
 
   renderChapterColumn = (section) => {
@@ -177,19 +175,23 @@ class Timeline extends Component {
   }
 }
 
+const LEFT_COLUMN_WIDTH = 150
+
 const styles = StyleSheet.create({
   container: { backgroundColor: 'hsl(210, 36%, 96%)', marginVertical: 2, marginBottom: 0 }, //gray-9
   header: { flexDirection: 'row' },
-  lineTitlesColumn: { position: 'absolute', width: CELL_WIDTH },
+  cornerCell: { width: LEFT_COLUMN_WIDTH },
+  lineTitlesColumn: { position: 'absolute', width: LEFT_COLUMN_WIDTH },
   lineTitleCell: {
     justifyContent: 'center',
     alignItems: 'flex-end',
     paddingHorizontal: 16,
+    width: LEFT_COLUMN_WIDTH,
   },
   lineTitle: {
     fontWeight: 'bold',
   },
-  body: { marginLeft: CELL_WIDTH },
+  body: { marginLeft: LEFT_COLUMN_WIDTH },
   cell: {
     width: CELL_WIDTH,
     height: CELL_HEIGHT,

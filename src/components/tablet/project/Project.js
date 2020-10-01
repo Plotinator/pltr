@@ -12,6 +12,19 @@ import { getVersion } from 'react-native-device-info'
 import Book from '../../shared/project/Book'
 
 class Project extends Component {
+  state = {}
+  static getDerivedStateFromProps (props, state) {
+    if (state.changes) {
+      return {series: state.series, changes: true}
+    } else {
+      return {series: props.series, changes: false}
+    }
+  }
+
+  saveChanges = () => {
+    this.props.seriesActions.editSeries({...this.state.series})
+    this.setState({changes: false})
+  }
 
   goToDocs = () => {
     Linking.openURL('https://getplottr.com/docs')
@@ -40,8 +53,7 @@ class Project extends Component {
   }
 
   render () {
-    console.log('CLOSE FILE', this.props.closeFile)
-    const { series, closeFile } = this.props
+    const { series, changes } = this.state
     return <View style={{flex: 1}}>
       <Toolbar>
         <Button iconLeft bordered style={styles.button} onPress={this.props.closeFile}><Icon type='FontAwesome5' name='times-circle' style={styles.icon}/><Text style={styles.text}>{t('Close File')}</Text></Button>
@@ -60,7 +72,7 @@ class Project extends Component {
                 <Label>{t('Name')}</Label>
                 <Input
                   value={series.name}
-                  onChangeText={text => {}}
+                  onChangeText={text => this.setState({series: {...series, name: text}, changes: true})}
                   autoCapitalize='words'
                 />
               </Item>
@@ -70,7 +82,7 @@ class Project extends Component {
                 <Label>{t('Premise')}</Label>
                 <Input
                   value={series.premise}
-                  onChangeText={text => {}}
+                  onChangeText={text => this.setState({series: {...series, premise: text}, changes: true})}
                   autoCapitalize='sentences'
                 />
               </Item>
@@ -82,7 +94,7 @@ class Project extends Component {
                 <Label>{t('Genre')}</Label>
                 <Input
                   value={series.genre}
-                  onChangeText={text => {}}
+                  onChangeText={text => this.setState({series: {...series, genre: text}, changes: true})}
                   autoCapitalize='sentences'
                 />
               </Item>
@@ -92,10 +104,15 @@ class Project extends Component {
                 <Label>{t('Theme')}</Label>
                 <Input
                   value={series.theme}
-                  onChangeText={text => {}}
+                  onChangeText={text => this.setState({series: {...series, theme: text}, changes: true})}
                   autoCapitalize='sentences'
                 />
               </Item>
+            </Col>
+          </Row>
+          <Row>
+            <Col size={12} style={styles.saveColumn}>
+              <Button success disabled={!changes} onPress={this.saveChanges}><Text>{t('Save')}</Text></Button>
             </Col>
           </Row>
         </Grid>
@@ -147,6 +164,10 @@ const styles = StyleSheet.create({
   },
   column: {
     padding: 8,
+  },
+  saveColumn: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
   },
   booksList: {
     flex: 1,

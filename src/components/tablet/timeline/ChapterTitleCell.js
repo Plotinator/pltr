@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { StyleSheet, Text, View } from 'react-native'
 import { selectors, actions } from 'pltr/v2'
-import { Cell } from '../../ui/Cell'
+import { Cell } from '../shared/Cell'
 
 class ChapterTitleCell extends PureComponent {
   render () {

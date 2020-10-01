@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View } from 'native-base'
 import tinycolor from 'tinycolor2'
 import { StyleSheet } from 'react-native'
-import { Cell } from '../../ui/Cell'
+import { Cell } from '../shared/Cell'
 
 export class BlankCell extends Component {
   render () {

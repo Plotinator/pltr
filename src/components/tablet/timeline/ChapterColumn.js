@@ -7,16 +7,8 @@ import t from 'format-message'
 import cx from 'classnames'
 import { selectors, actions, cardHelpers, listHelpers, chapterHelpers } from 'pltr/v2'
 import { H3, Icon, Card, CardItem, View, Button, Text } from 'native-base'
-import { SwipeRow } from 'react-native-swipe-list-view'
-import SceneCard from './SceneCard'
 import { StyleSheet } from 'react-native'
-import AddButton from '../../ui/AddButton'
-import TrashButton from '../../ui/TrashButton'
-import RenameButton from '../../ui/RenameButton'
-import { Cell } from '../../ui/Cell'
-
-const CELL_WIDTH = 100
-const CELL_HEIGHT = 60
+import { Cell } from '../shared/Cell'
 
 class Chapter extends Component {
 

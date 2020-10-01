@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import { View } from 'native-base'
 import { StyleSheet, TouchableOpacity } from 'react-native'
-
-const CELL_WIDTH = 150
-const CELL_HEIGHT = 93
+import { CELL_WIDTH, CELL_HEIGHT } from '../../../utils/constants'
 
 export class Cell extends Component {
   render () {

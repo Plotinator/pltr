@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, Text } from 'native-base'
 import tinycolor from 'tinycolor2'
 import { StyleSheet } from 'react-native'
-import { Cell } from '../../ui/Cell'
+import { Cell } from '../shared/Cell'
 import CardModal from './CardModal'
 
 export class CardCell extends Component {
@@ -44,11 +44,11 @@ const styles = StyleSheet.create({
   },
   cardBox: {
     position: 'absolute',
-    left: 29, // 25 +4 for borders
-    width: 100,
-    height: 62,
+    left: 26, // 25 +1
+    width: 125,
+    height: 70,
     backgroundColor: 'hsl(210, 36%, 96%)', //gray-9
-    borderWidth: 2,
+    borderWidth: 3,
     borderRadius: 4,
     padding: 4,
     shadowColor: "#000",
