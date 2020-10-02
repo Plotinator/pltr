@@ -26,6 +26,7 @@ class Timeline extends Component {
       { useNativeDriver: false },
     )
     this.state = {lineMapKeys: {}, showColorPicker: false}
+    this.dropCoordinates = []
   }
 
   static getDerivedStateFromProps (props, state) {
@@ -40,6 +41,52 @@ class Timeline extends Component {
     this.listener = this.scrollPosition.addListener(position => {
       this.headerScrollView.scrollTo({ x: position.value, animated: false })
     })
+  }
+
+  registerDropCoordinate = (cell) => {
+    // ignore ids of 'new'
+    if (cell.chapterId == 'new' || cell.lineId == 'new') return
+    console.log('register', this.dropCoordinates.length)
+    this.dropCoordinates.push(cell)
+  }
+
+  dropCard = (x, y, droppedCard) => {
+    let moveToChapterId = null
+    let moveToLineId = null
+    let moveToIsBlank = false
+    const success = this.dropCoordinates.some(coord => { // using .some to short circuit once we find one
+      if (coord.chapterId == 'new' || coord.lineId == 'new') return false
+      // check if it's within this one's bounds
+      if (this.isWithinCell(x, y, coord)) {
+        // do nothing for dropping on itself
+        if (coord.chapterId != droppedCard.chapterId || coord.lineId != droppedCard.lineId) {
+          moveToChapterId = coord.chapterId
+          moveToLineId = coord.lineId
+          moveToIsBlank = coord.isBlank
+          return true
+        }
+      }
+      return false
+    })
+    if (success) {
+      // remove the two that have changed
+      // only one has changed if moveToIsBlank == false
+      this.dropCoordinates = this.dropCoordinates.filter(coord => {
+        if (droppedCard.chapterId == coord.chapterId && droppedCard.lineId == coord.lineId) return false
+        if (moveToIsBlank && moveToChapterId == coord.chapterId && moveToLineId == coord.lineId) return false
+        return true
+      })
+      console.log('moving', this.dropCoordinates.length)
+      // move the card to these coordinates
+      this.props.cardActions.editCardCoordinates(droppedCard.id, moveToLineId, moveToChapterId, this.props.bookId)
+    }
+    return success
+  }
+
+  isWithinCell = (x, y, pair) => {
+    const withinWidth = x > pair.x && x < (pair.x + CELL_WIDTH)
+    const withinHeight = y > pair.y && y < (pair.y + CELL_HEIGHT)
+    return withinWidth && withinHeight
   }
 
   showColorPicker = () => this.setState({showColorPicker: true})
@@ -91,9 +138,9 @@ class Timeline extends Component {
         const cards = cardMap[`${line.id}-${chapter.id}`]
         const key = `${cards ? 'card' : 'blank'}-${chapter.position}-${linePosition}`
         if (cards) {
-          return <CardCell key={key} card={cards[0]} color={line.color} navigation={this.props.navigation}/>
+          return <CardCell key={key} card={cards[0]} color={line.color} register={this.registerDropCoordinate} handleDrop={this.dropCard} navigation={this.props.navigation}/>
         } else {
-          return <BlankCell key={key} color={line.color} navigation={this.props.navigation}/>
+          return <BlankCell key={key} color={line.color} register={this.registerDropCoordinate} lineId={line.id} chapterId={chapter.id} handleDrop={this.dropCard} navigation={this.props.navigation}/>
         }
       })
     }
@@ -211,6 +258,7 @@ Timeline.propTypes = {
   seriesLines: PropTypes.array,
   cardMap: PropTypes.object.isRequired,
   ui: PropTypes.object.isRequired,
+  bookId: PropTypes.any,
   navigation: PropTypes.object.isRequired,
 }
 
@@ -230,6 +278,7 @@ function mapStateToProps (state) {
     cardMap: selectors.cardMapSelector(state),
     ui: state.ui,
     isSeries: selectors.isSeriesSelector(state),
+    bookId: bookId,
   }
 }
 

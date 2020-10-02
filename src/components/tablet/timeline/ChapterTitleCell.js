@@ -9,7 +9,8 @@ import Cell from '../shared/Cell'
 class ChapterTitleCell extends PureComponent {
   render () {
     const { chapterTitle } = this.props
-    return <Cell style={styles.cell}>
+    // ref is needed
+    return <Cell style={styles.cell} ref={r => this.ref = r}>
       <Text style={styles.text}>{chapterTitle}</Text>
     </Cell>
   }
