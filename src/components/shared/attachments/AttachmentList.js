@@ -3,6 +3,8 @@ import t from 'format-message'
 import { View, Left, Right, Icon, Badge, Text, List, ListItem } from 'native-base'
 import { StyleSheet } from 'react-native'
 import { attachmentItemText } from '../../../utils/attachment_titles'
+import { isTablet } from 'react-native-device-info'
+import AttachmentSelector from '../../tablet/shared/AttachmentSelector'
 
 const defaultAttachments = ['characters', 'places', 'tags']
 
@@ -21,17 +23,21 @@ export default function AttachmentList (props) {
   }
 
   const renderAttachments = () => {
-    return attachments.map(type => {
-      return <ListItem key={type} button onPress={() => navigateToAttachmentSelector(type)}>
-        <Left>
-          <Badge info style={styles.badge}><Text>{item[type].length}</Text></Badge>
-          <Text>{attachmentItemText(type)}</Text>
-        </Left>
-        <Right>
-          <Icon type='FontAwesome5' name='chevron-right'/>
-        </Right>
-      </ListItem>
-    })
+    if (isTablet()) {
+      return attachments.map(type => <AttachmentSelector key={type} type={type} item={item} itemType={itemType} />)
+    } else {
+      return attachments.map(type => {
+        return <ListItem key={type} button onPress={() => navigateToAttachmentSelector(type)}>
+          <Left>
+            <Badge info style={styles.badge}><Text>{item[type].length}</Text></Badge>
+            <Text>{attachmentItemText(type)}</Text>
+          </Left>
+          <Right>
+            <Icon type='FontAwesome5' name='chevron-right'/>
+          </Right>
+        </ListItem>
+      })
+    }
   }
 
   return <View>

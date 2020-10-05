@@ -4,14 +4,15 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { actions, selectors } from 'pltr/v2'
 import { StyleSheet, FlatList } from 'react-native'
-import { Icon, H1, H3, Container, Content, ListItem, CheckBox, Body, Text, View, Badge } from 'native-base'
+import { Icon, H1, H3, ListItem, CheckBox, Body, Text, View, Badge, Left, Right } from 'native-base'
+import Popover from 'react-native-popover-view'
 import t from 'format-message'
+import { attachmentItemText } from '../../../utils/attachment_titles'
 
-class AttachmentSelectorModal extends Component {
+class AttachmentSelector extends Component {
 
   static getDerivedStateFromProps (props, state) {
-    const { route } = props
-    const { type, item, itemType } = route.params
+    const { type, item, itemType } = props
     const connectedItem = props[`${itemType}s`].find(things => things.id == item.id)
     return { type, item: connectedItem, itemType, selected: connectedItem[type] }
   }
@@ -75,17 +76,28 @@ class AttachmentSelectorModal extends Component {
   }
 
   render () {
-    return <Container>
-      <Content>
-        <FlatList
-          data={this.props[this.state.type]}
-          ListEmptyComponent={<H1 style={styles.h1}>{t('None to choose')}</H1>}
-          extraData={{selected: this.state.selected}}
-          keyExtractor={(item) => item.id}
-          renderItem={this.renderItem}
-        />
-      </Content>
-    </Container>
+    const { item, type } = this.props
+    return <Popover
+      from={
+        <ListItem>
+          <Left>
+            <Badge info style={styles.listBadge}><Text>{item[type].length}</Text></Badge>
+            <Text>{attachmentItemText(type)}</Text>
+          </Left>
+          <Right>
+            <Icon type='FontAwesome5' name='chevron-right'/>
+          </Right>
+        </ListItem>
+      }
+    >
+      <FlatList
+        data={this.props[this.state.type]}
+        ListEmptyComponent={<H1 style={styles.h1}>{t('None to choose')}</H1>}
+        extraData={{selected: this.state.selected}}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={this.renderItem}
+      />
+    </Popover>
   }
 }
 
@@ -106,9 +118,15 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginLeft: 20,
   },
+  listBadge: {
+    marginRight: 8,
+  },
+  listItem: {
+    width: 500,
+  },
 })
 
-AttachmentSelectorModal.propTypes = {
+AttachmentSelector.propTypes = {
   characters: PropTypes.array.isRequired,
   places: PropTypes.array.isRequired,
   tags: PropTypes.array.isRequired,
@@ -130,8 +148,7 @@ function mapStateToProps (state) {
 }
 
 function mapDispatchToProps (dispatch, ownProps) {
-  const { route } = ownProps
-  const { itemType } = route.params
+  const { itemType } = ownProps
   switch (itemType) {
     case 'card':
       return {actions: bindActionCreators(actions.cardActions, dispatch)}
@@ -149,4 +166,4 @@ function mapDispatchToProps (dispatch, ownProps) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AttachmentSelectorModal)
+)(AttachmentSelector)

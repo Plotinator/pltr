@@ -26,7 +26,9 @@ class SeriesPicker extends Component {
     const { currentTimeline, series, books } = this.props
     const seriesText = series.name == '' ? t('Series View') : `${series.name} (${t('Series View')})`
     const selectedTitle = currentTimeline == 'series' ? seriesText : (books[currentTimeline].title || t('Untitled'))
-    return <Popover from={<Button bordered dark iconRight style={styles.picker}><Text>{selectedTitle}</Text><Icon type='FontAwesome5' name='chevron-down' style={{fontSize: 12}}/></Button>}>
+    return <Popover
+      from={<Button bordered dark iconRight style={styles.picker}><Text>{selectedTitle}</Text><Icon type='FontAwesome5' name='chevron-down' style={{fontSize: 12}}/></Button>}
+    >
       <List>
         <ListItem style={styles.listItem} onPress={() => this.onChange('series')} noIndent selected={currentTimeline == 'series'}><Text>{seriesText}</Text></ListItem>
         { this.renderItems() }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import t from 'format-message'
-import { View, Input, Label, Item, Text, Button, Image } from 'native-base'
+import { View, Input, Label, Item, Text, Button } from 'native-base'
 import { StyleSheet } from 'react-native'
 import AttachmentList from '../../shared/attachments/AttachmentList'
 import { DetailsWrapper, DetailsLeft, DetailsRight } from '../shared/Details'

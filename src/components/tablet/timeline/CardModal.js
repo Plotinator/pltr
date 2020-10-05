@@ -24,7 +24,8 @@ class CardModal extends Component {
     if (isNewCard) {
       cardObj = state.card || {...cloneDeep(initialState.card), chapterId, lineId}
     } else {
-      cardObj = state.card || cards.find(c => c.id == card.id)
+      const reduxCard = cards.find(c => c.id == card.id)
+      cardObj = state.changes ? state.card : (reduxCard || state.card)
     }
     return {
       card: cardObj,
