@@ -4,7 +4,7 @@ import { View, Input, Label, Item, Text, Button, Image } from 'native-base'
 import { StyleSheet } from 'react-native'
 import AttachmentList from '../../shared/attachments/AttachmentList'
 import { DetailsWrapper, DetailsLeft, DetailsRight } from '../shared/Details'
-import RichTextEditor from '../../ui/RichTextEditor'
+import RichTextEditor from '../../shared/RichTextEditor'
 
 export default function Note (props) {
   const { note } = props
@@ -13,8 +13,7 @@ export default function Note (props) {
   const [changes, makeChanges] = useState(false)
 
   const saveChanges = () => {
-    // TODO: save content as well
-    props.onSave(note.id, title)
+    props.onSave(note.id, title, content)
     makeChanges(false)
   }
 

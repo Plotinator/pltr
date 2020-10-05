@@ -11,7 +11,7 @@ import ChapterPicker from '../../ui/ChapterPicker'
 import LinePicker from '../../ui/LinePicker'
 import SaveButton from '../../ui/SaveButton'
 import AttachmentList from '../../shared/attachments/AttachmentList'
-import RichTextEditor from '../../ui/RichTextEditor'
+import RichTextEditor from '../../shared/RichTextEditor'
 
 // cooresponds to CardDialog in desktop
 

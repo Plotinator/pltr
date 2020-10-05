@@ -92,8 +92,8 @@ class Notes extends Component {
     this.setState({activeNoteId: id})
   }
 
-  saveNote = (id, title) => {
-    this.props.actions.editNote(id, {title})
+  saveNote = (id, title, content) => {
+    this.props.actions.editNote(id, {title, content})
   }
 
   deleteNote = (id) => {

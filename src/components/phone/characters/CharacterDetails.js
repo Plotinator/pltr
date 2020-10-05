@@ -10,7 +10,7 @@ import { StyleSheet } from 'react-native'
 import SaveButton from '../../ui/SaveButton'
 import AttachmentList from '../../shared/attachments/AttachmentList'
 import CategoryPicker from '../../ui/CategoryPicker'
-import RichTextEditor from '../../ui/RichTextEditor'
+import RichTextEditor from '../../shared/RichTextEditor'
 
 class CharacterDetails extends Component {
   state = {}

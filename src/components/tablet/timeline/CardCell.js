@@ -1,12 +1,10 @@
 import React, { useState, useEffect, useLayoutEffect, useRef } from 'react'
 import { View, Text, Button, Icon } from 'native-base'
 import tinycolor from 'tinycolor2'
-import { StyleSheet, PanResponder, Animated, TouchableOpacity, TouchableWithoutFeedback } from 'react-native'
+import { StyleSheet, PanResponder, Animated, TouchableOpacity } from 'react-native'
 import Cell from '../shared/Cell'
 import CardModal from './CardModal'
 import { useRegisterCoordinates } from './hooks'
-
-const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity)
 
 export default function CardCell (props) {
   const [showModal, setModal] = useState(false)
@@ -61,7 +59,7 @@ export default function CardCell (props) {
     transform: pan.getTranslateTransform()
   }
   return <Cell style={styles.cell} ref={cellRef}>
-    <View style={[styles.coloredLine, borderColor]}/>
+    {props.showLine ? <View style={[styles.coloredLine, borderColor]}/> : null}
     <Animated.View {...panResponder.panHandlers} style={[styles.cardBox, panStyle, borderColor]} elevation={5}>
       <View style={styles.cardInner}>
         <Text style={styles.cardText}>{card.title}</Text>

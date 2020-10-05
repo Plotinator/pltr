@@ -5624,9 +5624,9 @@ plist@^3.0.1:
     xmlbuilder "^9.0.7"
     xmldom "0.1.x"
 
-"pltr@https://github.com/Plotinator/pltr.git#v2.1.2":
-  version "2.1.2"
-  resolved "https://github.com/Plotinator/pltr.git#43ecac2c24c4305308e3530353e2c0f9a44dcd9e"
+"pltr@https://github.com/Plotinator/pltr.git#v2.1.5":
+  version "2.1.4"
+  resolved "https://github.com/Plotinator/pltr.git#08620e284950048cb5a45861eaaa4e16a9d33268"
   dependencies:
     dom-parser "^0.1.6"
     format-message "^6.2.1"
@@ -5846,6 +5846,13 @@ react-native-iphone-x-helper@^1.0.3, react-native-iphone-x-helper@^1.2.1:
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.2.1.tgz#645e2ffbbb49e80844bb4cbbe34a126fda1e6772"
   integrity sha512-/VbpIEp8tSNNHIvstuA3Swx610whci1Zpc9mqNkqn14DkMbw+ORviln2u0XyHG1kPvvwTNGZY6QpeFwxYaSdbQ==
 
+react-native-popover-view@^3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-popover-view/-/react-native-popover-view-3.0.3.tgz#6376db42c077b60f782db933f3a1830ce0c35430"
+  integrity sha512-B0Y4MOdrGDKylGVNzFE+dTqNIweY4Rd3StbIBFrbKCDZbi5MK5VCDL+tWN6/3I6xQknNQUi4MdqhnsyDscgLng==
+  dependencies:
+    react-native-safe-area-view "0.14.9"
+
 react-native-prompt-android@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/react-native-prompt-android/-/react-native-prompt-android-1.1.0.tgz#3c5168029075cb9f72549fd5f92403372fb234e9"
@@ -5862,6 +5869,13 @@ react-native-safe-area-context@^3.1.7:
   version "3.1.7"
   resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-3.1.7.tgz#fc9e636dfb168f992a2172d363509ce0611a8403"
   integrity sha512-qSyg/pVMwVPgAy8yCvw349Q+uEUhtRBV33eVXHHkfoou1vCChJxI7SmNR47/6M3BLdjWcyc4lcd018Kx+jhQCw==
+
+react-native-safe-area-view@0.14.9:
+  version "0.14.9"
+  resolved "https://registry.yarnpkg.com/react-native-safe-area-view/-/react-native-safe-area-view-0.14.9.tgz#90ee8383037010d9a5055a97cf97e4c1da1f0c3d"
+  integrity sha512-WII/ulhpVyL/qbYb7vydq7dJAfZRBcEhg4/UWt6F6nAKpLa3gAceMOxBxI914ppwSP/TdUsandFy6lkJQE0z4A==
+  dependencies:
+    hoist-non-react-statics "^2.3.1"
 
 react-native-screens@^2.10.1:
   version "2.10.1"

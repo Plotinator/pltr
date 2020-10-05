@@ -4,7 +4,7 @@ import { View, Input, Label, Item, Text, Button } from 'native-base'
 import { StyleSheet } from 'react-native'
 import AttachmentList from '../../shared/attachments/AttachmentList'
 import { DetailsWrapper, DetailsLeft, DetailsRight } from '../shared/Details'
-import RichTextEditor from '../../ui/RichTextEditor'
+import RichTextEditor from '../../shared/RichTextEditor'
 
 export default function Place (props) {
   const { place, customAttributes } = props
@@ -17,9 +17,9 @@ export default function Place (props) {
   const [workingCA, setWorkingCA] = useState(customAttrs)
 
   const saveChanges = () => {
-    // TODO: save notes as well
     const values = {
       name: workingCopy.name,
+      notes: workingCopy.notes,
       description: workingCopy.description,
       ...workingCA,
     }

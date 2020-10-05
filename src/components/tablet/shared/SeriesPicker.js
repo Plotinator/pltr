@@ -5,7 +5,8 @@ import { bindActionCreators } from 'redux'
 import { StyleSheet } from 'react-native'
 import t from 'format-message'
 import { selectors, actions } from 'pltr/v2'
-import { Icon, Picker } from 'native-base'
+import { Text, List, ListItem, Button, Icon } from 'native-base'
+import Popover from 'react-native-popover-view'
 
 class SeriesPicker extends Component {
 
@@ -13,40 +14,35 @@ class SeriesPicker extends Component {
     this.props.actions.changeCurrentTimeline(val)
   }
 
-
-
   renderItems () {
-    const { bookIds, books } = this.props
+    const { currentTimeline, bookIds, books } = this.props
     return bookIds.map(id => {
       const book = books[`${id}`]
-      return <Picker.Item key={book.id} label={book.title || t('Untitled')} value={id} />
+      return <ListItem key={id} style={styles.listItem} onPress={() => onChange(id)} noIndent selected={id == currentTimeline}><Text>{book.title || t('Untitled')}</Text></ListItem>
     })
   }
 
-  render() {
+  render () {
     const { currentTimeline, series, books } = this.props
     const seriesText = series.name == '' ? t('Series View') : `${series.name} (${t('Series View')})`
     const selectedTitle = currentTimeline == 'series' ? seriesText : (books[currentTimeline].title || t('Untitled'))
-    return <Picker
-      iosIcon={<Icon type='FontAwesome5' name='chevron-down' style={{fontSize: 12}}/>}
-      mode='modal'
-      iosHeader={selectedTitle}
-      placeholder={selectedTitle}
-      selectedValue={currentTimeline}
-      onValueChange={this.onChange}
-      style={styles.picker}
-    >
-      <Picker.Item label={seriesText} value='series' />
-      { this.renderItems() }
-    </Picker>
+    return <Popover from={<Button bordered dark iconRight style={styles.picker}><Text>{selectedTitle}</Text><Icon type='FontAwesome5' name='chevron-down' style={{fontSize: 12}}/></Button>}>
+      <List>
+        <ListItem style={styles.listItem} onPress={() => this.onChange('series')} noIndent selected={currentTimeline == 'series'}><Text>{seriesText}</Text></ListItem>
+        { this.renderItems() }
+      </List>
+    </Popover>
   }
 }
 
 const styles = StyleSheet.create({
   picker: {
     borderColor: 'hsl(211, 27%, 70%)', //gray-6
-    borderWidth: 1,
     backgroundColor: 'white',
+    alignSelf: 'center',
+  },
+  listItem: {
+    width: 400,
   },
 })
 

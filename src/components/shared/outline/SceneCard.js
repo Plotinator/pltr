@@ -7,7 +7,7 @@ import { selectors, actions } from 'pltr/v2'
 import { Card, CardItem, Text, View, Body, Left, Right } from 'native-base'
 import { StyleSheet } from 'react-native'
 import { isTablet } from 'react-native-device-info'
-import RichTextEditor from '../../ui/RichTextEditor'
+import RichTextEditor from '../RichTextEditor'
 
 const isOnTablet = isTablet()
 

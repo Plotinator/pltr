@@ -7,7 +7,7 @@ import CustomAttributesScreen from '../customAttributes/CustomAttributesScreen'
 import { attachmentHeaderTitles } from '../../../utils/attachment_titles'
 import SideBar from '../project/SideBar'
 import PlotlinesStack from './PlotlinesStack'
-import AttachmentSelectorModal from '../../shared/attachments/AttachmentSelectorModal'
+import AttachmentSelectorModal from '../shared/AttachmentSelectorModal'
 import ColorPickerScreen from '../shared/ColorPickerScreen'
 
 const RootStack = createStackNavigator()

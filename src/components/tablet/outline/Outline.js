@@ -10,7 +10,7 @@ import { View, H3 } from 'native-base'
 import { Col, Grid } from 'react-native-easy-grid'
 import ErrorBoundary from '../../ErrorBoundary'
 import Toolbar from '../shared/Toolbar'
-import SeriesPicker from '../../ui/SeriesPicker'
+import SeriesPicker from '../shared/SeriesPicker'
 import MiniChapter from './MiniChapter'
 import Chapter from '../../shared/outline/Chapter'
 

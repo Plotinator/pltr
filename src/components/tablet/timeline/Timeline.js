@@ -1,19 +1,16 @@
 import React, { Component } from 'react'
 import PropTypes from 'react-proptypes'
 import { connect } from 'react-redux'
-import { Animated, ActivityIndicator, FlatList, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Animated, FlatList, ScrollView, StyleSheet, Text, View, Vibration } from 'react-native'
 import { bindActionCreators } from 'redux'
+import t from 'format-message'
 import { actions, selectors, newIds, cardHelpers } from 'pltr/v2'
 import ChapterTitleCell from './ChapterTitleCell'
 import { BlankCell } from './BlankCell'
 import Cell from '../shared/Cell'
 import CardCell from './CardCell'
-import { TouchableOpacity } from 'react-native-gesture-handler'
-import ColorPickerModal from '../shared/ColorPickerModal'
 import { CELL_HEIGHT, CELL_WIDTH } from '../../../utils/constants'
-
-const black = '#000'
-const white = '#fff'
+import { Icon } from 'native-base'
 
 class Timeline extends Component {
   constructor(props) {
@@ -43,10 +40,26 @@ class Timeline extends Component {
     })
   }
 
+  handleAppendLine = () => {
+    const title = t('New Plotline')
+    if (this.props.isSeries) {
+      this.props.seriesLineActions.addLineWithTitle(title)
+    } else {
+      this.props.lineActions.addLineWithTitle(title, this.props.bookId)
+    }
+  }
+
+  handleAppendChapter = () => {
+    if (this.props.isSeries) {
+      this.props.beatActions.addBeat()
+    } else {
+      this.props.sceneActions.addScene(this.props.bookId)
+    }
+  }
+
   registerDropCoordinate = (cell) => {
     // ignore ids of 'new'
     if (cell.chapterId == 'new' || cell.lineId == 'new') return
-    console.log('register', this.dropCoordinates.length)
     this.dropCoordinates.push(cell)
   }
 
@@ -55,7 +68,6 @@ class Timeline extends Component {
     let moveToLineId = null
     let moveToIsBlank = false
     const success = this.dropCoordinates.some(coord => { // using .some to short circuit once we find one
-      if (coord.chapterId == 'new' || coord.lineId == 'new') return false
       // check if it's within this one's bounds
       if (this.isWithinCell(x, y, coord)) {
         // do nothing for dropping on itself
@@ -71,12 +83,14 @@ class Timeline extends Component {
     if (success) {
       // remove the two that have changed
       // only one has changed if moveToIsBlank == false
+      // when moving creates a scene stack, there are a lot more that re-register. Need to figure out which ones
       this.dropCoordinates = this.dropCoordinates.filter(coord => {
+        // TODO: remove duplicates
         if (droppedCard.chapterId == coord.chapterId && droppedCard.lineId == coord.lineId) return false
         if (moveToIsBlank && moveToChapterId == coord.chapterId && moveToLineId == coord.lineId) return false
         return true
       })
-      console.log('moving', this.dropCoordinates.length)
+      Vibration.vibrate()
       // move the card to these coordinates
       this.props.cardActions.editCardCoordinates(droppedCard.id, moveToLineId, moveToChapterId, this.props.bookId)
     }
@@ -100,24 +114,24 @@ class Timeline extends Component {
     }
   }
 
-  renderColorPicker () {
-    if (!this.state.showColorPicker) return null
-
-    return <ColorPickerModal onClose={this.hideColorPicker} chooseColor={this.hideColorPicker}/>
-  }
-
   renderLineTitle (id, title) {
     return <Cell key={id} style={styles.lineTitleCell}>
-      <TouchableOpacity onPress={this.showColorPicker}>
-        <Text style={styles.lineTitle}>{title}</Text>
-      </TouchableOpacity>
+      <Text style={styles.lineTitle}>{title}</Text>
     </Cell>
   }
 
-  renderNewChapter (id, title) {
-    return <View key={id} style={styles.cell}>
-      <Text>{title}</Text>
-    </View>
+  renderBlankLineTitleCell (key) {
+    return <Cell key={key} style={styles.lineTitleCell} />
+  }
+
+  renderSpacerCard (key) {
+    return <Cell key={key} />
+  }
+
+  renderPlusButton (id, onPress) {
+    return <Cell key={id} style={styles.addCell} onPress={onPress}>
+      <Icon type='FontAwesome5' name='plus' style={styles.plusButton}/>
+    </Cell>
   }
 
   renderCornerCell () {
@@ -130,19 +144,32 @@ class Timeline extends Component {
     if (chapter.new) {
       cells = [<Cell key='+'></Cell>]
     } else {
-      const { lineMap, cardMap } = this.props
+      const { lineMap, cardMap, linesMaxCards } = this.props
       const { lineMapKeys } = this.state
-      cells = lineMapKeys.map(linePosition => {
+      cells = lineMapKeys.reduce((acc, linePosition) => {
 
         const line = lineMap[linePosition]
+        const lineMaxCards = linesMaxCards[line.id]
         const cards = cardMap[`${line.id}-${chapter.id}`]
         const key = `${cards ? 'card' : 'blank'}-${chapter.position}-${linePosition}`
         if (cards) {
-          return <CardCell key={key} card={cards[0]} color={line.color} register={this.registerDropCoordinate} handleDrop={this.dropCard} navigation={this.props.navigation}/>
+          cards.forEach((c, idx) => acc.push(<CardCell key={`${key}-${idx}`} card={c} color={line.color} showLine={idx == 0} register={this.registerDropCoordinate} handleDrop={this.dropCard} navigation={this.props.navigation}/>))
+          if (cards.length < lineMaxCards) {
+            for(i = cards.length; i < lineMaxCards; i++) {
+              acc.push(this.renderSpacerCard(`${key}-spacer-${i}`))
+            }
+          }
         } else {
-          return <BlankCell key={key} color={line.color} register={this.registerDropCoordinate} lineId={line.id} chapterId={chapter.id} handleDrop={this.dropCard} navigation={this.props.navigation}/>
+          acc.push(<BlankCell key={key} color={line.color} register={this.registerDropCoordinate} lineId={line.id} chapterId={chapter.id} handleDrop={this.dropCard} navigation={this.props.navigation}/>)
+          if (lineMaxCards > 1) {
+            for(i = 1; i < lineMaxCards; i++) {
+              acc.push(this.renderSpacerCard(`${key}-spacer-${i}`))
+            }
+          }
         }
-      })
+
+        return acc
+      }, [])
     }
     // TODO: dont use corner cell
     cells.push(this.renderCornerCell()) // needed to show the + line cell
@@ -153,7 +180,7 @@ class Timeline extends Component {
   renderChapterTitles() {
     const { chapters } = this.props
     let cols = chapters.map(ch => <ChapterTitleCell key={ch.id} chapterId={ch.id} />)
-    cols.push(this.renderNewChapter('new-chapter', '+'))
+    cols.push(this.renderPlusButton('new-chapter', this.handleAppendChapter))
 
     return (
       <View style={styles.header}>
@@ -171,9 +198,16 @@ class Timeline extends Component {
   }
 
   renderLineTitles() {
-    const { lines } = this.props
-    let cells = lines.map(l => this.renderLineTitle(l.id, l.title))
-    cells.push(this.renderLineTitle('new-line', '+'))
+    const { lines, linesMaxCards } = this.props
+    let cells = lines.reduce((acc, l) => {
+      acc.push(this.renderLineTitle(l.id, l.title))
+      // start at 1 because the first cell is the title cell
+      for(i = 1; i < linesMaxCards[l.id]; i++) {
+        acc.push(this.renderBlankLineTitleCell(`${l.id}-blank-${i}`))
+      }
+      return acc
+    }, [])
+    cells.push(this.renderPlusButton('new-line', this.handleAppendLine))
 
     return <View style={styles.lineTitlesColumn}>{cells}</View>
   }
@@ -211,8 +245,7 @@ class Timeline extends Component {
 
     return (
       <View style={styles.container}>
-        {this.renderChapterTitles()}
-        { this.renderColorPicker()}
+        { this.renderChapterTitles() }
         <FlatList
           data={data}
           renderItem={this.renderMainRow}
@@ -225,7 +258,7 @@ class Timeline extends Component {
 const LEFT_COLUMN_WIDTH = 150
 
 const styles = StyleSheet.create({
-  container: { backgroundColor: 'hsl(210, 36%, 96%)', marginVertical: 2, marginBottom: 0 }, //gray-9
+  container: { backgroundColor: 'hsl(210, 36%, 96%)', marginVertical: 2, marginBottom: 0, flex: 1 }, //gray-9
   header: { flexDirection: 'row' },
   cornerCell: { width: LEFT_COLUMN_WIDTH },
   lineTitlesColumn: { position: 'absolute', width: LEFT_COLUMN_WIDTH },
@@ -239,14 +272,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   body: { marginLeft: LEFT_COLUMN_WIDTH },
-  cell: {
-    width: CELL_WIDTH,
-    height: CELL_HEIGHT,
-    borderRightWidth: 1,
-    borderBottomWidth: 1,
-    borderColor: black,
-  },
   column: { flexDirection: 'column' },
+  addCell: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  plusButton: {
+    color: '#ff7f32',
+  },
 })
 
 Timeline.propTypes = {
@@ -273,6 +306,7 @@ function mapStateToProps (state) {
   return {
     chapters: selectors.sortedChaptersByBookSelector(state),
     lineMap: selectors.linePositionMappingSelector(state),
+    linesMaxCards: selectors.lineMaxCardsSelector(state),
     nextChapterId: nextChapterId,
     lines: selectors.sortedLinesByBookSelector(state),
     cardMap: selectors.cardMapSelector(state),

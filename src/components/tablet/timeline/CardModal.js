@@ -10,7 +10,7 @@ import t from 'format-message'
 import AttachmentList from '../../shared/attachments/AttachmentList'
 import ChapterPicker from '../../ui/ChapterPicker'
 import LinePicker from '../../ui/LinePicker'
-import RichTextEditor from '../../ui/RichTextEditor'
+import RichTextEditor from '../../shared/RichTextEditor'
 import { DetailsWrapper, DetailsRight, DetailsLeft } from '../shared/Details'
 
 // cooresponds to CardDialog in desktop
@@ -19,17 +19,16 @@ class CardModal extends Component {
   state = {}
 
   static getDerivedStateFromProps (props, state) {
-    const { cards, card, isNewCard, chapterId } = props
+    const { cards, card, isNewCard, chapterId, lineId } = props
     let cardObj = {}
     if (isNewCard) {
-      cardObj = {...cloneDeep(initialState.card), chapterId: chapterId}
+      cardObj = state.card || {...cloneDeep(initialState.card), chapterId, lineId}
     } else {
       cardObj = state.card || cards.find(c => c.id == card.id)
     }
     return {
-      isNewCard: state.isNewCard === undefined ? isNewCard : state.isNewCard,
-      chapterId: chapterId,
       card: cardObj,
+      isNewCard: state.isNewCard === undefined ? isNewCard : state.isNewCard,
       changes: state.changes === undefined ? isNewCard : state.changes,
     }
   }
@@ -38,7 +37,7 @@ class CardModal extends Component {
     const { changes, isNewCard, card } = this.state
     if (!changes) return
     if (isNewCard) {
-      this.props.actions.addCard({...card, lineId: 1}) // TODO: remove lineId 1
+      this.props.actions.addCard(card)
     } else {
       this.props.actions.editCard(card.id, card.title, card.description)
     }
@@ -100,14 +99,12 @@ class CardModal extends Component {
                   <Button rounded light style={styles.button} onPress={this.props.onClose}><Icon type='FontAwesome5' name='times'/></Button>
                 </View>
                 <View style={styles.formRightItems}>
-                  <Item stackedLabel style={styles.label}>
-                    <Label>{t('Chapter')}</Label>
+                  <View style={styles.label}>
                     <ChapterPicker selectedId={card.chapterId} onChange={this.changeChapter} />
-                  </Item>
-                  <Item stackedLabel style={styles.label}>
-                    <Label>{t('Plotline')}</Label>
+                  </View>
+                  <View style={styles.label}>
                     <LinePicker selectedId={card.lineId} onChange={this.changeLine} />
-                  </Item>
+                  </View>
                   { this.renderAttachments() }
                 </View>
               </View>
