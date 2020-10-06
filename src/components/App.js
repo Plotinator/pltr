@@ -9,9 +9,9 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 import { Content, Text, H1, H2, Form, Item, Input, Button, Label, Spinner, Toast, Root, Container } from 'native-base'
 import { checkForActiveLicense, getUserVerification, verifyUser, reset } from '../utils/user_info'
 import Main from './Main'
-import ErrorBoundary from './ErrorBoundary'
 import { sendVerificationEmail } from '../utils/api'
 import t from 'format-message'
+import AppErrorBoundary from './AppErrorBoundary'
 
 const App = () => {
   const [userInfo, setUserInfo] = useState(null)
@@ -37,6 +37,15 @@ const App = () => {
     fetchUserInfo()
     return () => (ignore = true)
   }, [])
+
+  const resetOnError = () => {
+    // TODO: handle Android
+    DocumentBrowser.closeBrowser()
+  }
+
+  const recoverFromError = () => {
+    DocumentBrowser.openBrowser()
+  }
 
   const verifyLicense = async () => {
     setVerifying(true)
@@ -180,7 +189,9 @@ const App = () => {
     <SafeAreaProvider>
       <Root>
         <StatusBar barStyle='dark-content' />
-        <ErrorBoundary>{renderBody()}</ErrorBoundary>
+        <AppErrorBoundary reset={resetOnError} recover={recoverFromError}>
+          {renderBody()}
+        </AppErrorBoundary>
       </Root>
     </SafeAreaProvider>
   )

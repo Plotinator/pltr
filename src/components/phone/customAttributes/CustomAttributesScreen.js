@@ -78,17 +78,28 @@ class CustomAttributesScreen extends Component {
 
   renderItem = ({ item, index }) => {
     const canChange = this.props.customAttributesThatCanChange.includes(item.name)
-    return <ListItem noIndent style={styles.row}>
-      <Left>
-        <Input defaultValue={item.name} onChangeText={text => this.editAttr(text, item, index)}/>
-      </Left>
-      <Body>
-        <Text>{t('Paragraph?')}</Text>
-      </Body>
-      <Right>
-        <Switch value={item.type == 'paragraph'} onValueChange={val => this.toggleAttr(val, item, index)}/>
-      </Right>
-    </ListItem>
+    if (canChange) {
+      return <ListItem noIndent style={styles.row}>
+        <Left>
+          <Text>{item.name}</Text>
+        </Left>
+        <Body>
+          <Text>{t('Paragraph?')}</Text>
+        </Body>
+        <Right>
+          <Switch value={item.type == 'paragraph'} onValueChange={val => this.toggleAttr(val, item, index)}/>
+        </Right>
+      </ListItem>
+    } else {
+      return <ListItem noIndent style={styles.row}>
+        <Left>
+          <Text>{item.name}</Text>
+        </Left>
+        <Body>
+          <Text note>{t('Paragraph')}</Text>
+        </Body>
+      </ListItem>
+    }
   }
 
   render () {

@@ -7,7 +7,7 @@ import { View, Text, Button, H3 } from 'native-base'
 import t from 'format-message'
 import cx from 'classnames'
 import { selectors, cardHelpers } from 'pltr/v2'
-import ErrorBoundary from '../../ErrorBoundary'
+import ErrorBoundary from '../../shared/ErrorBoundary'
 import Chapter from '../../shared/outline/Chapter'
 import TrashButton from '../../ui/TrashButton'
 import RenameButton from '../../ui/RenameButton'
@@ -33,9 +33,9 @@ class Outline extends Component {
         <View style={styles.chapterView}>
           <View style={styles.title}>
             <H3>{chapterTitle}</H3>
+            { manualSort }
             <AddButton onPress={navigateToNewCard} iconStyle={styles.addScene} />
           </View>
-          { manualSort }
         </View>
       </SwipeRow>
       { cards }

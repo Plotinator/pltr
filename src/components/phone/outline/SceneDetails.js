@@ -62,14 +62,24 @@ class SceneDetails extends Component {
   }
 
   changeChapter = (val) => {
+    const { isSeries } = this.props
     const { card } = this.state
-    this.setState({card: {...card, chapterId: val}})
+    if (isSeries) {
+      this.setState({card: {...card, beatId: val}})
+    } else {
+      this.setState({card: {...card, chapterId: val}})
+    }
     this.props.actions.changeScene(card.id, val, this.props.bookId)
   }
 
   changeLine = (val) => {
+    const { isSeries } = this.props
     const { card } = this.state
-    this.setState({card: {...card, lineId: val}})
+    if (isSeries) {
+      this.setState({card: {...card, seriesLineId: val}})
+    } else {
+      this.setState({card: {...card, lineId: val}})
+    }
     this.props.actions.changeLine(card.id, val, this.props.bookId)
   }
 
@@ -89,7 +99,10 @@ class SceneDetails extends Component {
   }
 
   render () {
+    const { isSeries } = this.props
     const { card } = this.state
+    const chapterId = isSeries ? card.beatId : card.chapterId
+    const lineId = isSeries ? card.seriesLineId : card.lineId
     return <Container style={{flex: 1}}>
       <Content style={styles.content} contentContainerStyle={{flex: 1}}>
         <Form style={styles.form}>
@@ -103,11 +116,11 @@ class SceneDetails extends Component {
           </Item>
           <Item fixedLabel style={styles.label}>
             <Label>{t('Chapter')}</Label>
-            <ChapterPicker selectedId={card.chapterId} onChange={this.changeChapter} />
+            <ChapterPicker selectedId={chapterId} onChange={this.changeChapter} />
           </Item>
           <Item fixedLabel style={styles.label}>
             <Label>{t('Plotline')}</Label>
-            <LinePicker selectedId={card.lineId} onChange={this.changeLine} />
+            <LinePicker selectedId={lineId} onChange={this.changeLine} />
           </Item>
           { this.renderAttachments() }
           <View style={[styles.afterList, { flex: 1 }]}>

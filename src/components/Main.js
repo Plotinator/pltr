@@ -8,6 +8,7 @@ import { Provider } from 'react-redux'
 import { Content, Spinner, Container } from 'native-base'
 import DocumentRoot from './DocumentRoot'
 import { configureStore } from '../store/configureStore'
+import MainErrorBoundary from './MainErrorBoundary'
 const { DocumentViewController, Document, ReactNativeEventEmitter, DocumentBrowser } = NativeModules
 
 const DocumentEvents = new NativeEventEmitter(ReactNativeEventEmitter)
@@ -37,7 +38,11 @@ const Main = props => {
     })
 
     return () => DocumentEvents.removeAllListeners('onOpenDocument')
-  }, [])
+  }, [document])
+
+  const recoverFromError = () => {
+    setDocument(null)
+  }
 
   const renderV1 = () => {
     // TODO: figure out v1
@@ -47,7 +52,9 @@ const Main = props => {
   const renderV2 = () => {
     return (
       <Provider store={storeV2}>
-        <DocumentRoot document={document} closeFile={closeFile} />
+        <MainErrorBoundary recover={recoverFromError}>
+          <DocumentRoot document={document} closeFile={closeFile} />
+        </MainErrorBoundary>
       </Provider>
     )
   }

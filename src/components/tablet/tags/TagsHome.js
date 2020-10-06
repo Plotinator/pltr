@@ -1,6 +1,6 @@
 import React from 'react'
 import { SafeAreaView } from 'react-native'
-import ErrorBoundary from '../../ErrorBoundary'
+import ErrorBoundary from '../../shared/ErrorBoundary'
 import Tags from './Tags'
 
 export default function TagsHome (props) {

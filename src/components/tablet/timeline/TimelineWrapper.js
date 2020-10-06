@@ -6,7 +6,7 @@ import t from 'format-message'
 import cx from 'classnames'
 import { selectors, cardHelpers } from 'pltr/v2'
 import { View, Text, Button, Picker } from 'native-base'
-import ErrorBoundary from '../../ErrorBoundary'
+import ErrorBoundary from '../../shared/ErrorBoundary'
 import Toolbar from '../shared/Toolbar'
 import SeriesPicker from '../shared/SeriesPicker'
 import Timeline from './Timeline'
@@ -17,7 +17,9 @@ class TimelineWrapper extends Component {
       <Toolbar>
         <SeriesPicker />
       </Toolbar>
-      <Timeline navigation={this.props.navigation}/>
+      <ErrorBoundary>
+        <Timeline navigation={this.props.navigation}/>
+      </ErrorBoundary>
     </View>
   }
 }

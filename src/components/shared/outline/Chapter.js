@@ -75,7 +75,9 @@ class Chapter extends Component {
   renderManualSort () {
     if (this.props.chapter.autoOutlineSort) return null
 
-    return <Text onClick={this.autoSortChapter}>{t('Manually Sorted')}{' '}<Icon name='ios-close-circle-outline'/></Text>
+    // TODO: after fixing Ionicons, use ios-close-circle-outline
+
+    return <Button small iconRight warning bordered onPress={this.autoSortChapter} style={{alignSelf: 'center'}}><Text>{t('Manually Sorted')}</Text><Icon type='FontAwesome5' name='times-circle' style={{fontSize: 16}}/></Button>
   }
 
   renderCards () {

@@ -8,7 +8,7 @@ import cx from 'classnames'
 import { selectors, cardHelpers } from 'pltr/v2'
 import { View, H3 } from 'native-base'
 import { Col, Grid } from 'react-native-easy-grid'
-import ErrorBoundary from '../../ErrorBoundary'
+import ErrorBoundary from '../../shared/ErrorBoundary'
 import Toolbar from '../shared/Toolbar'
 import SeriesPicker from '../shared/SeriesPicker'
 import MiniChapter from './MiniChapter'
@@ -131,6 +131,9 @@ const styles = StyleSheet.create({
   },
   chapterTitle: {
     paddingBottom: 8,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   cardWrapper: {
     marginLeft: -16,

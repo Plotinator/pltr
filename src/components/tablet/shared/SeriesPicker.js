@@ -9,16 +9,18 @@ import { Text, List, ListItem, Button, Icon } from 'native-base'
 import Popover from 'react-native-popover-view'
 
 class SeriesPicker extends Component {
+  state = {open: false}
 
   onChange = (val) => {
     this.props.actions.changeCurrentTimeline(val)
+    this.setState({open: false})
   }
 
   renderItems () {
     const { currentTimeline, bookIds, books } = this.props
     return bookIds.map(id => {
       const book = books[`${id}`]
-      return <ListItem key={id} style={styles.listItem} onPress={() => onChange(id)} noIndent selected={id == currentTimeline}><Text>{book.title || t('Untitled')}</Text></ListItem>
+      return <ListItem key={id} style={styles.listItem} onPress={() => this.onChange(id)} noIndent selected={id == currentTimeline}><Text>{book.title || t('Untitled')}</Text></ListItem>
     })
   }
 
@@ -27,7 +29,10 @@ class SeriesPicker extends Component {
     const seriesText = series.name == '' ? t('Series View') : `${series.name} (${t('Series View')})`
     const selectedTitle = currentTimeline == 'series' ? seriesText : (books[currentTimeline].title || t('Untitled'))
     return <Popover
-      from={<Button bordered dark iconRight style={styles.picker}><Text>{selectedTitle}</Text><Icon type='FontAwesome5' name='chevron-down' style={{fontSize: 12}}/></Button>}
+      isVisible={this.state.open}
+      from={<Button bordered dark iconRight style={styles.picker} onPress={() => this.setState({open: true})}>
+        <Text>{selectedTitle}</Text><Icon type='FontAwesome5' name='chevron-down' style={{fontSize: 12}}/>
+      </Button>}
     >
       <List>
         <ListItem style={styles.listItem} onPress={() => this.onChange('series')} noIndent selected={currentTimeline == 'series'}><Text>{seriesText}</Text></ListItem>
