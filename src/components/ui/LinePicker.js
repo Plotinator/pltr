@@ -30,7 +30,7 @@ class LinePicker extends Component {
 
   renderPhoneItems () {
     return this.props.lines.map(l => {
-      return <Picker.Item label={l.title} value={l.id} />
+      return <Picker.Item key={l.id} label={l.title} value={l.id} />
     })
   }
 

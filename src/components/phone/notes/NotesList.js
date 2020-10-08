@@ -9,11 +9,12 @@ import { actions } from 'pltr/v2'
 import { View, ListItem, Icon, Left, Right, H3, Text, Button } from 'native-base'
 import t from 'format-message'
 import TrashButton from '../../ui/TrashButton'
+import { askToDelete } from '../../../utils/delete'
 
 class NotesList extends Component {
 
-  deleteNote = (id) => {
-    this.props.actions.deleteNote(id)
+  deleteNote = (note) => {
+    askToDelete(note.title, () => this.props.actions.deleteNote(note.id))
   }
 
   navigateToDetails = (note) => {
@@ -36,7 +37,7 @@ class NotesList extends Component {
     return <SwipeListView
       data={notes}
       renderItem={this.renderNote}
-      renderHiddenItem={ (data, rowMap) => <TrashButton onPress={() => this.deleteNote(data.item.id)} />}
+      renderHiddenItem={ (data, rowMap) => <TrashButton onPress={() => this.deleteNote(data.item)} />}
       keyExtractor={item => item.id}
       leftOpenValue={75}
     />

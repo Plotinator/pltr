@@ -1,7 +1,7 @@
 import { sortBy } from 'lodash'
 import React, { Component } from 'react'
 import { SwipeListView } from 'react-native-swipe-list-view'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Alert, LayoutAnimation } from 'react-native'
 import PropTypes from 'react-proptypes'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -9,11 +9,12 @@ import { selectors, actions } from 'pltr/v2'
 import { View, ListItem, Icon, Left, Right, H3, Text, Button } from 'native-base'
 import t from 'format-message'
 import TrashButton from '../../ui/TrashButton'
+import { askToDelete } from '../../../utils/delete'
 
 class PlacesList extends Component {
 
-  deletePlace = (id) => {
-    this.props.actions.deletePlace(id)
+  deletePlace = (place) => {
+    askToDelete(place.name, () => this.props.actions.deletePlace(place.id))
   }
 
   navigateToDetails = (place) => {
@@ -40,7 +41,7 @@ class PlacesList extends Component {
       <SwipeListView
         data={this.props.visiblePlaces}
         renderItem={this.renderPlace}
-        renderHiddenItem={ (data, rowMap) => <TrashButton onPress={() => this.deletePlace(data.item.id)} />}
+        renderHiddenItem={ (data, rowMap) => <TrashButton onPress={() => this.deletePlace(data.item)} />}
         keyExtractor={item => item.id}
         leftOpenValue={75}
       />

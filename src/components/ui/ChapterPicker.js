@@ -32,7 +32,7 @@ class ChapterPicker extends Component {
   renderPhoneItems () {
     const { chapters, positionOffset, isSeries } = this.props
     return chapters.map(ch => {
-      return <Picker.Item label={chapterHelpers.chapterTitle(ch, positionOffset, isSeries)} value={ch.id} />
+      return <Picker.Item key={ch.id} label={chapterHelpers.chapterTitle(ch, positionOffset, isSeries)} value={ch.id} />
     })
   }
 

@@ -13,6 +13,7 @@ import ErrorBoundary from '../../shared/ErrorBoundary'
 import Toolbar from '../shared/Toolbar'
 import Place from './Place'
 import NewButton from '../../ui/NewButton'
+import { askToDelete } from '../../../utils/delete'
 
 class Places extends Component {
   state = {
@@ -48,8 +49,8 @@ class Places extends Component {
     this.props.actions.editPlace(id, attributes)
   }
 
-  deletePlace = (id) => {
-    this.props.actions.deletePlace(id)
+  deletePlace = (place) => {
+    askToDelete(place.name || t('New Place'), () => this.props.actions.deletePlace(place.id))
   }
 
   renderPlaceItem = ({item}) => {
@@ -61,7 +62,7 @@ class Places extends Component {
         </TouchableOpacity>
       </Col>
       <Col size={3}>
-        <Button small light bordered onPress={() => this.deletePlace(item.id)}>
+        <Button small light bordered onPress={() => this.deletePlace(item)}>
           <Icon type='FontAwesome5' name='trash' />
         </Button>
       </Col>

@@ -32,8 +32,8 @@ class SceneCard extends Component {
 
   render () {
     const { line, card } = this.props
-    const lineColor = {color: line.color, fontSize: 12}
-    return <Card style={[styles.card, {borderColor: line.color}]}>
+    const lineColor = {color: line.color.toLowerCase(), fontSize: 12}
+    return <Card style={[styles.card, {borderColor: line.color.toLowerCase()}]}>
       <CardItem button={!isOnTablet} onPress={isOnTablet ? null : this.navigateToDetails}>
         <Left><Text>{card.title}</Text></Left>
         <Right><Text style={lineColor}>({line.title})</Text></Right>

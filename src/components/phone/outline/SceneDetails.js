@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import PropTypes from 'react-proptypes'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Container, Content, Form, Input, Label, Item, View } from 'native-base'
+import { Container, Content, Form, Input, Label, Item, View, Toast } from 'native-base'
 import { selectors, actions, initialState } from 'pltr/v2'
 import { StyleSheet } from 'react-native'
 import t from 'format-message'
@@ -23,7 +23,7 @@ class SceneDetails extends Component {
     const { isNewCard, card, chapterId } = route.params
     let cardObj = {}
     if (isNewCard) {
-      cardObj = {...cloneDeep(initialState.card), chapterId: chapterId}
+      cardObj = state.card || {...cloneDeep(initialState.card), chapterId: chapterId}
     } else {
       cardObj = state.card || cards.find(c => c.id == card.id)
     }
@@ -49,11 +49,29 @@ class SceneDetails extends Component {
     })
   }
 
+  plotlineError = () => {
+    Toast.show({
+      text: t('Please choose a plotline'),
+      duration: 3000,
+      type: 'danger',
+    })
+  }
+
   saveChanges = () => {
+    const { isSeries } = this.props
     const { changes, isNewCard, card } = this.state
     if (!changes) return
     if (isNewCard) {
-      this.props.actions.addCard({...card, lineId: 1}) // TODO: remove lineId 1
+      if (isSeries) {
+        if (!card.seriesLineId) {
+          return this.plotlineError()
+        }
+      } else {
+        if (!card.lineId) {
+          return this.plotlineError()
+        }
+      }
+      this.props.actions.addCard({...card})
       this.props.navigation.setParams({isNewCard: false})
     } else {
       this.props.actions.editCard(card.id, card.title, card.description)

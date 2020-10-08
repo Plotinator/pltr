@@ -13,6 +13,7 @@ import ErrorBoundary from '../../shared/ErrorBoundary'
 import Toolbar from '../shared/Toolbar'
 import Character from './Character'
 import NewButton from '../../ui/NewButton'
+import { askToDelete } from '../../../utils/delete'
 
 class Characters extends Component {
   state = {
@@ -72,8 +73,8 @@ class Characters extends Component {
     this.props.actions.editCharacter(id, attributes)
   }
 
-  deleteCharacter = (id) => {
-    this.props.actions.deleteCharacter(id)
+  deleteCharacter = (character) => {
+    askToDelete(character.name || t('New Character'), () => this.props.actions.deleteCharacter(character.id))
   }
 
   renderCharacterItem = ({item}) => {
@@ -85,7 +86,7 @@ class Characters extends Component {
         </TouchableOpacity>
       </Col>
       <Col size={3}>
-        <Button small light bordered onPress={() => this.deleteCharacter(item.id)}>
+        <Button small light bordered onPress={() => this.deleteCharacter(item)}>
           <Icon type='FontAwesome5' name='trash' />
         </Button>
       </Col>

@@ -3,12 +3,13 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { actions, selectors } from 'pltr/v2'
-import { StyleSheet, View, FlatList, TouchableOpacity, LayoutAnimation, Platform } from 'react-native'
+import { StyleSheet, View, FlatList, TouchableOpacity, LayoutAnimation, Platform, UIManager } from 'react-native'
 import { Icon, H1, Item, Input, Button, Label, Container, Content, Text, ListItem, Left, Switch, Body, Right } from 'native-base'
 import { SwipeListView } from 'react-native-swipe-list-view'
 import t from 'format-message'
 import RenameButton from '../../ui/RenameButton'
 import TrashButton from '../../ui/TrashButton'
+import { askToDelete } from '../../../utils/delete'
 
 if (Platform.OS === "android" && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true)
@@ -40,12 +41,11 @@ class CustomAttributesScreen extends Component {
   deleteAttr = (attr) => {
     const { type } = this.state
     const { actions } = this.props
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
     if (type == 'characters') {
-      actions.removeCharacterAttr(attr.name)
+      askToDelete(attr.name, () => actions.removeCharacterAttr(attr.name))
     }
     if (type == 'places') {
-      actions.removePlaceAttr(attr.name)
+      askToDelete(attr.name, () => actions.removePlaceAttr(attr.name))
     }
   }
 
@@ -110,7 +110,7 @@ class CustomAttributesScreen extends Component {
             <Label>{t('New Attribute')}</Label>
             <Input value={this.state.text} onChangeText={text => this.setState({text})}/>
           </Item>
-          <Button full success onPress={this.add}><Text>{t('Add')}</Text></Button>
+          <Button full success disabled={!this.state.text} onPress={this.add}><Text>{t('Add')}</Text></Button>
           <SwipeListView
             data={this.props.customAttributes}
             keyExtractor={(item) => item.name}

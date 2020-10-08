@@ -13,9 +13,9 @@ import tinycolor from 'tinycolor2'
 class PlotlineDetails extends Component {
   state = {}
   static getDerivedStateFromProps (props, state) {
-    const { route, lines } = props
-    const { line } = route.params
-    const lineFromRedux = lines.find(l => l.id == line.id)
+    const { route, lines, seriesLines } = props
+    const { line, isSeries } = route.params
+    const lineFromRedux = isSeries ? seriesLines.find(l => l.id == line.id) : lines.find(l => l.id == line.id)
     return {
       line: state.changes && state.line ? state.line : lineFromRedux,
       changes: state.changes,
@@ -38,9 +38,14 @@ class PlotlineDetails extends Component {
   }
 
   saveChanges = () => {
+    const { route, seriesLineActions, actions } = this.props
     const { changes, line } = this.state
     if (!changes) return
-    this.props.actions.editLine(line.id, line.title, line.color)
+    if (route.params.isSeries) {
+      seriesLineActions.editLine(line.id, line.title, line.color)
+    } else {
+      actions.editLine(line.id, line.title, line.color)
+    }
     this.setState({changes: false})
   }
 
@@ -73,6 +78,7 @@ class PlotlineDetails extends Component {
           <Input
             value={line.color}
             onChangeText={text => this.setState({line: {...line, color: text}, changes: true})}
+            autoCapitalize='none'
           />
         </Item>
         <View style={styles.colorWrapper}>
@@ -125,6 +131,7 @@ const styles = StyleSheet.create({
 
 PlotlineDetails.propTypes = {
   lines: PropTypes.array.isRequired,
+  seriesLines: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired,
   navigation: PropTypes.object.isRequired,
 }
@@ -132,12 +139,14 @@ PlotlineDetails.propTypes = {
 function mapStateToProps (state) {
   return {
     lines: state.lines,
+    seriesLines: state.seriesLines,
   }
 }
 
 function mapDispatchToProps (dispatch) {
   return {
-    actions: bindActionCreators(actions.lineActions, dispatch)
+    actions: bindActionCreators(actions.lineActions, dispatch),
+    seriesLineActions: bindActionCreators(actions.seriesLineActions, dispatch),
   }
 }
 

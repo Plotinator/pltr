@@ -13,6 +13,7 @@ import ErrorBoundary from '../../shared/ErrorBoundary'
 import Toolbar from '../shared/Toolbar'
 import Note from './Note'
 import NewButton from '../../ui/NewButton'
+import { askToDelete } from '../../../utils/delete'
 
 class Notes extends Component {
   state = {
@@ -96,8 +97,8 @@ class Notes extends Component {
     this.props.actions.editNote(id, {title, content})
   }
 
-  deleteNote = (id) => {
-    this.props.actions.deleteNote(id)
+  deleteNote = (note) => {
+    askToDelete(note.title || t('New Note'), () => this.props.actions.deleteNote(note.id))
   }
 
   renderNoteItem = ({item}) => {
@@ -109,7 +110,7 @@ class Notes extends Component {
         </TouchableOpacity>
       </Col>
       <Col size={3}>
-        <Button small light bordered onPress={() => this.deleteNote(item.id)}>
+        <Button small light bordered onPress={() => this.deleteNote(item)}>
           <Icon type='FontAwesome5' name='trash' />
         </Button>
       </Col>

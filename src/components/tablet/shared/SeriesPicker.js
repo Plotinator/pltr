@@ -20,7 +20,7 @@ class SeriesPicker extends Component {
     const { currentTimeline, bookIds, books } = this.props
     return bookIds.map(id => {
       const book = books[`${id}`]
-      return <ListItem key={id} style={styles.listItem} onPress={() => this.onChange(id)} noIndent selected={id == currentTimeline}><Text>{book.title || t('Untitled')}</Text></ListItem>
+      return <ListItem key={id} style={styles.listItem} onPress={() => this.onChange(id)} noIndent selected={id == currentTimeline}><Text style={styles.text}>{book.title || t('Untitled')}</Text></ListItem>
     })
   }
 
@@ -30,12 +30,13 @@ class SeriesPicker extends Component {
     const selectedTitle = currentTimeline == 'series' ? seriesText : (books[currentTimeline].title || t('Untitled'))
     return <Popover
       isVisible={this.state.open}
+      onRequestClose={() => this.setState({open: false})}
       from={<Button bordered dark iconRight style={styles.picker} onPress={() => this.setState({open: true})}>
         <Text>{selectedTitle}</Text><Icon type='FontAwesome5' name='chevron-down' style={{fontSize: 12}}/>
       </Button>}
     >
       <List>
-        <ListItem style={styles.listItem} onPress={() => this.onChange('series')} noIndent selected={currentTimeline == 'series'}><Text>{seriesText}</Text></ListItem>
+        <ListItem style={[styles.listItem, styles.seriesListItem]} onPress={() => this.onChange('series')} noIndent selected={currentTimeline == 'series'}><Text style={styles.text}>{seriesText}</Text></ListItem>
         { this.renderItems() }
       </List>
     </Popover>
@@ -50,6 +51,13 @@ const styles = StyleSheet.create({
   },
   listItem: {
     width: 400,
+    height: 60,
+  },
+  seriesListItem: {
+    backgroundColor: 'hsl(210, 36%, 96%)', //gray-9
+  },
+  text: {
+    fontSize: 22,
   },
 })
 
