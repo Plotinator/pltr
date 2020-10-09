@@ -3,8 +3,8 @@
  */
 
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, View, StatusBar, Linking, NativeModules } from 'react-native'
-const { DocumentBrowser } = NativeModules
+import { StyleSheet, View, StatusBar, Linking, NativeModules, Platform } from 'react-native'
+const { DocumentBrowser, AndroidDocumentBrowser } = NativeModules
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 import { Content, Text, H1, H2, Form, Item, Input, Button, Label, Spinner, Toast, Root, Container } from 'native-base'
 import { checkForActiveLicense, getUserVerification, verifyUser, reset } from '../utils/user_info'
@@ -28,8 +28,11 @@ const App = () => {
       const fetchedInfo = await getUserVerification()
       // console.log('USER_INFO', fetchedInfo)
       if (!fetchedInfo) {
-        // TODO: handle Android
-        DocumentBrowser.closeBrowser()
+        if (Platform.OS == 'ios') {
+          DocumentBrowser.closeBrowser()
+        } else if (Platform.OS == 'android') {
+          AndroidDocumentBrowser.closeBrowser()
+        }
       }
       if (!ignore) setUserInfo(fetchedInfo)
     }
@@ -39,15 +42,21 @@ const App = () => {
   }, [])
 
   const resetOnError = () => {
-    // TODO: handle Android
-    DocumentBrowser.closeBrowser()
+    if (Platform.OS == 'ios') {
+      DocumentBrowser.closeBrowser()
+    } else if (Platform.OS == 'android') {
+      AndroidDocumentBrowser.closeBrowser()
+    }
   }
 
   const recoverFromError = () => {
-    DocumentBrowser.openBrowser()
+    if (Platform.OS == 'ios') {
+      DocumentBrowser.openBrowser()
+    }
   }
 
   const verifyLicense = async () => {
+    if (email == '') return
     setVerifying(true)
     const userInfo = await checkForActiveLicense(email)
     setVerifying(false)

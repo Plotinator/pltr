@@ -23,7 +23,10 @@ export default function DocumentRoot (props) {
       const json = JSON.parse(document.data)
       if (json.newFile) {
         // creating a new file
-        const name = json.storyName.replace('.pltr', '')
+        let name = ''
+        if (json.storyName) name = json.storyName // ios
+        if (document.storyName) name = document.storyName // android
+        name = name.replace('.pltr', '')
         const newFile = newFileState(name, FILE_VERSION)
         store.dispatch(actions.uiActions.loadFile(filePath, false, newFile, FILE_VERSION))
       } else {

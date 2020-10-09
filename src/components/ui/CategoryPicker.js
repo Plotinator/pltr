@@ -10,7 +10,7 @@ class CategoryPicker extends Component {
     const { categories, type } = this.props
 
     return categories[type].map(cat => {
-      return <Picker.Item label={cat.name} value={cat.id} />
+      return <Picker.Item key={cat.id} label={cat.name} value={cat.id} />
     })
   }
 
