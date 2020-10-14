@@ -13,8 +13,9 @@ export function useRegisterCoordinates (registerFN, chapterId, lineId, isBlank) 
   }, [cellRef, chapterId, lineId])
 
   const measure = () => {
-    if (cellRef.current?._root) {
-      cellRef.current._root.measure((x, y, width, height, px, py) => {
+    const root = isBlank ? cellRef.current : cellRef.current?._root
+    if (root) {
+      root.measure((x, y, width, height, px, py) => {
         if (!px || !py) return
         registerFN({x: px, y: py, chapterId, lineId, isBlank})
       })

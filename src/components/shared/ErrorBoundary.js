@@ -3,17 +3,19 @@ import React, { Component } from 'react'
 // import log from 'electron-log'
 import t from 'format-message'
 import { View, H1, Text, Button, Icon } from 'native-base'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, ScrollView, TouchableOpacity } from 'react-native'
 // const rollbar = setupRollbar('ErrorBoundary')
 
 export default class ErrorBoundary extends Component {
-  state = {hasError: false}
+  state = {hasError: false, viewError: false}
 
   static getDerivedStateFromError(error) {
     return { hasError: true }
   }
 
   componentDidCatch(error, errorInfo) {
+    this.error = error
+    this.errorInfo = errorInfo
     if (process.env.NODE_ENV !== 'development') {
       // log.error(error, errorInfo)
       // rollbar.error(error, errorInfo)
@@ -28,6 +30,15 @@ export default class ErrorBoundary extends Component {
         <Button warning bordered style={styles.button} onPress={() => this.setState({hasError: false})}>
           <Text>{t('Try that again')}</Text><Icon type='FontAwesome5' name='redo' style={{fontSize: 16}} />
         </Button>
+        <View style={[styles.infoWrapper, this.state.viewError ? {flex: 1} : {}]}>
+          {!this.state.viewError ? <TouchableOpacity onPress={() => this.setState({viewError: true})}>
+            <Text>{t('View Error')}</Text>
+          </TouchableOpacity> : null}
+          {this.state.viewError ? <ScrollView>
+            <Text multiline>{this.error.message}</Text>
+            <Text multiline>{this.errorInfo.componentStack}</Text>
+          </ScrollView> : null}
+        </View>
       </View>
     }
 
@@ -47,4 +58,7 @@ const styles = StyleSheet.create({
   button: {
     alignSelf: 'center',
   },
+  infoWrapper: {
+    padding: 32,
+  }
 })

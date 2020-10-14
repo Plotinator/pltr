@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     width: '100%',
     borderWidth: 1,
     position: 'absolute',
-    top: 45,
+    top: 45.5,
   },
   cardBox: {
     position: 'absolute',

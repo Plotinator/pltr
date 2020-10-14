@@ -4,7 +4,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, View, StatusBar, Linking, NativeModules, Platform } from 'react-native'
-const { DocumentBrowser, AndroidDocumentBrowser } = NativeModules
+const { DocumentBrowser } = NativeModules
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 import { Content, Text, H1, H2, Form, Item, Input, Button, Label, Spinner, Toast, Root, Container } from 'native-base'
 import { checkForActiveLicense, getUserVerification, verifyUser, reset } from '../utils/user_info'
@@ -31,7 +31,7 @@ const App = () => {
         if (Platform.OS == 'ios') {
           DocumentBrowser.closeBrowser()
         } else if (Platform.OS == 'android') {
-          AndroidDocumentBrowser.closeBrowser()
+          NativeModules.AndroidDocumentBrowser.closeBrowser()
         }
       }
       if (!ignore) setUserInfo(fetchedInfo)
@@ -45,7 +45,7 @@ const App = () => {
     if (Platform.OS == 'ios') {
       DocumentBrowser.closeBrowser()
     } else if (Platform.OS == 'android') {
-      AndroidDocumentBrowser.closeBrowser()
+      NativeModules.AndroidDocumentBrowser.closeBrowser()
     }
   }
 

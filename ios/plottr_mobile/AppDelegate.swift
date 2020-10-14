@@ -20,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
   var bridge: RCTBridge!
   var reactViewController: UIViewController!
+  var browserViewController: UIViewController = DocumentBrowserViewController(forOpeningFilesWithContentTypes: nil)
 
   func sourceURL() -> URL {
     #if DEBUG
@@ -98,17 +99,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func openDocumentBrowser() {
     guard let window = self.window else { return }
-    UIView.transition(with: window, duration: 0.5, options: .transitionCurlDown, animations: {
-      window.rootViewController = DocumentBrowserViewController(forOpeningFilesWithContentTypes: nil)
-    }, completion:nil)
-//    window.rootViewController?.present(DocumentBrowserViewController(forOpeningFilesWithContentTypes: nil), animated: true, completion: nil)
+//    UIView.transition(with: window, duration: 0.5, options: .transitionCurlDown, animations: {
+//      window.rootViewController = DocumentBrowserViewController(forOpeningFilesWithContentTypes: nil)
+//    }, completion:nil)
+    window.rootViewController?.present(self.browserViewController, animated: true, completion: nil)
   }
   
   func closeDocumentBrowser() {
-    guard let window = self.window else { return }
-    UIView.transition(with: window, duration: 0.5, options: .transitionCurlUp, animations: {
-      window.rootViewController = self.reactViewController
-    }, completion:nil)
+//    guard let window = self.window else { return }
+//    UIView.transition(with: window, duration: 0.5, options: .transitionCurlUp, animations: {
+//      window.rootViewController = self.reactViewController
+//    }, completion:nil)
+    self.browserViewController.dismiss(animated: true, completion: nil)
   }
   
   func applicationWillResignActive(_ application: UIApplication) {

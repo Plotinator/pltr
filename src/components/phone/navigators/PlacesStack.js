@@ -21,6 +21,6 @@ export default function PlacesStack (props) {
         headerLeft: () => <DrawerButton openDrawer={props.route?.params?.openDrawer} />,
       }}
     />
-    <Stack.Screen name='PlaceDetails' component={PlaceDetails} />
+    <Stack.Screen name='PlaceDetails' component={PlaceDetails} options={{title: t('Details')}} />
   </Stack.Navigator>
 }

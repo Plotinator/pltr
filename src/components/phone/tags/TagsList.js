@@ -24,7 +24,7 @@ class TagsList extends Component {
       <Left>
         <View style={styles.rowView}>
           <H3 style={styles.title}>{item.title || t('New Tag')}</H3>
-          <Badge style={[styles.badge, {backgroundColor: item.color}]}><Text>{item.color}</Text></Badge>
+          <Badge style={[styles.badge, {backgroundColor: item.color.toLowerCase()}]}></Badge>
         </View>
       </Left>
       <Right>
@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
   badge: {
     marginTop: 5,
     marginLeft: 20,
+    width: 50,
   },
 })
 

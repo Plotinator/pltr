@@ -106,11 +106,11 @@ class CustomAttributesScreen extends Component {
     return <Container>
       <Content padder>
         <View style={styles.container}>
-          <Item floatingLabel>
-            <Label>{t('New Attribute')}</Label>
-            <Input value={this.state.text} onChangeText={text => this.setState({text})}/>
+          <Item floatingLabel style={styles.newAttr}>
+            <Label>{t('New Custom Attribute Title')}</Label>
+            <Input value={this.state.text} onChangeText={text => this.setState({text})} placeholder={t('Enter Custom Attribute Title')}/>
           </Item>
-          <Button full success disabled={!this.state.text} onPress={this.add}><Text>{t('Add')}</Text></Button>
+          <Button full success disabled={!this.state.text} onPress={this.add} style={styles.button}><Text>{t('Add')}</Text></Button>
           <SwipeListView
             data={this.props.customAttributes}
             keyExtractor={(item) => item.name}
@@ -141,6 +141,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center'
+  },
+  button: {
+    marginVertical: 8,
+  },
+  newAttr: {
+    marginBottom: 8,
   },
 })
 

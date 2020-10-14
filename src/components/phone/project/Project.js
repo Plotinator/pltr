@@ -48,7 +48,7 @@ class Project extends Component {
       <View>
         <ListItem noIndent button style={styles.row} onPress={() => this.navigateToOutline(series.id)}>
           <Left>
-            <H3 style={styles.title}>{t('Series')}</H3>
+            <H3 style={styles.title}>{t('Series Outline')}</H3>
           </Left>
           <Right>
             <Icon type='FontAwesome5' name='chevron-right'/>

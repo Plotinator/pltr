@@ -21,6 +21,6 @@ export default function CharactersStack (props) {
         headerLeft: () => <DrawerButton openDrawer={props.route?.params?.openDrawer} />,
       }}
     />
-    <Stack.Screen name='CharacterDetails' component={CharacterDetails} />
+    <Stack.Screen name='CharacterDetails' component={CharacterDetails} options={{title: t('Details')}} />
   </Stack.Navigator>
 }

@@ -269,7 +269,7 @@ const styles = StyleSheet.create({
     width: LEFT_COLUMN_WIDTH,
   },
   lineTitle: {
-    fontWeight: 'bold',
+    fontSize: 18,
   },
   body: { marginLeft: LEFT_COLUMN_WIDTH },
   column: { flexDirection: 'column' },

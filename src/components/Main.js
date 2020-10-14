@@ -10,11 +10,15 @@ import DocumentRoot from './DocumentRoot'
 import { configureStore } from '../store/configureStore'
 import MainErrorBoundary from './MainErrorBoundary'
 import t from 'format-message'
-const { DocumentViewController, ReactNativeEventEmitter, DocumentBrowser, AndroidDocumentBrowser } = NativeModules
+const { DocumentViewController, ReactNativeEventEmitter, DocumentBrowser } = NativeModules
 
-const DocumentEvents = new NativeEventEmitter(ReactNativeEventEmitter)
-const AndroidDocumentEvents = new NativeEventEmitter(AndroidDocumentBrowser)
-const storeV2 = configureStore({})
+let DocumentEvents
+if (Platform.OS == 'ios') {
+  DocumentEvents = new NativeEventEmitter(ReactNativeEventEmitter)
+} else if (Platform.OS == 'android') {
+  DocumentEvents = new NativeEventEmitter(NativeModules.AndroidDocumentBrowser)
+}
+let storeV2 = configureStore({})
 
 const Main = props => {
   const [document, setDocument] = useState(null)
@@ -22,12 +26,12 @@ const Main = props => {
 
   const closeFile = () => {
     setDocument(null)
-    setTimeout(() => {
-      if (Platform.OS === 'ios') {
+    storeV2 = configureStore({})
+    if (Platform.OS == 'ios') {
+      setTimeout(() => {
         DocumentViewController.closeDocument()
-        DocumentBrowser.openBrowser()
-      }
-    }, 500)
+      }, 500)
+    }
   }
 
   useEffect(() => {
@@ -35,27 +39,21 @@ const Main = props => {
       if (Platform.OS == 'ios') {
         DocumentBrowser.openBrowser()
       }
-    }
-
-    if (Platform.OS == 'ios') {
       DocumentEvents.addListener('onOpenDocument', data => {
-        DocumentBrowser.closeBrowser()
         setDocument(data)
+        if (Platform.OS == 'ios') {
+          DocumentBrowser.closeBrowser()
+        } else if (Platform.OS == 'android') {
+          setLoading(false)
+        }
       })
-      return () => DocumentEvents.removeAllListeners('onOpenDocument')
-    } else if (Platform.OS == 'android') {
-      AndroidDocumentEvents.addListener('onOpenDocument', data => {
-        setDocument(data)
-        setLoading(false)
-      })
-      return () => AndroidDocumentEvents.removeAllListeners('onOpenDocument')
     }
   }, [document])
 
   const openDoc = () => {
     if (Platform.OS == 'android') {
       try {
-        AndroidDocumentBrowser.openBrowser('open')
+        NativeModules.AndroidDocumentBrowser.openBrowser('open')
         setLoading(true)
       } catch (error) {
         console.log(error)
@@ -66,7 +64,7 @@ const Main = props => {
   const createDoc = () => {
     if (Platform.OS == 'android') {
       try {
-        AndroidDocumentBrowser.openBrowser('create')
+        NativeModules.AndroidDocumentBrowser.openBrowser('create')
         setLoading(true)
       } catch (error) {
         console.log(error)
@@ -85,7 +83,7 @@ const Main = props => {
 
   const renderV2 = () => {
     return (
-      <Provider store={storeV2}>
+      <Provider store={storeV2} key={document?.documentURL}>
         <MainErrorBoundary recover={recoverFromError}>
           <DocumentRoot document={document} closeFile={closeFile} />
         </MainErrorBoundary>
