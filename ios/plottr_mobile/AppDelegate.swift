@@ -99,18 +99,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func openDocumentBrowser() {
     guard let window = self.window else { return }
-//    UIView.transition(with: window, duration: 0.5, options: .transitionCurlDown, animations: {
-//      window.rootViewController = DocumentBrowserViewController(forOpeningFilesWithContentTypes: nil)
-//    }, completion:nil)
-    window.rootViewController?.present(self.browserViewController, animated: true, completion: nil)
+
+    if (UIDevice.current.userInterfaceIdiom == .phone) {
+      window.rootViewController?.present(self.browserViewController, animated: true, completion: nil)
+    }
+
+    if (UIDevice.current.userInterfaceIdiom == .pad) {
+      // option 1
+//      window.rootViewController?.show(self.browserViewController, sender: self.reactViewController)
+      // option 2
+//      window.rootViewController = self.browserViewController
+      // option 3
+      UIView.transition(with: window, duration: 0.5, options: .transitionCurlDown, animations: {
+        window.rootViewController = self.browserViewController
+      }, completion:nil)
+    }
   }
   
   func closeDocumentBrowser() {
-//    guard let window = self.window else { return }
-//    UIView.transition(with: window, duration: 0.5, options: .transitionCurlUp, animations: {
+    guard let window = self.window else { return }
+
+    if (UIDevice.current.userInterfaceIdiom == .phone) {
+      self.browserViewController.dismiss(animated: true, completion: nil)
+    }
+
+    if (UIDevice.current.userInterfaceIdiom == .pad) {
+      // option 1
+//      self.browserViewController.dismiss(animated: true, completion: nil)
+      // option 2
 //      window.rootViewController = self.reactViewController
-//    }, completion:nil)
-    self.browserViewController.dismiss(animated: true, completion: nil)
+      // option 3
+      UIView.transition(with: window, duration: 0.5, options: .transitionCurlUp, animations: {
+        window.rootViewController = self.reactViewController
+      }, completion:nil)
+    }
   }
   
   func applicationWillResignActive(_ application: UIApplication) {

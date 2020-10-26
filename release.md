@@ -11,5 +11,5 @@
 ## Change back after release:
 
 1. Product -> Scheme -> plottr_mobile
-1. Change Scheme Destination to iPad (7th generation)
+1. Change Scheme Destination to iPad (8th generation)
 1. Info.plist -> App Transport Security -> localhost -> YES

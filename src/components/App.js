@@ -7,11 +7,14 @@ import { StyleSheet, View, StatusBar, Linking, NativeModules, Platform } from 'r
 const { DocumentBrowser } = NativeModules
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 import { Content, Text, H1, H2, Form, Item, Input, Button, Label, Spinner, Toast, Root, Container } from 'native-base'
-import { checkForActiveLicense, getUserVerification, verifyUser, reset } from '../utils/user_info'
+import { checkForActiveLicense, getUserVerification, verifyUser, reset, checkStoredLicense } from '../utils/user_info'
 import Main from './Main'
 import { sendVerificationEmail } from '../utils/api'
 import t from 'format-message'
+import locales from '../locales'
 import AppErrorBoundary from './AppErrorBoundary'
+
+t.setup({ translations: locales, locale: 'en' }) // different locales?
 
 const App = () => {
   const [userInfo, setUserInfo] = useState(null)
@@ -40,6 +43,16 @@ const App = () => {
     fetchUserInfo()
     return () => (ignore = true)
   }, [])
+
+  useEffect(() => {
+    async function checkLicenseIsStillActive() {
+      const isActive = await checkStoredLicense()
+      if (!isActive) {
+        // show something if not active
+      }
+    }
+    checkLicenseIsStillActive()
+  }, [userInfo])
 
   const resetOnError = () => {
     if (Platform.OS == 'ios') {

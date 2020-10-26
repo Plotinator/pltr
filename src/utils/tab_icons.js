@@ -4,7 +4,7 @@ export function chooseIcon (routeName) {
     case 'Project':
       return 'book'
     case 'Timeline':
-      return 'table'
+      return 'grip-horizontal' // table
     case 'Outline':
       return 'stream'
     case 'Notes':

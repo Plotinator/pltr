@@ -32,14 +32,26 @@ class SceneCard extends Component {
 
   render () {
     const { line, card } = this.props
-    const lineColor = {color: line.color.toLowerCase(), fontSize: 12}
-    return <Card style={[styles.card, {borderColor: line.color.toLowerCase()}]}>
-      <CardItem button={!isOnTablet} onPress={isOnTablet ? null : this.navigateToDetails}>
-        <Left><Text>{card.title}</Text></Left>
-        <Right><Text style={lineColor}>({line.title})</Text></Right>
-      </CardItem>
-      { this.renderDescription() }
-    </Card>
+    const lineColor = {color: line.color.toLowerCase()}
+    if (isOnTablet) {
+      return <Card style={[styles.card, {borderColor: line.color.toLowerCase()}]}>
+        <View style={styles.paddedTitleBox}>
+          <Text style={[styles.tabletLineText, lineColor]}>({line.title})</Text>
+        </View>
+        <View style={styles.paddedBox}>
+          <Text style={styles.tabletTitleText}>{card.title}</Text>
+        </View>
+        { this.renderDescription() }
+      </Card>
+    } else {
+      return <Card style={[styles.card, {borderColor: line.color.toLowerCase()}]}>
+        <CardItem button onPress={this.navigateToDetails}>
+          <Left><Text>{card.title}</Text></Left>
+          <Right><Text style={[styles.lineText, lineColor]}>({line.title})</Text></Right>
+        </CardItem>
+        { this.renderDescription() }
+      </Card>
+    }
   }
 }
 
@@ -47,6 +59,25 @@ const styles = StyleSheet.create({
   card: {
     marginLeft: 20,
     marginRight: 8,
+  },
+  lineText: {
+    fontSize: 12,
+  },
+  tabletLineText: {
+    fontSize: 16,
+  },
+  tabletTitleText: {
+    fontSize: 20,
+    fontWeight: '500',
+  },
+  paddedTitleBox: {
+    paddingTop: 16,
+    paddingBottom: 4,
+    paddingHorizontal: 16,
+  },
+  paddedBox: {
+    paddingHorizontal: 16,
+    paddingVertical: 4,
   },
 })
 

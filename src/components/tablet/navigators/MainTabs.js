@@ -9,6 +9,7 @@ import PlacesHome from '../places/PlacesHome'
 import TagsHome from '../tags/TagsHome'
 import { chooseIcon, tabBarOptions } from '../../../utils/tab_icons'
 import { Icon } from 'native-base'
+import { isTablet } from 'react-native-device-info'
 
 const Tab = createBottomTabNavigator()
 
@@ -17,7 +18,11 @@ export default function MainTabs (props) {
     screenOptions={({ route }) => ({
       tabBarIcon: ({ focused, color, size }) => {
         const iconName = chooseIcon(route.name)
-        return <Icon type='FontAwesome5' active={focused} name={iconName} style={{fontSize: size, color: color}}/>
+        let marginLeft = 0
+        if (isTablet()) {
+          marginLeft = ['Characters', 'Tags'].includes(route.name) ? -6 : 0
+        }
+        return <Icon type='FontAwesome5' active={focused} name={iconName} style={{fontSize: size, color, marginLeft}}/>
       },
     })}
     tabBarOptions={{...tabBarOptions, style:{paddingBottom: 6}, safeAreaInsets:{bottom: 10}}}

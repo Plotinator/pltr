@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import t from 'format-message'
 import { View, H1, Text, Button, Icon } from 'native-base'
-import { StyleSheet, SafeAreaView } from 'react-native'
+import { StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native'
 
 export default class MainErrorBoundary extends Component {
   state = {hasError: false, viewError: false}

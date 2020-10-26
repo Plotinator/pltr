@@ -21,6 +21,6 @@ export default function NotesStack (props) {
         headerLeft: () => <DrawerButton openDrawer={props.route?.params?.openDrawer} />,
       }}
     />
-    <Stack.Screen name='NoteDetails' component={NoteDetails} />
+    <Stack.Screen name='NoteDetails' component={NoteDetails} options={{title: t('Note Details')}} />
   </Stack.Navigator>
 }

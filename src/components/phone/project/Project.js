@@ -16,14 +16,9 @@ class Project extends Component {
   state = {data: []}
 
   static getDerivedStateFromProps (props, state) {
-    console.log('getDerivedStateFromProps', props.books)
-    if (props.books.allIds) {
-      const seriesObj = {id: 'series', ...props.series}
-      const bookObjs = props.books.allIds.map(id => props.books[id])
-      return {data: [seriesObj, ...bookObjs]}
-    } else {
-      return state
-    }
+    const seriesObj = {id: 'series', ...props.series}
+    const bookObjs = props.books.allIds.map(id => props.books[id])
+    return {data: [seriesObj, ...bookObjs]}
   }
 
   deleteBook = (id) => {

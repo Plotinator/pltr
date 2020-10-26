@@ -17,7 +17,7 @@ export default function RootPhoneNavigator (props) {
   const closeDrawer = () => drawerRef.current._root.close()
   const openDrawer = () => drawerRef.current._root.open()
 
-  return <Drawer ref={drawerRef} content={<SideBar closeFile={props.closeFile}/>} onClose={closeDrawer}>
+  return <Drawer ref={drawerRef} content={<SideBar closeFile={props.closeFile} closeDrawer={closeDrawer}/>} onClose={closeDrawer}>
     <RootStack.Navigator mode='modal'>
       <RootStack.Screen name='Main' component={MainTabs} options={{ headerShown: false }} initialParams={{openDrawer}}/>
       <RootStack.Screen name='CustomAttributesModal' component={CustomAttributesScreen}

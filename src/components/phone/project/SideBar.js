@@ -26,9 +26,12 @@ export default function SideBar (props) {
   return <View style={{flex: 1, backgroundColor: 'hsl(210, 36%, 96%)'}}>
     <SafeAreaView style={{flex: 1}}>
       <View style={styles.wrapper}>
-        <H1>{t('Menu')}</H1>
+        <View style={styles.menuTitle}>
+          <H1>{t('Menu')}</H1>
+          <Button light style={styles.closeButton} onPress={props.closeDrawer}><Icon type='FontAwesome5' name='times'/></Button>
+        </View>
         <View style={styles.buttonWrapper}>
-          <Button iconLeft bordered style={styles.button} onPress={props.closeFile}><Icon type='FontAwesome5' name='times-circle' style={styles.icon}/><Text style={styles.text}>{t('Close File')}</Text></Button>
+          <Button iconLeft bordered style={styles.button} onPress={props.closeFile}><Icon type='FontAwesome5' name='tachometer-alt' style={styles.icon}/><Text style={styles.text}>{t('Dashboard')}</Text></Button>
           <Button iconLeft bordered style={styles.button} onPress={goToDocs}><Icon type='FontAwesome5' name='book-open' style={styles.icon}/><Text style={styles.text}>{t('Documentation')}</Text></Button>
           <Button iconLeft bordered style={styles.button} onPress={goToHelp}><Icon type='FontAwesome5' name='life-ring' style={styles.icon}/><Text style={styles.text}>{t('Help')}</Text></Button>
           <Button iconLeft bordered style={styles.button} onPress={goToVideos}><Icon type='FontAwesome5' name='video' style={styles.icon}/><Text style={styles.text}>{t('Learn')}</Text></Button>
@@ -50,10 +53,20 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 4,
     borderBottomRightRadius: 4,
   },
+  menuTitle: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
   buttonWrapper: {
     padding: 16,
     alignItems: 'flex-start',
     justifyContent: 'space-evenly',
+  },
+  closeButton: {
+    // backgroundColor: '#f4f4f4',
+    backgroundColor: 'white',
+    borderColor: '#f4f4f4',
   },
   button: {
     marginVertical: 16,

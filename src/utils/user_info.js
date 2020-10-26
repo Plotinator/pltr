@@ -3,14 +3,18 @@ import Config from 'react-native-config'
 
 const USER_KEY = '@user_info'
 const BASE_URL = 'http://getplottr.com'
-const PRODUCT_IDS = {mac:'11321', windows: '11322'}
-// const SUBSCRIPTION_ID = '10333'
+let SALES_PRODUCT_IDS = [12772, 12768, 11325, 11538, 14460, 29035, 33345]
+const PLOTTR_2020_ID = 33347
+const BEGINNING_2021 = 1609484400000
+if (Date.now() < BEGINNING_2021) SALES_PRODUCT_IDS.push(PLOTTR_2020_ID)
+const PRODUCT_IDS = {mac:'11321', windows: '11322', pro: '33345', twenty: '33347'}
 const NAME_PATTERN = /Plottr .* (Windows|Mac)/
 const TESTR_EMAIL = 'special_tester_email@getplottr.com'
 const TESTR_CODE = 735373
 
 export async function getUserVerification () {
   const info = await AsyncStorage.getItem(USER_KEY)
+  console.log('INFO', info)
   return info ? JSON.parse(info) : null
 }
 
@@ -35,17 +39,13 @@ export async function checkForActiveLicense (email) {
     let userInfo = null
     if (json.sales && json.sales.length) {
       await Promise.all(json.sales.map(async s => {
-        if (s.licenses) {
-          // check each license (besides the bundle)
+        const hasValidSalesProduct = s.products.some(p => SALES_PRODUCT_IDS.includes(p.id))
+        if (hasValidSalesProduct && s.licenses) {
+          // check each valid license
           const validations = await Promise.all(s.licenses
-            .filter(l => l.status == 'active' && l.name.match(NAME_PATTERN))
+            .filter(isValidLicense)
             .map(async l => {
-              let id = null
-              if (l.name.includes('Mac')) {
-                id = PRODUCT_IDS.mac
-              } else if (l.name.includes('Windows')) {
-                id = PRODUCT_IDS.windows
-              }
+              const id = getProductIdFromLicense(l)
               return await isActiveLicense(l.key, id)
             }))
           const isValid = validations.some(v => v)
@@ -62,6 +62,12 @@ export async function checkForActiveLicense (email) {
     console.error(error)
     return false
   }
+}
+
+// valid means not expired, invalid, nor disabled, and not the bundle license
+// also, don't check the bundle license
+function isValidLicense (license) {
+  return ['active', 'inactive'].includes(license.status) && !license.name.includes('Bundle')
 }
 
 isActiveLicense = async (license, productId) => {
@@ -84,11 +90,48 @@ function licenseURL (license, productId) {
   return `${BASE_URL}/?edd_action=check_license&item_id=${productId}&license=${license}`
 }
 
-// otherKeys is an array of arrays e.g. [['email', <val>], ...]
+// otherKeys is an array of arrays e.g. [['email', 'me@example.com'], ...]
 function apiURL (path = '', otherKeys) {
   return `${BASE_URL}/edd-api${path}?key=${Config.EDD_KEY}&token=${Config.EDD_TOKEN}&number=-1${otherKeys.map(k => `&${k[0]}=${k[1]}`)}`
 }
 
 function newUserInfoTemplate (email, sales, idToVerify) {
   return { email, verified: false, chancesLeft: 3, isV2: true, sales, idToVerify }
+}
+
+function getProductIdFromLicense (license) {
+  if (license.name.includes('Mac')) {
+    return PRODUCT_IDS.mac
+  } else if (license.name.includes('Windows')) {
+    return PRODUCT_IDS.windows
+  } else if (license.name.includes('Pro')) {
+    return PRODUCT_IDS.pro
+  } else if (license.name.includes('2020')) {
+    return PRODUCT_IDS.twenty
+  }
+  return null
+}
+
+export async function checkStoredLicense () {
+  const info = await getUserVerification()
+  if (!info) return false
+
+  if (info.email == TESTR_EMAIL) return true
+
+  const sale = info.sales.find(s => {
+    if (Date.now() > BEGINNING_2021) {
+      const has2020 = s.products.some(p => p.id == PLOTTR_2020_ID)
+      if (has2020) return false
+    }
+    return s.ID == info.idToVerify
+  })
+  if (!sale) return false
+
+  const validations = await Promise.all(s.licenses
+    .filter(isValidLicense)
+    .map(async l => {
+      const id = getProductIdFromLicense(l)
+      return await isActiveLicense(l.key, id)
+    }))
+  return validations.some(v => v)
 }

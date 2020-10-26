@@ -10,6 +10,7 @@ import DocumentRoot from './DocumentRoot'
 import { configureStore } from '../store/configureStore'
 import MainErrorBoundary from './MainErrorBoundary'
 import t from 'format-message'
+import { isTablet } from 'react-native-device-info'
 const { DocumentViewController, ReactNativeEventEmitter, DocumentBrowser } = NativeModules
 
 let DocumentEvents
@@ -28,9 +29,7 @@ const Main = props => {
     setDocument(null)
     storeV2 = configureStore({})
     if (Platform.OS == 'ios') {
-      setTimeout(() => {
-        DocumentViewController.closeDocument()
-      }, 500)
+      DocumentViewController.closeDocument()
     }
   }
 
@@ -40,10 +39,15 @@ const Main = props => {
         DocumentBrowser.openBrowser()
       }
       DocumentEvents.addListener('onOpenDocument', data => {
-        setDocument(data)
         if (Platform.OS == 'ios') {
           DocumentBrowser.closeBrowser()
+          if (isTablet()) {
+            setTimeout(() => setDocument(data), 600)
+          } else {
+            setDocument(data)
+          }
         } else if (Platform.OS == 'android') {
+          setDocument(data)
           setLoading(false)
         }
       })

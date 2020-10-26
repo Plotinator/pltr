@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, Dimensions, TouchableOpacity } from 'react-native'
-import { View, Text, Button, H1 } from 'native-base'
+import { View, Text, Button, H2 } from 'native-base'
 import { isTablet } from 'react-native-device-info'
 import t from 'format-message'
 
@@ -12,9 +12,9 @@ export default function Book (props) {
     <View style={styles.cardView}>
       <View style={styles.backbone}/>
       <View style={styles.card}>
-        <H1 style={styles.bookTitle}>{book.title || t('Untitled')}</H1>
+        <H2 style={styles.bookTitle}>{book.title || t('Untitled')}</H2>
         <View style={styles.footer}>
-          <Button light onPress={() => props.navigateToDetails(book.id)} style={styles.buttons}><Text>{t('Edit')}</Text></Button>
+          {isTablet() ? null : <Button light onPress={() => props.navigateToDetails(book.id)} style={styles.buttons}><Text>{t('Edit')}</Text></Button>}
           <Button light onPress={() => props.navigateToOutline(book.id)} style={styles.buttons}><Text>{t('Outline')}</Text></Button>
         </View>
       </View>
@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
     height: 300,
     width: bookWidth,
     marginLeft: -6,
+    paddingHorizontal: 16,
     borderWidth: 2,
     borderBottomWidth: 4,
     borderRadius: 4,

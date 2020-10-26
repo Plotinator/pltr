@@ -1,0 +1,278 @@
+{
+  "Add": {
+    "message": "Add"
+  },
+  "Are you sure you want to delete {name}?": {
+    "message": "Are you sure you want to delete { name }?"
+  },
+  "Attach Books": {
+    "message": "Attach Books"
+  },
+  "Attach Characters": {
+    "message": "Attach Characters"
+  },
+  "Attach Places": {
+    "message": "Attach Places"
+  },
+  "Attach Tags": {
+    "message": "Attach Tags"
+  },
+  "Back": {
+    "message": "Back"
+  },
+  "Book Details": {
+    "message": "Book Details"
+  },
+  "Books": {
+    "message": "Books"
+  },
+  "Cancel": {
+    "message": "Cancel"
+  },
+  "Category": {
+    "message": "Category"
+  },
+  "Chapter": {
+    "message": "Chapter"
+  },
+  "Characters": {
+    "message": "Characters"
+  },
+  "Check": {
+    "message": "Check"
+  },
+  "Choose Color": {
+    "message": "Choose Color"
+  },
+  "Close File": {
+    "message": "Close File"
+  },
+  "Code": {
+    "message": "Code"
+  },
+  "Color": {
+    "message": "Color"
+  },
+  "Color Picker": {
+    "message": "Color Picker"
+  },
+  "Content": {
+    "message": "Content"
+  },
+  "Create a New Plottr Document": {
+    "message": "Create a New Plottr Document"
+  },
+  "Current Color": {
+    "message": "Current Color"
+  },
+  "Custom Attributes": {
+    "message": "Custom Attributes"
+  },
+  "Delete": {
+    "message": "Delete"
+  },
+  "Demos": {
+    "message": "Demos"
+  },
+  "Description": {
+    "message": "Description"
+  },
+  "Details": {
+    "message": "Details"
+  },
+  "Documentation": {
+    "message": "Documentation"
+  },
+  "Don't have a license? Go to our website to learn more": {
+    "message": "Don''t have a license? Go to our website to learn more"
+  },
+  "Done": {
+    "message": "Done"
+  },
+  "Edit": {
+    "message": "Edit"
+  },
+  "Email": {
+    "message": "Email"
+  },
+  "Enter Custom Attribute Title": {
+    "message": "Enter Custom Attribute Title"
+  },
+  "Enter your verification code": {
+    "message": "Enter your verification code"
+  },
+  "Error sending email! Try again or another email.": {
+    "message": "Error sending email! Try again or another email."
+  },
+  "Error! That code didn't verify. Try again.": {
+    "message": "Error! That code didn''t verify. Try again."
+  },
+  "Error! That email didn't verify. Try again or another email.": {
+    "message": "Error! That email didn''t verify. Try again or another email."
+  },
+  "Genre": {
+    "message": "Genre"
+  },
+  "Give this tag a name": {
+    "message": "Give this tag a name"
+  },
+  "Help": {
+    "message": "Help"
+  },
+  "Learn": {
+    "message": "Learn"
+  },
+  "Let's verify your license": {
+    "message": "Let''s verify your license"
+  },
+  "Manually Sorted": {
+    "message": "Manually Sorted"
+  },
+  "Menu": {
+    "message": "Menu"
+  },
+  "Name": {
+    "message": "Name"
+  },
+  "New": {
+    "message": "New"
+  },
+  "New Character": {
+    "message": "New Character"
+  },
+  "New Custom Attribute Title": {
+    "message": "New Custom Attribute Title"
+  },
+  "New Note": {
+    "message": "New Note"
+  },
+  "New Place": {
+    "message": "New Place"
+  },
+  "New Plotline": {
+    "message": "New Plotline"
+  },
+  "New Tag": {
+    "message": "New Tag"
+  },
+  "No Characters": {
+    "message": "No Characters"
+  },
+  "None to choose": {
+    "message": "None to choose"
+  },
+  "Notes": {
+    "message": "Notes"
+  },
+  "OK": {
+    "message": "OK"
+  },
+  "Open a Plottr Document": {
+    "message": "Open a Plottr Document"
+  },
+  "Outline": {
+    "message": "Outline"
+  },
+  "Paragraph": {
+    "message": "Paragraph"
+  },
+  "Paragraph?": {
+    "message": "Paragraph?"
+  },
+  "Places": {
+    "message": "Places"
+  },
+  "Please choose a plotline": {
+    "message": "Please choose a plotline"
+  },
+  "Plotline": {
+    "message": "Plotline"
+  },
+  "Plotline Details": {
+    "message": "Plotline Details"
+  },
+  "Plotlines": {
+    "message": "Plotlines"
+  },
+  "Premise": {
+    "message": "Premise"
+  },
+  "Project": {
+    "message": "Project"
+  },
+  "Rename": {
+    "message": "Rename"
+  },
+  "Save": {
+    "message": "Save"
+  },
+  "Saved": {
+    "message": "Saved"
+  },
+  "Scene Details": {
+    "message": "Scene Details"
+  },
+  "Select a Category": {
+    "message": "Select a Category"
+  },
+  "Select a Chapter": {
+    "message": "Select a Chapter"
+  },
+  "Select a Plotline": {
+    "message": "Select a Plotline"
+  },
+  "Series": {
+    "message": "Series"
+  },
+  "Series Outline": {
+    "message": "Series Outline"
+  },
+  "Series View": {
+    "message": "Series View"
+  },
+  "Something went wrong.": {
+    "message": "Something went wrong."
+  },
+  "Success!": {
+    "message": "Success!"
+  },
+  "Tags": {
+    "message": "Tags"
+  },
+  "Theme": {
+    "message": "Theme"
+  },
+  "This will send you an email with a code": {
+    "message": "This will send you an email with a code"
+  },
+  "Title": {
+    "message": "Title"
+  },
+  "Try that again": {
+    "message": "Try that again"
+  },
+  "Uncategorized": {
+    "message": "Uncategorized"
+  },
+  "Untitled": {
+    "message": "Untitled"
+  },
+  "Verify": {
+    "message": "Verify"
+  },
+  "View Error": {
+    "message": "View Error"
+  },
+  "Welcome to Plottr!": {
+    "message": "Welcome to Plottr!"
+  },
+  "What would you like to do?": {
+    "message": "What would you like to do?"
+  },
+  "You should have received an email with a code": {
+    "message": "You should have received an email with a code"
+  },
+  "getplottr.com": {
+    "message": "getplottr.com"
+  }
+}

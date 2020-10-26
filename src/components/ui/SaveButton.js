@@ -18,8 +18,8 @@ export default function SaveButton (props) {
 const styles = StyleSheet.create({
   changes: {
     marginRight: 16,
-    borderColor: 'hsl(42, 87%, 55%)', //yellow-3
-    backgroundColor: 'hsl(42, 87%, 55%)',
+    borderColor: '#ff7f32', //orange
+    backgroundColor: '#ff7f32', //orange
   },
   noChanges: {
 
