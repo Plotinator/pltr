@@ -25,7 +25,9 @@ const App = () => {
       // DEV: use the following to reset user info/verification
       // await reset()
       const fetchedInfo = await getUserVerification()
-      // console.log('USER_INFO', fetchedInfo)
+      // if (fetchedInfo) {
+      //   console.log('USER_INFO', fetchedInfo)
+      // }
       if (!fetchedInfo) {
         if (Platform.OS == 'ios') {
           DocumentBrowser.closeBrowser()
@@ -44,10 +46,12 @@ const App = () => {
     async function checkLicenseIsStillActive() {
       const isActive = await checkStoredLicense()
       if (!isActive) {
-        // show something if not active
+        // TODO: show something if not active
       }
     }
-    checkLicenseIsStillActive()
+    if (userInfo && userInfo.verified && userInfo.validLicense) {
+      checkLicenseIsStillActive()
+    }
   }, [userInfo])
 
   const logout = async () => {
@@ -102,7 +106,7 @@ const App = () => {
     }
   }
 
-  const verifyCode = () => {
+  const verifyCode = async () => {
     setVerifying(true)
     if (code == userInfo.idToVerify) {
       Toast.show({
@@ -110,9 +114,27 @@ const App = () => {
         duration: 3000,
         type: 'success',
       })
-      const newUserInfo = verifyUser(userInfo)
-      // console.log('newUserInfo', newUserInfo)
-      setUserInfo({ ...newUserInfo })
+      const [verified, newUserInfo] = await verifyUser(userInfo)
+      if (verified) {
+        // console.log('newUserInfo', newUserInfo)
+        setUserInfo({ ...newUserInfo }) // create a new object to force a re-render
+      } else {
+        console.log('FAIL', newUserInfo)
+        // newUserInfo is the license verification response
+        let text = ''
+        if (newUserInfo && newUserInfo.problem == 'no_activations_left' && !newUserInfo.hasActivationsLeft) {
+          // not valid because of number of activations
+          text = t('It looks like you have Plottr on the max number of devices already')
+        } else {
+          // invalid
+          text = t('There was an error activating your license key on this device')
+        }
+        Toast.show({
+          text: text,
+          duration: 5000,
+          type: 'danger',
+        })
+      }
     } else {
       Toast.show({
         text: t("Error! That code didn't verify. Try again."),
@@ -146,14 +168,9 @@ const App = () => {
             </Button>
           </Form>
           <Text>{t('This will send you an email with a code')}</Text>
-          <View style={styles.ourWebsiteWrapper}>
-            <Text style={styles.ourWebsiteText}>{t("Don't have a license? Go to our website to learn more")}</Text>
-            <Button
-              transparent
-              large
-              onPress={() => Linking.openURL('https://getplottr.com')}
-              style={styles.ourWebsiteButton}
-            >
+          <View style={styles.centeredTextWrapper}>
+            <Text style={styles.centeredText}>{t("Don't have a license? Go to our website to learn more")}</Text>
+            <Button transparent large onPress={() => Linking.openURL('https://getplottr.com')} style={styles.ourWebsiteButton}>
               <Text>{t('getplottr.com')}</Text>
             </Button>
           </View>
@@ -167,7 +184,7 @@ const App = () => {
       <Container>
         <Content style={styles.content}>
           <H1 style={styles.header}>{t('Welcome to Plottr!')}</H1>
-          <H2 style={styles.header}>{t('Enter your verification code')}</H2>
+          <H2 style={styles.header}>{t('Enter your verification code to activate this device')}</H2>
           <Form style={styles.form}>
             <Item inlineLabel last regular style={styles.label}>
               <Label>{t('Code')}</Label>
@@ -185,6 +202,12 @@ const App = () => {
             </Button>
           </Form>
           <Text>{t('You should have received an email with a code')}</Text>
+          <View style={styles.centeredTextWrapper}>
+            <Text style={styles.centeredText}>{t('Verifying with email: {email}', {email: userInfo.email})}</Text>
+            <Button transparent large onPress={() => setUserInfo(null)} style={styles.ourWebsiteButton} >
+              <Text>{t('Use a different email')}</Text>
+            </Button>
+          </View>
         </Content>
       </Container>
     )
@@ -237,7 +260,7 @@ const styles = StyleSheet.create({
   form: {
     marginVertical: 16,
   },
-  ourWebsiteWrapper: {
+  centeredTextWrapper: {
     marginTop: 64,
     justifyContent: 'center',
     alignItems: 'center',
@@ -245,7 +268,7 @@ const styles = StyleSheet.create({
   ourWebsiteButton: {
     alignSelf: 'center',
   },
-  ourWebsiteText: {
+  centeredText: {
     fontSize: 20,
   },
 })

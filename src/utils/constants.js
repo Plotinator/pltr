@@ -1,8 +1,19 @@
-
-export const RCE_URL = 'https://plottr-web-rce.vercel.app/'
-
+// migration version
 export const FILE_VERSION = '2020.8.28'
+
+// RCE
+export const RCE_URL = 'https://plottr-web-rce.vercel.app/'
 
 // timeline cells
 export const CELL_WIDTH = 175
 export const CELL_HEIGHT = 93
+
+// licensing
+export const USER_KEY = '@user_info'
+export const BASE_URL = 'https://getplottr.com'
+export const OLD_PRODUCT_IDS = [12772, 12768, 11325, 11538, 14460, 29035]
+export const PRO_PRODUCT_IDS = [33345, 33347]
+export const SALES_PRODUCT_IDS = [...OLD_PRODUCT_IDS, ...PRO_PRODUCT_IDS]
+export const LICENSE_PRODUCT_IDS = {mac:'11321', windows: '11322', pro: '33345', life: '33347'}
+export const TESTR_EMAIL = 'special_tester_email@getplottr.com'
+export const TESTR_CODE = 735373
