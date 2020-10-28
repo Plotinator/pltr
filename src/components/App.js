@@ -1,7 +1,3 @@
-/**
- * @format
- */
-
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, View, StatusBar, Linking, NativeModules, Platform } from 'react-native'
 const { DocumentBrowser } = NativeModules
@@ -53,6 +49,11 @@ const App = () => {
     }
     checkLicenseIsStillActive()
   }, [userInfo])
+
+  const logout = async () => {
+    await reset()
+    setUserInfo(null)
+  }
 
   const resetOnError = () => {
     if (Platform.OS == 'ios') {
@@ -118,7 +119,6 @@ const App = () => {
         duration: 3000,
         type: 'danger',
       })
-      setUserInfo(null)
     }
     setVerifying(false)
   }
@@ -203,7 +203,7 @@ const App = () => {
     }
 
     if (userInfo && userInfo.verified) {
-      return <Main v2={userInfo.isV2} />
+      return <Main v2={userInfo.isV2} logout={logout} />
     }
   }
 
@@ -212,7 +212,7 @@ const App = () => {
       <Root>
         <StatusBar barStyle='dark-content' />
         <AppErrorBoundary reset={resetOnError} recover={recoverFromError}>
-          {renderBody()}
+          { renderBody() }
         </AppErrorBoundary>
       </Root>
     </SafeAreaProvider>

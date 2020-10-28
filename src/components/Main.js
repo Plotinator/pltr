@@ -21,7 +21,7 @@ if (Platform.OS == 'ios') {
 }
 let storeV2 = configureStore({})
 
-const Main = props => {
+const Main = ({v2, logout}) => {
   const [document, setDocument] = useState(null)
   const [androidLoading, setLoading] = useState(false)
 
@@ -89,7 +89,7 @@ const Main = props => {
     return (
       <Provider store={storeV2} key={document?.documentURL}>
         <MainErrorBoundary recover={recoverFromError}>
-          <DocumentRoot document={document} closeFile={closeFile} />
+          <DocumentRoot document={document} closeFile={closeFile} logout={logout} />
         </MainErrorBoundary>
       </Provider>
     )
@@ -124,7 +124,7 @@ const Main = props => {
     }
   }
 
-  if (props.v2) return renderV2()
+  if (v2) return renderV2()
 
   return renderV1()
 }

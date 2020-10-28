@@ -5,7 +5,7 @@ import t from 'format-message'
 import MainTabs from './MainTabs'
 import CustomAttributesScreen from '../customAttributes/CustomAttributesScreen'
 import { attachmentHeaderTitles } from '../../../utils/attachment_titles'
-import SideBar from '../project/SideBar'
+import SideBar from '../../shared/SideBar'
 import PlotlinesStack from './PlotlinesStack'
 import AttachmentSelectorModal from '../shared/AttachmentSelectorModal'
 import ColorPickerScreen from '../shared/ColorPickerScreen'
@@ -17,7 +17,7 @@ export default function RootPhoneNavigator (props) {
   const closeDrawer = () => drawerRef.current._root.close()
   const openDrawer = () => drawerRef.current._root.open()
 
-  return <Drawer ref={drawerRef} content={<SideBar closeFile={props.closeFile} closeDrawer={closeDrawer}/>} onClose={closeDrawer}>
+  return <Drawer ref={drawerRef} content={<SideBar closeFile={props.closeFile} closeDrawer={closeDrawer} logout={props.logout}/>} onClose={closeDrawer}>
     <RootStack.Navigator mode='modal'>
       <RootStack.Screen name='Main' component={MainTabs} options={{ headerShown: false }} initialParams={{openDrawer}}/>
       <RootStack.Screen name='CustomAttributesModal' component={CustomAttributesScreen}

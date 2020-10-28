@@ -7,7 +7,7 @@ export default function PlacesHome (props) {
   //gray-9
   return <SafeAreaView style={{flex: 1, backgroundColor: 'hsl(210, 36%, 96%)'}}>
     <ErrorBoundary>
-      <Places navigation={props.navigation} />
+      <Places navigation={props.navigation} openDrawer={props.route?.params?.openDrawer} />
     </ErrorBoundary>
   </SafeAreaView>
 }

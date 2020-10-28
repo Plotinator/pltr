@@ -14,6 +14,7 @@ import Toolbar from '../shared/Toolbar'
 import Character from './Character'
 import NewButton from '../../ui/NewButton'
 import { askToDelete } from '../../../utils/delete'
+import DrawerButton from '../../ui/DrawerButton'
 
 class Characters extends Component {
   state = {
@@ -127,6 +128,7 @@ class Characters extends Component {
   render () {
     return <View style={{flex: 1}}>
       <Toolbar>
+        <DrawerButton openDrawer={this.props.openDrawer} />
         <NewButton onPress={this.createNewCharacter}/>
       </Toolbar>
       <Grid style={{flex: 1}}>

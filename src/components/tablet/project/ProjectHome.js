@@ -7,7 +7,7 @@ export default function ProjectHome (props) {
   //gray-9
   return <SafeAreaView style={{flex: 1, backgroundColor: 'hsl(210, 36%, 96%)'}}>
     <ErrorBoundary>
-      <Project navigation={props.navigation} closeFile={props.route?.params?.closeFile}/>
+      <Project navigation={props.navigation} openDrawer={props.route?.params?.openDrawer}/>
     </ErrorBoundary>
   </SafeAreaView>
 }

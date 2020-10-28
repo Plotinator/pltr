@@ -46,11 +46,11 @@ export default function DocumentRoot (props) {
   }
 
   const renderPhone = () => {
-    return <RootPhoneNavigator closeFile={props.closeFile} />
+    return <RootPhoneNavigator closeFile={props.closeFile} logout={props.logout} />
   }
 
   const renderTablet = () => {
-    return <RootTabletNavigator closeFile={props.closeFile} />
+    return <RootTabletNavigator closeFile={props.closeFile} logout={props.logout} />
   }
 
   return <NavigationContainer>

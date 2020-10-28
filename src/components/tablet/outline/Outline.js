@@ -13,6 +13,7 @@ import Toolbar from '../shared/Toolbar'
 import SeriesPicker from '../shared/SeriesPicker'
 import MiniChapter from './MiniChapter'
 import Chapter from '../../shared/outline/Chapter'
+import DrawerButton from '../../ui/DrawerButton'
 
 class Outline extends Component {
   state = {linesById: {}, currentLine: null}
@@ -98,6 +99,7 @@ class Outline extends Component {
     const cardMap = cardHelpers.cardMapping(chapters, lines, card2Dmap, this.state.currentLine)
     return <View style={{flex: 1}}>
       <Toolbar>
+        <DrawerButton openDrawer={this.props.openDrawer} />
         <SeriesPicker />
       </Toolbar>
       <Grid style={{flex: 1}}>

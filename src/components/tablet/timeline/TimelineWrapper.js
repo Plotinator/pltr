@@ -10,11 +10,13 @@ import ErrorBoundary from '../../shared/ErrorBoundary'
 import Toolbar from '../shared/Toolbar'
 import SeriesPicker from '../shared/SeriesPicker'
 import Timeline from './Timeline'
+import DrawerButton from '../../ui/DrawerButton'
 
 class TimelineWrapper extends Component {
   render () {
     return <View style={{flex: 1}}>
       <Toolbar>
+        <DrawerButton openDrawer={this.props.openDrawer} />
         <SeriesPicker />
       </Toolbar>
       <ErrorBoundary>

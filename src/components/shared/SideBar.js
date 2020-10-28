@@ -1,11 +1,25 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { H3, View, Text, Button, Icon, H1 } from 'native-base'
-import { SafeAreaView, StyleSheet, Linking, Image } from 'react-native'
+import { SafeAreaView, StyleSheet, Linking } from 'react-native'
 import { getVersion } from 'react-native-device-info'
 import t from 'format-message'
-import images from '../../../images'
+import { getUserVerification } from '../../utils/user_info'
 
 export default function SideBar (props) {
+  const [userInfo, setUserInfo] = useState(null)
+
+  useEffect(() => {
+    let ignore = false
+
+    async function fetchUserInfo() {
+      const fetchedInfo = await getUserVerification()
+      if (!ignore) setUserInfo(fetchedInfo)
+    }
+
+    fetchUserInfo()
+    return () => (ignore = true)
+  }, [])
+
   const goToDocs = () => {
     Linking.openURL('https://getplottr.com/docs')
   }
@@ -22,6 +36,8 @@ export default function SideBar (props) {
     Linking.openURL('https://learn.getplottr.com/courses/plottr-101/')
   }
 
+  console.log('LOGOUT', props.logout)
+
   //gray-9
   return <View style={{flex: 1, backgroundColor: 'hsl(210, 36%, 96%)'}}>
     <SafeAreaView style={{flex: 1}}>
@@ -37,8 +53,15 @@ export default function SideBar (props) {
           <Button iconLeft bordered style={styles.button} onPress={goToVideos}><Icon type='FontAwesome5' name='video' style={styles.icon}/><Text style={styles.text}>{t('Learn')}</Text></Button>
           <Button iconLeft bordered style={styles.button} onPress={goToDemos}><Icon type='FontAwesome5' name='file-alt' style={styles.icon}/><Text style={styles.text}>{t('Demos')}</Text></Button>
         </View>
-        <View style={styles.versionWrapper}>
-          <Text note>{`App Version: ${getVersion()}`}</Text>
+        <View style={styles.bottomInfoWrapper}>
+          <View style={styles.userInfo}>
+            <View style={styles.logoutWrapper}>
+              <Text note>{t('Email:')}</Text>
+              <Button transparent onPress={props.logout}><Text>{t('(Logout)')}</Text></Button>
+            </View>
+            <Text>{userInfo ? userInfo.email : null}</Text>
+          </View>
+          <Text note>{t('App Version: {version}', {version: getVersion()})}</Text>
         </View>
       </View>
     </SafeAreaView>
@@ -79,10 +102,18 @@ const styles = StyleSheet.create({
   icon: {
     color: 'hsl(209, 61%, 16%)', //gray-0
   },
-  versionWrapper: {
+  bottomInfoWrapper: {
     marginTop: 'auto',
   },
   white: {
     color: 'white',
+  },
+  userInfo: {
+    marginVertical: 16,
+  },
+  logoutWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 })

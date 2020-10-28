@@ -27,12 +27,12 @@ export default function MainTabs (props) {
     })}
     tabBarOptions={{...tabBarOptions, style:{paddingBottom: 6}, safeAreaInsets:{bottom: 10}}}
   >
-    <Tab.Screen name='Project' component={ProjectHome} initialParams={{closeFile: props.route?.params?.closeFile}}/>
-    <Tab.Screen name='Timeline' component={TimelineHome} />
-    <Tab.Screen name='Outline' component={OutlineHome} />
-    <Tab.Screen name='Notes' component={NotesHome} />
-    <Tab.Screen name='Characters' component={CharactersHome} />
-    <Tab.Screen name='Places' component={PlacesHome} />
-    <Tab.Screen name='Tags' component={TagsHome} />
+    <Tab.Screen name='Project' component={ProjectHome} initialParams={{openDrawer: props.route?.params?.openDrawer}} />
+    <Tab.Screen name='Timeline' component={TimelineHome} initialParams={{openDrawer: props.route?.params?.openDrawer}} />
+    <Tab.Screen name='Outline' component={OutlineHome} initialParams={{openDrawer: props.route?.params?.openDrawer}} />
+    <Tab.Screen name='Notes' component={NotesHome} initialParams={{openDrawer: props.route?.params?.openDrawer}} />
+    <Tab.Screen name='Characters' component={CharactersHome} initialParams={{openDrawer: props.route?.params?.openDrawer}} />
+    <Tab.Screen name='Places' component={PlacesHome} initialParams={{openDrawer: props.route?.params?.openDrawer}} />
+    <Tab.Screen name='Tags' component={TagsHome} initialParams={{openDrawer: props.route?.params?.openDrawer}} />
   </Tab.Navigator>
 }

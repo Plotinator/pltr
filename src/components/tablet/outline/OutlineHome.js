@@ -7,7 +7,7 @@ export default function OutlineHome (props) {
   //gray-9
   return <SafeAreaView style={{flex: 1, backgroundColor: 'hsl(210, 36%, 96%)'}}>
     <ErrorBoundary>
-      <Outline navigation={props.navigation}/>
+      <Outline navigation={props.navigation} openDrawer={props.route?.params?.openDrawer}/>
     </ErrorBoundary>
   </SafeAreaView>
 }

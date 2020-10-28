@@ -4,17 +4,13 @@ import Config from 'react-native-config'
 const USER_KEY = '@user_info'
 const BASE_URL = 'http://getplottr.com'
 let SALES_PRODUCT_IDS = [12772, 12768, 11325, 11538, 14460, 29035, 33345]
-const PLOTTR_2020_ID = 33347
-const BEGINNING_2021 = 1609484400000
-if (Date.now() < BEGINNING_2021) SALES_PRODUCT_IDS.push(PLOTTR_2020_ID)
-const PRODUCT_IDS = {mac:'11321', windows: '11322', pro: '33345', twenty: '33347'}
+const PRODUCT_IDS = {mac:'11321', windows: '11322', pro: '33345'}
 const NAME_PATTERN = /Plottr .* (Windows|Mac)/
 const TESTR_EMAIL = 'special_tester_email@getplottr.com'
 const TESTR_CODE = 735373
 
 export async function getUserVerification () {
   const info = await AsyncStorage.getItem(USER_KEY)
-  console.log('INFO', info)
   return info ? JSON.parse(info) : null
 }
 
@@ -71,7 +67,7 @@ function isValidLicense (license) {
 }
 
 isActiveLicense = async (license, productId) => {
-  const url = licenseURL(license, productId)
+  const url = licenseURL('check_license', license, productId)
   try {
     let response = await fetch(url, {headers: {'User-Agent': 'mobile;mobile-app'}})
     let json = await response.json()
@@ -86,8 +82,8 @@ function salesURL (email) {
   return apiURL('/sales/', [['email', email]])
 }
 
-function licenseURL (license, productId) {
-  return `${BASE_URL}/?edd_action=check_license&item_id=${productId}&license=${license}`
+function licenseURL (action, license, productId) {
+  return `${BASE_URL}/?edd_action=${action}&item_id=${productId}&license=${license}`
 }
 
 // otherKeys is an array of arrays e.g. [['email', 'me@example.com'], ...]
@@ -118,13 +114,7 @@ export async function checkStoredLicense () {
 
   if (info.email == TESTR_EMAIL) return true
 
-  const sale = info.sales.find(s => {
-    if (Date.now() > BEGINNING_2021) {
-      const has2020 = s.products.some(p => p.id == PLOTTR_2020_ID)
-      if (has2020) return false
-    }
-    return s.ID == info.idToVerify
-  })
+  const sale = info.sales.find(s => s.ID == info.idToVerify)
   if (!sale) return false
 
   const validations = await Promise.all(s.licenses

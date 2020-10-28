@@ -63,6 +63,10 @@ class AttachmentSelectorModal extends Component {
     let color = {}
     if (type == 'tags') color = {backgroundColor: item.color}
     let defaultTitle = `New ${type.substr(0,1).toUpperCase()}${type.substr(1, type.length - 2)}`
+    if (type == 'bookIds') {
+      defaultTitle = t('Untitled')
+      item = this.props.books[`${item}`]
+    }
     return <ListItem noIndent button key={`item-${item.id}`} style={styles.listItem} onPress={() => this.toggleItem(item.id)}>
       <CheckBox checked={selected.includes(item.id)} onPress={() => this.toggleItem(item.id)}/>
       <Body>
@@ -75,10 +79,16 @@ class AttachmentSelectorModal extends Component {
   }
 
   render () {
+    let data = []
+    if (this.state.type == 'bookIds') {
+      data = this.props.books.allIds
+    } else {
+      data = this.props[this.state.type]
+    }
     return <Container>
       <Content>
         <FlatList
-          data={this.props[this.state.type]}
+          data={data}
           ListEmptyComponent={<H1 style={styles.h1}>{t('None to choose')}</H1>}
           extraData={{selected: this.state.selected}}
           keyExtractor={(item) => item.id}

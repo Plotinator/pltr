@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'react-proptypes'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { ScrollView, StyleSheet, Linking } from 'react-native'
+import { ScrollView, StyleSheet } from 'react-native'
 import { View, Text, H1, Form, Button, Icon, Input, Label, Item } from 'native-base'
 import { Col, Row, Grid } from 'react-native-easy-grid'
 import { actions } from 'pltr/v2'
@@ -10,6 +10,7 @@ import Toolbar from '../shared/Toolbar'
 import t from 'format-message'
 import { getVersion } from 'react-native-device-info'
 import Book from '../../shared/project/Book'
+import DrawerButton from '../../ui/DrawerButton'
 
 class Project extends Component {
   state = {}
@@ -24,14 +25,6 @@ class Project extends Component {
   saveChanges = () => {
     this.props.seriesActions.editSeries({...this.state.series})
     this.setState({changes: false})
-  }
-
-  goToDocs = () => {
-    Linking.openURL('https://getplottr.com/docs')
-  }
-
-  goToHelp = () => {
-    Linking.openURL('https://getplottr.com/support')
   }
 
   openEditModal = (id) => {
@@ -56,12 +49,7 @@ class Project extends Component {
     const { series, changes } = this.state
     return <View style={{flex: 1}}>
       <Toolbar>
-        <Button iconLeft bordered style={styles.button} onPress={this.props.closeFile}><Icon type='FontAwesome5' name='times-circle' style={styles.icon}/><Text style={styles.text}>{t('Close File')}</Text></Button>
-        <Button iconLeft bordered style={styles.button} onPress={this.goToDocs}><Icon type='FontAwesome5' name='book-open' style={styles.icon}/><Text style={styles.text}>{t('Documentation')}</Text></Button>
-        <Button iconLeft bordered style={styles.button} onPress={this.goToHelp}><Icon type='FontAwesome5' name='life-ring' style={styles.icon}/><Text style={styles.text}>{t('Help')}</Text></Button>
-        <View style={styles.versionWrapper}>
-          <Text style={styles.versionText}>{`App Version: ${getVersion()}`}</Text>
-        </View>
+        <DrawerButton openDrawer={this.props.openDrawer} />
       </Toolbar>
       <View style={styles.seriesWrapper}>
         <H1>{t('Series')}</H1>
@@ -139,12 +127,6 @@ const styles = StyleSheet.create({
   },
   icon: {
     color: 'hsl(209, 61%, 16%)', //gray-0
-  },
-  versionWrapper: {
-    marginLeft: 'auto',
-  },
-  versionText: {
-    color: 'hsl(209, 34%, 20%)', //gray-2
   },
   seriesWrapper: {
     flex: 1,

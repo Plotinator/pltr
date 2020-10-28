@@ -14,6 +14,7 @@ import Toolbar from '../shared/Toolbar'
 import Place from './Place'
 import NewButton from '../../ui/NewButton'
 import { askToDelete } from '../../../utils/delete'
+import DrawerButton from '../../ui/DrawerButton'
 
 class Places extends Component {
   state = {
@@ -94,6 +95,7 @@ class Places extends Component {
   render () {
     return <View style={{flex: 1}}>
       <Toolbar>
+        <DrawerButton openDrawer={this.props.openDrawer} />
         <NewButton onPress={this.createNewPlace}/>
       </Toolbar>
       <Grid style={{flex: 1}}>

@@ -11,6 +11,7 @@ import Toolbar from '../shared/Toolbar'
 import NewButton from '../../ui/NewButton'
 import tinycolor from 'tinycolor2'
 import prompt from 'react-native-prompt-android'
+import DrawerButton from '../../ui/DrawerButton'
 
 class Tags extends Component {
 
@@ -58,6 +59,7 @@ class Tags extends Component {
   render () {
     return <View style={{flex: 1}}>
       <Toolbar>
+        <DrawerButton openDrawer={this.props.openDrawer} />
         <NewButton onPress={this.promptToCreate}/>
       </Toolbar>
       <View style={styles.content}>
