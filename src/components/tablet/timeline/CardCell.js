@@ -7,10 +7,11 @@ import CardModal from './CardModal'
 import { useRegisterCoordinates } from './hooks'
 
 export default function CardCell (props) {
+  const { color, card } = props
   const [showModal, setModal] = useState(false)
   const [pan, setPan] = useState(new Animated.ValueXY())
   const [panResponder, setResponder] = useState(null)
-  const [cellRef, measure] = useRegisterCoordinates(props.register, props.card.chapterId, props.card.lineId, false)
+  const [cellRef, measure] = useRegisterCoordinates(props.register, card.chapterId, card.lineId, false, card.positionWithinLine, card.title)
   useLayoutEffect(() => {
     // Initialize PanResponder with move handling
     resp = PanResponder.create({
@@ -19,7 +20,7 @@ export default function CardCell (props) {
         null, { dx: pan.x, dy: pan.y }
       ], {useNativeDriver: false}),
       onPanResponderRelease: (e, gesture) => {
-        if (!props.handleDrop(gesture.moveX, gesture.moveY, props.card)) {
+        if (!props.handleDrop(gesture.moveX, gesture.moveY, card)) {
           Animated.spring(pan, {
             toValue: { x: 0, y: 0 },
             friction: 5,
@@ -49,10 +50,9 @@ export default function CardCell (props) {
 
   const renderModal = () => {
     if (!showModal) return null
-    return <CardModal card={props.card} navigation={props.navigation} onClose={() => setModal(false)}/>
+    return <CardModal card={card} navigation={props.navigation} onClose={() => setModal(false)}/>
   }
 
-  const { color, card } = props
   const colorObj = tinycolor(color)
   const borderColor = {borderColor: colorObj.toHexString()}
   const panStyle = {

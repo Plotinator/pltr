@@ -18,8 +18,15 @@ class Timeline extends Component {
 
     this.headerScrollView = null
     this.scrollPosition = new Animated.Value(0)
+    this.scrollX = 0
     this.scrollEvent = Animated.event(
       [{ nativeEvent: { contentOffset: { x: this.scrollPosition } } }],
+      { useNativeDriver: false },
+    )
+    this.verticalScrollPosition = new Animated.Value(0)
+    this.scrollY = 0
+    this.verticalScrollEvent = Animated.event(
+      [{ nativeEvent: { contentOffset: { y: this.verticalScrollPosition } } }],
       { useNativeDriver: false },
     )
     this.state = {lineMapKeys: {}, showColorPicker: false}
@@ -34,10 +41,19 @@ class Timeline extends Component {
     }
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.listener = this.scrollPosition.addListener(position => {
+      this.scrollX = position.value
       this.headerScrollView.scrollTo({ x: position.value, animated: false })
     })
+    this.listener = this.verticalScrollPosition.addListener(position => {
+      this.scrollY = position.value
+    })
+  }
+
+  componentWillUnmount () {
+    this.scrollPosition.removeAllListeners()
+    this.verticalScrollPosition.removeAllListeners()
   }
 
   handleAppendLine = () => {
@@ -64,12 +80,14 @@ class Timeline extends Component {
   }
 
   dropCard = (x, y, droppedCard) => {
+    const trueX = x + this.scrollX
+    const trueY = y + this.scrollY
     let moveToChapterId = null
     let moveToLineId = null
     let moveToIsBlank = false
     const success = this.dropCoordinates.some(coord => { // using .some to short circuit once we find one
       // check if it's within this one's bounds
-      if (this.isWithinCell(x, y, coord)) {
+      if (this.isWithinCell(trueX, trueY, coord)) {
         // do nothing for dropping on itself
         if (coord.chapterId != droppedCard.chapterId || coord.lineId != droppedCard.lineId) {
           moveToChapterId = coord.chapterId
@@ -249,6 +267,7 @@ class Timeline extends Component {
         <FlatList
           data={data}
           renderItem={this.renderMainRow}
+          onScroll={this.verticalScrollEvent}
         />
       </View>
     )

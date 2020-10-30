@@ -7,7 +7,7 @@ import { useRegisterCoordinates } from './hooks'
 import CardModal from './CardModal'
 
 export function BlankCell (props) {
-  const [cellRef, measure] = useRegisterCoordinates(props.register, props.chapterId, props.lineId, true)
+  const [cellRef, measure] = useRegisterCoordinates(props.register, props.chapterId, props.lineId, true, 0)
   const [showModal, toggleModal] = useState(false)
 
   const onLayout = () => measure()
