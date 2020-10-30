@@ -21,4 +21,4 @@
 
 1. In android/app/build.gradle on line 136, increment versionCode
 1. Run `./gradlew bundleRelease` in `<project>/android` in the command line
-3. The file to upload is in `<project>/android/app/build/outputs/bundle/release`
+1. The file to upload is in `<project>/android/app/build/outputs/bundle/release`

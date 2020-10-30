@@ -76,18 +76,15 @@ const App = () => {
   const verifyLicense = async () => {
     if (email == '') return
     setVerifying(true)
-    const userInfo = await checkForActiveLicense(email)
-    setVerifying(false)
-    if (userInfo) {
+    const [success, userInfo] = await checkForActiveLicense(email)
+    if (success) {
       Toast.show({
         text: t('Success!'),
         duration: 3000,
         type: 'success',
       })
-      setUserInfo(userInfo)
-
-      // TODO: send an email with userInfo.idToVerify
       sendVerificationEmail(email, userInfo.idToVerify, error => {
+        setVerifying(false)
         if (error) {
           Toast.show({
             text: t('Error sending email! Try again or another email.'),
@@ -95,12 +92,15 @@ const App = () => {
             type: 'danger',
           })
           setUserInfo(null)
+        } else {
+          setUserInfo(userInfo)
         }
       })
     } else {
+      setVerifying(false)
       Toast.show({
-        text: t("Error! That email didn't verify. Try again or another email."),
-        duration: 3000,
+        text: t(`Error! That email didn't verify. Try again or another email.${userInfo ? `\n${userInfo.message}` : ''}`),
+        duration: 10000,
         type: 'danger',
       })
     }
@@ -120,6 +120,7 @@ const App = () => {
         setUserInfo({ ...newUserInfo }) // create a new object to force a re-render
       } else {
         console.log('FAIL', newUserInfo)
+        setUserInfo(null)
         // newUserInfo is the license verification response
         let text = ''
         if (newUserInfo && newUserInfo.problem == 'no_activations_left' && !newUserInfo.hasActivationsLeft) {

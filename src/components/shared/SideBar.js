@@ -36,8 +36,6 @@ export default function SideBar (props) {
     Linking.openURL('https://learn.getplottr.com/courses/plottr-101/')
   }
 
-  console.log('LOGOUT', props.logout)
-
   //gray-9
   return <View style={{flex: 1, backgroundColor: 'hsl(210, 36%, 96%)'}}>
     <SafeAreaView style={{flex: 1}}>

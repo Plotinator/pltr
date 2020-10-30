@@ -11,11 +11,18 @@ export default function RichTextEditor (props) {
     ${props.readOnly ? 'window.readOnly = true;' : ''}
     true;
   `
+
+  const change = event => {
+    const stuff = JSON.parse(event.nativeEvent.data)
+    console.log(stuff[0].children)
+    props.onChange(JSON.parse(event.nativeEvent.data))
+  }
+
   return <WebView
     containerStyle={{flex: 0, height: '100%'}}
     style={[styles.webview, props.style]}
     source={{ uri: RCE_URL }}
-    onMessage={event => props.onChange(JSON.parse(event.nativeEvent.data))}
+    onMessage={change}
     injectedJavaScriptBeforeContentLoaded={injectValue}
     renderLoading={() => <View style={styles.loader}><Spinner color='orange'/></View>}
     startInLoadingState

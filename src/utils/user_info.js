@@ -10,6 +10,8 @@ export async function getUserVerification () {
 }
 
 export async function verifyUser (userInfo) {
+  if (userInfo.email == TESTR_EMAIL) return [true, {...userInfo, verified: true}]
+
   userInfo.verified = true
   const license = await activateLicense(userInfo, 0)
   if (license.success) {
@@ -27,7 +29,7 @@ export async function reset () {
 }
 
 export async function checkForActiveLicense (email) {
-  if (email == TESTR_EMAIL) return newUserInfoTemplate(TESTR_EMAIL, [], TESTR_CODE)
+  if (email == TESTR_EMAIL) return [true, newUserInfoTemplate(TESTR_EMAIL, [], TESTR_CODE)]
   const url = salesURL(email)
   try {
     let response = await fetch(url)
@@ -60,10 +62,10 @@ export async function checkForActiveLicense (email) {
         AsyncStorage.setItem(USER_KEY, JSON.stringify(userInfo))
       }
     }
-    return userInfo
+    return [!!userInfo, userInfo]
   } catch (error) {
     console.error(error)
-    return false
+    return [false, error]
   }
 }
 
