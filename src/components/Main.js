@@ -1,16 +1,13 @@
-/**
- * @format
- */
-
 import React, { useEffect, useState } from 'react'
-import { NativeModules, NativeEventEmitter, Platform, StyleSheet } from 'react-native'
+import { NativeModules, NativeEventEmitter, Platform, StyleSheet, Image } from 'react-native'
 import { Provider } from 'react-redux'
-import { Content, Spinner, Container, H1, H2, Form, Button, Text } from 'native-base'
+import { Content, Spinner, Container, H1, H3, Form, Button, Text, Thumbnail } from 'native-base'
 import DocumentRoot from './DocumentRoot'
 import { configureStore } from '../store/configureStore'
 import MainErrorBoundary from './MainErrorBoundary'
 import t from 'format-message'
 import { isTablet } from 'react-native-device-info'
+import images from '../images'
 const { DocumentViewController, ReactNativeEventEmitter, DocumentBrowser } = NativeModules
 
 let DocumentEvents
@@ -108,15 +105,17 @@ const Main = ({v2, logout}) => {
       return (
         <Container>
           <Content style={styles.content}>
+            <Image source={images.logo} style={styles.image}/>
             <H1 style={styles.header}>{t('Welcome to Plottr!')}</H1>
-            <H2 style={styles.header}>{t('What would you like to do?')}</H2>
             <Form style={styles.form}>
-              <Button block onPress={openDoc} style={styles.button}>
-                <Text>{t('Open a Plottr Document')}</Text>
+              <Button rounded onPress={openDoc} style={styles.button}>
+                <Text>{t('Open')}</Text>
               </Button>
-              <Button block onPress={createDoc} style={styles.button}>
-                <Text>{t('Create a New Plottr Document')}</Text>
+              <Text note style={styles.centeredText}>{t('Open an Existing Plottr File')}</Text>
+              <Button rounded onPress={createDoc} style={styles.button}>
+                <Text>{t('Create New')}</Text>
               </Button>
+              <Text note style={styles.centeredText}>{t('Create a New Plottr File')}</Text>
             </Form>
           </Content>
         </Container>
@@ -132,10 +131,18 @@ const Main = ({v2, logout}) => {
 const styles = StyleSheet.create({
   content: {
     padding: 16,
+    backgroundColor: 'hsl(210, 36%, 96%)', //gray-9
+  },
+  image: {
+    marginTop: 20,
+    height: 100,
+    width: 300,
+    resizeMode: 'contain',
+    alignSelf: 'center',
   },
   header: {
     textAlign: 'center',
-    marginTop: 10,
+    marginTop: 16,
     marginBottom: 10,
   },
   form: {
@@ -143,6 +150,14 @@ const styles = StyleSheet.create({
   },
   button: {
     marginVertical: 16,
+    backgroundColor: '#FF7F32',
+    alignSelf: 'center',
+    width: 250,
+    justifyContent: 'center',
+  },
+  centeredText: {
+    textAlign: 'center',
+    color: 'hsl(209, 28%, 39%)', //gray-3
   },
 })
 

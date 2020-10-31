@@ -3,6 +3,7 @@ export const FILE_VERSION = '2020.8.28'
 
 // RCE
 export const RCE_URL = 'https://plottr-web-rce.vercel.app/'
+// export const RCE_URL = 'http://10.0.2.2:3000'
 
 // timeline cells
 export const CELL_WIDTH = 175

@@ -6,11 +6,8 @@ import { Content, Text, H1, H2, Form, Item, Input, Button, Label, Spinner, Toast
 import { checkForActiveLicense, getUserVerification, verifyUser, reset, checkStoredLicense } from '../utils/user_info'
 import Main from './Main'
 import { sendVerificationEmail } from '../utils/api'
-import t from 'format-message'
-import locales from '../locales'
 import AppErrorBoundary from './AppErrorBoundary'
-
-t.setup({ translations: locales, locale: 'en' }) // different locales?
+import t from 'format-message'
 
 const App = () => {
   const [userInfo, setUserInfo] = useState(null)
@@ -172,7 +169,7 @@ const App = () => {
           <View style={styles.centeredTextWrapper}>
             <Text style={styles.centeredText}>{t("Don't have a license? Go to our website to learn more")}</Text>
             <Button transparent large onPress={() => Linking.openURL('https://getplottr.com')} style={styles.ourWebsiteButton}>
-              <Text>{t('getplottr.com')}</Text>
+              <Text>getplottr.com</Text>
             </Button>
           </View>
         </Content>

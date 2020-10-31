@@ -10,9 +10,12 @@ export async function getUserVerification () {
 }
 
 export async function verifyUser (userInfo) {
-  if (userInfo.email == TESTR_EMAIL) return [true, {...userInfo, verified: true}]
-
   userInfo.verified = true
+  if (userInfo.email == TESTR_EMAIL) {
+    AsyncStorage.setItem(USER_KEY, JSON.stringify(userInfo)) // not await-ing it
+    return [true, userInfo]
+  }
+
   const license = await activateLicense(userInfo, 0)
   if (license.success) {
     userInfo.validLicense = license

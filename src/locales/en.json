@@ -1,6 +1,12 @@
 {
+  "(Logout)": {
+    "message": "(Logout)"
+  },
   "Add": {
     "message": "Add"
+  },
+  "App Version: {version}": {
+    "message": "App Version: { version }"
   },
   "Are you sure you want to delete {name}?": {
     "message": "Are you sure you want to delete { name }?"
@@ -44,9 +50,6 @@
   "Choose Color": {
     "message": "Choose Color"
   },
-  "Close File": {
-    "message": "Close File"
-  },
   "Code": {
     "message": "Code"
   },
@@ -67,6 +70,9 @@
   },
   "Custom Attributes": {
     "message": "Custom Attributes"
+  },
+  "Dashboard": {
+    "message": "Dashboard"
   },
   "Delete": {
     "message": "Delete"
@@ -95,20 +101,20 @@
   "Email": {
     "message": "Email"
   },
+  "Email:": {
+    "message": "Email:"
+  },
   "Enter Custom Attribute Title": {
     "message": "Enter Custom Attribute Title"
   },
-  "Enter your verification code": {
-    "message": "Enter your verification code"
+  "Enter your verification code to activate this device": {
+    "message": "Enter your verification code to activate this device"
   },
   "Error sending email! Try again or another email.": {
     "message": "Error sending email! Try again or another email."
   },
   "Error! That code didn't verify. Try again.": {
     "message": "Error! That code didn''t verify. Try again."
-  },
-  "Error! That email didn't verify. Try again or another email.": {
-    "message": "Error! That email didn''t verify. Try again or another email."
   },
   "Genre": {
     "message": "Genre"
@@ -118,6 +124,9 @@
   },
   "Help": {
     "message": "Help"
+  },
+  "It looks like you have Plottr on the max number of devices already": {
+    "message": "It looks like you have Plottr on the max number of devices already"
   },
   "Learn": {
     "message": "Learn"
@@ -242,6 +251,9 @@
   "Theme": {
     "message": "Theme"
   },
+  "There was an error activating your license key on this device": {
+    "message": "There was an error activating your license key on this device"
+  },
   "This will send you an email with a code": {
     "message": "This will send you an email with a code"
   },
@@ -257,8 +269,14 @@
   "Untitled": {
     "message": "Untitled"
   },
+  "Use a different email": {
+    "message": "Use a different email"
+  },
   "Verify": {
     "message": "Verify"
+  },
+  "Verifying with email: {email}": {
+    "message": "Verifying with email: { email }"
   },
   "View Error": {
     "message": "View Error"
@@ -271,8 +289,5 @@
   },
   "You should have received an email with a code": {
     "message": "You should have received an email with a code"
-  },
-  "getplottr.com": {
-    "message": "getplottr.com"
   }
 }
