@@ -1,13 +1,16 @@
+import { Platform } from 'react-native'
+
 // migration version
 export const FILE_VERSION = '2020.8.28'
 
 // RCE
 export const RCE_URL = 'https://plottr-web-rce.vercel.app/'
-// export const RCE_URL = 'http://10.0.2.2:3000'
+// export const RCE_URL = Platform.select({android: 'http://10.0.2.2:3000', ios: 'http://localhost:3000'})
 
 // timeline cells
 export const CELL_WIDTH = 175
 export const CELL_HEIGHT = 93
+export const LEFT_COLUMN_WIDTH = 150
 
 // licensing
 export const USER_KEY = '@user_info'

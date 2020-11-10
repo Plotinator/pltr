@@ -9,8 +9,9 @@ import ChapterTitleCell from './ChapterTitleCell'
 import { BlankCell } from './BlankCell'
 import Cell from '../shared/Cell'
 import CardCell from './CardCell'
-import { CELL_HEIGHT, CELL_WIDTH } from '../../../utils/constants'
+import { CELL_HEIGHT, CELL_WIDTH, LEFT_COLUMN_WIDTH } from '../../../utils/constants'
 import { Icon } from 'native-base'
+import LineTitleCell from './LineTitleCell'
 
 class Timeline extends Component {
   constructor(props) {
@@ -132,12 +133,6 @@ class Timeline extends Component {
     }
   }
 
-  renderLineTitle (id, title) {
-    return <Cell key={id} style={styles.lineTitleCell}>
-      <Text style={styles.lineTitle}>{title}</Text>
-    </Cell>
-  }
-
   renderBlankLineTitleCell (key) {
     return <Cell key={key} style={styles.lineTitleCell} />
   }
@@ -218,7 +213,7 @@ class Timeline extends Component {
   renderLineTitles() {
     const { lines, linesMaxCards } = this.props
     let cells = lines.reduce((acc, l) => {
-      acc.push(this.renderLineTitle(l.id, l.title))
+      acc.push(<LineTitleCell key={l.id} line={l}/>)
       // start at 1 because the first cell is the title cell
       for(i = 1; i < linesMaxCards[l.id]; i++) {
         acc.push(this.renderBlankLineTitleCell(`${l.id}-blank-${i}`))
@@ -273,8 +268,6 @@ class Timeline extends Component {
     )
   }
 }
-
-const LEFT_COLUMN_WIDTH = 150
 
 const styles = StyleSheet.create({
   container: { backgroundColor: 'hsl(210, 36%, 96%)', marginVertical: 2, marginBottom: 0, flex: 1 }, //gray-9
