@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux'
 import t from 'format-message'
 import { Text, Container, Content, H1, H2, Form, Input, Label, Item, Button, Picker, List, Left, Right, Badge, View, ListItem, Body, Icon } from 'native-base'
 import { actions, selectors, initialState } from 'pltr/v2'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Platform } from 'react-native'
 import SaveButton from '../../ui/SaveButton'
 import AttachmentList from '../../shared/attachments/AttachmentList'
 import CategoryPicker from '../../ui/CategoryPicker'
@@ -152,8 +152,9 @@ class CharacterDetails extends Component {
 
   render () {
     const { character } = this.state
+    const platformStyle = Platform.select({ios: {flex: 1}, android: {height: 900}})
     return <Container style={{flex: 1}}>
-      <Content style={styles.content}>
+      <Content style={styles.content} contentContainerStyle={platformStyle}>
         <Form style={styles.form}>
           <Item inlineLabel last regular style={styles.label}>
             <Label>{t('Name')}</Label>

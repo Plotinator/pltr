@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Container, Content, Form, Input, Label, Item, View, Toast } from 'native-base'
 import { selectors, actions, initialState } from 'pltr/v2'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Platform } from 'react-native'
 import t from 'format-message'
 import ChapterPicker from '../../ui/ChapterPicker'
 import LinePicker from '../../ui/LinePicker'
@@ -121,8 +121,9 @@ class SceneDetails extends Component {
     const { card } = this.state
     const chapterId = isSeries ? card.beatId : card.chapterId
     const lineId = isSeries ? card.seriesLineId : card.lineId
+    const platformStyle = Platform.select({ios: {flex: 1}, android: {height: 900}})
     return <Container style={{flex: 1}}>
-      <Content style={styles.content} contentContainerStyle={{flex: 1}}>
+      <Content style={styles.content} contentContainerStyle={platformStyle}>
         <Form style={styles.form}>
           <Item inlineLabel last regular style={styles.label}>
             <Label>{t('Title')}</Label>

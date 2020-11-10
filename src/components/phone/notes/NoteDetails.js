@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux'
 import t from 'format-message'
 import { Container, Content, Form, Input, Label, Item, View } from 'native-base'
 import { actions, selectors, initialState } from 'pltr/v2'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Platform } from 'react-native'
 import SaveButton from '../../ui/SaveButton'
 import AttachmentList from '../../shared/attachments/AttachmentList'
 import RichTextEditor from '../../shared/RichTextEditor'
@@ -63,8 +63,9 @@ class NoteDetails extends Component {
 
   render () {
     const { note } = this.state
+    const platformStyle = Platform.select({ios: {flex: 1}, android: {height: 900}})
     return <Container style={{flex: 1}}>
-      <Content style={styles.content} contentContainerStyle={{flex: 1}}>
+      <Content style={styles.content} contentContainerStyle={platformStyle}>
         <Form style={styles.form}>
           <Item inlineLabel last regular style={styles.label}>
             <Label>{t('Title')}</Label>
