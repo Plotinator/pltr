@@ -10,7 +10,7 @@ export default class ErrorBoundary extends Component {
   state = {hasError: false, viewError: false}
 
   static getDerivedStateFromError(error) {
-    return { hasError: true }
+    return { hasError: true, viewError: false }
   }
 
   componentDidCatch(error, errorInfo) {

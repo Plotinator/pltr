@@ -42,7 +42,7 @@ class Tags extends Component {
       const color = tinycolor(tag.color)
       borderColor = {borderColor: color.toHexString(), borderWidth: 2}
     }
-    return <TouchableOpacity>
+    return <TouchableOpacity key={tag.id}>
       <View style={[styles.tagItem, borderColor]}>
         <Text>{tag.title || t('New Tag')}</Text>
       </View>

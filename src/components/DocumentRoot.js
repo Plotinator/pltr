@@ -7,6 +7,8 @@ import { getStore } from '../store/configureStore'
 import RootPhoneNavigator from './phone/navigators/RootPhoneNavigator'
 import RootTabletNavigator from './tablet/navigators/RootTabletNavigator'
 import { FILE_VERSION } from '../utils/constants'
+import { Alert } from 'react-native'
+import t from 'format-message'
 
 export default function DocumentRoot (props) {
 
@@ -20,21 +22,42 @@ export default function DocumentRoot (props) {
     if (document) {
       const filePath = document.documentURL
       // console.log('PATH', filePath)
-      const json = JSON.parse(document.data)
-      if (json.newFile) {
-        // creating a new file
-        let name = ''
-        if (json.storyName) name = json.storyName // ios
-        if (document.storyName) name = document.storyName // android
-        name = name.replace('.pltr', '')
-        const newFile = newFileState(name, FILE_VERSION)
-        store.dispatch(actions.uiActions.loadFile(filePath, false, newFile, FILE_VERSION))
-      } else {
-        // opening existing file
-        migrateIfNeeded(FILE_VERSION, json, filePath, null, (err, migrated, resultJson) => { // TODO: backup somehow?
-          if (err) console.error(err)
-          store.dispatch(actions.uiActions.loadFile(filePath, migrated, resultJson, resultJson.file.version))
-        })
+      if (!filePath.includes('.pltr')) {
+        // handle wrong type of file
+        Alert.alert(t('Error opening file'), t('That file appears to be the wrong type. Try another'),
+          [
+            {text: t('Cancel'), style: 'cancel'},
+            {text: t('OK'), onPress: props.closeFile},
+          ],
+          {}
+        )
+      }
+
+      try {
+        const json = JSON.parse(document.data)
+        if (json.newFile) {
+          // creating a new file
+          let name = ''
+          if (json.storyName) name = json.storyName // ios
+          if (document.storyName) name = document.storyName // android
+          name = name.replace('.pltr', '')
+          const newFile = newFileState(name, FILE_VERSION)
+          store.dispatch(actions.uiActions.loadFile(filePath, false, newFile, FILE_VERSION))
+        } else {
+          // opening existing file
+          migrateIfNeeded(FILE_VERSION, json, filePath, null, (err, migrated, resultJson) => { // TODO: backup somehow?
+            if (err) console.error(err)
+            store.dispatch(actions.uiActions.loadFile(filePath, migrated, resultJson, resultJson.file.version))
+          })
+        }
+      } catch (error) {
+        console.error(error)
+        Alert.alert(t('Error reading file'), t("Plottr couldn't read your file. Try another or contact support"),
+          [
+            {text: t('OK'), onPress: props.closeFile},
+          ],
+          {}
+        )
       }
     }
   }

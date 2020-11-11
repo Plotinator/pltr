@@ -35,8 +35,6 @@ class LineTitleCell extends PureComponent {
   renderColorPicker () {
     if (!this.state.showColorPicker) return null
 
-    console.log('renderColorPicker', this.state.showColorPicker)
-
     return <ColorPickerModal
       chooseColor={color => this.setState({color, showColorPicker: false, showModal: true, changes: true})}
       currentColor={this.state.color || this.props.line.color}
@@ -99,7 +97,6 @@ class LineTitleCell extends PureComponent {
   }
 
   render () {
-    console.log('state', this.state)
     const { line } = this.props
     return <Cell style={styles.lineTitleCell} onPress={() => this.setState({showModal: true})}>
       <Text style={styles.lineTitle}>{line.title}</Text>
