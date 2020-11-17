@@ -5,8 +5,10 @@ import PlacesHome from '../places/PlacesHome'
 import PlaceDetails from '../places/PlaceDetails'
 import AddButton from '../../ui/AddButton'
 import DrawerButton from '../../ui/DrawerButton'
+import withBoundary from '../shared/BoundaryWrapper'
 
 const Stack = createStackNavigator()
+const PlaceDetailsBounded = withBoundary(PlaceDetails)
 
 export default function PlacesStack (props) {
   const addPlace = () => {
@@ -21,6 +23,6 @@ export default function PlacesStack (props) {
         headerLeft: () => <DrawerButton openDrawer={props.route?.params?.openDrawer} />,
       }}
     />
-    <Stack.Screen name='PlaceDetails' component={PlaceDetails} options={{title: t('Details')}} />
+    <Stack.Screen name='PlaceDetails' component={PlaceDetailsBounded} options={{title: t('Place Details')}} />
   </Stack.Navigator>
 }

@@ -5,8 +5,10 @@ import NotesHome from '../notes/NotesHome'
 import NoteDetails from '../notes/NoteDetails'
 import AddButton from '../../ui/AddButton'
 import DrawerButton from '../../ui/DrawerButton'
+import withBoundary from '../shared/BoundaryWrapper'
 
 const Stack = createStackNavigator()
+const NoteDetailsBounded = withBoundary(NoteDetails)
 
 export default function NotesStack (props) {
   const addNote = () => {
@@ -21,6 +23,6 @@ export default function NotesStack (props) {
         headerLeft: () => <DrawerButton openDrawer={props.route?.params?.openDrawer} />,
       }}
     />
-    <Stack.Screen name='NoteDetails' component={NoteDetails} options={{title: t('Details')}} />
+    <Stack.Screen name='NoteDetails' component={NoteDetailsBounded} options={{title: t('Note Details')}} />
   </Stack.Navigator>
 }

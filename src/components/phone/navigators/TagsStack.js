@@ -4,9 +4,11 @@ import t from 'format-message'
 import AddButton from '../../ui/AddButton'
 import DrawerButton from '../../ui/DrawerButton'
 import TagsHome from '../tags/TagsHome'
+import withBoundary from '../shared/BoundaryWrapper'
 import TagDetails from '../tags/TagDetails'
 
 const Stack = createStackNavigator()
+const TagDetailsBounded = withBoundary(TagDetails)
 
 export default function TagsStack (props) {
   const addTag = () => {
@@ -21,6 +23,6 @@ export default function TagsStack (props) {
         headerLeft: () => <DrawerButton openDrawer={props.route?.params?.openDrawer} />,
       }}
     />
-    <Stack.Screen name='TagDetails' component={TagDetails} />
+    <Stack.Screen name='TagDetails' component={TagDetailsBounded} options={{title: t('Tag Details')}} />
   </Stack.Navigator>
 }

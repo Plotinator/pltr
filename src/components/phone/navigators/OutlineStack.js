@@ -9,8 +9,11 @@ import { actions } from 'pltr/v2'
 import AddButton from '../../ui/AddButton'
 import DrawerButton from '../../ui/DrawerButton'
 import SeriesDetails from '../project/SeriesDetails'
+import withBoundary from '../shared/BoundaryWrapper'
 
 const Stack = createStackNavigator()
+const SceneDetailsBounded = withBoundary(SceneDetails)
+const SeriesDetailsBounded = withBoundary(SeriesDetails)
 
 export default function OutlineStack (props) {
 
@@ -34,13 +37,13 @@ export default function OutlineStack (props) {
         headerLeft: () => <DrawerButton openDrawer={props.route?.params?.openDrawer} />,
       }}
     />
-    <Stack.Screen name='SeriesDetails' component={SeriesDetails}/>
+    <Stack.Screen name='SeriesDetails' component={SeriesDetailsBounded}/>
     <Stack.Screen name='OutlineHome' component={OutlineHome}
       options={{
         title: t('Outline'),
         headerRight: () => <AddButton onPress={addChapter} />,
       }}
     />
-    <Stack.Screen name='SceneDetails' component={SceneDetails} options={{ title: t('Scene Details') }}/>
+    <Stack.Screen name='SceneDetails' component={SceneDetailsBounded} options={{ title: t('Scene Details') }}/>
   </Stack.Navigator>
 }

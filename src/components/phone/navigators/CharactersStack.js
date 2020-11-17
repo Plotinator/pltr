@@ -3,10 +3,12 @@ import t from 'format-message'
 import { createStackNavigator } from '@react-navigation/stack'
 import CharactersHome from '../characters/CharactersHome'
 import AddButton from '../../ui/AddButton'
-import CharacterDetails from '../characters/CharacterDetails'
 import DrawerButton from '../../ui/DrawerButton'
+import withBoundary from '../shared/BoundaryWrapper'
+import CharacterDetails from '../characters/CharacterDetails'
 
 const Stack = createStackNavigator()
+const CharacterDetailsBounded = withBoundary(CharacterDetails)
 
 export default function CharactersStack (props) {
   const addCharacter = () => {
@@ -21,6 +23,6 @@ export default function CharactersStack (props) {
         headerLeft: () => <DrawerButton openDrawer={props.route?.params?.openDrawer} />,
       }}
     />
-    <Stack.Screen name='CharacterDetails' component={CharacterDetails} options={{title: t('Details')}} />
+    <Stack.Screen name='CharacterDetails' component={CharacterDetailsBounded} options={{title: t('Character Details')}} />
   </Stack.Navigator>
 }
