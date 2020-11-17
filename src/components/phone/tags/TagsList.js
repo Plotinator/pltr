@@ -8,6 +8,7 @@ import { actions, selectors } from 'pltr/v2'
 import { ListItem, Icon, Left, Right, H3, View, Badge, Text } from 'native-base'
 import t from 'format-message'
 import TrashButton from '../../ui/TrashButton'
+import tinycolor from 'tinycolor2'
 
 class TagsList extends Component {
 
@@ -20,11 +21,13 @@ class TagsList extends Component {
   }
 
   renderTag = ({item}) => {
+    const colorObj = tinycolor(item.color || 'black')
+    const backgroundColor = {backgroundColor: colorObj.toHexString()}
     return <ListItem noIndent button style={styles.row} onPress={() => this.navigateToDetails(item)}>
       <Left>
         <View style={styles.rowView}>
           <H3 style={styles.title}>{item.title || t('New Tag')}</H3>
-          <Badge style={[styles.badge, {backgroundColor: item.color.toLowerCase()}]}></Badge>
+          <Badge style={[styles.badge, backgroundColor]}></Badge>
         </View>
       </Left>
       <Right>

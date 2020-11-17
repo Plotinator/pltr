@@ -4,11 +4,12 @@ import PropTypes from 'react-proptypes'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import t from 'format-message'
-import { Container, Content, Form, Input, Label, Item, H3, Button, Text } from 'native-base'
+import { Input, Label, Item, H3, Button, Text } from 'native-base'
 import { actions, selectors, initialState } from 'pltr/v2'
-import { StyleSheet, Dimensions, View, ScrollView } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import SaveButton from '../../ui/SaveButton'
 import tinycolor from 'tinycolor2'
+import DetailsScrollView from '../shared/DetailsScrollView'
 
 class TagDetails extends Component {
   state = {}
@@ -64,48 +65,38 @@ class TagDetails extends Component {
 
   render () {
     const { title, color } = this.state
-    const colorObj = tinycolor(color)
+    const colorObj = tinycolor(color || 'black')
     const backgroundColor = {backgroundColor: colorObj.toHexString()}
-
-    return <Container>
-      <Form style={styles.form}>
-        <Item inlineLabel last regular style={styles.label}>
-          <Label>{t('Title')}</Label>
-          <Input
-            value={title}
-            onChangeText={text => this.setState({title: text, changes: true})}
-            autoCapitalize='sentences'
-          />
-        </Item>
-        <Item inlineLabel last regular style={styles.label}>
-          <Label>{t('Color')}</Label>
-          <Input
-            value={color}
-            onChangeText={text => this.setState({color: text, changes: true})}
-          />
-        </Item>
-        <View style={styles.colorWrapper}>
-          <H3>{t('Current Color')}</H3>
-          <View style={[styles.colorSwatch, backgroundColor]} />
-          <Button bordered light style={styles.button} onPress={this.navigateToColorPicker}><Text style={styles.buttonText}>{t('Choose Color')}</Text></Button>
-        </View>
-      </Form>
-    </Container>
+    return <DetailsScrollView>
+      <Item inlineLabel last regular style={styles.label}>
+        <Label>{t('Title')}</Label>
+        <Input
+          value={title}
+          onChangeText={text => this.setState({title: text, changes: true})}
+          autoCapitalize='sentences'
+        />
+      </Item>
+      <Item inlineLabel last regular style={styles.label}>
+        <Label>{t('Color')}</Label>
+        <Input
+          value={color}
+          onChangeText={text => this.setState({color: text, changes: true})}
+        />
+      </Item>
+      <View style={styles.colorWrapper}>
+        <H3>{t('Current Color')}</H3>
+        <View style={[styles.colorSwatch, backgroundColor]} />
+        <Button bordered light style={styles.button} onPress={this.navigateToColorPicker}><Text style={styles.buttonText}>{t('Choose Color')}</Text></Button>
+      </View>
+    </DetailsScrollView>
   }
 }
 
 const styles = StyleSheet.create({
-  content: {
-    padding: 16,
-  },
   label: {
     marginBottom: 16,
   },
   afterList: {
-    marginTop: 16,
-  },
-  form: {
-    padding: 16,
     marginTop: 16,
   },
   currentColor: {
@@ -139,6 +130,7 @@ TagDetails.propTypes = {
   actions: PropTypes.object.isRequired,
   ui: PropTypes.object.isRequired,
   navigation: PropTypes.object.isRequired,
+  route: PropTypes.object.isRequired,
 }
 
 function mapStateToProps (state) {

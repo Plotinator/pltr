@@ -12,6 +12,7 @@ import LinePicker from '../../ui/LinePicker'
 import SaveButton from '../../ui/SaveButton'
 import AttachmentList from '../../shared/attachments/AttachmentList'
 import RichTextEditor from '../../shared/RichTextEditor'
+import DetailsScrollView from '../shared/DetailsScrollView'
 
 // cooresponds to CardDialog in desktop
 
@@ -121,53 +122,41 @@ class SceneDetails extends Component {
     const { card } = this.state
     const chapterId = isSeries ? card.beatId : card.chapterId
     const lineId = isSeries ? card.seriesLineId : card.lineId
-    const platformStyle = Platform.select({ios: {flex: 1}, android: {height: 900}})
-    return <Container style={{flex: 1}}>
-      <Content style={styles.content} contentContainerStyle={platformStyle}>
-        <Form style={styles.form}>
-          <Item inlineLabel last regular style={styles.label}>
-            <Label>{t('Title')}</Label>
-            <Input
-              value={card.title}
-              onChangeText={text => this.setState({card: {...card, title: text}, changes: true})}
-              autoCapitalize='sentences'
-            />
-          </Item>
-          <Item fixedLabel style={styles.label}>
-            <Label>{t('Chapter')}</Label>
-            <ChapterPicker selectedId={chapterId} onChange={this.changeChapter} />
-          </Item>
-          <Item fixedLabel style={styles.label}>
-            <Label>{t('Plotline')}</Label>
-            <LinePicker selectedId={lineId} onChange={this.changeLine} />
-          </Item>
-          { this.renderAttachments() }
-          <View style={[styles.afterList, { flex: 1 }]}>
-            <Label>{t('Description')}</Label>
-            <RichTextEditor
-              initialValue={card.description}
-              onChange={val => this.setState({card: {...card, description: val}, changes: true}) }
-            />
-          </View>
-        </Form>
-      </Content>
-    </Container>
+    return <DetailsScrollView>
+      <Item inlineLabel last regular style={styles.label}>
+        <Label>{t('Title')}</Label>
+        <Input
+          value={card.title}
+          onChangeText={text => this.setState({card: {...card, title: text}, changes: true})}
+          autoCapitalize='sentences'
+        />
+      </Item>
+      <Item fixedLabel style={styles.label}>
+        <Label>{t('Chapter')}</Label>
+        <ChapterPicker selectedId={chapterId} onChange={this.changeChapter} />
+      </Item>
+      <Item fixedLabel style={styles.label}>
+        <Label>{t('Plotline')}</Label>
+        <LinePicker selectedId={lineId} onChange={this.changeLine} />
+      </Item>
+      { this.renderAttachments() }
+      <View style={[styles.afterList, { flex: 1 }]}>
+        <Label>{t('Description')}</Label>
+        <RichTextEditor
+          initialValue={card.description}
+          onChange={val => this.setState({card: {...card, description: val}, changes: true}) }
+        />
+      </View>
+    </DetailsScrollView>
   }
 }
 
 const styles = StyleSheet.create({
-  content: {
-    padding: 16,
-  },
   label: {
     marginBottom: 16,
   },
   afterList: {
     marginTop: 16,
-  },
-  form: {
-    flex: 1,
-    marginVertical: 16,
   },
   badge: {
     marginRight: 8,

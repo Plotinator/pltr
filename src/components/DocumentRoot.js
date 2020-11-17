@@ -7,7 +7,7 @@ import { getStore } from '../store/configureStore'
 import RootPhoneNavigator from './phone/navigators/RootPhoneNavigator'
 import RootTabletNavigator from './tablet/navigators/RootTabletNavigator'
 import { FILE_VERSION } from '../utils/constants'
-import { Alert } from 'react-native'
+import { Alert, Platform } from 'react-native'
 import t from 'format-message'
 
 export default function DocumentRoot (props) {
@@ -22,7 +22,7 @@ export default function DocumentRoot (props) {
     if (document) {
       const filePath = document.documentURL
       // console.log('PATH', filePath)
-      if (!filePath.includes('.pltr')) {
+      if (Platform.OS != 'android' && !filePath.includes('.pltr')) {
         // handle wrong type of file
         Alert.alert(t('Error opening file'), t('That file appears to be the wrong type. Try another'),
           [

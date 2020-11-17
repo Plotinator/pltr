@@ -9,6 +9,7 @@ import { actions } from 'pltr/v2'
 import { StyleSheet } from 'react-native'
 import SaveButton from '../../ui/SaveButton'
 import tinycolor from 'tinycolor2'
+import DetailsScrollView from '../shared/DetailsScrollView'
 
 class PlotlineDetails extends Component {
   state = {}
@@ -62,47 +63,37 @@ class PlotlineDetails extends Component {
     const { line } = this.state
     const colorObj = tinycolor(line.color)
     const backgroundColor = {backgroundColor: colorObj.toHexString()}
-
-    return <Container>
-      <Form style={styles.form}>
-        <Item inlineLabel last regular style={styles.label}>
-          <Label>{t('Title')}</Label>
-          <Input
-            value={line.title}
-            onChangeText={text => this.setState({line: {...line, title: text}, changes: true})}
-            autoCapitalize='sentences'
-          />
-        </Item>
-        <Item inlineLabel last regular style={styles.label}>
-          <Label>{t('Color')}</Label>
-          <Input
-            value={line.color}
-            onChangeText={text => this.setState({line: {...line, color: text}, changes: true})}
-            autoCapitalize='none'
-          />
-        </Item>
-        <View style={styles.colorWrapper}>
-          <H3>{t('Current Color')}</H3>
-          <View style={[styles.colorSwatch, backgroundColor]} />
-          <Button bordered light style={styles.button} onPress={this.navigateToColorPicker}><Text style={styles.buttonText}>{t('Choose Color')}</Text></Button>
-        </View>
-      </Form>
-    </Container>
+    return <DetailsScrollView>
+      <Item inlineLabel last regular style={styles.label}>
+        <Label>{t('Title')}</Label>
+        <Input
+          value={line.title}
+          onChangeText={text => this.setState({line: {...line, title: text}, changes: true})}
+          autoCapitalize='sentences'
+        />
+      </Item>
+      <Item inlineLabel last regular style={styles.label}>
+        <Label>{t('Color')}</Label>
+        <Input
+          value={line.color}
+          onChangeText={text => this.setState({line: {...line, color: text}, changes: true})}
+          autoCapitalize='none'
+        />
+      </Item>
+      <View style={styles.colorWrapper}>
+        <H3>{t('Current Color')}</H3>
+        <View style={[styles.colorSwatch, backgroundColor]} />
+        <Button bordered light style={styles.button} onPress={this.navigateToColorPicker}><Text style={styles.buttonText}>{t('Choose Color')}</Text></Button>
+      </View>
+    </DetailsScrollView>
   }
 }
 
 const styles = StyleSheet.create({
-  content: {
-    padding: 16,
-  },
   label: {
     marginBottom: 16,
   },
   afterList: {
-    marginTop: 16,
-  },
-  form: {
-    padding: 16,
     marginTop: 16,
   },
   currentColor: {

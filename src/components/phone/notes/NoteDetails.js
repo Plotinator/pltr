@@ -10,6 +10,7 @@ import { StyleSheet, Platform } from 'react-native'
 import SaveButton from '../../ui/SaveButton'
 import AttachmentList from '../../shared/attachments/AttachmentList'
 import RichTextEditor from '../../shared/RichTextEditor'
+import DetailsScrollView from '../shared/DetailsScrollView'
 
 class NoteDetails extends Component {
   state = {}
@@ -63,46 +64,34 @@ class NoteDetails extends Component {
 
   render () {
     const { note } = this.state
-    const platformStyle = Platform.select({ios: {flex: 1}, android: {height: 900}})
-    return <Container style={{flex: 1}}>
-      <Content style={styles.content} contentContainerStyle={platformStyle}>
-        <Form style={styles.form}>
-          <Item inlineLabel last regular style={styles.label}>
-            <Label>{t('Title')}</Label>
-            <Input
-              value={note.title}
-              onChangeText={text => this.setState({note: {...note, title: text}, changes: true})}
-              autoCapitalize='sentences'
-            />
-          </Item>
-          { this.renderAttachments() }
-          <View style={[styles.afterList, { flex: 1 }]}>
-            <Label>{t('Content')}</Label>
-            <RichTextEditor
-              initialValue={note.content}
-              style={styles.rce}
-              onChange={val => this.setState({note: {...note, content: val}, changes: true}) }
-            />
-          </View>
-        </Form>
-      </Content>
-    </Container>
+    return <DetailsScrollView>
+      <Item inlineLabel last regular style={styles.label}>
+        <Label>{t('Title')}</Label>
+        <Input
+          value={note.title}
+          onChangeText={text => this.setState({note: {...note, title: text}, changes: true})}
+          autoCapitalize='sentences'
+        />
+      </Item>
+      { this.renderAttachments() }
+      <View style={[styles.afterList, { flex: 1 }]}>
+        <Label>{t('Content')}</Label>
+        <RichTextEditor
+          initialValue={note.content}
+          style={styles.rce}
+          onChange={val => this.setState({note: {...note, content: val}, changes: true}) }
+        />
+      </View>
+    </DetailsScrollView>
   }
 }
 
 const styles = StyleSheet.create({
-  content: {
-    padding: 16,
-  },
   label: {
     marginBottom: 16,
   },
   afterList: {
     marginTop: 16,
-  },
-  form: {
-    flex: 1,
-    marginVertical: 16,
   },
   badge: {
     marginRight: 8,

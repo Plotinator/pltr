@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { WebView } from 'react-native-webview'
 import { RCE_URL } from '../../utils/constants'
 import { StyleSheet, Platform } from 'react-native'
@@ -8,12 +8,21 @@ import t from 'format-message'
 const isAndroid = Platform.OS == 'android'
 
 export default function RichTextEditor (props) {
+  const [height, setHeight] = useState(120)
   const showWarning = isAndroid && !props.readOnly
+  const maxHeight = props.maxHeight || 1000
   const injectValue = `
     window.injectedText = ${JSON.stringify(props.initialValue)};
     window.isNativeApp = true;
     window.isAndroid = ${isAndroid};
     ${props.readOnly ? 'window.readOnly = true;' : ''}
+    true;
+  `
+  const heightScript = `
+    setTimeout(function() {
+      var value = {height: document.documentElement.scrollHeight}
+      window.ReactNativeWebView.postMessage(JSON.stringify(value));
+    }, 500);
     true;
   `
 
@@ -27,14 +36,33 @@ export default function RichTextEditor (props) {
     </View>
   }
 
+  const handleMessage = event => {
+    const value = JSON.parse(event.nativeEvent.data)
+    if (value.height) {
+      // if it has height, it's either the heightScript from above, or
+      // an update from web_rce in the new format which includes height and text
+      const newHeight = value.height
+      // never let it get smaller
+      if (newHeight > height && newHeight <= maxHeight) {
+        setHeight(newHeight)
+      }
+      if (value.text) {
+        props.onChange(value.text)
+      }
+    } else {
+      props.onChange(value)
+    }
+  }
+
   return <View style={{flex: 1}}>
     { displayWarning() }
     <WebView
-      containerStyle={{flex: 0, height: '100%'}}
+      containerStyle={{flex: 0, height: height}}
       style={[styles.webview, props.style]}
       source={{ uri: RCE_URL }}
-      onMessage={event => props.onChange(JSON.parse(event.nativeEvent.data))}
+      onMessage={handleMessage}
       injectedJavaScriptBeforeContentLoaded={injectValue}
+      injectedJavaScript={heightScript}
       renderLoading={() => <View style={styles.loader}><Spinner color='orange'/></View>}
       startInLoadingState
       bounces={false}

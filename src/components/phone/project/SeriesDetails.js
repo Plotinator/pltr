@@ -8,6 +8,7 @@ import { Container, Content, Form, Input, Label, Item } from 'native-base'
 import { actions, selectors, initialState } from 'pltr/v2'
 import { StyleSheet, Dimensions, View, ScrollView } from 'react-native'
 import SaveButton from '../../ui/SaveButton'
+import DetailsScrollView from '../shared/DetailsScrollView'
 
 class SeriesDetails extends Component {
   constructor (props) {
@@ -74,65 +75,55 @@ class SeriesDetails extends Component {
 
   render () {
     const { id, book } = this.state
-    return <Container>
-      <Content style={styles.content}>
-        <Form style={styles.form}>
-          <Item inlineLabel last regular style={styles.label}>
-            <Label>{id == 'series' ? t('Name') : t('Title')}</Label>
-            <Input
-              value={id == 'series' ? book.name : book.title}
-              onChangeText={text => {
-                if (id == 'series') {
-                  this.setState({book: {...book, name: text}, changes: true})
-                } else {
-                  this.setState({book: {...book, title: text}, changes: true})
-                }
-              }}
-              autoCapitalize='words'
-            />
-          </Item>
-          <Item inlineLabel last regular style={styles.label}>
-            <Label>{t('Genre')}</Label>
-            <Input
-              value={book.genre}
-              onChangeText={text => this.setState({book: {...book, genre: text}, changes: true})}
-              autoCapitalize='sentences'
-            />
-          </Item>
-          <Item inlineLabel last regular style={styles.label}>
-            <Label>{t('Premise')}</Label>
-            <Input
-              value={book.premise}
-              onChangeText={text => this.setState({book: {...book, premise: text}, changes: true})}
-              autoCapitalize='sentences'
-            />
-          </Item>
-          <Item inlineLabel last regular style={styles.label}>
-            <Label>{t('Theme')}</Label>
-            <Input
-              value={book.theme}
-              onChangeText={text => this.setState({book: {...book, theme: text}, changes: true})}
-              autoCapitalize='sentences'
-            />
-          </Item>
-        </Form>
-      </Content>
-    </Container>
+    return <DetailsScrollView>
+      <Item inlineLabel last regular style={styles.label}>
+        <Label>{id == 'series' ? t('Name') : t('Title')}</Label>
+        <Input
+          value={id == 'series' ? book.name : book.title}
+          onChangeText={text => {
+            if (id == 'series') {
+              this.setState({book: {...book, name: text}, changes: true})
+            } else {
+              this.setState({book: {...book, title: text}, changes: true})
+            }
+          }}
+          autoCapitalize='words'
+        />
+      </Item>
+      <Item inlineLabel last regular style={styles.label}>
+        <Label>{t('Genre')}</Label>
+        <Input
+          value={book.genre}
+          onChangeText={text => this.setState({book: {...book, genre: text}, changes: true})}
+          autoCapitalize='sentences'
+        />
+      </Item>
+      <Item inlineLabel last regular style={styles.label}>
+        <Label>{t('Premise')}</Label>
+        <Input
+          value={book.premise}
+          onChangeText={text => this.setState({book: {...book, premise: text}, changes: true})}
+          autoCapitalize='sentences'
+        />
+      </Item>
+      <Item inlineLabel last regular style={styles.label}>
+        <Label>{t('Theme')}</Label>
+        <Input
+          value={book.theme}
+          onChangeText={text => this.setState({book: {...book, theme: text}, changes: true})}
+          autoCapitalize='sentences'
+        />
+      </Item>
+    </DetailsScrollView>
   }
 }
 
 const styles = StyleSheet.create({
-  content: {
-    padding: 16,
-  },
   label: {
     marginBottom: 16,
   },
   afterList: {
     marginTop: 16,
-  },
-  form: {
-    marginVertical: 16,
   },
   badge: {
     marginRight: 8,

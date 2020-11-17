@@ -10,6 +10,7 @@ import { StyleSheet, Platform } from 'react-native'
 import SaveButton from '../../ui/SaveButton'
 import AttachmentList from '../../shared/attachments/AttachmentList'
 import RichTextEditor from '../../shared/RichTextEditor'
+import DetailsScrollView from '../shared/DetailsScrollView'
 
 class PlaceDetails extends Component {
   state = {}
@@ -101,54 +102,42 @@ class PlaceDetails extends Component {
 
   render () {
     const { place } = this.state
-    const platformStyle = Platform.select({ios: {flex: 1}, android: {height: 900}})
-    return <Container style={{flex: 1}}>
-      <Content style={styles.content} contentContainerStyle={platformStyle}>
-        <Form style={styles.form}>
-          <Item inlineLabel last regular style={styles.label}>
-            <Label>{t('Name')}</Label>
-            <Input
-              value={place.name}
-              onChangeText={text => this.setState({place: {...place, name: text}, changes: true})}
-              autoCapitalize='words'
-            />
-          </Item>
-          <Item inlineLabel last regular style={styles.label}>
-            <Label>{t('Description')}</Label>
-            <Input
-              value={place.description}
-              onChangeText={text => this.setState({place: {...place, description: text}, changes: true})}
-              autoCapitalize='sentences'
-            />
-          </Item>
-          { this.renderAttachments() }
-          <View style={[styles.afterList, { height: 100 * place.notes.length, minHeight: 150, marginBottom: 32 }]}>
-            <Label>{t('Notes')}</Label>
-            <RichTextEditor
-              initialValue={place.notes}
-              onChange={val => this.setState({place: {...place, notes: val}, changes: true}) }
-            />
-          </View>
-          { this.renderCustomAttributes() }
-        </Form>
-      </Content>
-    </Container>
+    return <DetailsScrollView>
+      <Item inlineLabel last regular style={styles.label}>
+        <Label>{t('Name')}</Label>
+        <Input
+          value={place.name}
+          onChangeText={text => this.setState({place: {...place, name: text}, changes: true})}
+          autoCapitalize='words'
+        />
+      </Item>
+      <Item inlineLabel last regular style={styles.label}>
+        <Label>{t('Description')}</Label>
+        <Input
+          value={place.description}
+          onChangeText={text => this.setState({place: {...place, description: text}, changes: true})}
+          autoCapitalize='sentences'
+        />
+      </Item>
+      { this.renderAttachments() }
+      <View style={[styles.afterList, { height: 100 * place.notes.length, minHeight: 150, marginBottom: 32 }]}>
+        <Label>{t('Notes')}</Label>
+        <RichTextEditor
+          initialValue={place.notes}
+          onChange={val => this.setState({place: {...place, notes: val}, changes: true}) }
+        />
+      </View>
+      { this.renderCustomAttributes() }
+    </DetailsScrollView>
   }
 }
 
 const styles = StyleSheet.create({
-  content: {
-    padding: 16,
-  },
   label: {
     marginBottom: 16,
   },
   afterList: {
     marginTop: 16,
-  },
-  form: {
-    flex: 1,
-    marginVertical: 16,
   },
   badge: {
     marginRight: 8,
