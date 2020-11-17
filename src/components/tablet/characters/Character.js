@@ -49,8 +49,7 @@ export default function Character (props) {
     return workingCopy.templates.flatMap(t => {
       return t.attributes.map(attr => {
         if (attr.type == 'paragraph') {
-          const height = attr.value ? 100 * attr.value.length : 150
-          return <View key={attr.name} style={[styles.afterList, { height: height, minHeight: 150, marginBottom: 32 }]}>
+          return <View key={attr.name} style={[styles.afterList, styles.rceView]}>
             <Label>{attr.name}</Label>
             <RichTextEditor
               initialValue={attr.value}
@@ -75,7 +74,7 @@ export default function Character (props) {
     return customAttributes.map((attr, idx) => {
       const { name, type } = attr
       if (type == 'paragraph') {
-        return <View key={idx} style={[styles.afterList, { height: 300, marginBottom: 32 }]}>
+        return <View key={idx} style={[styles.afterList, styles.rceView]}>
           <Label>{name}</Label>
           <RichTextEditor
             initialValue={workingCA[name]}
@@ -134,7 +133,7 @@ export default function Character (props) {
           autoCapitalize='sentences'
         />
       </Item>
-      <View style={[styles.afterList, { height: 100 * character.notes.length, minHeight: 150, marginBottom: 32 }]}>
+      <View style={[styles.afterList, styles.rceView]}>
         <Label>{t('Notes')}</Label>
         <RichTextEditor
           initialValue={character.notes}
@@ -174,5 +173,8 @@ const styles = StyleSheet.create({
   },
   detailsRightItems: {
     paddingRight: 8,
+  },
+  rceView: {
+    marginBottom: 16,
   },
 })

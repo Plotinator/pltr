@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import t from 'format-message'
 import { selectors, actions } from 'pltr/v2'
-import { Card, CardItem, Text, View, Body, Left, Right } from 'native-base'
+import { Card, CardItem, Text, View, Left, Right } from 'native-base'
 import { StyleSheet } from 'react-native'
 import { isTablet } from 'react-native-device-info'
 import RichTextEditor from '../RichTextEditor'
@@ -21,7 +21,7 @@ class SceneCard extends Component {
     if (!isOnTablet) return null
     const { card } = this.props
 
-    return <View style={{height: 100 * card.description.length, padding: 16}}>
+    return <View style={{padding: 16}}>
       <RichTextEditor
         initialValue={card.description}
         onChange={() => {}}
@@ -49,7 +49,6 @@ class SceneCard extends Component {
           <Left><Text>{card.title}</Text></Left>
           <Right><Text style={[styles.lineText, lineColor]}>({line.title})</Text></Right>
         </CardItem>
-        { this.renderDescription() }
       </Card>
     }
   }

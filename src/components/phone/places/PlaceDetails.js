@@ -80,7 +80,7 @@ class PlaceDetails extends Component {
     return customAttributes.map((attr, idx) => {
       const { name, type } = attr
       if (type == 'paragraph') {
-        return <View key={idx} style={[styles.afterList, { height: 300, marginBottom: 32 }]}>
+        return <View key={idx} style={[styles.afterList, styles.rceView]}>
           <Label>{name}</Label>
           <RichTextEditor
             initialValue={customAttrs[name]}
@@ -120,7 +120,7 @@ class PlaceDetails extends Component {
         />
       </Item>
       { this.renderAttachments() }
-      <View style={[styles.afterList, { height: 100 * place.notes.length, minHeight: 150, marginBottom: 32 }]}>
+      <View style={[styles.afterList, styles.rceView]}>
         <Label>{t('Notes')}</Label>
         <RichTextEditor
           initialValue={place.notes}
@@ -141,7 +141,10 @@ const styles = StyleSheet.create({
   },
   badge: {
     marginRight: 8,
-  }
+  },
+  rceView: {
+    marginBottom: 16,
+  },
 })
 
 PlaceDetails.propTypes = {

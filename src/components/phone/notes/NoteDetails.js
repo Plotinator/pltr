@@ -74,12 +74,12 @@ class NoteDetails extends Component {
         />
       </Item>
       { this.renderAttachments() }
-      <View style={[styles.afterList, { flex: 1 }]}>
+      <View style={[styles.afterList, styles.rceView]}>
         <Label>{t('Content')}</Label>
         <RichTextEditor
           initialValue={note.content}
-          style={styles.rce}
           onChange={val => this.setState({note: {...note, content: val}, changes: true}) }
+          maxHeight={5000}
         />
       </View>
     </DetailsScrollView>
@@ -96,7 +96,8 @@ const styles = StyleSheet.create({
   badge: {
     marginRight: 8,
   },
-  rce: {
+  rceView: {
+    flex: 1,
   },
 })
 

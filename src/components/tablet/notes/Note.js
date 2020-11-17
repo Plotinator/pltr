@@ -39,7 +39,7 @@ export default function Note (props) {
           autoCapitalize='sentences'
         />
       </Item>
-      <View style={[styles.afterList, { flex: 1 }]}>
+      <View style={[styles.afterList, styles.rceView]}>
         <Label>{t('Content')}</Label>
         <RichTextEditor
           initialValue={note.content}
@@ -47,6 +47,7 @@ export default function Note (props) {
             setContent(val)
             makeChanges(true)
           }}
+          maxHeight={5000}
         />
       </View>
     </DetailsLeft>
@@ -74,5 +75,8 @@ const styles = StyleSheet.create({
   },
   detailsRightItems: {
     paddingRight: 8,
+  },
+  rceView: {
+    flex: 1,
   },
 })

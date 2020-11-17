@@ -31,7 +31,7 @@ export default function Place (props) {
     return customAttributes.map((attr, idx) => {
       const { name, type } = attr
       if (type == 'paragraph') {
-        return <View key={idx} style={[styles.afterList, { height: 300, marginBottom: 32 }]}>
+        return <View key={idx} style={[styles.afterList, styles.rceView]}>
           <Label>{name}</Label>
           <RichTextEditor
             initialValue={workingCA[name]}
@@ -90,7 +90,7 @@ export default function Place (props) {
           autoCapitalize='sentences'
         />
       </Item>
-      <View style={[styles.afterList, { height: 100 * workingCopy.notes.length, minHeight: 150, marginBottom: 32 }]}>
+      <View style={[styles.afterList, styles.rceView]}>
         <Label>{t('Notes')}</Label>
         <RichTextEditor
           initialValue={workingCopy.notes}
@@ -129,5 +129,8 @@ const styles = StyleSheet.create({
   },
   detailsRightItems: {
     paddingRight: 8,
+  },
+  rceView: {
+    marginBottom: 16,
   },
 })

@@ -86,11 +86,12 @@ class CardModal extends Component {
                   autoCapitalize='sentences'
                 />
               </Item>
-              <View style={[styles.afterList, { flex: 1 }]}>
+              <View style={[styles.afterList, styles.rceView]}>
                 <Label>{t('Description')}</Label>
                 <RichTextEditor
                   initialValue={card.description}
                   onChange={val => this.setState({card: {...card, description: val}, changes: true}) }
+                  maxHeight={5000}
                 />
               </View>
             </DetailsLeft>
@@ -154,6 +155,9 @@ const styles = StyleSheet.create({
   },
   formRightItems: {
     paddingRight: 8,
+  },
+  rceView: {
+    flex: 1,
   },
 })
 
