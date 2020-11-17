@@ -6113,9 +6113,9 @@ plist@^3.0.1:
     xmlbuilder "^9.0.7"
     xmldom "0.1.x"
 
-"pltr@https://github.com/Plotinator/pltr.git#v2.1.9":
-  version "2.1.9"
-  resolved "https://github.com/Plotinator/pltr.git#d4e8db613ca66c339b588c77400147be6f9fe801"
+"pltr@https://github.com/Plotinator/pltr.git#v2.1.10":
+  version "2.1.10"
+  resolved "https://github.com/Plotinator/pltr.git#ad97c98b759df152dca891f07bf3a1d047e656ac"
   dependencies:
     dom-parser "^0.1.6"
     format-message "^6.2.1"

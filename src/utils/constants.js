@@ -1,7 +1,7 @@
 import { Platform } from 'react-native'
 
 // migration version
-export const FILE_VERSION = '2020.8.28'
+export const MIGRATION_VERSION = '2020.8.28'
 
 // RCE
 export const RCE_URL = 'https://plottr-web-rce.vercel.app/'

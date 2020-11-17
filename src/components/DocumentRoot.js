@@ -6,7 +6,7 @@ import { newFileState, actions, migrateIfNeeded } from 'pltr/v2'
 import { getStore } from '../store/configureStore'
 import RootPhoneNavigator from './phone/navigators/RootPhoneNavigator'
 import RootTabletNavigator from './tablet/navigators/RootTabletNavigator'
-import { FILE_VERSION } from '../utils/constants'
+import { MIGRATION_VERSION } from '../utils/constants'
 import { Alert, Platform } from 'react-native'
 import t from 'format-message'
 
@@ -41,11 +41,11 @@ export default function DocumentRoot (props) {
           if (json.storyName) name = json.storyName // ios
           if (document.storyName) name = document.storyName // android
           name = name.replace('.pltr', '')
-          const newFile = newFileState(name, FILE_VERSION)
-          store.dispatch(actions.uiActions.loadFile(filePath, false, newFile, FILE_VERSION))
+          const newFile = newFileState(name, MIGRATION_VERSION)
+          store.dispatch(actions.uiActions.loadFile(filePath, false, newFile, MIGRATION_VERSION))
         } else {
           // opening existing file
-          migrateIfNeeded(FILE_VERSION, json, filePath, null, (err, migrated, resultJson) => { // TODO: backup somehow?
+          migrateIfNeeded(MIGRATION_VERSION, json, filePath, null, (err, migrated, resultJson) => { // TODO: backup somehow?
             if (err) console.error(err)
             store.dispatch(actions.uiActions.loadFile(filePath, migrated, resultJson, resultJson.file.version))
           })
