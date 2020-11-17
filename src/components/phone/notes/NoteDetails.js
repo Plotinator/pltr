@@ -102,10 +102,6 @@ const styles = StyleSheet.create({
 })
 
 NoteDetails.propTypes = {
-  note: PropTypes.object.isRequired,
-  editing: PropTypes.bool.isRequired,
-  startEditing: PropTypes.func.isRequired,
-  stopEditing: PropTypes.func.isRequired,
   characters: PropTypes.array.isRequired,
   places: PropTypes.array.isRequired,
   tags: PropTypes.array.isRequired,

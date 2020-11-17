@@ -38,7 +38,7 @@ class NotesList extends Component {
       data={notes}
       renderItem={this.renderNote}
       renderHiddenItem={ (data, rowMap) => <TrashButton onPress={() => this.deleteNote(data.item)} />}
-      keyExtractor={item => item.id}
+      keyExtractor={item => item.id.toString()}
       leftOpenValue={75}
     />
   }
