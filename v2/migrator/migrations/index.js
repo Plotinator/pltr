@@ -14,6 +14,8 @@ import m2020_5_5 from './2020.5.5'
 import m2020_6_12 from './2020.6.12'
 import m2020_7_7 from './2020.7.7'
 import m2020_8_28 from './2020.8.28'
+import m2020_11_16 from './2020.11.16'
+import m2020_11_19 from './2020.11.19'
 
 export default {
   m0_6,
@@ -32,4 +34,6 @@ export default {
   m2020_6_12,
   m2020_7_7,
   m2020_8_28,
+  m2020_11_16,
+  m2020_11_19,
 }
