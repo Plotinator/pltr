@@ -1,3 +1,5 @@
+const { cloneDeep } = require('lodash')
+
 function fixRCE(richContent) {
   if (!richContent) return richContent
   // Rich content can sometimes just be a string
@@ -27,31 +29,38 @@ function walkRichContentTree(richContent, callback) {
 }
 
 function migrate(data) {
+  const obj = cloneDeep(data);
+
   // cards
-  data.cards.forEach(card => card.description = fixRCE(card.description))
+  obj.cards.forEach(card => card.description = fixRCE(card.description))
 
   // nodes
-  data.notes.forEach(note => note.content = fixRCE(note.content))
+  obj.notes.forEach(note => note.content = fixRCE(note.content))
 
   // characters
   const characterParagraphAttributes = [
     'notes',
-    ...data.customAttributes.characters.filter(attr => attr.type === 'paragraph')
+    ...obj.customAttributes.characters.filter(attr => attr.type === 'paragraph')
   ]
-  data.characters.forEach(character => {
+  obj.characters.forEach(character => {
     characterParagraphAttributes.forEach(attr => character[attr] = fixRCE(character[attr]))
+    character.templates.forEach(template => {
+      template.attributes
+        .filter(attribute => attribute.type === 'paragraph')
+        .forEach(attribute => attribute.value = fixRCE(attribute.value))
+    })
   })
 
   // places
   const placesParagraphAttributes = [
     'notes',
-    ...data.customAttributes.places.filter(attr => attr.type === 'paragraph')
+    ...obj.customAttributes.places.filter(attr => attr.type === 'paragraph')
   ]
-  data.places.forEach(place => {
+  obj.places.forEach(place => {
     placesParagraphAttributes.forEach(attr => place[attr] = fixRCE(place[attr]))
   })
 
-  return data
+  return obj
 }
 
 module.exports = migrate
