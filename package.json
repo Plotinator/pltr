@@ -7,6 +7,7 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
+    "postinstall": "cd ios && pod install && cd ..",
     "lint": "eslint .",
     "extract-strings": "format-message extract -o src/locales/en.json \"src/**/*.js\""
   },
