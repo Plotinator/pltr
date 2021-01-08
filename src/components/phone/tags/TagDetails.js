@@ -6,27 +6,46 @@ import { bindActionCreators } from 'redux'
 import t from 'format-message'
 import { Input, Label, Item, H3, Button, Text } from 'native-base'
 import { actions, selectors, initialState } from 'pltr/v2'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, TouchableOpacity } from 'react-native'
 import SaveButton from '../../ui/SaveButton'
 import tinycolor from 'tinycolor2'
 import DetailsScrollView from '../shared/DetailsScrollView'
+import ColorPickerModal from '../../tablet/shared/ColorPickerModal'
 
 class TagDetails extends Component {
-  state = {}
+  constructor(props) {
+    super(props)
+    const NewTag = cloneDeep(initialState.tag)
+    const { route, tags } = this.props
+    const { isNewTag, tag = {} } = route.params
+    const currentTag = isNewTag ? NewTag : tags.find(eTag => eTag.id == tag.id)
 
-  static getDerivedStateFromProps (props, state) {
-    const { route, tags } = props
-    const { isNewTag, tag } = route.params
-    const tagObj = isNewTag ? cloneDeep(initialState.tag) : tags.find(t => t.id == tag.id)
-    return {
-      isNewTag: state.isNewTag || isNewTag,
-      changes: state.changes || isNewTag,
-      id: state.id || tagObj.id,
-      title: state.title || tagObj.title,
-      color: state.changes && state.color ? state.color : tagObj.color,
-      colorFromRedux: tagObj.color,
+    this.state = {
+      isNewTag,
+      ...currentTag,
+      changes: isNewTag,
+      colorFromRedux: currentTag.color,
+      showColorPicker: false
     }
   }
+
+  // static getDerivedStateFromProps (props, state) {
+  //   const { route, tags } = props
+  //   const { isNewTag, tag } = route.params
+  //   console.log('isNewTag', isNewTag)
+  //   console.log('tag', tag)
+  //   console.log('tags', tags)
+  //   const tagObj = isNewTag ? cloneDeep(initialState.tag) : tags.find(t => t?.id == tag?.id)
+  //   console.log('tagObj', tagObj)
+  //   return {
+  //     isNewTag: state.isNewTag || isNewTag,
+  //     changes: state.changes || isNewTag,
+  //     id: state.id || tagObj.id,
+  //     title: state.title || tagObj.title,
+  //     color: state.changes && state.color ? state.color : tagObj.color,
+  //     colorFromRedux: tagObj.color,
+  //   }
+  // }
 
   componentDidMount () {
     this.setSaveButton()
@@ -63,38 +82,67 @@ class TagDetails extends Component {
     this.setState({changes: false, color: colorFromRedux})
   }
 
+  toggleColorPicker = () => {
+    const { showColorPicker } = this.state
+    this.setState({
+      showColorPicker: !showColorPicker
+    })
+  }
+
+  hideColorPicker = () => {
+    const { colorFromRedux, color } = this.state
+    this.setState({ showColorPicker: false })
+  }
+
+  handleSelectColor = (color) => this.setState({ color, changes: true, showColorPicker: false })
+
+  renderColorPicker () {
+    const { showColorPicker, color } = this.state
+    return showColorPicker ? <ColorPickerModal expressMode currentColor={color} onClose={this.hideColorPicker} chooseColor={this.handleSelectColor} /> : null
+  }
+
   render () {
     const { title, color } = this.state
     const colorObj = tinycolor(color || 'black')
     const backgroundColor = {backgroundColor: colorObj.toHexString()}
     return <DetailsScrollView>
       <Item inlineLabel last regular style={styles.label}>
-        <Label>{t('Title')}</Label>
+        <Label style={styles.NBlabel}>{t('Title')}:</Label>
         <Input
+          style={styles.input}
           value={title}
           onChangeText={text => this.setState({title: text, changes: true})}
           autoCapitalize='sentences'
         />
       </Item>
       <Item inlineLabel last regular style={styles.label}>
-        <Label>{t('Color')}</Label>
+        <Label style={styles.NBlabel}>{t('Color')}:</Label>
         <Input
+          style={styles.input}
           value={color}
           onChangeText={text => this.setState({color: text, changes: true})}
         />
       </Item>
       <View style={styles.colorWrapper}>
         <H3>{t('Current Color')}</H3>
-        <View style={[styles.colorSwatch, backgroundColor]} />
-        <Button bordered light style={styles.button} onPress={this.navigateToColorPicker}><Text style={styles.buttonText}>{t('Choose Color')}</Text></Button>
+        <TouchableOpacity onPress={this.toggleColorPicker}><View style={[styles.colorSwatch, backgroundColor]} /></TouchableOpacity>
+        <Button bordered light style={styles.button} onPress={this.toggleColorPicker}><Text style={styles.buttonText}>{t('Choose Color')}</Text></Button>
       </View>
+      {this.renderColorPicker()}
     </DetailsScrollView>
   }
 }
 
 const styles = StyleSheet.create({
   label: {
+    paddingLeft: 15,
     marginBottom: 16,
+  },
+  NBlabel: {
+    paddingRight: 0,
+  },
+  input: {
+    marginTop: -2
   },
   afterList: {
     marginTop: 16,
@@ -110,13 +158,13 @@ const styles = StyleSheet.create({
   colorSwatch: {
     width: 60,
     height: 50,
-    margin: 8,
+    margin: 10,
     borderBottomRightRadius: 10,
     borderTopLeftRadius: 10,
   },
   button: {
     alignSelf: 'center',
-    marginTop: 16,
+    marginTop: 8,
   },
   buttonText: {
     color: 'black',
