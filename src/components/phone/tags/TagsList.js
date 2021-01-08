@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { SwipeListView } from 'react-native-swipe-list-view'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Alert } from 'react-native'
 import PropTypes from 'react-proptypes'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -12,8 +12,18 @@ import tinycolor from 'tinycolor2'
 
 class TagsList extends Component {
 
-  deleteTag = (id) => {
-    this.props.actions.deleteTag(id)
+  deleteTag = (tag) => {
+    const { title, id } = tag
+    Alert.alert(
+      'Delete Tag',
+      `Detete "${title}" Tag?`,
+      [
+        {text: 'Yes, Delete', onPress: () => {
+          this.props.actions.deleteTag(id)
+        }},
+        {text: 'No', onPress: () => {}, style: 'cancel'},
+      ]
+    )
   }
 
   navigateToDetails = (tag) => {
@@ -40,7 +50,7 @@ class TagsList extends Component {
     return <SwipeListView
       data={this.props.tags}
       renderItem={this.renderTag}
-      renderHiddenItem={ (data, rowMap) => <TrashButton onPress={() => this.deleteTag(data.item.id)} />}
+      renderHiddenItem={ (data, rowMap) => <TrashButton onPress={() => this.deleteTag(data.item)} />}
       keyExtractor={item => item.id}
       leftOpenValue={75}
     />
