@@ -5,10 +5,7 @@ function migrate (data) {
 
   let obj = cloneDeep(data)
 
-  obj.ui.timelineScrollPosition = {
-    x: 0,
-    y: 0,
-  }
+  obj.ui.timelineScrollPosition = { x: 0, y: 0 }
 
   return obj
 }

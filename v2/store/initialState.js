@@ -54,6 +54,10 @@ export const ui = {
   noteSort: 'title~asc',
   noteFilter: null,
   timelineFilter: null,
+  timelineScrollPosition: {
+    x: 0,
+    y: 0,
+  }
 }
 
 export const file = {
