@@ -167,8 +167,8 @@
   "Delete Tag": {
     "message": "Delete Tag"
   },
-  "Delete this Tag?": {
-    "message": "Delete this Tag?"
+  "Delete {title} Tag?": {
+    "message": "Delete \"{title}\" Tag?"
   },
   "No Characters": {
     "message": "No Characters"
