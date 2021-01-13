@@ -215,6 +215,10 @@ const App = () => {
   // userInfo but not verified -> verification
   // verified -> Main
   const renderBody = () => {
+    if(__DEV__) {
+      //for validation bypass
+      return <Main v2={1} logout={logout} />
+    }
     if (!userInfo) {
       return renderEnterEmail()
     }
