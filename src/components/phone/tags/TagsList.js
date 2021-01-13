@@ -15,13 +15,13 @@ class TagsList extends Component {
   deleteTag = (tag) => {
     const { title, id } = tag
     Alert.alert(
-      'Delete Tag',
-      `Detete "${title}" Tag?`,
+      t('Delete Tag'),
+      t('Delete this Tag?').replace(/this/i, `"${title}"`),
       [
-        {text: 'Yes, Delete', onPress: () => {
+        {text: t('Yes, Delete'), onPress: () => {
           this.props.actions.deleteTag(id)
         }},
-        {text: 'No', onPress: () => {}, style: 'cancel'},
+        {text: t('No'), onPress: () => {}, style: 'cancel'},
       ]
     )
   }

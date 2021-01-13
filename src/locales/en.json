@@ -164,6 +164,12 @@
   "New Tag": {
     "message": "New Tag"
   },
+  "Delete Tag": {
+    "message": "Delete Tag"
+  },
+  "Delete this Tag?": {
+    "message": "Delete this Tag?"
+  },
   "No Characters": {
     "message": "No Characters"
   },
@@ -175,6 +181,12 @@
   },
   "OK": {
     "message": "OK"
+  },
+  "No": {
+    "message": "No"
+  },
+  "Yes, Delete": {
+    "message": "Yes, Delete"
   },
   "Open a Plottr Document": {
     "message": "Open a Plottr Document"
