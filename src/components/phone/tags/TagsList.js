@@ -16,7 +16,7 @@ class TagsList extends Component {
     const { title, id } = tag
     Alert.alert(
       t('Delete Tag'),
-      t('Delete this Tag?').replace(/this/i, `"${title}"`),
+      t('Delete {title} Tag?', { title }),
       [
         {text: t('Yes, Delete'), onPress: () => {
           this.props.actions.deleteTag(id)

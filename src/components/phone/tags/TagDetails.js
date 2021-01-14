@@ -6,11 +6,13 @@ import { bindActionCreators } from 'redux'
 import t from 'format-message'
 import { Input, Label, Item, H3, Button, Text } from 'native-base'
 import { actions, selectors, initialState } from 'pltr/v2'
-import { StyleSheet, View, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, TouchableOpacity, Platform } from 'react-native'
 import SaveButton from '../../ui/SaveButton'
 import tinycolor from 'tinycolor2'
 import DetailsScrollView from '../shared/DetailsScrollView'
 import ColorPickerModal from '../../tablet/shared/ColorPickerModal'
+
+const isIOS = Platform.OS == 'ios'
 
 class TagDetails extends Component {
   constructor(props) {
@@ -28,24 +30,6 @@ class TagDetails extends Component {
       showColorPicker: false
     }
   }
-
-  // static getDerivedStateFromProps (props, state) {
-  //   const { route, tags } = props
-  //   const { isNewTag, tag } = route.params
-  //   console.log('isNewTag', isNewTag)
-  //   console.log('tag', tag)
-  //   console.log('tags', tags)
-  //   const tagObj = isNewTag ? cloneDeep(initialState.tag) : tags.find(t => t?.id == tag?.id)
-  //   console.log('tagObj', tagObj)
-  //   return {
-  //     isNewTag: state.isNewTag || isNewTag,
-  //     changes: state.changes || isNewTag,
-  //     id: state.id || tagObj.id,
-  //     title: state.title || tagObj.title,
-  //     color: state.changes && state.color ? state.color : tagObj.color,
-  //     colorFromRedux: tagObj.color,
-  //   }
-  // }
 
   componentDidMount () {
     this.setSaveButton()
@@ -142,7 +126,7 @@ const styles = StyleSheet.create({
     paddingRight: 0,
   },
   input: {
-    marginTop: -2
+    marginTop: isIOS ? -2 : 1
   },
   afterList: {
     marginTop: 16,

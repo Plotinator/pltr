@@ -11,7 +11,8 @@ export default function ColorPickerModal (props) {
   const color = tinycolor(currentColor)
   const currentBackground = { backgroundColor: color.toHexString() }
   return (
-    <Modal
+    <View
+      style={styles.modal}
       visible
       animationType='slide'
       transparent
@@ -42,7 +43,7 @@ export default function ColorPickerModal (props) {
           </DetailsWrapper>
         </View>
       </View>
-    </Modal>
+    </View>
   )
 }
 
@@ -97,5 +98,6 @@ const styles = StyleSheet.create({
     lineHeight: 10,
     textAlign: 'center',
     fontWeight: 'bold'
-  }
+  },
+  modal: { position: 'absolute', zIndex: 9, top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.5)'}
 })
