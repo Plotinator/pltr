@@ -6,11 +6,13 @@ import { bindActionCreators } from 'redux'
 import t from 'format-message'
 import { Input, Label, Item, H3, Button, Text } from 'native-base'
 import { actions, selectors, initialState } from 'pltr/v2'
-import { StyleSheet, View, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, TouchableOpacity, Platform } from 'react-native'
 import SaveButton from '../../ui/SaveButton'
 import tinycolor from 'tinycolor2'
 import DetailsScrollView from '../shared/DetailsScrollView'
 import ColorPickerModal from '../../tablet/shared/ColorPickerModal'
+
+const isIOS = Platform.OS == 'ios'
 
 class TagDetails extends Component {
   constructor(props) {
@@ -142,7 +144,7 @@ const styles = StyleSheet.create({
     paddingRight: 0,
   },
   input: {
-    marginTop: -2
+    marginTop: isIOS ? -2 : 1
   },
   afterList: {
     marginTop: 16,
