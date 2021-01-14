@@ -31,24 +31,6 @@ class TagDetails extends Component {
     }
   }
 
-  // static getDerivedStateFromProps (props, state) {
-  //   const { route, tags } = props
-  //   const { isNewTag, tag } = route.params
-  //   console.log('isNewTag', isNewTag)
-  //   console.log('tag', tag)
-  //   console.log('tags', tags)
-  //   const tagObj = isNewTag ? cloneDeep(initialState.tag) : tags.find(t => t?.id == tag?.id)
-  //   console.log('tagObj', tagObj)
-  //   return {
-  //     isNewTag: state.isNewTag || isNewTag,
-  //     changes: state.changes || isNewTag,
-  //     id: state.id || tagObj.id,
-  //     title: state.title || tagObj.title,
-  //     color: state.changes && state.color ? state.color : tagObj.color,
-  //     colorFromRedux: tagObj.color,
-  //   }
-  // }
-
   componentDidMount () {
     this.setSaveButton()
   }
