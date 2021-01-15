@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Text as RNText } from 'react-native'
 import styles from './TextStyles'
 import Fonts from '../../../fonts'
+import Colors from '../../../utils/Colors'
 
 const { size: fontSizes, style: fontStyles, type: fontTypes } = Fonts
 
@@ -19,7 +20,7 @@ export default class Text extends Component {
         wrap,
         gray,
         white,
-        color,
+        color = '#555555',
         center,
         nobase,
         padded,
@@ -43,7 +44,7 @@ export default class Text extends Component {
       compStyles.push({ fontSize: fontSizes[fontSize] || fontSize })
     }
     if (color) {
-      compStyles.push({ color })
+      compStyles.push({ color: Colors[color] || color })
     }
     if (faded) compStyles.push(styles.faded)
     if (flex) compStyles.push(styles.flex)

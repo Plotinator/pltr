@@ -93,8 +93,8 @@ export const style = {
     fontSize: size.micro
   },
   buttonText: {
-    fontFamily: type.regular,
-    fontSize: size.large
+    fontFamily: type.bold,
+    fontSize: size.regular
   }
 }
 

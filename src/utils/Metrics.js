@@ -17,7 +17,8 @@ const Metrics = {
   screenHeight: width < height ? height - ifIOS(0, 23) : width,
   headerHeight: verticalScale(70),
   footerHeight: verticalScale(70),
-  buttonRadius: 8
+  buttonRadius: 14,
+  cornerRadius: 9
 }
 
 export default Metrics
