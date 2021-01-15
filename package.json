@@ -32,6 +32,7 @@
     "react-native-reanimated": "^1.13.0",
     "react-native-safe-area-context": "^3.1.7",
     "react-native-screens": "^2.10.1",
+    "react-native-size-matters": "^0.4.0",
     "react-native-swipe-list-view": "^3.2.3",
     "react-native-webview": "^10.9.0",
     "react-proptypes": "^1.0.0",
