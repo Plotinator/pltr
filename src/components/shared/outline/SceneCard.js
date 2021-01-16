@@ -4,10 +4,11 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import t from 'format-message'
 import { selectors, actions } from 'pltr/v2'
-import { Card, CardItem, Text, View, Left, Right } from 'native-base'
+import { Card, CardItem, View, Left, Right } from 'native-base'
 import { StyleSheet } from 'react-native'
 import { isTablet } from 'react-native-device-info'
 import RichTextEditor from '../RichTextEditor'
+import { Text } from '../common'
 
 const isOnTablet = isTablet()
 

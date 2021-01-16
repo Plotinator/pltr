@@ -6,11 +6,12 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { actions, selectors } from 'pltr/v2'
 import { SwipeRow } from 'react-native-swipe-list-view'
-import { ListItem, Icon, Left, Right, H2, H3, View, Badge, Text, Card, CardItem, Button, H1 } from 'native-base'
+import { ListItem, Icon, Left, Right, H2, H3, View, Badge, Card, CardItem, Button, H1 } from 'native-base'
 import t from 'format-message'
 import TrashButton from '../../ui/TrashButton'
 import EditButton from '../../ui/EditButton'
 import Book from '../../shared/project/Book'
+import { Text } from '../../shared/common'
 
 class Project extends Component {
   state = {data: []}
@@ -43,7 +44,7 @@ class Project extends Component {
       <View>
         <ListItem noIndent button style={styles.row} onPress={() => this.navigateToOutline(series.id)}>
           <Left>
-            <H3 style={styles.title}>{t('Series Outline')}</H3>
+            <Text fontSize={'h3'} fontStyle={'semiBold'} style={styles.title}>{t('Series Outline')}</Text>
           </Left>
           <Right>
             <Icon type='FontAwesome5' name='chevron-right'/>

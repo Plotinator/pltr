@@ -17,7 +17,8 @@ export default ScaledSheet.create({
     height: footerHeight
   },
   tabButton: {
-    padding: baseMargin
+    padding: baseMargin,
+    paddingHorizontal: baseMargin / 2
   },
   tabLabel: {
     ...style.semiBoldText,

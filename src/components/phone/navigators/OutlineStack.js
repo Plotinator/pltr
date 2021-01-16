@@ -10,6 +10,7 @@ import AddButton from '../../ui/AddButton'
 import DrawerButton from '../../ui/DrawerButton'
 import SeriesDetails from '../project/SeriesDetails'
 import withBoundary from '../shared/BoundaryWrapper'
+import { Text } from '../../shared/common'
 
 const Stack = createStackNavigator()
 const SceneDetailsBounded = withBoundary(SceneDetails)
@@ -33,14 +34,14 @@ export default function OutlineStack (props) {
   return <Stack.Navigator>
     <Stack.Screen name='ProjectHome' component={ProjectHome}
       options={{
-        title: t('Project'),
+        title: <Text fontStyle={'bold'} color={null}>{t('Project')}</Text>,
         headerLeft: () => <DrawerButton openDrawer={props.route?.params?.openDrawer} />,
       }}
     />
     <Stack.Screen name='SeriesDetails' component={SeriesDetailsBounded}/>
     <Stack.Screen name='OutlineHome' component={OutlineHome}
       options={{
-        title: t('Outline'),
+        title: <Text fontStyle={'bold'} color={null}>{t('Outline')}</Text>,
         headerRight: () => <AddButton onPress={addChapter} />,
       }}
     />

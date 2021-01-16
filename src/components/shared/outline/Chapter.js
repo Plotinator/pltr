@@ -6,13 +6,11 @@ import { sortBy } from 'lodash'
 import t from 'format-message'
 import cx from 'classnames'
 import { selectors, actions, cardHelpers, listHelpers, chapterHelpers } from 'pltr/v2'
-import { H3, Icon, Card, CardItem, View, Button, Text } from 'native-base'
+import { H3, Icon, Card, CardItem, View, Button } from 'native-base'
 import { SwipeRow } from 'react-native-swipe-list-view'
 import SceneCard from './SceneCard'
 import { StyleSheet } from 'react-native'
-import AddButton from '../../ui/AddButton'
-import TrashButton from '../../ui/TrashButton'
-import RenameButton from '../../ui/RenameButton'
+import { Text } from '../common'
 
 class Chapter extends Component {
 
@@ -77,7 +75,12 @@ class Chapter extends Component {
 
     // TODO: after fixing Ionicons, use ios-close-circle-outline
 
-    return <Button small iconRight warning bordered onPress={this.autoSortChapter} style={{alignSelf: 'center'}}><Text>{t('Manually Sorted')}</Text><Icon type='FontAwesome5' name='times-circle' style={{fontSize: 16}}/></Button>
+    return (
+      <Button small iconRight warning bordered onPress={this.autoSortChapter} style={{alignSelf: 'center'}}>
+        <Text fontStyle='semiBold'>{t('Manually Sorted')}</Text>
+        <Icon type='FontAwesome5' name='times-circle' style={{fontSize: 16}}/>
+      </Button>
+    )
   }
 
   renderCards () {
@@ -93,7 +96,7 @@ class Chapter extends Component {
     const chapterTitle = chapterHelpers.chapterTitle(chapter, positionOffset, isSeries)
     const renderedCards = this.renderCards()
     const manualSort = this.renderManualSort()
-    return this.props.render(chapterTitle, renderedCards, manualSort, this.navigateToNewCard)
+    return this.props.render(chapterTitle, renderedCards, manualSort, this.navigateToNewCard, chapter)
   }
 }
 

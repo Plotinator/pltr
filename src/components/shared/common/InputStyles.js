@@ -4,7 +4,7 @@ import Fonts from '../../../fonts'
 import Colors from '../../../utils/Colors'
 
 const { textGray, blackGray, inputBorder } = Colors
-const { baseMargin, doubleBaseMargin, buttonRadius, IS_IOS } = Metrics
+const { baseMargin, doubleBaseMargin, cornerRadius, IS_IOS } = Metrics
 const { size, type, style } = Fonts
 
 export default ScaledSheet.create({
@@ -25,9 +25,9 @@ export default ScaledSheet.create({
   },
   bordered: {
     borderColor: inputBorder,
-    borderRadius: buttonRadius,
+    borderRadius: cornerRadius,
     borderWidth: 0.5,
-    paddingVertical: baseMargin,
+    paddingVertical: baseMargin / 2,
     paddingHorizontal: doubleBaseMargin,
     backgroundColor: blackGray
   },

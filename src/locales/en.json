@@ -41,6 +41,24 @@
   "Chapter": {
     "message": "Chapter"
   },
+  "Chapter {count}": {
+    "message": "Chapter {count}"
+  },
+  "Delete Chapter {name}?": {
+    "message": "Delete Chapter \"{name}\"?"
+  },
+  "Delete Chapter": {
+    "message": "Delete Chapter"
+  },
+  "Save Chapter": {
+    "message": "Save Chapter"
+  },
+  "Rename Chapter": {
+    "message": "Rename Chapter"
+  },
+  "Enter new name": {
+    "message": "Enter new name"
+  },
   "Characters": {
     "message": "Characters"
   },
@@ -313,6 +331,9 @@
   },
   "CREATE PROJECT": {
     "message": "CREATE PROJECT"
+  },
+  "OVERWRITE": {
+    "message": "OVERWRITE"
   },
   "UH-OH!": {
     "message": "UH-OH!"

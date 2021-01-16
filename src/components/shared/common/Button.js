@@ -14,6 +14,7 @@ export default class Button extends Component {
     const {
       style,
       block,
+      tight,
       textStyle,
       buttonText,
       children,
@@ -36,6 +37,7 @@ export default class Button extends Component {
     if (textStyle) textStylesArray.push(textStyle)
     if (bordered) stylesArray.push(styles.bordered)
     if (wrapperStyle) wrapperStylesArray.push(wrapperStyle)
+    if (tight) wrapperStylesArray.push(styles.tightWrapper)
     if (disabled || faded) stylesArray.push(styles.disabled)
     if (buttonColor) {
       stylesArray.push({ backgroundColor: Colors[buttonColor] || buttonColor })

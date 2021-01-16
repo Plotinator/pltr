@@ -1,37 +1,57 @@
 import React from 'react'
 import { StyleSheet, Dimensions, TouchableOpacity } from 'react-native'
-import { View, Text, Button, H2 } from 'native-base'
+import { View, H2 } from 'native-base'
 import { isTablet } from 'react-native-device-info'
 import t from 'format-message'
+import { Text, Button } from '../../shared/common'
 
-const bookWidth = isTablet() ? (Dimensions.get('window').width * 3/16) : (Dimensions.get('window').width * 9/16)
+const bookWidth = isTablet()
+  ? (Dimensions.get('window').width * 3) / 16
+  : (Dimensions.get('window').width * 9) / 16
 
 export default function Book (props) {
   const { book } = props
-  return <TouchableOpacity onPress={() => props.navigateToOutline(book.id)}>
-    <View style={styles.cardView}>
-      <View style={styles.backbone}/>
-      <View style={styles.card}>
-        <H2 style={styles.bookTitle}>{book.title || t('Untitled')}</H2>
-        <View style={styles.footer}>
-          {isTablet() ? null : <Button light onPress={() => props.navigateToDetails(book.id)} style={styles.buttons}><Text>{t('Edit')}</Text></Button>}
-          <Button light onPress={() => props.navigateToOutline(book.id)} style={styles.buttons}><Text>{t('Outline')}</Text></Button>
+  return (
+    <TouchableOpacity onPress={() => props.navigateToOutline(book.id)}>
+      <View style={styles.cardView}>
+        <View style={styles.backbone} />
+        <View style={styles.card}>
+          <Text fontSize='h3' fontStyle='semiBold' style={styles.bookTitle}>
+            {book.title || t('Untitled')}
+          </Text>
+          <View style={styles.footer}>
+            {isTablet() ? null : (
+              <Button
+                tight
+                onPress={() => props.navigateToDetails(book.id)}
+                style={styles.buttons}>
+                <Text fontSize='h5'>{t('Edit')}</Text>
+              </Button>
+            )}
+            <Button
+              tight
+              onPress={() => props.navigateToOutline(book.id)}
+              style={styles.buttons}>
+              <Text fontSize='h5'>{t('Outline')}</Text>
+            </Button>
+          </View>
         </View>
       </View>
-    </View>
-  </TouchableOpacity>
+    </TouchableOpacity>
+  )
 }
 
 const styles = StyleSheet.create({
   bookTitle: {
-    marginTop: 8,
-    textAlign: 'center',
+    marginTop: 25,
+    textAlign: 'center'
   },
   cardView: {
+    marginTop: 25,
     flexDirection: 'row',
     alignItems: 'flex-start',
     justifyContent: 'center',
-    padding: 16,
+    padding: 16
   },
   card: {
     height: 300,
@@ -43,21 +63,22 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     borderColor: '#62B1F6', // same color as info buttons
     backgroundColor: 'white',
-    justifyContent: 'space-between',
+    justifyContent: 'space-between'
   },
   backbone: {
     width: 20,
     height: 300,
     backgroundColor: '#62B1F6', // same color as info buttons
     borderTopLeftRadius: 2,
-    borderBottomLeftRadius: 2,
+    borderBottomLeftRadius: 2
   },
   footer: {
     flexDirection: 'row',
-    padding: 10,
-    justifyContent: 'space-around',
+    paddingHorizontal: 5,
+    paddingBottom: 25,
+    justifyContent: 'space-around'
   },
   buttons: {
-    backgroundColor: '#F4F4F4',
-  },
+    backgroundColor: '#F4F4F4'
+  }
 })

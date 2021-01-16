@@ -12,16 +12,20 @@ export default ScaledSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: doubleBaseMargin,
     borderRadius: buttonRadius,
     backgroundColor: orange
   },
   textWrapper: {
+    paddingHorizontal: doubleBaseMargin,
     paddingVertical: baseMargin * 1.5
   },
   text: {
     ...style.buttonText,
     color: white
+  },
+  tightWrapper: {
+    paddingHorizontal: baseMargin * 1.5,
+    paddingVertical: baseMargin
   },
   bordered: {
     borderWidth: 0.5,
