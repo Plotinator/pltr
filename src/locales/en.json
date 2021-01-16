@@ -296,6 +296,48 @@
   "Welcome to Plottr!": {
     "message": "Welcome to Plottr!"
   },
+  "Welcome to": {
+    "message": "Welcome to"
+  },
+  "You may create a new project": {
+    "message": "You may create a new project\nor select a project file to begin"
+  },
+  "Open one of your most recent projects": {
+    "message": "Open one of your most recent projects"
+  },
+  "SELECT PROJECT FILE": {
+    "message": "SELECT PROJECT FILE"
+  },
+  "CREATE NEW PROJECT": {
+    "message": "CREATE NEW PROJECT"
+  },
+  "CREATE PROJECT": {
+    "message": "CREATE PROJECT"
+  },
+  "UH-OH!": {
+    "message": "UH-OH!"
+  },
+  "LOOK OUT!": {
+    "message": "LOOK OUT!"
+  },
+  "New Project": {
+    "message": "New Project"
+  },
+  "Enter the name of your story": {
+    "message": "Enter the name of your story"
+  },
+  "We had a problem processing your file": {
+    "message": "We had a problem processing your file. Ensure Plottr has the correct permissions and try again."
+  },
+  "We had a problem creating a new project": {
+    "message": "We had a problem creating a new project. Ensure Plottr has the correct permissions and that you have enough storage space."
+  },
+  "Please select a valid Plottr file": {
+    "message": "Please select a valid Plottr file."
+  },
+  "You already have a file named {file}": {
+    "message": "You already have a file named \n{file}.\nDo you wish to overwrite?"
+  },
   "What would you like to do?": {
     "message": "What would you like to do?"
   },
