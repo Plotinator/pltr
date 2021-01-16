@@ -1,5 +1,5 @@
 import { Dimensions, Platform } from 'react-native'
-import { verticalScale } from 'react-native-size-matters'
+import { verticalScale, moderateScale } from 'react-native-size-matters'
 
 const { width, height } = Dimensions.get('window')
 const IS_IOS = Platform.OS === 'ios'
@@ -9,16 +9,16 @@ const Metrics = {
   IS_IOS,
   IS_ANDROID: !IS_IOS,
   ifIOS,
-  section: 25,
-  baseMargin: 10,
-  doubleSection: 50,
-  doubleBaseMargin: 20,
+  section: moderateScale(25),
+  baseMargin: moderateScale(10),
+  doubleSection: moderateScale(50),
+  doubleBaseMargin: moderateScale(20),
   screenWidth: width < height ? width : height - ifIOS(0, 23),
   screenHeight: width < height ? height - ifIOS(0, 23) : width,
   headerHeight: verticalScale(70),
   footerHeight: verticalScale(70),
-  buttonRadius: 14,
-  cornerRadius: 9
+  buttonRadius: moderateScale(14),
+  cornerRadius: moderateScale(9)
 }
 
 export default Metrics
