@@ -1,13 +1,45 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, View, StatusBar, Linking, NativeModules, Platform } from 'react-native'
+import {
+  StyleSheet,
+  View,
+  StatusBar,
+  Linking,
+  NativeModules,
+  Platform,
+  Keyboard,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback
+} from 'react-native'
 const { DocumentBrowser } = NativeModules
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
-import { Content, Text, H1, H2, Form, Item, Input, Button, Label, Spinner, Toast, Root, Container } from 'native-base'
-import { checkForActiveLicense, getUserVerification, verifyUser, reset, checkStoredLicense } from '../utils/user_info'
+import {
+  Content,
+  Text,
+  H1,
+  H2,
+  Form,
+  Item,
+  Input,
+  Button,
+  Label,
+  Spinner,
+  Toast,
+  Root,
+  Container
+} from 'native-base'
+import {
+  checkForActiveLicense,
+  getUserVerification,
+  verifyUser,
+  reset,
+  checkStoredLicense
+} from '../utils/user_info'
 import Main from './Main'
 import { sendVerificationEmail } from '../utils/api'
 import AppErrorBoundary from './AppErrorBoundary'
 import t from 'format-message'
+import { AlertDialog } from './shared/common'
+import { screenWidth, screenHeight } from '../utils/Metrics'
 
 const App = () => {
   const [userInfo, setUserInfo] = useState(null)
@@ -18,7 +50,7 @@ const App = () => {
   useEffect(() => {
     let ignore = false
 
-    async function fetchUserInfo() {
+    async function fetchUserInfo () {
       // DEV: use the following to reset user info/verification
       // await reset()
       const fetchedInfo = await getUserVerification()
@@ -39,17 +71,20 @@ const App = () => {
     return () => (ignore = true)
   }, [])
 
-  useEffect(() => {
-    async function checkLicenseIsStillActive() {
-      const isActive = await checkStoredLicense()
-      if (!isActive) {
-        // TODO: show something if not active
+  useEffect(
+    () => {
+      async function checkLicenseIsStillActive () {
+        const isActive = await checkStoredLicense()
+        if (!isActive) {
+          // TODO: show something if not active
+        }
       }
-    }
-    if (userInfo && userInfo.verified && userInfo.validLicense) {
-      checkLicenseIsStillActive()
-    }
-  }, [userInfo])
+      if (userInfo && userInfo.verified && userInfo.validLicense) {
+        checkLicenseIsStillActive()
+      }
+    },
+    [userInfo]
+  )
 
   const logout = async () => {
     await reset()
@@ -78,7 +113,7 @@ const App = () => {
       Toast.show({
         text: t('Success!'),
         duration: 3000,
-        type: 'success',
+        type: 'success'
       })
       sendVerificationEmail(email, userInfo.idToVerify, error => {
         setVerifying(false)
@@ -86,7 +121,7 @@ const App = () => {
           Toast.show({
             text: t('Error sending email! Try again or another email.'),
             duration: 3000,
-            type: 'danger',
+            type: 'danger'
           })
           setUserInfo(null)
         } else {
@@ -96,9 +131,13 @@ const App = () => {
     } else {
       setVerifying(false)
       Toast.show({
-        text: t(`Error! That email didn't verify. Try again or another email.${userInfo ? `\n${userInfo.message}` : ''}`),
+        text: t(
+          `Error! That email didn't verify. Try again or another email.${
+            userInfo ? `\n${userInfo.message}` : ''
+          }`
+        ),
         duration: 10000,
-        type: 'danger',
+        type: 'danger'
       })
     }
   }
@@ -109,7 +148,7 @@ const App = () => {
       Toast.show({
         text: t('Success!'),
         duration: 3000,
-        type: 'success',
+        type: 'success'
       })
       const [verified, newUserInfo] = await verifyUser(userInfo)
       if (verified) {
@@ -120,24 +159,32 @@ const App = () => {
         setUserInfo(null)
         // newUserInfo is the license verification response
         let text = ''
-        if (newUserInfo && newUserInfo.problem == 'no_activations_left' && !newUserInfo.hasActivationsLeft) {
+        if (
+          newUserInfo &&
+          newUserInfo.problem == 'no_activations_left' &&
+          !newUserInfo.hasActivationsLeft
+        ) {
           // not valid because of number of activations
-          text = t('It looks like you have Plottr on the max number of devices already')
+          text = t(
+            'It looks like you have Plottr on the max number of devices already'
+          )
         } else {
           // invalid
-          text = t('There was an error activating your license key on this device')
+          text = t(
+            'There was an error activating your license key on this device'
+          )
         }
         Toast.show({
           text: text,
           duration: 5000,
-          type: 'danger',
+          type: 'danger'
         })
       }
     } else {
       Toast.show({
         text: t("Error! That code didn't verify. Try again."),
         duration: 3000,
-        type: 'danger',
+        type: 'danger'
       })
     }
     setVerifying(false)
@@ -167,8 +214,14 @@ const App = () => {
           </Form>
           <Text>{t('This will send you an email with a code')}</Text>
           <View style={styles.centeredTextWrapper}>
-            <Text style={styles.centeredText}>{t("Don't have a license? Go to our website to learn more")}</Text>
-            <Button transparent large onPress={() => Linking.openURL('https://getplottr.com')} style={styles.ourWebsiteButton}>
+            <Text style={styles.centeredText}>
+              {t("Don't have a license? Go to our website to learn more")}
+            </Text>
+            <Button
+              transparent
+              large
+              onPress={() => Linking.openURL('https://getplottr.com')}
+              style={styles.ourWebsiteButton}>
               <Text>getplottr.com</Text>
             </Button>
           </View>
@@ -182,7 +235,9 @@ const App = () => {
       <Container>
         <Content style={styles.content}>
           <H1 style={styles.header}>{t('Welcome to Plottr!')}</H1>
-          <H2 style={styles.header}>{t('Enter your verification code to activate this device')}</H2>
+          <H2 style={styles.header}>
+            {t('Enter your verification code to activate this device')}
+          </H2>
           <Form style={styles.form}>
             <Item inlineLabel last regular style={styles.label}>
               <Label>{t('Code')}</Label>
@@ -201,8 +256,14 @@ const App = () => {
           </Form>
           <Text>{t('You should have received an email with a code')}</Text>
           <View style={styles.centeredTextWrapper}>
-            <Text style={styles.centeredText}>{t('Verifying with email: {email}', {email: userInfo.email})}</Text>
-            <Button transparent large onPress={() => setUserInfo(null)} style={styles.ourWebsiteButton} >
+            <Text style={styles.centeredText}>
+              {t('Verifying with email: {email}', { email: userInfo.email })}
+            </Text>
+            <Button
+              transparent
+              large
+              onPress={() => setUserInfo(null)}
+              style={styles.ourWebsiteButton}>
               <Text>{t('Use a different email')}</Text>
             </Button>
           </View>
@@ -215,8 +276,8 @@ const App = () => {
   // userInfo but not verified -> verification
   // verified -> Main
   const renderBody = () => {
-    if(__DEV__) {
-      //for validation bypass
+    if (__DEV__) {
+      // for validation bypass
       return <Main v2={1} logout={logout} />
     }
     if (!userInfo) {
@@ -234,45 +295,55 @@ const App = () => {
 
   return (
     <SafeAreaProvider>
-      <Root>
-        <StatusBar barStyle='dark-content' />
-        <AppErrorBoundary reset={resetOnError} recover={recoverFromError}>
-          { renderBody() }
-        </AppErrorBoundary>
-      </Root>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <KeyboardAvoidingView
+          enabled
+          behavior={'padding'}
+          keyboardShouldPersistTaps={'always'}
+          style={styles.container}>
+          <Root>
+            <StatusBar barStyle='dark-content' />
+            <AppErrorBoundary reset={resetOnError} recover={recoverFromError}>
+              {renderBody()}
+            </AppErrorBoundary>
+            <AlertDialog />
+          </Root>
+        </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
     </SafeAreaProvider>
   )
 }
 
 const styles = StyleSheet.create({
+  container: { flex: 1 },
   scrollView: {
-    backgroundColor: 'white',
+    backgroundColor: 'white'
   },
   content: {
-    padding: 16,
+    padding: 16
   },
   header: {
     textAlign: 'center',
     marginTop: 10,
-    marginBottom: 10,
+    marginBottom: 10
   },
   label: {
-    marginBottom: 16,
+    marginBottom: 16
   },
   form: {
-    marginVertical: 16,
+    marginVertical: 16
   },
   centeredTextWrapper: {
     marginTop: 64,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   ourWebsiteButton: {
-    alignSelf: 'center',
+    alignSelf: 'center'
   },
   centeredText: {
-    fontSize: 20,
-  },
+    fontSize: 20
+  }
 })
 
 export default App
