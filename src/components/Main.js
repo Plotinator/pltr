@@ -1,164 +1,287 @@
-import React, { useEffect, useState } from 'react'
-import { NativeModules, NativeEventEmitter, Platform, StyleSheet, Image } from 'react-native'
+import React, { useEffect, useState, Component } from 'react'
+import { NativeModules, NativeEventEmitter } from 'react-native'
 import { Provider } from 'react-redux'
-import { Content, Spinner, Container, H1, H3, Form, Button, Text, Thumbnail } from 'native-base'
 import DocumentRoot from './DocumentRoot'
 import { configureStore } from '../store/configureStore'
 import MainErrorBoundary from './MainErrorBoundary'
 import t from 'format-message'
 import { isTablet } from 'react-native-device-info'
-import images from '../images'
-const { DocumentViewController, ReactNativeEventEmitter, DocumentBrowser } = NativeModules
+import Dashboard from './screens/dashboard'
+import Metrics from '../utils/Metrics'
+import DocumentPicker from 'react-native-document-picker'
+import rnfs, { DocumentDirectoryPath } from 'react-native-fs';
+import { showAlert, showInputAlert } from './shared/common/AlertDialog'
+import AsyncStorage from '@react-native-community/async-storage'
 
-let DocumentEvents
-if (Platform.OS == 'ios') {
-  DocumentEvents = new NativeEventEmitter(ReactNativeEventEmitter)
-} else if (Platform.OS == 'android') {
-  DocumentEvents = new NativeEventEmitter(NativeModules.AndroidDocumentBrowser)
-}
-let storeV2 = configureStore({})
+let store = configureStore({})
+const {
+  DocumentViewController,
+  ReactNativeEventEmitter,
+  DocumentBrowser,
+  AndroidDocumentBrowser,
+} = NativeModules
+const { IS_IOS } = Metrics
+const DocumentEvents = new NativeEventEmitter(
+  IS_IOS ? ReactNativeEventEmitter : AndroidDocumentBrowser
+)
 
-const Main = ({v2, logout}) => {
-  const [document, setDocument] = useState(null)
-  const [androidLoading, setLoading] = useState(false)
-
-  const closeFile = () => {
-    setDocument(null)
-    storeV2 = configureStore({})
-    if (Platform.OS == 'ios') {
-      DocumentViewController.closeDocument()
-    }
+export default class Main extends Component {
+  state = {
+    document: null,
+    loading: false,
+    recentDocuments: []
   }
 
-  useEffect(() => {
-    if (!document) {
-      if (Platform.OS == 'ios') {
-        DocumentBrowser.openBrowser()
+  componentDidMount() {
+    DocumentEvents.addListener('onOpenDocument', this.handleDocumentOpened)
+    this.getRecentDocuments()
+  }
+
+  handleDocumentOpened = (data) => {
+    this.setDocument(data)
+    this.setLoading(false)
+    this.addRecentDocument(data)
+    // TODO: test these below scenarios
+    // for delaying setting data for tablets
+    // if (IS_IOS) DocumentBrowser.closeBrowser()
+    /*
+    if (isTablet()) {
+      setTimeout(() => setDocument(data), 600)
+    }
+    */
+  }
+
+  handleNewProject = ({ input }) => {
+    this.setLoading(true)
+    const fileName = String(input || 'New Story')
+      .replace(/\s+/gi, '_')
+      .replace(/[^a-zA-Z0-9_\-]/gi)
+    const filePath = DocumentDirectoryPath + `/${fileName}.pltr`;
+    const fileData = `{"storyName": "${input}", "newFile": true}`
+    const writeProjectFile = () => {
+      rnfs.writeFile(filePath, fileData, 'utf8')
+        .then(() => this.handleDocumentOpened({
+          data: fileData,
+          documentURL: filePath
+        }))
+        .catch((err) => {
+          console.log(err.message);
+          this.showCreateFileError()
+        })
+        .finally(() => this.setLoading(false));
+    }
+    rnfs.exists(filePath)
+      .then((exists) => {
+        if(exists) {
+          const actions = [
+            {
+              positive: true,
+              name: t('OVERWRITE'),
+              callback: writeProjectFile
+            },
+            {
+              name: t('Cancel').toUpperCase(),
+              callback: () => this.setLoading(false)
+            }
+          ]
+          showAlert(
+            t('LOOK OUT!'),
+            t(
+              'You already have a file named {file}',
+              { file: `"${fileName}.pltr"` }
+            ),
+            actions
+          )
+        } else writeProjectFile()
+      })
+
+    // TODO: for android try existing this.androidOpenCommand('create')
+  }
+
+  getRecentDocuments () {
+    AsyncStorage.getItem('recentDocuments').then(data => {
+      if(data) {
+        try {
+          const recentDocuments = JSON.parse(data || '[]')
+          this.setState({ recentDocuments })
+        } catch(e) {
+          console.log('corrupt recent docs', e)
+        }
       }
-      DocumentEvents.addListener('onOpenDocument', data => {
-        if (Platform.OS == 'ios') {
-          DocumentBrowser.closeBrowser()
-          if (isTablet()) {
-            setTimeout(() => setDocument(data), 600)
-          } else {
-            setDocument(data)
-          }
-        } else if (Platform.OS == 'android') {
-          setDocument(data)
-          setLoading(false)
+    })
+  }
+
+  addRecentDocument ({ data, documentURL }) {
+    const { recentDocuments = [] } = this.state
+    const documentObject = JSON.parse(data)
+    const { storyName, series } = documentObject
+    const projetName = (series && series.name) || storyName
+
+    console.log('storyName', series, projetName)
+    recentDocuments.forEach((document, i) => {
+      const { name, url } = document
+      if(url == documentURL && name == projetName) {
+        recentDocuments.splice(i, 1)
+      }
+    })
+
+    recentDocuments.unshift({
+      name: projetName,
+      url: documentURL
+    })
+
+    // top 4
+    this.setState({ recentDocuments: recentDocuments.splice(0, 4) })
+    AsyncStorage.setItem('recentDocuments', JSON.stringify(recentDocuments))
+  }
+
+  setDocument = (document) => this.setState({ document })
+
+  setLoading = (loading) => this.setState({ loading })
+
+  closeDocument = () => {
+    this.setDocument(null)
+    store = configureStore({})
+    if (IS_IOS) DocumentViewController.closeDocument()
+  }
+
+  showFileProcessingError () {
+    showAlert(t('UH-OH!'), t('We had a problem processing your file'))
+  }
+
+  showInValidFileError () {
+    showAlert(t('UH-OH!'), t('Please select a valid Plottr file'))
+  }
+
+  showCreateFileError () {
+    showAlert(t('UH-OH!'), t('We had a problem creating a new project'))
+  }
+
+  readDocumentFile (uri) {
+    rnfs.readFile(decodeURI(uri), 'utf8')
+      .then((data) => {
+        const document = {
+          data,
+          documentURL: uri
+        }
+        this.handleDocumentOpened(document)
+      })
+      .catch((err) => {
+        console.log('Error Reading File!', err.message);
+        this.showFileProcessingError()
+      })
+      .finally(() => this.setLoading(false));
+  }
+
+  readDocument = ({ name, url }) => {
+    this.readDocumentFile(url)
+  }
+
+  selectDocument = () => {
+    try {
+      DocumentPicker.pick({
+        mode: 'open',
+        // type: [
+        //   'public.pltr',
+        //   'public.json',
+        // ],
+      }).then((res) => {
+        this.setLoading(true)
+        const { uri, fileCopyUri, name } = res
+        if(name.match('.pltr')) {
+          this.readDocumentFile(uri)
+        } else {
+          this.showInValidFileError()
+          this.setLoading(false)
         }
       })
+      .catch((error) => {
+        if(!String(error).match(/canceled/i)) {
+          this.showFileProcessingError()
+        }
+      })
+      .finally(() => this.setLoading(false))
+    } catch (err) {
+      this.showFileProcessingError()
+      this.setLoading(false)
     }
-  }, [document])
+  }
 
-  const openDoc = () => {
-    if (Platform.OS == 'android') {
-      try {
-        NativeModules.AndroidDocumentBrowser.openBrowser('open')
-        setLoading(true)
-      } catch (error) {
-        console.log(error)
+  openDocument = () => {
+    if (IS_IOS) {
+      DocumentBrowser.openBrowser()
+    } else {
+      this.androidOpenCommand('open')
+    }
+    this.setLoading(true)
+  }
+
+  createDocument = () => {
+    const actions = [
+      {
+        name: t('CREATE PROJECT'),
+        callback: this.handleNewProject,
+        positive: true
+      },
+      {
+        name: t('Cancel').toUpperCase()
       }
+    ]
+    showInputAlert(t('New Project'), t('Enter the name of your story'), actions)
+  }
+
+  androidOpenCommand(type) {
+    try {
+      AndroidDocumentBrowser.openBrowser(type)
+    } catch (error) {
+      console.log(error)
     }
   }
 
-  const createDoc = () => {
-    if (Platform.OS == 'android') {
-      try {
-        NativeModules.AndroidDocumentBrowser.openBrowser('create')
-        setLoading(true)
-      } catch (error) {
-        console.log(error)
-      }
-    }
+  recoverFromError = () => {
+    this.setDocument(null)
   }
 
-  const recoverFromError = () => {
-    setDocument(null)
-  }
-
-  const renderV1 = () => {
-    // TODO: figure out v1
-    return null
-  }
-
-  const renderV2 = () => {
+  renderProjectDocument() {
+    const { logout } = this.props
+    const { document } = this.state
+    const { documentURL } = document || {}
     return (
-      <Provider store={storeV2} key={document?.documentURL}>
-        <MainErrorBoundary recover={recoverFromError}>
-          <DocumentRoot document={document} closeFile={closeFile} logout={logout} />
+      <Provider store={store} key={documentURL}>
+        <MainErrorBoundary recover={this.recoverFromError}>
+          <DocumentRoot
+            document={document}
+            closeFile={this.closeDocument}
+            logout={logout}
+          />
         </MainErrorBoundary>
       </Provider>
     )
   }
 
-  if (!document) {
-    if (Platform.OS == 'ios' || androidLoading) {
-      return (
-        <Container>
-          <Content>
-            <Spinner color='orange' />
-          </Content>
-        </Container>
-      )
-    } else if (Platform.OS == 'android') {
-      return (
-        <Container>
-          <Content style={styles.content}>
-            <Image source={images.logo} style={styles.image}/>
-            <H1 style={styles.header}>{t('Welcome to Plottr!')}</H1>
-            <Form style={styles.form}>
-              <Button rounded onPress={openDoc} style={styles.button}>
-                <Text>{t('Open')}</Text>
-              </Button>
-              <Text note style={styles.centeredText}>{t('Open an Existing Plottr File')}</Text>
-              <Button rounded onPress={createDoc} style={styles.button}>
-                <Text>{t('Create New')}</Text>
-              </Button>
-              <Text note style={styles.centeredText}>{t('Create a New Plottr File')}</Text>
-            </Form>
-          </Content>
-        </Container>
-      )
-    }
+  renderDashboard() {
+    const {
+      readDocument,
+      createDocument,
+      selectDocument,
+      state: {
+        loading,
+        recentDocuments
+      }
+    } = this
+    return (
+      <Dashboard
+        loading={loading}
+        readDocument={readDocument}
+        recentDocuments={recentDocuments}
+        createDocument={createDocument}
+        openDocument={selectDocument}
+      />
+    )
   }
 
-  if (v2) return renderV2()
-
-  return renderV1()
+  render() {
+    const { document } = this.state
+    return this[document ? 'renderProjectDocument' : 'renderDashboard']()
+  }
 }
-
-const styles = StyleSheet.create({
-  content: {
-    padding: 16,
-    backgroundColor: 'hsl(210, 36%, 96%)', //gray-9
-  },
-  image: {
-    marginTop: 20,
-    height: 100,
-    width: 300,
-    resizeMode: 'contain',
-    alignSelf: 'center',
-  },
-  header: {
-    textAlign: 'center',
-    marginTop: 16,
-    marginBottom: 10,
-  },
-  form: {
-    marginVertical: 16,
-  },
-  button: {
-    marginVertical: 16,
-    backgroundColor: '#FF7F32',
-    alignSelf: 'center',
-    width: 250,
-    justifyContent: 'center',
-  },
-  centeredText: {
-    textAlign: 'center',
-    color: 'hsl(209, 28%, 39%)', //gray-3
-  },
-})
-
-export default Main

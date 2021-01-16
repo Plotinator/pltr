@@ -1,12 +1,14 @@
 import { ScaledSheet } from 'react-native-size-matters'
 import Fonts from '../../../fonts'
 import Metrics from '../../../utils/Metrics'
+import { ifIphoneX } from 'react-native-iphone-x-helper'
 
 const {
   screenHeight,
   baseMargin,
   doubleBaseMargin,
   section,
+  doubleSection,
   cornerRadius
 } = Metrics
 
@@ -19,13 +21,15 @@ const {
 export default ScaledSheet.create({
   container: {
     flex: 1,
-    padding: section
+    padding: section,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   header: {
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: doubleBaseMargin
+    paddingBottom: ifIphoneX(doubleSection, 0)
   },
   logo: {
     height: '100@ms',
@@ -37,8 +41,8 @@ export default ScaledSheet.create({
     flexDirection: 'row'
   },
   logoText: {
-    width: 60,
-    height: 30,
+    width: '60@ms',
+    height: '30@ms',
     resizeMode: 'contain',
     marginLeft: 5
   },
@@ -49,8 +53,13 @@ export default ScaledSheet.create({
     backgroundColor: '#F5F5F5',
     paddingHorizontal: doubleBaseMargin,
     paddingTop: doubleBaseMargin,
+    paddingBottom: baseMargin,
     marginTop: baseMargin,
     width: '80%'
+  },
+  or: {
+    marginTop: baseMargin,
+    marginBottom: -baseMargin
   },
   project: {
     width: '50%',
@@ -65,6 +74,7 @@ export default ScaledSheet.create({
     resizeMode: 'contain'
   },
   actionButtons: {
+    minHeight: '150@vs',
     width: '90%',
     justifyContent: 'center',
     alignItems: 'center'
