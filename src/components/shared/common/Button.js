@@ -48,7 +48,12 @@ export default class Button extends Component {
         onPress={onPress}
         disabled={disabled}>
         <View style={wrapperStylesArray}>
-          <Text style={textStylesArray}>{buttonTextRender}</Text>
+          <Text
+            fontStyle={fontStyle}
+            fontSize={fontSize}
+            style={textStylesArray}>
+            {buttonTextRender}
+          </Text>
         </View>
       </AnimatableTouchableOpacity>
     )
