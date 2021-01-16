@@ -4,7 +4,7 @@ export const type = {
   light: 'OpenSans-Light',
   lightItalic: 'OpenSans-LightItalic',
   regular: 'OpenSans-Regular',
-  regularItalic: 'OpenSans-RegularItalic',
+  italic: 'OpenSans-Italic',
   semiBold: 'OpenSans-SemiBold',
   semiBoldItalic: 'OpenSans-SemiBoldItalic',
   bold: 'OpenSans-Bold',
@@ -34,35 +34,50 @@ export const size = {
 }
 
 export const style = {
-  regular: {
-    fontFamily: type.regular
-  },
-  italic: {
-    fontFamily: type.regularItalic
-  },
   light: {
-    fontFamily: type.light
+    fontFamily: type.light,
+    fontWeight: '300'
   },
   lightItalic: {
-    fontFamily: type.lightItalic
+    fontFamily: type.lightItalic,
+    fontWeight: '300',
+    fontStyle: 'italic'
+  },
+  regular: {
+    fontFamily: type.regular,
+    fontWeight: '400'
+  },
+  italic: {
+    fontFamily: type.italic,
+    fontWeight: '400',
+    fontStyle: 'italic'
   },
   semiBold: {
-    fontFamily: type.semiBold
+    fontFamily: type.semiBold,
+    fontWeight: '500'
   },
   semiBoldItalic: {
-    fontFamily: type.semiBoldItalic
+    fontFamily: type.semiBoldItalic,
+    fontWeight: '500',
+    fontStyle: 'italic'
   },
   bold: {
-    fontFamily: type.bold
+    fontFamily: type.bold,
+    fontWeight: '700'
   },
   boldItalic: {
-    fontFamily: type.boldItalic
+    fontFamily: type.boldItalic,
+    fontWeight: '700',
+    fontStyle: 'italic'
   },
   extraBold: {
-    fontFamily: type.extraBold
+    fontFamily: type.extraBold,
+    fontWeight: '900'
   },
   extraBoldItalic: {
-    fontFamily: type.extraBoldItalic
+    fontFamily: type.extraBoldItalic,
+    fontWeight: '900',
+    fontStyle: 'italic'
   },
   inputText: {
     fontFamily: type.regular,

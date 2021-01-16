@@ -38,7 +38,9 @@ export default class Text extends Component {
       compStyles.push({ fontFamily: fontTypes[typeFace] || typeFace })
     }
     if (fontStyle) {
-      compStyles.push({ fontFamily: fontTypes[fontStyle] || fontStyle })
+      compStyles.push({
+        ...(fontStyles[fontStyle] || { fontStyle })
+      })
     }
     if (fontSize) {
       compStyles.push({ fontSize: fontSizes[fontSize] || fontSize })
