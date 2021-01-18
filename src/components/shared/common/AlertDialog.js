@@ -18,7 +18,6 @@ export const showInputAlert = (title, message, actions) => {
 }
 
 export const hideAlert = () => {
-  Keyboard.dismiss()
   MasterAlert && MasterAlert.hide()
 }
 
@@ -74,6 +73,7 @@ export default class AlertDialog extends Component {
   };
 
   hide = () => {
+    Keyboard.dismiss()
     this.setState({
       visible: false,
     })
