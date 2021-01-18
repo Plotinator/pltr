@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import { View, Keyboard } from 'react-native'
 import styles from './AlertDialogStyles'
 import * as Animatable from 'react-native-animatable'
-import { Text, ShellButton, Input } from './'
+import Text from './Text'
+import ShellButton from './ShellButton'
+import Input from './Input'
 import { Icon } from 'native-base'
 
 let MasterAlert
