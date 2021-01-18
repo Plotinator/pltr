@@ -18,10 +18,14 @@ export default ScaledSheet.create({
   },
   tabButton: {
     padding: baseMargin,
-    paddingHorizontal: baseMargin / 2
+    paddingHorizontal: baseMargin / 2,
   },
   tabLabel: {
     ...style.semiBoldText,
     fontSize: size.h7
+  },
+  tabIcon: {
+    minWidth: 40,
+    textAlign: 'center'
   }
 })

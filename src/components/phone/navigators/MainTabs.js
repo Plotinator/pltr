@@ -40,7 +40,7 @@ const TabIcon = ({ focused, color, size, route }) => {
       type='FontAwesome5'
       active={focused}
       name={iconName}
-      style={[{ fontSize: size, color: color }]}
+      style={[{ fontSize: size, color: color }, styles.tabIcon]}
     />
   )
 }
