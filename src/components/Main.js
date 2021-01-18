@@ -74,14 +74,14 @@ export default class Main extends Component {
               callback: () => this.setLoading(false)
             }
           ]
-          showAlert(
-            t('LOOK OUT!'),
-            t(
+          showAlert({
+            title: t('LOOK OUT!'),
+            message: t(
               'You already have a file named {file}',
               { file: `"${fileName}.pltr"` }
             ),
             actions
-          )
+          })
         } else writeProjectFile()
       })
   }
@@ -123,15 +123,24 @@ export default class Main extends Component {
   }
 
   showFileProcessingError () {
-    showAlert(t('UH-OH!'), t('We had a problem processing your file'))
+    showAlert({
+      title: t('UH-OH!'),
+      message: t('We had a problem processing your file')}
+    )
   }
 
   showInValidFileError () {
-    showAlert(t('UH-OH!'), t('Please select a valid Plottr file'))
+    showAlert({
+      title: t('UH-OH!'),
+      message: t('Please select a valid Plottr file')
+    })
   }
 
   showCreateFileError () {
-    showAlert(t('UH-OH!'), t('We had a problem creating a new project'))
+    showAlert({
+      title: t('UH-OH!'),
+      message: t('We had a problem creating a new project')
+    })
   }
 
   readDocumentFile (uri) {
@@ -184,17 +193,20 @@ export default class Main extends Component {
   }
 
   createDocument = () => {
-    const actions = [
-      {
-        name: t('CREATE PROJECT'),
-        callback: this.handleNewProject,
-        positive: true
-      },
-      {
-        name: t('Cancel').toUpperCase()
-      }
-    ]
-    showInputAlert(t('New Project'), t('Enter the name of your story'), actions)
+    showInputAlert({
+      title: t('New Project'),
+      message: t('Enter the name of your story'),
+      actions: [
+        {
+          name: t('CREATE PROJECT'),
+          callback: this.handleNewProject,
+          positive: true
+        },
+        {
+          name: t('Cancel').toUpperCase()
+        }
+      ]
+    })
   }
 
   recoverFromError = () => {

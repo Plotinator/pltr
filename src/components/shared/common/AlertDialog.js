@@ -9,14 +9,14 @@ import { Icon } from 'native-base'
 
 let MasterAlert
 
-export const showAlert = (title, message, actions) => {
+export const showAlert = (config) => {
   Keyboard.dismiss()
-  MasterAlert && MasterAlert.show(title, message, actions)
+  MasterAlert && MasterAlert.show(config)
 }
 
-export const showInputAlert = (title, message, actions) => {
+export const showInputAlert = (config) => {
   Keyboard.dismiss()
-  MasterAlert && MasterAlert.showInput(title, message, actions)
+  MasterAlert && MasterAlert.showInput(config)
 }
 
 export const hideAlert = () => {
@@ -47,7 +47,7 @@ export default class AlertDialog extends Component {
     MasterAlert = null
   }
 
-  show = (title, message, actions = []) => {
+  show = ({ title, message, actions = [] }) => {
     this.setState({
       initial: false,
       title: message ? title : 'Plottr',
@@ -59,12 +59,12 @@ export default class AlertDialog extends Component {
     })
   };
 
-  showInput = (title, message, actions = []) => {
+  showInput = ({ title, message, actions = [], inputText = '' }) => {
     this.setState({
       initial: false,
       title: message ? title : 'Plottr',
       message: message || title,
-      inputText: '',
+      inputText,
       isInput: true,
       visible: true,
       shadeBase: 0,
