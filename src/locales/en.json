@@ -41,8 +41,8 @@
   "Chapter": {
     "message": "Chapter"
   },
-  "Chapter {count}": {
-    "message": "Chapter {count}"
+  "Chapter {number}": {
+    "message": "Chapter {number}"
   },
   "Delete Chapter {name}?": {
     "message": "Delete Chapter \"{name}\"?"
@@ -242,6 +242,9 @@
   "Project": {
     "message": "Project"
   },
+  "Prologue": {
+    "message": "Prologue"
+  },
   "Rename": {
     "message": "Rename"
   },
@@ -367,5 +370,47 @@
   },
   "You should have received an email with a code": {
     "message": "You should have received an email with a code"
+  },
+  "Default Colors": {
+    "message": "Default Colors"
+  },
+  "Reds": {
+    "message": "Reds"
+  },
+  "Oranges": {
+    "message": "Oranges"
+  },
+  "Greens": {
+    "message": "Greens"
+  },
+  "Blues": {
+    "message": "Blues"
+  },
+  "Purples": {
+    "message": "Purples"
+  },
+  "Grays": {
+    "message": "Grays"
+  },
+  "Whites": {
+    "message": "Whites"
+  },
+  "Browns": {
+    "message": "Browns"
+  },
+  "Beat 1":
+    { "message": "Beat 1"
+  },
+  "Main Plot": {
+    "message": "Main Plot"
+  },
+  "Main": {
+    "message": "Main"
+  },
+  "Supporting": {
+    "message": "Supporting"
+  },
+  "Other": {
+    "message": "Other"
   }
 }
