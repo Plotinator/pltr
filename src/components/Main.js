@@ -1,29 +1,17 @@
 import React, { useEffect, useState, Component } from 'react'
-import { NativeModules, NativeEventEmitter } from 'react-native'
 import { Provider } from 'react-redux'
 import DocumentRoot from './DocumentRoot'
 import { configureStore } from '../store/configureStore'
 import MainErrorBoundary from './MainErrorBoundary'
 import t from 'format-message'
-import { isTablet } from 'react-native-device-info'
 import Dashboard from './screens/dashboard'
-import Metrics from '../utils/Metrics'
 import DocumentPicker from 'react-native-document-picker'
-import rnfs, { DocumentDirectoryPath } from 'react-native-fs';
+import rnfs, { DocumentDirectoryPath } from 'react-native-fs'
 import { showAlert, showInputAlert } from './shared/common/AlertDialog'
 import AsyncStorage from '@react-native-community/async-storage'
+import { setDocumentURL } from '../middlewares/DocumentSaver'
 
 let store = configureStore({})
-const {
-  DocumentViewController,
-  ReactNativeEventEmitter,
-  DocumentBrowser,
-  AndroidDocumentBrowser,
-} = NativeModules
-const { IS_IOS } = Metrics
-const DocumentEvents = new NativeEventEmitter(
-  IS_IOS ? ReactNativeEventEmitter : AndroidDocumentBrowser
-)
 
 export default class Main extends Component {
   state = {
@@ -32,8 +20,19 @@ export default class Main extends Component {
     recentDocuments: []
   }
 
+  setLoading = (loading) => this.setState({ loading })
+
+  setDocument = (document) => {
+    setDocumentURL(document && document.documentURL)
+    this.setState({ document })
+  }
+
+  closeDocument = () => {
+    this.setDocument(null)
+    store = configureStore({})
+  }
+
   componentDidMount() {
-    DocumentEvents.addListener('onOpenDocument', this.handleDocumentOpened)
     this.getRecentDocuments()
   }
 
@@ -41,14 +40,6 @@ export default class Main extends Component {
     this.setDocument(data)
     this.setLoading(false)
     this.addRecentDocument(data)
-    // TODO: test these below scenarios
-    // for delaying setting data for tablets
-    // if (IS_IOS) DocumentBrowser.closeBrowser()
-    /*
-    if (isTablet()) {
-      setTimeout(() => setDocument(data), 600)
-    }
-    */
   }
 
   handleNewProject = ({ input }) => {
@@ -65,7 +56,6 @@ export default class Main extends Component {
           documentURL: filePath
         }))
         .catch((err) => {
-          console.log(err.message);
           this.showCreateFileError()
         })
         .finally(() => this.setLoading(false));
@@ -94,8 +84,6 @@ export default class Main extends Component {
           )
         } else writeProjectFile()
       })
-
-    // TODO: for android try existing this.androidOpenCommand('create')
   }
 
   getRecentDocuments () {
@@ -117,7 +105,6 @@ export default class Main extends Component {
     const { storyName, series } = documentObject
     const projetName = (series && series.name) || storyName
 
-    console.log('storyName', series, projetName)
     recentDocuments.forEach((document, i) => {
       const { name, url } = document
       if(url == documentURL && name == projetName) {
@@ -133,16 +120,6 @@ export default class Main extends Component {
     // top 4
     this.setState({ recentDocuments: recentDocuments.splice(0, 4) })
     AsyncStorage.setItem('recentDocuments', JSON.stringify(recentDocuments))
-  }
-
-  setDocument = (document) => this.setState({ document })
-
-  setLoading = (loading) => this.setState({ loading })
-
-  closeDocument = () => {
-    this.setDocument(null)
-    store = configureStore({})
-    if (IS_IOS) DocumentViewController.closeDocument()
   }
 
   showFileProcessingError () {
@@ -167,7 +144,6 @@ export default class Main extends Component {
         this.handleDocumentOpened(document)
       })
       .catch((err) => {
-        console.log('Error Reading File!', err.message);
         this.showFileProcessingError()
       })
       .finally(() => this.setLoading(false));
@@ -207,15 +183,6 @@ export default class Main extends Component {
     }
   }
 
-  openDocument = () => {
-    if (IS_IOS) {
-      DocumentBrowser.openBrowser()
-    } else {
-      this.androidOpenCommand('open')
-    }
-    this.setLoading(true)
-  }
-
   createDocument = () => {
     const actions = [
       {
@@ -228,14 +195,6 @@ export default class Main extends Component {
       }
     ]
     showInputAlert(t('New Project'), t('Enter the name of your story'), actions)
-  }
-
-  androidOpenCommand(type) {
-    try {
-      AndroidDocumentBrowser.openBrowser(type)
-    } catch (error) {
-      console.log(error)
-    }
   }
 
   recoverFromError = () => {

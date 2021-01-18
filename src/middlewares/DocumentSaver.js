@@ -1,0 +1,31 @@
+import { ActionTypes } from 'pltr/v2'
+import rnfs from 'react-native-fs'
+
+const { FILE_SAVED, FILE_LOADED, NEW_FILE, EDIT_CARD_DETAILS } = ActionTypes
+const BLACKLIST = [FILE_SAVED, FILE_LOADED, EDIT_CARD_DETAILS] // card details because it edits details and then coordinates and 2 like that screw up iOS
+let documentURL = ''
+
+export const setDocumentURL = URL => (documentURL = decodeURI(URL))
+
+export const saveDocument = (documentData, successCallback, errorCallback) => {
+  if (documentURL) {
+    // only if doc url was set
+    rnfs
+      .writeFile(documentURL, documentData, 'utf8')
+      .then(() => successCallback && successCallback())
+      .catch(err => errorCallback && errorCallback(err.message))
+  }
+}
+
+const DocumentSaver = store => next => action => {
+  const result = next(action)
+  if (BLACKLIST.includes(action.type)) return result
+  // var isNewFile = action.type === NEW_FILE
+  const state = store.getState()
+  const documentData = JSON.stringify(state, null, 2)
+
+  saveDocument(documentData)
+  return result
+}
+
+export default DocumentSaver

@@ -1,11 +1,11 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import { rootReducer } from 'pltr/v2'
-import saver from '../middlewares/saver'
+import DocumentSaver from '../middlewares/DocumentSaver'
 
 let store = null
 
-export function configureStore(initialState) {
-  const enhancer = compose(applyMiddleware(saver))
+export function configureStore (initialState) {
+  const enhancer = compose(applyMiddleware(DocumentSaver))
   store = createStore(rootReducer, initialState, enhancer)
   return store
 }

@@ -87,7 +87,6 @@ export default class Dashboard extends Component {
   render () {
     const { loading, recentDocuments } = this.props
     const hasRecentDocuments = recentDocuments.length
-    console.log('LOADING', loading)
     return (
       <View style={styles.container}>
         <Animatable.View
