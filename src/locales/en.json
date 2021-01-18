@@ -56,8 +56,8 @@
   "Rename Chapter": {
     "message": "Rename Chapter"
   },
-  "Enter new name": {
-    "message": "Enter new name"
+  "Enter a new name {for}": {
+    "message": "Enter a new name \"{for}\""
   },
   "Characters": {
     "message": "Characters"

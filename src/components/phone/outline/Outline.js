@@ -18,83 +18,88 @@ import styles from './OutlineStyles'
 import { showAlert, showInputAlert } from '../../shared/common/AlertDialog'
 
 class Outline extends Component {
+  referrers = []
+
   constructor (props) {
     super(props)
     this.state = { currentLine: null }
   }
 
-  rename = newValue => {
-    const { isSeries, actions, beatActions, chapterId } = this.props
+  setRowReferrer = ref_name => ref => this.referrers[ref_name] = ref
+  deleteRowReferrer = ref_name => delete this.referrers[ref_name]
+
+  renameChapter = ({ chapterId, input: chapterName }) => {
+    const { isSeries, actions, beatActions } = this.props
+
     if (isSeries) {
-      beatActions.editBeatTitle(chapterId, newValue)
+      beatActions.editBeatTitle(chapterId, chapterName)
     } else {
-      // actions.editSceneTitle(chapterId, newValue)
+      actions.editSceneTitle(chapterId, chapterName)
     }
   }
 
-  askToRename = () => {
-    const { chapterTitle, chapter } = this.props
-    // t('(Current title: {chapterName})', {chapterName: chapter.title})
-    prompt(t('Rename {chapterName}', {chapterName: chapterTitle}), null,
-      [
-        {text: t('Cancel'), style: 'cancel'},
-        {text: t('OK'), onPress: this.rename},
-      ],
-      {
-        type: 'plain-text',
-        cancelable: false,
-        defaultValue: chapter.title,
-      }
-    )
+  deleteChapter = ({ chapterId, input: chapterName, bookId }) => {
+    const { isSeries, actions, beatActions } = this.props
+    if (isSeries) {
+      beatActions.deleteBeat(chapterId, bookId)
+    } else {
+      actions.deleteScene(chapterId, bookId)
+    }
+    this.deleteRowReferrer(`chapter_row_${chapterId}`)
   }
 
-  deleteChapter = ({ data }) => {
-    console.log('CHAPTER', data)
-  }
-
-  renameChapter = ({ input, data }) => {
-    console.log('CHAPTER', data)
+  closeChapterRow({ chapterId }) {
+    // per row closure
+    const chapterRow = this.referrers[`chapter_row_${chapterId}`]
+    if(chapterRow) chapterRow.closeRow()
   }
 
   handleDeleteChapter = (chapter) => {
-    const { id, title } = chapter
+    const { position, title, id: chapterId, bookId } = chapter
     const isAuto = title == 'auto'
-    const autoChapter = t('Chapter {count}', { count: id})
+    const chapterNumber = position + 1
+    const autoChapter = t('Chapter {number}', { number: chapterNumber })
     const chapterName = isAuto ? autoChapter : title
 
-    showAlert(
-      t('Delete Chapter?'),
-      t('Delete Chapter {name}?', { name: chapterName }),
-      [{
+    showAlert({
+      title: t('Delete Chapter'),
+      message: t('Delete Chapter {name}?', { name: chapterName }),
+      actions: [{
+        chapterId,
+        bookId: bookId,
         positive: true,
         name: t('Delete Chapter'),
-        callback: this.deleteChapter,
-        data: chapter
+        callback: this.deleteChapter
       },
       {
         name: t('Cancel')
       }]
-    )
+    })
+    this.closeChapterRow({ chapterId })
   }
 
   handleRenameChapter = (chapter) => {
-    const { id, title } = chapter
+    const { position, title, id: chapterId } = chapter
+    const chapterNumber = position + 1
     const isAuto = title == 'auto'
-    const autoChapter = t('Chapter {count}', { count: id})
+    const autoChapter = t('Chapter {number}', { number: chapterNumber })
     const chapterName = isAuto ? autoChapter : title
 
-    showInputAlert(
-      t('Rename Chapter'),
-      t('Enter new name'),
-      [{
+    showInputAlert({
+      title: t('Rename Chapter'),
+      message: t('Enter a new name {for}', { for: chapterName }),
+      inputText: chapterName,
+      actions: [{
+        chapterId,
+        positive: true,
         name: t('Save Chapter'),
-        callback: this.handleRenameChapter,
-        positive: true
+        callback: this.renameChapter
       },
       {
         name: t('Cancel')
       }]
-    )
+    })
+    this.closeChapterRow({ chapterId })
   }
 
   navigateToPlotlines = () => {
@@ -104,7 +109,7 @@ class Outline extends Component {
   renderChapterInner = (chapterTitle, cards, manualSort, navigateToNewCard, chapter) => {
     return (
       <View style={styles.swipeContainer}>
-        <SwipeRow leftOpenValue={75} rightOpenValue={-100}>
+        <SwipeRow ref={this.setRowReferrer(`chapter_row_${chapter.id}`)} leftOpenValue={75} rightOpenValue={-100}>
           <View style={styles.sliderRow}>
             <TrashButton
               data={chapter}
@@ -195,7 +200,8 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    beatActions: bindActionCreators(actions.beatActions, dispatch),
+    actions: bindActionCreators(actions.sceneActions, dispatch),
+    beatActions: bindActionCreators(actions.beatActions, dispatch)
   }
 }
 
