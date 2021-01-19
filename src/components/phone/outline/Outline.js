@@ -168,6 +168,7 @@ class Outline extends Component {
           renderItem={({ item }) => this.renderChapter(item, cardMap)}
           keyExtractor={item => item.id.toString()}
           contentContainerStyle={styles.content}
+          style={styles.chaptersList}
         />
         <Button full info onPress={this.navigateToPlotlines}>
           <Text white>{t('Plotlines')}</Text>

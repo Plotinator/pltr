@@ -33,5 +33,6 @@ export default ScaledSheet.create({
   swipeContainer: {
     borderBottomWidth: 0.5,
     borderBottomColor: borderGray
-  }
+  },
+  chaptersList: { marginTop: -7 }
 })
