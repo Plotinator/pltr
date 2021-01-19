@@ -1,11 +1,25 @@
-import { ADD_CHARACTER_ATTRIBUTE, ADD_PLACES_ATTRIBUTE,
-  ADD_CARDS_ATTRIBUTE, ADD_LINES_ATTRIBUTE,
-  ADD_SCENES_ATTRIBUTE, REMOVE_CHARACTER_ATTRIBUTE,
-  REMOVE_CARDS_ATTRIBUTE, REMOVE_PLACES_ATTRIBUTE, REMOVE_LINES_ATTRIBUTE,
-  REMOVE_SCENES_ATTRIBUTE, EDIT_CHARACTER_ATTRIBUTE, EDIT_PLACES_ATTRIBUTE,
-  EDIT_CARDS_ATTRIBUTE, EDIT_LINES_ATTRIBUTE, EDIT_SCENES_ATTRIBUTE,
-  RESET, FILE_LOADED, NEW_FILE, REORDER_CHARACTER_ATTRIBUTE,
-  REORDER_PLACES_ATTRIBUTE } from '../constants/ActionTypes'
+import {
+  ADD_CHARACTER_ATTRIBUTE,
+  ADD_PLACES_ATTRIBUTE,
+  ADD_CARDS_ATTRIBUTE,
+  ADD_LINES_ATTRIBUTE,
+  ADD_SCENES_ATTRIBUTE,
+  REMOVE_CHARACTER_ATTRIBUTE,
+  REMOVE_CARDS_ATTRIBUTE,
+  REMOVE_PLACES_ATTRIBUTE,
+  REMOVE_LINES_ATTRIBUTE,
+  REMOVE_SCENES_ATTRIBUTE,
+  EDIT_CHARACTER_ATTRIBUTE,
+  EDIT_PLACES_ATTRIBUTE,
+  EDIT_CARDS_ATTRIBUTE,
+  EDIT_LINES_ATTRIBUTE,
+  EDIT_SCENES_ATTRIBUTE,
+  RESET,
+  FILE_LOADED,
+  NEW_FILE,
+  REORDER_CHARACTER_ATTRIBUTE,
+  REORDER_PLACES_ATTRIBUTE,
+} from '../constants/ActionTypes'
 import { combineReducers } from 'redux'
 import { newFileCustomAttributes } from '../store/newFileState'
 
@@ -109,11 +123,18 @@ function cards (state = [], action) {
 function scenes (state = [], action) {
   switch (action.type) {
     case ADD_SCENES_ATTRIBUTE:
+      if (state.some(({ name }) => name === action.attribute.name)) {
+        return state
+      }
       return [...state, action.attribute]
 
+    case EDIT_SCENES_ATTRIBUTE:
+      let newState = [...state]
+      newState[action.index] = action.newAttribute
+      return newState
+
     case REMOVE_SCENES_ATTRIBUTE:
-      state.splice(state.indexOf(action.attribute), 1)
-      return [...state]
+      return state.filter(attr => attr.name !== action.attribute)
 
     case RESET:
     case NEW_FILE:
