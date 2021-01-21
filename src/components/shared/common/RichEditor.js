@@ -45,6 +45,17 @@ export default class RichTextEditor extends Component {
     const initialText = typeof initialHTMLText == 'object' ? '' : initialHTMLText
     return (
       <View style={containerStyles}>
+        <RichEditor
+          pasteAsPlainText
+          ref={this.setEditor}
+          style={editorStyles}
+          editorStyle={{ color: Colors.darkGray }}
+          placeholder={placeholderText}
+          onFocus={onFocus}
+          initialContentHTML={initialText}
+          onChange={onChange}
+          editorInitializedCallback={this.handleEditorInitialized}
+        />
         <RichToolbar
           style={toolbarStyles}
           iconSize={moderateScale(20)}
@@ -71,17 +82,6 @@ export default class RichTextEditor extends Component {
             // actions.undo,
             // actions.redo,
           ]}
-        />
-        <RichEditor
-          pasteAsPlainText
-          ref={this.setEditor}
-          style={editorStyles}
-          editorStyle={{ color: Colors.darkGray }}
-          placeholder={placeholderText}
-          onFocus={onFocus}
-          initialContentHTML={initialText}
-          onChange={onChange}
-          editorInitializedCallback={this.handleEditorInitialized}
         />
       </View>
     )
