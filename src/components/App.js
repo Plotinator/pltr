@@ -39,8 +39,10 @@ import { sendVerificationEmail } from '../utils/api'
 import AppErrorBoundary from './AppErrorBoundary'
 import t from 'format-message'
 import { AlertDialog } from './shared/common'
+import Metrics from '../utils/Metrics'
 import { screenWidth, screenHeight } from '../utils/Metrics'
 
+const { IS_ANDROID } = Metrics
 const App = () => {
   const [userInfo, setUserInfo] = useState(null)
   const [email, setEmail] = useState('')
@@ -298,7 +300,7 @@ const App = () => {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <KeyboardAvoidingView
           enabled
-          behavior={'padding'}
+          behavior={IS_ANDROID ? '' : 'padding'}
           keyboardShouldPersistTaps={'always'}
           style={styles.container}>
           <Root>
