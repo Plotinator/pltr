@@ -38,8 +38,8 @@ export default class Main extends Component {
 
   handleDocumentOpened = (data) => {
     this.setDocument(data)
-    this.setLoading(false)
     this.addRecentDocument(data)
+    this.setLoading(false)
   }
 
   handleNewProject = ({ input }) => {
@@ -58,7 +58,6 @@ export default class Main extends Component {
         .catch((err) => {
           this.showCreateFileError()
         })
-        .finally(() => this.setLoading(false));
     }
     rnfs.exists(filePath)
       .then((exists) => {
@@ -125,8 +124,9 @@ export default class Main extends Component {
   showFileProcessingError () {
     showAlert({
       title: t('UH-OH!'),
-      message: t('We had a problem processing your file')}
-    )
+      message: t('We had a problem processing your file')
+    })
+    this.setLoading(false)
   }
 
   showInValidFileError () {
@@ -134,6 +134,7 @@ export default class Main extends Component {
       title: t('UH-OH!'),
       message: t('Please select a valid Plottr file')
     })
+    this.setLoading(false)
   }
 
   showCreateFileError () {
@@ -141,9 +142,11 @@ export default class Main extends Component {
       title: t('UH-OH!'),
       message: t('We had a problem creating a new project')
     })
+    this.setLoading(false)
   }
 
   readDocumentFile (uri) {
+    this.setLoading(true)
     rnfs.readFile(decodeURI(uri), 'utf8')
       .then((data) => {
         const document = {
@@ -155,7 +158,6 @@ export default class Main extends Component {
       .catch((err) => {
         this.showFileProcessingError()
       })
-      .finally(() => this.setLoading(false));
   }
 
   readDocument = ({ name, url }) => {
@@ -185,7 +187,6 @@ export default class Main extends Component {
           this.showFileProcessingError()
         }
       })
-      .finally(() => this.setLoading(false))
     } catch (err) {
       this.showFileProcessingError()
       this.setLoading(false)
