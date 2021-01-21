@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Picker, Icon, Text, List, ListItem, Button } from 'native-base'
 import PropTypes from 'react-proptypes'
 import { connect } from 'react-redux'
-import { TouchableOpacity, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import { isTablet } from 'react-native-device-info'
 import { selectors } from 'pltr/v2'
 import t from 'format-message'
@@ -12,19 +12,36 @@ class LinePicker extends Component {
   renderTablet () {
     const { selectedId, lines } = this.props
     const selected = lines.find(l => l.id == selectedId)
-    return <Popover
-      from={<Button bordered dark iconRight style={styles.picker}><Text>{selected ? selected.title : t('Select a Plotline')}</Text><Icon type='FontAwesome5' name='chevron-down' style={{fontSize: 12}}/></Button>}
-    >
-      <List>
-        { this.renderTabletItems() }
-      </List>
-    </Popover>
+    return (
+      <Popover
+        from={
+          <Button bordered dark iconRight style={styles.picker}>
+            <Text>{selected ? selected.title : t('Select a Plotline')}</Text>
+            <Icon
+              type='FontAwesome5'
+              name='chevron-down'
+              style={{ fontSize: 12 }}
+            />
+          </Button>
+        }>
+        <List>{this.renderTabletItems()}</List>
+      </Popover>
+    )
   }
 
   renderTabletItems () {
     const { lines, onChange, selectedId } = this.props
     return lines.map(l => {
-      return <ListItem key={l.id} style={styles.listItem} onPress={() => onChange(l.id)} noIndent selected={l.id == selectedId}><Text>{l.title}</Text></ListItem>
+      return (
+        <ListItem
+          key={l.id}
+          style={styles.listItem}
+          onPress={() => onChange(l.id)}
+          noIndent
+          selected={l.id == selectedId}>
+          <Text>{l.title}</Text>
+        </ListItem>
+      )
     })
   }
 
@@ -35,17 +52,27 @@ class LinePicker extends Component {
   }
 
   renderPhone () {
-    const { selectedId, onChange } = this.props
-    return <Picker
-      iosIcon={<Icon type='FontAwesome5' name='chevron-down' style={{fontSize: 12}}/>}
-      iosHeader={selectedId ? '' : t('Select a Plotline')}
-      placeholder={selectedId ? '' : t('Select a Plotline')}
-      mode='dropdown'
-      selectedValue={selectedId}
-      onValueChange={onChange}
-    >
-      { this.renderPhoneItems() }
-    </Picker>
+    const { selectedId, onChange, style } = this.props
+    return (
+      <View style={styles.container}>
+        <Picker
+          style={styles.pickerParent}
+          iosIcon={
+            <Icon
+              type='FontAwesome5'
+              name='chevron-down'
+              style={{ fontSize: 12 }}
+            />
+          }
+          iosHeader={selectedId ? '' : t('Select a Plotline')}
+          placeholder={selectedId ? '' : t('Select a Plotline')}
+          mode='dropdown'
+          selectedValue={selectedId}
+          onValueChange={onChange}>
+          {this.renderPhoneItems()}
+        </Picker>
+      </View>
+    )
   }
 
   render () {
@@ -58,28 +85,35 @@ class LinePicker extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingRight: 10
+  },
+  pickerParent: {
+    maxWidth: '95%'
+  },
   picker: {
-    backgroundColor: 'white',
+    backgroundColor: 'white'
   },
   listItem: {
-    width: 200,
-  },
+    width: 200
+  }
 })
 
 LinePicker.propTypes = {
   lines: PropTypes.array.isRequired,
   selectedId: PropTypes.number,
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired
 }
 
 function mapStateToProps (state) {
   return {
-    lines: selectors.sortedLinesByBookSelector(state),
+    lines: selectors.sortedLinesByBookSelector(state)
   }
 }
 
 function mapDispatchToProps (dispatch) {
-  return { }
+  return {}
 }
 
 export default connect(
