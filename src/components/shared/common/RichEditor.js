@@ -49,6 +49,7 @@ export default class RichTextEditor extends Component {
           pasteAsPlainText
           ref={this.setEditor}
           style={editorStyles}
+          editorStyle={{ color: Colors.darkGray }}
           placeholder={placeholderText}
           onFocus={onFocus}
           initialContentHTML={initialText}
