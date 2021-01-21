@@ -15,6 +15,11 @@ import DetailsScrollView from '../shared/DetailsScrollView'
 import Colors from '../../../utils/Colors'
 import Metrics from '../../../utils/Metrics'
 import { Text, RichEditor } from '../../shared/common'
+import {
+  checkForChanges,
+  addLeaveListener,
+  removeLeaveListener
+} from '../../../utils/Changes'
 
 // cooresponds to CardDialog in desktop
 
@@ -42,10 +47,22 @@ class SceneDetails extends Component {
 
   componentDidMount () {
     this.setSaveButton()
+    const { navigation } = this.props
+    addLeaveListener(navigation, this.checkChanges)
+  }
+
+  componentWillUnmount () {
+    removeLeaveListener(navigation, this.checkChanges)
   }
 
   componentDidUpdate () {
     this.setSaveButton()
+  }
+
+  checkChanges = (event) => {
+    const { changes } = this.state
+    const { navigation } = this.props
+    checkForChanges(event, changes, this.saveChanges, navigation)
   }
 
   setSaveButton = () => {
