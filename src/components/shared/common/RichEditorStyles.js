@@ -7,13 +7,14 @@ export default ScaledSheet.create({
     borderWidth: 1,
     borderColor: Colors.borderGray,
     borderRadius: Metrics.cornerRadius,
-    paddingTop: Metrics.baseMargin / 2
+    paddingBottom: Metrics.baseMargin / 2
   },
   richToolbar: {
+    alignItems: 'flex-start',
     backgroundColor: Colors.cloud,
     borderRadius: Metrics.cornerRadius,
-    borderTopLeftRadius: 0,
-    borderTopRightRadius: 0,
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
     paddingHorizontal: Metrics.baseMargin / 2
   },
   richEditor: {

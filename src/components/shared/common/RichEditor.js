@@ -17,7 +17,7 @@ export default class RichTextEditor extends Component {
   }
 
   renderTitleIcons = title => ({ tintColor }) => (
-    <Text fontSize={'small'} fontStyle={'bold'} color={tintColor}>{title}</Text>
+    <Text fontSize={16} fontStyle={'bold'} color={tintColor}>{title}</Text>
   )
 
   render () {
@@ -45,20 +45,9 @@ export default class RichTextEditor extends Component {
     const initialText = typeof initialHTMLText == 'object' ? '' : initialHTMLText
     return (
       <View style={containerStyles}>
-        <RichEditor
-          pasteAsPlainText
-          ref={this.setEditor}
-          style={editorStyles}
-          editorStyle={{ color: Colors.darkGray }}
-          placeholder={placeholderText}
-          onFocus={onFocus}
-          initialContentHTML={initialText}
-          onChange={onChange}
-          editorInitializedCallback={this.handleEditorInitialized}
-        />
         <RichToolbar
           style={toolbarStyles}
-          iconSize={moderateScale(16)}
+          iconSize={moderateScale(20)}
           iconMap={{
             heading2: this.renderTitleIcons('H1'),
             heading3: this.renderTitleIcons('H3'),
@@ -71,17 +60,28 @@ export default class RichTextEditor extends Component {
             actions.setItalic,
             actions.setUnderline,
             actions.setStrikethrough,
-            actions.alignLeft,
-            actions.alignCenter,
-            actions.alignRight,
+            // actions.alignLeft,
+            // actions.alignCenter,
+            // actions.alignRight,
             actions.heading2,
             actions.heading3,
             actions.insertOrderedList,
             actions.insertBulletsList,
-            actions.removeFormat,
-            actions.undo,
-            actions.redo,
+            // actions.removeFormat,
+            // actions.undo,
+            // actions.redo,
           ]}
+        />
+        <RichEditor
+          pasteAsPlainText
+          ref={this.setEditor}
+          style={editorStyles}
+          editorStyle={{ color: Colors.darkGray }}
+          placeholder={placeholderText}
+          onFocus={onFocus}
+          initialContentHTML={initialText}
+          onChange={onChange}
+          editorInitializedCallback={this.handleEditorInitialized}
         />
       </View>
     )
