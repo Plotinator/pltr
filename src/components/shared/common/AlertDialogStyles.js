@@ -47,7 +47,8 @@ export default ScaledSheet.create({
     alignItems: 'center'
   },
   dialogBody: {
-    paddingHorizontal: section
+    paddingHorizontal: section,
+    alignItems: 'center'
   },
   input: {
     maxWidth: '80%'
