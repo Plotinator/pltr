@@ -101,6 +101,9 @@
   "Description": {
     "message": "Description"
   },
+  "Describe the scene": {
+    "message": "Describe the scene"
+  },
   "Details": {
     "message": "Details"
   },
@@ -139,6 +142,9 @@
   },
   "Give this tag a name": {
     "message": "Give this tag a name"
+  },
+  "Give your scene a title": {
+    "message": "Give your scene a title"
   },
   "Help": {
     "message": "Help"

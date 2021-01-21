@@ -4,8 +4,9 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { actions, selectors } from 'pltr/v2'
 import { StyleSheet, FlatList } from 'react-native'
-import { Icon, H1, H3, Container, Content, ListItem, CheckBox, Body, Text, View, Badge } from 'native-base'
+import { Icon, H1, H3, Container, Content, ListItem, CheckBox, Body, View, Badge } from 'native-base'
 import t from 'format-message'
+import { Text } from '../../shared/common'
 
 class AttachmentSelectorModal extends Component {
 
@@ -67,15 +68,26 @@ class AttachmentSelectorModal extends Component {
       defaultTitle = t('Untitled')
       item = this.props.books[`${item}`]
     }
-    return <ListItem noIndent button key={`item-${item.id}`} style={styles.listItem} onPress={() => this.toggleItem(item.id)}>
-      <CheckBox checked={selected.includes(item.id)} onPress={() => this.toggleItem(item.id)}/>
-      <Body>
-        <View style={styles.rowView}>
-          <H3 style={styles.title}>{item.name || item.title || defaultTitle}</H3>
-          {type == 'tags' ? <Badge style={[styles.badge, color]}><Text>{item.color}</Text></Badge> : null}
-        </View>
-      </Body>
-    </ListItem>
+    return (
+      <ListItem noIndent button key={`item-${item.id}`} style={styles.listItem} onPress={() => this.toggleItem(item.id)}>
+        <CheckBox checked={selected.includes(item.id)} onPress={() => this.toggleItem(item.id)}/>
+        <Body>
+          <View style={styles.rowView}>
+            <Text
+              fontSize={'h3'}
+              fontStyle={'semiBold'}
+              style={styles.title}>
+              {item.name || item.title || defaultTitle}
+            </Text>
+            { type == 'tags' ? (
+              <Badge style={[styles.badge, color]}>
+                <Text>{item.color}</Text>
+              </Badge>
+            ) : null }
+          </View>
+        </Body>
+      </ListItem>
+    )
   }
 
   render () {
@@ -85,17 +97,23 @@ class AttachmentSelectorModal extends Component {
     } else {
       data = this.props[this.state.type]
     }
-    return <Container>
-      <Content>
-        <FlatList
-          data={data}
-          ListEmptyComponent={<H1 style={styles.h1}>{t('None to choose')}</H1>}
-          extraData={{selected: this.state.selected}}
-          keyExtractor={(item) => item.id}
-          renderItem={this.renderItem}
-        />
-      </Content>
-    </Container>
+    return (
+      <Container>
+        <Content>
+          <FlatList
+            data={data}
+            ListEmptyComponent={(
+              <Text fontSize={'h3'} fontStyle={'semiBold'} center padded>
+                {t('None to choose')}
+              </Text>
+            )}
+            extraData={{selected: this.state.selected}}
+            keyExtractor={(item) => item.id}
+            renderItem={this.renderItem}
+          />
+        </Content>
+      </Container>
+    )
   }
 }
 

@@ -45,6 +45,8 @@ export default function OutlineStack (props) {
         headerRight: () => <AddButton onPress={addChapter} />,
       }}
     />
-    <Stack.Screen name='SceneDetails' component={SceneDetailsBounded} options={{ title: t('Scene Details') }}/>
+    <Stack.Screen name='SceneDetails' component={SceneDetailsBounded} options={{
+        title: <Text fontStyle={'bold'} color={null}>{t('Scene Details')}</Text>
+      }}/>
   </Stack.Navigator>
 }

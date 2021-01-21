@@ -6,7 +6,8 @@ const Colors = {
   borderGray: '#DFDFDF',
   inputBorder: '#AFAFAF',
   darkGray: '#303030',
-  textGray: '#888888'
+  textGray: '#888888',
+  lightGray: '#9F9F9F'
 }
 
 export default Colors

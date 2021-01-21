@@ -11,6 +11,8 @@ import { SwipeRow } from 'react-native-swipe-list-view'
 import SceneCard from './SceneCard'
 import { StyleSheet } from 'react-native'
 import { Text } from '../common'
+import Metrics from '../../../utils/Metrics'
+import Colors from '../../../utils/Colors'
 
 class Chapter extends Component {
 
@@ -84,9 +86,17 @@ class Chapter extends Component {
   }
 
   renderCards () {
-    return this.state.sortedCards.map((c, idx) => {
-      return <SceneCard key={c.id} card={c} index={idx} reorder={this.reorderCards} navigation={this.props.navigation}/>
-    })
+    const { sortedCards } = this.state
+    const hasCards = sortedCards.length
+    return hasCards == 0 ? null : (
+      <View style={styles.cardsContainer}>
+        {sortedCards.map((c, idx) => {
+          return (
+            <SceneCard key={c.id} card={c} index={idx} reorder={this.reorderCards} navigation={this.props.navigation}/>
+          )
+        })}
+      </View>
+    )
   }
 
   render () {
@@ -101,6 +111,10 @@ class Chapter extends Component {
 }
 
 const styles = StyleSheet.create({
+  cardsContainer: {
+    backgroundColor: Colors.cloud,
+    paddingTop: Metrics.baseMargin,
+  },
   chapterView: {
     backgroundColor: 'white',
     padding: 8,

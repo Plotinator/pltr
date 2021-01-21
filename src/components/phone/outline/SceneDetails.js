@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import PropTypes from 'react-proptypes'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Container, Content, Form, Input, Label, Item, View, Toast } from 'native-base'
+import { Input, Icon, Label, Item, View, Toast } from 'native-base'
 import { selectors, actions, initialState } from 'pltr/v2'
 import { StyleSheet, Platform } from 'react-native'
 import t from 'format-message'
@@ -11,8 +11,10 @@ import ChapterPicker from '../../ui/ChapterPicker'
 import LinePicker from '../../ui/LinePicker'
 import SaveButton from '../../ui/SaveButton'
 import AttachmentList from '../../shared/attachments/AttachmentList'
-import RichTextEditor from '../../shared/RichTextEditor'
 import DetailsScrollView from '../shared/DetailsScrollView'
+import Colors from '../../../utils/Colors'
+import Metrics from '../../../utils/Metrics'
+import { Text, RichEditor } from '../../shared/common'
 
 // cooresponds to CardDialog in desktop
 
@@ -24,7 +26,9 @@ class SceneDetails extends Component {
     const { isNewCard, card, chapterId } = route.params
     let cardObj = {}
     if (isNewCard) {
-      cardObj = state.card || {...cloneDeep(initialState.card), chapterId: chapterId}
+      // TODO: confirm description override as well as
+      // the new text rich editor with HTML text
+      cardObj = state.card || {...cloneDeep(initialState.card), description: '', chapterId: chapterId}
     } else {
       cardObj = state.card || cards.find(c => c.id == card.id)
     }
@@ -51,8 +55,12 @@ class SceneDetails extends Component {
   }
 
   plotlineError = () => {
+    this.toastError(t('Please choose a plotline'))
+  }
+
+  toastError (errorText) {
     Toast.show({
-      text: t('Please choose a plotline'),
+      text: errorText,
       duration: 3000,
       type: 'danger',
     })
@@ -62,6 +70,8 @@ class SceneDetails extends Component {
     const { isSeries } = this.props
     const { changes, isNewCard, card } = this.state
     if (!changes) return
+    if(!card.title) return this.toastError(t('Give your scene a title'))
+    console.log('CARD', card)
     if (isNewCard) {
       if (isSeries) {
         if (!card.seriesLineId) {
@@ -103,8 +113,24 @@ class SceneDetails extends Component {
   }
 
   navigateToAttachmentSelector = (type, selectedIds) => {
-    this.props.navigation.navigate('AttachmentSelectorModal', {item: this.state.card, itemType: 'card', type, selectedIds})
+    this.props.navigation.navigate('AttachmentSelectorModal', { item: this.state.card, itemType: 'card', type, selectedIds })
   }
+
+  setScroller = ref => this.detailsScroller = ref
+
+  handleDescriptionChange = description => {
+    const { card } = this.state
+    this.setState({ card: { ...card, description }, changes: true })
+  }
+
+  handleTitleChange = title => {
+    const { card } = this.state
+    this.setState({ card: { ...card, title }, changes: true })
+  }
+
+  handleOnEditorFocus = () => (
+    this.detailsScroller && this.detailsScroller.getScroller().scrollToEnd()
+  )
 
   renderAttachments () {
     const { card, isNewCard } = this.state
@@ -119,42 +145,52 @@ class SceneDetails extends Component {
 
   render () {
     const { isSeries } = this.props
-    const { card } = this.state
+    const { card, card: { title, description } } = this.state
     const chapterId = isSeries ? card.beatId : card.chapterId
     const lineId = isSeries ? card.seriesLineId : card.lineId
-    return <DetailsScrollView>
-      <Item inlineLabel last regular style={styles.label}>
-        <Label>{t('Title')}</Label>
-        <Input
-          value={card.title}
-          onChangeText={text => this.setState({card: {...card, title: text}, changes: true})}
-          autoCapitalize='sentences'
-        />
-      </Item>
-      <Item fixedLabel style={styles.label}>
-        <Label>{t('Chapter')}</Label>
-        <ChapterPicker selectedId={chapterId} onChange={this.changeChapter} />
-      </Item>
-      <Item fixedLabel style={styles.label}>
-        <Label>{t('Plotline')}</Label>
-        <LinePicker selectedId={lineId} onChange={this.changeLine} />
-      </Item>
-      { this.renderAttachments() }
-      <View style={[styles.afterList, styles.rceView]}>
-        <Label>{t('Description')}</Label>
-        <RichTextEditor
-          initialValue={card.description}
-          onChange={val => this.setState({card: {...card, description: val}, changes: true}) }
-          maxHeight={5000}
-        />
-      </View>
-    </DetailsScrollView>
+    return (
+      <DetailsScrollView ref={this.setScroller}>
+        <View style={styles.container}>
+          <Item inlineLabel last style={styles.label}>
+            <Text fontStyle='semiBold'>{t('Title')}:</Text>
+            <Input
+              value={title}
+              onChangeText={this.handleTitleChange}
+              autoCapitalize='sentences'
+              placeholder={t('Give your scene a title')}
+              placeholderTextColor={Colors.lightGray}
+            />
+          </Item>
+          <Item fixedLabel style={styles.label}>
+            <Text fontStyle='semiBold'>{t('Chapter')}:</Text>
+            <ChapterPicker selectedId={chapterId} onChange={this.changeChapter} />
+          </Item>
+          <Item fixedLabel style={styles.label}>
+            <Text fontStyle='semiBold'>{t('Plotline')}:</Text>
+            <LinePicker selectedId={lineId} onChange={this.changeLine} />
+          </Item>
+          { this.renderAttachments() }
+          <View style={[styles.afterList, styles.rceView]}>
+            <Text fontStyle='semiBold' style={styles.label}>{t('Description')}:</Text>
+            <RichEditor
+              initialHTMLText={description}
+              placeholder={t('Describe the scene')}
+              onFocus={this.handleOnEditorFocus}
+              onChange={this.handleDescriptionChange}
+            />
+          </View>
+        </View>
+      </DetailsScrollView>
+    )
   }
 }
 
 const styles = StyleSheet.create({
+  container: {
+    marginTop: -Metrics.baseMargin * 1.45
+  },
   label: {
-    marginBottom: 16,
+    marginBottom: Metrics.baseMargin,
   },
   afterList: {
     marginTop: 16,

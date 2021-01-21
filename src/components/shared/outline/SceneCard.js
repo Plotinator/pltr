@@ -9,6 +9,8 @@ import { StyleSheet } from 'react-native'
 import { isTablet } from 'react-native-device-info'
 import RichTextEditor from '../RichTextEditor'
 import { Text } from '../common'
+import Metrics from '../../../utils/Metrics'
+import Colors from '../../../utils/Colors'
 
 const isOnTablet = isTablet()
 
@@ -33,32 +35,39 @@ class SceneCard extends Component {
 
   render () {
     const { line, card } = this.props
-    const lineColor = {color: line.color.toLowerCase()}
+    const lineColor = { color: line.color.toLowerCase() }
     if (isOnTablet) {
-      return <Card style={[styles.card, {borderColor: line.color.toLowerCase()}]}>
-        <View style={styles.paddedTitleBox}>
-          <Text style={[styles.tabletLineText, lineColor]}>({line.title})</Text>
-        </View>
-        <View style={styles.paddedBox}>
-          <Text style={styles.tabletTitleText}>{card.title}</Text>
-        </View>
-        { this.renderDescription() }
-      </Card>
+      return (
+        <Card style={[styles.card, {borderColor: line.color.toLowerCase()}]}>
+          <View style={styles.paddedTitleBox}>
+            <Text style={[styles.tabletLineText, lineColor]}>({line.title})</Text>
+          </View>
+          <View style={styles.paddedBox}>
+            <Text style={styles.tabletTitleText}>{card.title}</Text>
+          </View>
+          { this.renderDescription() }
+        </Card>
+      )
     } else {
-      return <Card style={[styles.card, {borderColor: line.color.toLowerCase()}]}>
-        <CardItem button onPress={this.navigateToDetails}>
-          <Left><Text>{card.title}</Text></Left>
-          <Right><Text style={[styles.lineText, lineColor]}>({line.title})</Text></Right>
-        </CardItem>
-      </Card>
+      return (
+        <Card style={[styles.card, { borderColor: line.color.toLowerCase() }]}>
+          <CardItem button onPress={this.navigateToDetails}>
+            <Left><Text>{card.title}</Text></Left>
+            <Right><Text style={[styles.lineText, lineColor]}>({line.title})</Text></Right>
+          </CardItem>
+        </Card>
+      )
     }
   }
 }
 
 const styles = StyleSheet.create({
   card: {
-    marginLeft: 20,
-    marginRight: 8,
+    backgroundColor: Colors.white,
+    marginTop: 0,
+    marginBottom: Metrics.baseMargin,
+    marginLeft: Metrics.doubleBaseMargin,
+    marginRight: Metrics.doubleBaseMargin,
   },
   lineText: {
     fontSize: 12,
