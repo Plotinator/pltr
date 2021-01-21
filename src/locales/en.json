@@ -50,11 +50,8 @@
   "Delete Chapter": {
     "message": "Delete Chapter"
   },
-  "Save Chapter": {
-    "message": "Save Chapter"
-  },
-  "Rename Chapter": {
-    "message": "Rename Chapter"
+  "Default Colors": {
+    "message": "Default Colors"
   },
   "Enter a new name {for}": {
     "message": "Enter a new name \"{for}\""
@@ -67,6 +64,12 @@
   },
   "Choose Color": {
     "message": "Choose Color"
+  },
+  "CREATE NEW PROJECT": {
+    "message": "CREATE NEW PROJECT"
+  },
+  "CREATE PROJECT": {
+    "message": "CREATE PROJECT"
   },
   "Code": {
     "message": "Code"
@@ -94,6 +97,12 @@
   },
   "Delete": {
     "message": "Delete"
+  },
+  "Delete Tag": {
+    "message": "Delete Tag"
+  },
+  "Delete {title} Tag?": {
+    "message": "Delete \"{title}\" Tag?"
   },
   "Demos": {
     "message": "Demos"
@@ -128,11 +137,14 @@
   "Enter Custom Attribute Title": {
     "message": "Enter Custom Attribute Title"
   },
-  "Enter your verification code to activate this device": {
-    "message": "Enter your verification code to activate this device"
-  },
   "Error sending email! Try again or another email.": {
     "message": "Error sending email! Try again or another email."
+  },
+  "Enter the name of your story": {
+    "message": "Enter the name of your story"
+  },
+  "Enter your verification code to activate this device": {
+    "message": "Enter your verification code to activate this device"
   },
   "Error! That code didn't verify. Try again.": {
     "message": "Error! That code didn''t verify. Try again."
@@ -157,6 +169,9 @@
   },
   "Let's verify your license": {
     "message": "Let''s verify your license"
+  },
+  "LOOK OUT!": {
+    "message": "LOOK OUT!"
   },
   "Manually Sorted": {
     "message": "Manually Sorted"
@@ -185,14 +200,11 @@
   "New Plotline": {
     "message": "New Plotline"
   },
+  "New Project": {
+    "message": "New Project"
+  },
   "New Tag": {
     "message": "New Tag"
-  },
-  "Delete Tag": {
-    "message": "Delete Tag"
-  },
-  "Delete {title} Tag?": {
-    "message": "Delete \"{title}\" Tag?"
   },
   "No Characters": {
     "message": "No Characters"
@@ -212,14 +224,20 @@
   "No": {
     "message": "No"
   },
-  "Yes, Delete": {
-    "message": "Yes, Delete"
+  "No, Discard": {
+    "message": "No, Discard"
   },
   "Open a Plottr Document": {
     "message": "Open a Plottr Document"
   },
+  "Open one of your most recent projects": {
+    "message": "Open one of your most recent projects"
+  },
   "Outline": {
     "message": "Outline"
+  },
+  "OVERWRITE": {
+    "message": "OVERWRITE"
   },
   "Paragraph": {
     "message": "Paragraph"
@@ -232,6 +250,9 @@
   },
   "Please choose a plotline": {
     "message": "Please choose a plotline"
+  },
+  "Please select a valid Plottr file": {
+    "message": "Please select a valid Plottr file."
   },
   "Plotline": {
     "message": "Plotline"
@@ -254,8 +275,17 @@
   "Rename": {
     "message": "Rename"
   },
+  "Rename Chapter": {
+    "message": "Rename Chapter"
+  },
   "Save": {
     "message": "Save"
+  },
+  "Save Changes?": {
+    "message": "Save Changes?"
+  },
+  "Save Chapter": {
+    "message": "Save Chapter"
   },
   "Saved": {
     "message": "Saved"
@@ -271,6 +301,9 @@
   },
   "Select a Plotline": {
     "message": "Select a Plotline"
+  },
+  "SELECT PROJECT FILE": {
+    "message": "SELECT PROJECT FILE"
   },
   "Series": {
     "message": "Series"
@@ -305,6 +338,9 @@
   "Try that again": {
     "message": "Try that again"
   },
+  "UH-OH!": {
+    "message": "UH-OH!"
+  },
   "Uncategorized": {
     "message": "Uncategorized"
   },
@@ -329,56 +365,32 @@
   "Welcome to": {
     "message": "Welcome to"
   },
-  "You may create a new project": {
-    "message": "You may create a new project\nor select a project file to begin"
-  },
-  "Open one of your most recent projects": {
-    "message": "Open one of your most recent projects"
-  },
-  "SELECT PROJECT FILE": {
-    "message": "SELECT PROJECT FILE"
-  },
-  "CREATE NEW PROJECT": {
-    "message": "CREATE NEW PROJECT"
-  },
-  "CREATE PROJECT": {
-    "message": "CREATE PROJECT"
-  },
-  "OVERWRITE": {
-    "message": "OVERWRITE"
-  },
-  "UH-OH!": {
-    "message": "UH-OH!"
-  },
-  "LOOK OUT!": {
-    "message": "LOOK OUT!"
-  },
-  "New Project": {
-    "message": "New Project"
-  },
-  "Enter the name of your story": {
-    "message": "Enter the name of your story"
-  },
   "We had a problem processing your file": {
     "message": "We had a problem processing your file. Ensure Plottr has the correct permissions and try again."
   },
   "We had a problem creating a new project": {
     "message": "We had a problem creating a new project. Ensure Plottr has the correct permissions and that you have enough storage space."
   },
-  "Please select a valid Plottr file": {
-    "message": "Please select a valid Plottr file."
+  "What would you like to do?": {
+    "message": "What would you like to do?"
+  },
+  "Yes, Delete": {
+    "message": "Yes, Delete"
+  },
+  "Yes, Save": {
+    "message": "Yes, Save"
   },
   "You already have a file named {file}": {
     "message": "You already have a file named \n{file}.\nDo you wish to overwrite?"
   },
-  "What would you like to do?": {
-    "message": "What would you like to do?"
-  },
   "You should have received an email with a code": {
     "message": "You should have received an email with a code"
   },
-  "Default Colors": {
-    "message": "Default Colors"
+  "You have unsaved changes": {
+    "message": "You have unsaved changes.\nDo you want to save?"
+  },
+  "You may create a new project": {
+    "message": "You may create a new project\nor select a project file to begin"
   },
   "Reds": {
     "message": "Reds"
