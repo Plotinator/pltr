@@ -8,7 +8,8 @@
 1. Change Scheme Destination to Any iOS Device
 1. Product -> Build
 1. Product -> Archive
-1. Organizer -> Validate, Upload
+1. Organizer -> Validate
+1. Organizer -> Upload
 
 ### Change back after release:
 
