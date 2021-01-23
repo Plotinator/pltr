@@ -123,6 +123,7 @@ export default function lines(state = initialState, action) {
           bookId: action.bookId,
           title: i18n('Main Plot'),
           color: nextColor(0),
+          backgroundColor: nextBackgroundColor(0),
           position: 0,
           expanded: null,
           fromTemplateId: null,
