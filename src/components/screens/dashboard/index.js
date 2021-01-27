@@ -1,18 +1,18 @@
 import React, { Component } from 'react'
-import {
-  View,
-  Image,
-  TouchableOpacity,
-  TouchableWithoutFeedback
-} from 'react-native'
+import { View, Image } from 'react-native'
 import styles from './styles'
-import { Text, ShellButton, Button } from '../../shared/common'
+import {
+  Text,
+  ShellButton,
+  Button,
+  WelcomeToPlottr
+} from '../../shared/common'
 import images from '../../../images'
 import * as Animatable from 'react-native-animatable'
 import t from 'format-message'
 import { Spinner } from 'native-base'
 
-const { PLOTTR_ICON, PLOTTR_TEXT, PLOTTR_FILE } = images
+const { PLOTTR_FILE } = images
 
 export default class Dashboard extends Component {
   renderCTAButtons () {
@@ -31,7 +31,7 @@ export default class Dashboard extends Component {
         key={'select'}
         style={styles.button}
         onPress={openDocument}>
-        {t('SELECT PROJECT FILE')}
+        {t('SELECT A PROJECT FILE')}
       </Button>
     ]
   }
@@ -76,9 +76,7 @@ export default class Dashboard extends Component {
           animation='fadeInUp'
           easing='ease-out-expo'
           style={styles.or}>
-            <Text fontStyle={'bold'}>
-              OR
-            </Text>
+            <Text fontStyle={'bold'}>{t('OR')}</Text>
         </Animatable.View>
       ]
     ) : null
@@ -89,18 +87,7 @@ export default class Dashboard extends Component {
     const hasRecentDocuments = recentDocuments.length
     return (
       <View style={styles.container}>
-        <Animatable.View
-          animation='fadeInUp'
-          easing='ease-out-expo'
-          duration={1000}
-          style={styles.header}>
-          <Image style={styles.logo} source={PLOTTR_ICON} />
-          <View style={styles.welcomeSection}>
-            <Text fontStyle='light' fontSize='h1'>
-              {t('Welcome to')}
-            </Text>
-            <Image style={styles.logoText} source={PLOTTR_TEXT} />
-          </View>
+        <WelcomeToPlottr>
           {hasRecentDocuments ? (
             <Text fontStyle='light' color='black'>
               {t('Open one of your most recent projects')}
@@ -110,7 +97,7 @@ export default class Dashboard extends Component {
               {t('You may create a new project')}
             </Text>
           )}
-        </Animatable.View>
+        </WelcomeToPlottr>
         {this.renderRecentDocuments(hasRecentDocuments)}
         <Animatable.View
           delay={hasRecentDocuments ? 150 : 100}

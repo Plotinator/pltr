@@ -1,22 +1,7 @@
 import { ScaledSheet } from 'react-native-size-matters'
-import Fonts from '../../../fonts'
 import Metrics from '../../../utils/Metrics'
-import { ifIphoneX } from 'react-native-iphone-x-helper'
 
-const {
-  screenHeight,
-  baseMargin,
-  doubleBaseMargin,
-  section,
-  doubleSection,
-  cornerRadius
-} = Metrics
-
-const {
-  size,
-  style,
-  type: { regular }
-} = Fonts
+const { baseMargin, doubleBaseMargin, section, cornerRadius } = Metrics
 
 export default ScaledSheet.create({
   container: {
@@ -24,27 +9,6 @@ export default ScaledSheet.create({
     padding: section,
     justifyContent: 'center',
     alignItems: 'center'
-  },
-  header: {
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingBottom: ifIphoneX(doubleSection, 0)
-  },
-  logo: {
-    height: '100@ms',
-    width: '80@ms',
-    resizeMode: 'contain',
-    marginBottom: baseMargin
-  },
-  welcomeSection: {
-    flexDirection: 'row'
-  },
-  logoText: {
-    width: '60@ms',
-    height: '30@ms',
-    resizeMode: 'contain',
-    marginLeft: 5
   },
   recentFiles: {
     flexDirection: 'row',
