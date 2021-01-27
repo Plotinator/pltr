@@ -2,6 +2,21 @@
   "(Logout)": {
     "message": "(Logout)"
   },
+  "{amount} / Weekly": {
+    "message": "{amount} / Weekly"
+  },
+  "{amount} / Monthly": {
+    "message": "{amount} / Monthly"
+  },
+  "{amount} / Yearly": {
+    "message": "{amount} / Yearly"
+  },
+  "{amount} / Lifetime": {
+    "message": "{amount} / Lifetime"
+  },
+  "A verification code was sent to:": {
+    "message": "A verification code was sent to:"
+  },
   "Add": {
     "message": "Add"
   },
@@ -22,6 +37,9 @@
   },
   "Attach Tags": {
     "message": "Attach Tags"
+  },
+  "Awesome choice!": {
+    "message": "Awesome choice!"
   },
   "Back": {
     "message": "Back"
@@ -62,8 +80,17 @@
   "Check": {
     "message": "Check"
   },
+  "CHECK EMAIL": {
+    "message": "CHECK EMAIL"
+  },
+  "Choose a {platform} mobile subscription": {
+    "message": "Choose a {platform} mobile subscription"
+  },
   "Choose Color": {
     "message": "Choose Color"
+  },
+  "CODE": {
+    "message": "CODE"
   },
   "CREATE NEW PROJECT": {
     "message": "CREATE NEW PROJECT"
@@ -119,6 +146,9 @@
   "Documentation": {
     "message": "Documentation"
   },
+  "Don't have a license?": {
+    "message": "Don't have a license?"
+  },
   "Don't have a license? Go to our website to learn more": {
     "message": "Don''t have a license? Go to our website to learn more"
   },
@@ -143,6 +173,9 @@
   "Enter the name of your story": {
     "message": "Enter the name of your story"
   },
+  "Enter your verification code": {
+    "message": "Enter your verification code"
+  },
   "Enter your verification code to activate this device": {
     "message": "Enter your verification code to activate this device"
   },
@@ -152,11 +185,23 @@
   "Genre": {
     "message": "Genre"
   },
+  "GET A LICENSE": {
+    "message": "GET A LICENSE"
+  },
+  "GET STARTED!": {
+    "message": "GET STARTED!"
+  },
   "Give this tag a name": {
     "message": "Give this tag a name"
   },
   "Give your scene a title": {
     "message": "Give your scene a title"
+  },
+  "Go Back": {
+    "message": "Go Back"
+  },
+  "Go to our website to learn more:": {
+    "message": "Go to our website to learn more:"
   },
   "Help": {
     "message": "Help"
@@ -167,8 +212,8 @@
   "Learn": {
     "message": "Learn"
   },
-  "Let's verify your license": {
-    "message": "Let''s verify your license"
+  "Let's verify your license.": {
+    "message": "Let's verify your license."
   },
   "LOOK OUT!": {
     "message": "LOOK OUT!"
@@ -218,6 +263,9 @@
   "Note Details": {
     "message": "Note Details"
   },
+  "Now lets get you writing your first plot!": {
+    "message": "Now lets get you writing your first plot!"
+  },
   "OK": {
     "message": "OK"
   },
@@ -232,6 +280,9 @@
   },
   "Open one of your most recent projects": {
     "message": "Open one of your most recent projects"
+  },
+  "or": {
+    "message": "or"
   },
   "Outline": {
     "message": "Outline"
@@ -278,6 +329,9 @@
   "Rename Chapter": {
     "message": "Rename Chapter"
   },
+  "RESEND EMAIL": {
+    "message": "RESEND EMAIL"
+  },
   "Save": {
     "message": "Save"
   },
@@ -302,8 +356,8 @@
   "Select a Plotline": {
     "message": "Select a Plotline"
   },
-  "SELECT PROJECT FILE": {
-    "message": "SELECT PROJECT FILE"
+  "SELECT A PROJECT FILE": {
+    "message": "SELECT A PROJECT FILE"
   },
   "Series": {
     "message": "Series"
@@ -317,11 +371,17 @@
   "Something went wrong.": {
     "message": "Something went wrong."
   },
+  "START MOBILE SUBSCRIPTION": {
+    "message": "START MOBILE SUBSCRIPTION"
+  },
   "Success!": {
     "message": "Success!"
   },
   "Tags": {
     "message": "Tags"
+  },
+  "that best suits your style and needs.": {
+    "message": "that best suits your style and needs."
   },
   "Theme": {
     "message": "Theme"
@@ -334,6 +394,9 @@
   },
   "Title": {
     "message": "Title"
+  },
+  "to activate this device.": {
+    "message": "to activate this device."
   },
   "Try that again": {
     "message": "Try that again"
@@ -353,6 +416,9 @@
   "Verify": {
     "message": "Verify"
   },
+  "VERIFY CODE": {
+    "message": "VERIFY CODE"
+  },
   "Verifying with email: {email}": {
     "message": "Verifying with email: { email }"
   },
@@ -370,6 +436,9 @@
   },
   "We had a problem creating a new project": {
     "message": "We had a problem creating a new project. Ensure Plottr has the correct permissions and that you have enough storage space."
+  },
+  "We will email you a verification code.": {
+    "message": "We will email you a verification code."
   },
   "What would you like to do?": {
     "message": "What would you like to do?"
