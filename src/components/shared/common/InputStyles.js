@@ -3,9 +3,15 @@ import Metrics from '../../../utils/Metrics'
 import Fonts from '../../../fonts'
 import Colors from '../../../utils/Colors'
 
-const { textGray, blackGray, inputBorder } = Colors
+const {
+  textGray,
+  blackGray,
+  inputWhite,
+  inputBorderWhite,
+  inputBorder
+} = Colors
 const { baseMargin, doubleBaseMargin, cornerRadius, IS_IOS } = Metrics
-const { size, type, style } = Fonts
+const { size, style } = Fonts
 
 export default ScaledSheet.create({
   container: {
@@ -18,7 +24,6 @@ export default ScaledSheet.create({
   input: {
     ...style.inputText,
     color: textGray,
-    fontStyle: 'italic',
     paddingVertical: IS_IOS ? 5 : null,
     fontSize: size.h4,
     flex: 1
@@ -30,6 +35,17 @@ export default ScaledSheet.create({
     paddingVertical: baseMargin / 2,
     paddingHorizontal: doubleBaseMargin,
     backgroundColor: blackGray
+  },
+  friendly: {
+    backgroundColor: inputWhite,
+    borderColor: inputBorderWhite,
+    borderRadius: cornerRadius * 1.75,
+    borderWidth: 1,
+    paddingHorizontal: doubleBaseMargin
+  },
+  friendlyText: {
+    textAlign: 'center',
+    paddingVertical: baseMargin * 1.25
   },
   center: {
     textAlign: 'center'

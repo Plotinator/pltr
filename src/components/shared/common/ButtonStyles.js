@@ -17,7 +17,7 @@ export default ScaledSheet.create({
   },
   textWrapper: {
     paddingHorizontal: doubleBaseMargin,
-    paddingVertical: baseMargin * 1.5
+    paddingVertical: baseMargin * 1.35
   },
   text: {
     ...style.buttonText,
@@ -30,6 +30,9 @@ export default ScaledSheet.create({
   bordered: {
     borderWidth: 0.5,
     borderColor: 'lightgray'
+  },
+  faded: {
+    opacity: 0.5
   },
   block: {
     width: '100%'

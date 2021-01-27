@@ -3,7 +3,7 @@ import { View, TextInput } from 'react-native'
 import styles from './InputStyles'
 import Colors from '../../../utils/Colors'
 
-const { textGray } = Colors
+const { textGray, inputWhiteText } = Colors
 
 export default class Input extends Component {
   handleOnChangeText = TextValue => {
@@ -12,7 +12,7 @@ export default class Input extends Component {
   }
 
   focus = () => this.refs.input.focus()
-  
+
   blur = () => this.refs.input.blur()
 
   render () {
@@ -23,6 +23,7 @@ export default class Input extends Component {
       multiline,
       numberOfLines,
       darkMode,
+      friendly,
       placeholderTextColor = textGray,
       returnKeyType,
       maxLength,
@@ -46,10 +47,16 @@ export default class Input extends Component {
       autogrow
     } = this.props
 
+    let placeholderColor = placeholderTextColor
     const inputStyles = [styles.input]
     inputStyles.push(inputStyle)
 
     const containerStyles = [styles.container]
+    if (friendly) {
+      placeholderColor = inputWhiteText
+      containerStyles.push(styles.friendly)
+      inputStyles.push(styles.friendlyText)
+    }
     if (bordered) containerStyles.push(styles.bordered)
     if (center) inputStyles.push(styles.center)
     if (darkMode) inputStyles.push(styles.darkMode)
@@ -67,7 +74,7 @@ export default class Input extends Component {
           multiline={multiline}
           maxLength={maxLength}
           numberOfLines={numberOfLines}
-          placeholderTextColor={placeholderTextColor}
+          placeholderTextColor={placeholderColor}
           underlineColorAndroid='transparent'
           placeholder={placeholderText}
           editable={editable}

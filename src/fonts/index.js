@@ -14,7 +14,7 @@ export const type = {
 }
 
 export const size = {
-  h0: moderateScale(25),
+  h0: moderateScale(26),
   h1: moderateScale(22),
   h2: moderateScale(20),
   h3: moderateScale(18),
@@ -80,7 +80,7 @@ export const style = {
     fontStyle: 'italic'
   },
   inputText: {
-    fontFamily: type.regular,
+    fontFamily: type.semiBold,
     fontSize: size.input
   },
   normalText: {

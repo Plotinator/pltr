@@ -18,6 +18,7 @@ export default class Text extends Component {
         faded,
         flex,
         wrap,
+        black,
         gray,
         white,
         color = '#555555',
@@ -51,6 +52,7 @@ export default class Text extends Component {
     if (faded) compStyles.push(styles.faded)
     if (flex) compStyles.push(styles.flex)
     if (gray) compStyles.push(styles.gray)
+    if (black) compStyles.push(styles.black)
     if (white) compStyles.push(styles.white)
     if (underlined) compStyles.push(styles.underlined)
     if (paragraph) compStyles.push(styles.paragraph)
