@@ -4,7 +4,8 @@ const images = {
   plottr_logo: require('./plottr_logo.png'),
   PLOTTR_ICON: require('./plottr_icon.png'),
   PLOTTR_TEXT: require('./plottr_text.png'),
-  PLOTTR_FILE: require('./plottr_file.png')
+  PLOTTR_FILE: require('./plottr_file.png'),
+  BIRTHDAY_EMOJI: require('./birthday_emoji.png')
 }
 
 export default images
