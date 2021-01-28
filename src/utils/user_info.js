@@ -143,8 +143,8 @@ function getProductIdFromLicense (license, isOldProducts, ids) {
   return null
 }
 
-export async function checkStoredLicense () {
-  const info = await getUserVerification()
+export async function checkStoredLicense (userInfo) {
+  const info = userInfo || await getUserVerification()
   if (!info) return false
 
   if (info.email == TESTR_EMAIL) return true
