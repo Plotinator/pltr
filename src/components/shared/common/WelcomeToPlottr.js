@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Image } from 'react-native'
-import { Text } from '../../shared/common'
+import Text from './Text'
 import * as Animatable from 'react-native-animatable'
 import styles from './WelcomeToPlottrStyles'
 import images from '../../../images'
