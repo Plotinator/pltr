@@ -60,6 +60,10 @@
     "preset": "react-native"
   },
   "prettier": {
+    "insertSpaceBeforeFunctionParenthesis": true,
+    "singleQuote": true,
+    "trailingComma": "none",
+    "jsxSingleQuote": true,
     "jsxBracketSameLine": true,
     "semi": false
   }
