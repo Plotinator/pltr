@@ -50,7 +50,7 @@ export default class AlertDialog extends Component {
   show = ({ title, message, actions = [] }) => {
     this.setState({
       initial: false,
-      title: message ? title : 'Plottr',
+      title: title || 'Plottr',
       isInput: false,
       message: message || title,
       visible: true,
