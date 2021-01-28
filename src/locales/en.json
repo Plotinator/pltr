@@ -167,8 +167,8 @@
   "Enter Custom Attribute Title": {
     "message": "Enter Custom Attribute Title"
   },
-  "Error sending email! Try again or another email.": {
-    "message": "Error sending email! Try again or another email."
+  "Error sending email! Check your email and Try again.": {
+    "message": "Error sending email! Check your email and Try again."
   },
   "Enter the name of your story": {
     "message": "Enter the name of your story"
@@ -178,9 +178,6 @@
   },
   "Enter your verification code to activate this device": {
     "message": "Enter your verification code to activate this device"
-  },
-  "Error! That code didn't verify. Try again.": {
-    "message": "Error! That code didn''t verify. Try again."
   },
   "Genre": {
     "message": "Genre"
@@ -383,6 +380,12 @@
   "that best suits your style and needs.": {
     "message": "that best suits your style and needs."
   },
+  "That code didn't verify. Try again.": {
+    "message": "That code didn''t verify. Try again."
+  },
+  "That email didn't verify. Try again or another email.": {
+    "message": "That email didn't verify. Try again or another email."
+  },
   "Theme": {
     "message": "Theme"
   },
@@ -424,6 +427,9 @@
   },
   "View Error": {
     "message": "View Error"
+  },
+  "We found your user session but...": {
+    "message": "We found your user session but your license has expired or is inactive. Please purchase a new license or mobile subscription to continue."
   },
   "Welcome to Plottr!": {
     "message": "Welcome to Plottr!"
