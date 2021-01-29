@@ -26,7 +26,7 @@ const { IS_ANDROID } = Metrics
 
 export default class App extends Component {
   state = {
-    userInfo: null,
+    userInfo: {},
     verifying: false
   }
 
@@ -35,19 +35,19 @@ export default class App extends Component {
   }
 
   setUserInfo(info, checkLicense) {
-    const userInfo = info && cloneDeep(info)
+    const userInfo = info && cloneDeep(info) || {}
     console.log('SETTING USER INFO:', userInfo)
-    this.setState({ userInfo }, checkLicense && this.checkUserLicense)
+    this.setState({ userInfo }, info && checkLicense && this.checkUserLicense)
   }
 
   setVerifying(verifying) {
     this.setState({ verifying })
   }
 
-  showError (message) {
+  showError (message, useTranslation = true) {
     showAlert({
       title: t('UH-OH!'),
-      message: t(message)
+      message: useTranslation ? t(message) : message
     })
   }
 
@@ -78,7 +78,7 @@ export default class App extends Component {
     }
   }
 
-  handleLogout () {
+  handleLogout = () => {
     // unset user session
     reset()
     this.setUserInfo(null)
@@ -96,10 +96,10 @@ export default class App extends Component {
       )
     } else {
       this.setVerifying(false)
-      this.showError(
-        "That email didn't verify. Try again or another email." +
-            '\n' + (userInfo && userInfo.message) || ''
-      )
+      const error = t("That email didn't verify. Try again or another email.")
+      const hasMessage = userInfo && userInfo.message
+      const message = (hasMessage ? `\n${hasMessage}` : '')
+      this.showError(error + message, false)
     }
   }
 
@@ -149,8 +149,13 @@ export default class App extends Component {
   }
 
   render () {
-    const { userInfo, verifying } = this.state
     const flexContainer = { flex: 1 }
+    const {
+      state: { userInfo, verifying },
+      handleLicenseVerification,
+      handleCodeVerification,
+      handleLogout
+    } = this
 
     console.log('userInfo', userInfo)
     return (
@@ -167,10 +172,10 @@ export default class App extends Component {
                 <Main
                   v2
                   user={userInfo}
-                  loading={verifying}
-                  logout={this.handleLogout}
-                  verifyLicense={this.handleLicenseVerification}
-                  verifyCode={this.handleCodeVerification} />
+                  verifying={verifying}
+                  logout={handleLogout}
+                  verifyCode={handleCodeVerification}
+                  verifyLicense={handleLicenseVerification} />
               </AppErrorBoundary>
               <AlertDialog />
             </View>

@@ -83,6 +83,9 @@
   "CHECK EMAIL": {
     "message": "CHECK EMAIL"
   },
+  "CHECKING...": {
+    "message": "CHECKING..."
+  },
   "Choose a {platform} mobile subscription": {
     "message": "Choose a {platform} mobile subscription"
   },
@@ -167,9 +170,6 @@
   "Enter Custom Attribute Title": {
     "message": "Enter Custom Attribute Title"
   },
-  "Error sending email! Check your email and Try again.": {
-    "message": "Error sending email! Check your email and Try again."
-  },
   "Enter the name of your story": {
     "message": "Enter the name of your story"
   },
@@ -178,6 +178,9 @@
   },
   "Enter your verification code to activate this device": {
     "message": "Enter your verification code to activate this device"
+  },
+  "Error sending email! Check your email and Try again.": {
+    "message": "Error sending email! Check your email and Try again."
   },
   "Genre": {
     "message": "Genre"
@@ -211,6 +214,9 @@
   },
   "Let's verify your license.": {
     "message": "Let's verify your license."
+  },
+  "LOGOUT": {
+    "message": "LOGOUT"
   },
   "LOOK OUT!": {
     "message": "LOOK OUT!"
@@ -356,6 +362,9 @@
   "SELECT A PROJECT FILE": {
     "message": "SELECT A PROJECT FILE"
   },
+  "SENDING...": {
+    "message": "SENDING..."
+  },
   "Series": {
     "message": "Series"
   },
@@ -381,10 +390,10 @@
     "message": "that best suits your style and needs."
   },
   "That code didn't verify. Try again.": {
-    "message": "That code didn''t verify. Try again."
+    "message": "That code didn''t verify.\nTry again."
   },
   "That email didn't verify. Try again or another email.": {
-    "message": "That email didn't verify. Try again or another email."
+    "message": "That email didn't verify.\nTry again or another email."
   },
   "Theme": {
     "message": "Theme"
@@ -421,6 +430,9 @@
   },
   "VERIFY CODE": {
     "message": "VERIFY CODE"
+  },
+  "VERIFYING...": {
+    "message": "VERIFYING..."
   },
   "Verifying with email: {email}": {
     "message": "Verifying with email: { email }"

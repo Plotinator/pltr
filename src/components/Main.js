@@ -1,6 +1,7 @@
 import React, { useEffect, useState, Component } from 'react'
 import { Provider } from 'react-redux'
 import DocumentRoot from './DocumentRoot'
+import AuthenticatorRoot from './AuthenticatorRoot'
 import { configureStore } from '../store/configureStore'
 import MainErrorBoundary from './MainErrorBoundary'
 import t from 'format-message'
@@ -258,8 +259,46 @@ export default class Main extends Component {
     )
   }
 
+  renderAuthenticator () {
+    const {
+      user,
+      verifying,
+      verifyCode,
+      verifyLicense
+    } = this.props
+    const { verified } = user
+
+    return (
+      <AuthenticatorRoot
+        user={user}
+        verifying={verifying}
+        verifyCode={verifyCode}
+        verifyLicense={verifyLicense} />
+    )
+  }
+
   render() {
     const { document } = this.state
-    return this[document ? 'renderProjectDocument' : 'renderDashboard']()
+    const { user = {} } = this.props
+    const { verified, validLicense } = user
+
+    // if the user is verified and valid or
+    // we are in the development environment
+    const userIsVerifiedAndValid =
+      verified && validLicense || __DEV__
+
+    // only if a document is loaded we will
+    // show the project document for manipulation
+    if(userIsVerifiedAndValid && document)
+      return this.renderProjectDocument()
+
+    // if the user is verified and valid or
+    // we are developing, we show the dashboard
+    if(userIsVerifiedAndValid)
+      return this.renderDashboard()
+
+    // else we don't know who you are! :-(
+    // so lets authenticate you ;-)
+    return this.renderAuthenticator()
   }
 }
