@@ -10,6 +10,7 @@ import rnfs, { DocumentDirectoryPath } from 'react-native-fs'
 import { showAlert, showInputAlert } from './shared/common/AlertDialog'
 import AsyncStorage from '@react-native-community/async-storage'
 import { setDocumentURL } from '../middlewares/DocumentSaver'
+import { ifIphoneX } from 'react-native-iphone-x-helper'
 
 let store = configureStore({})
 
@@ -17,6 +18,7 @@ export default class Main extends Component {
   state = {
     document: null,
     loading: false,
+    isSubscribed: false,
     recentDocuments: []
   }
 
@@ -32,7 +34,7 @@ export default class Main extends Component {
     store = configureStore({})
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.getRecentDocuments()
   }
 
@@ -116,8 +118,8 @@ export default class Main extends Component {
       url: documentURL
     })
 
-    // top 4
-    this.setState({ recentDocuments: recentDocuments.splice(0, 4) })
+    // top 2 or 4
+    this.setState({ recentDocuments: recentDocuments.splice(0, ifIphoneX(4, 2)) })
     AsyncStorage.setItem('recentDocuments', JSON.stringify(recentDocuments))
   }
 
@@ -214,7 +216,7 @@ export default class Main extends Component {
     this.setDocument(null)
   }
 
-  renderProjectDocument() {
+  renderProjectDocument () {
     const { logout } = this.props
     const { document } = this.state
     const { documentURL } = document || {}
@@ -231,7 +233,7 @@ export default class Main extends Component {
     )
   }
 
-  renderDashboard() {
+  renderDashboard () {
     const {
       readDocument,
       createDocument,
@@ -239,10 +241,14 @@ export default class Main extends Component {
       state: {
         loading,
         recentDocuments
+      },
+      props: {
+        logout
       }
     } = this
     return (
       <Dashboard
+        logout={logout}
         loading={loading}
         readDocument={readDocument}
         recentDocuments={recentDocuments}

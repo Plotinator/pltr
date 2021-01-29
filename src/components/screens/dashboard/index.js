@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Image } from 'react-native'
+import { View, Image, ScrollView, TouchableWithoutFeedback } from 'react-native'
 import styles from './styles'
 import {
   Text,
@@ -16,11 +16,13 @@ const { PLOTTR_FILE } = images
 
 export default class Dashboard extends Component {
   renderCTAButtons () {
-    const { createDocument, openDocument, loading } = this.props
+    const { createDocument, openDocument, logout, loading } = this.props
+
     return [
       <Button
         block
         key='create'
+        disabled={loading}
         buttonColor='green'
         style={styles.button}
         onPress={createDocument}>
@@ -29,9 +31,19 @@ export default class Dashboard extends Component {
       <Button
         block
         key={'select'}
+        disabled={loading}
         style={styles.button}
         onPress={openDocument}>
         {t('SELECT A PROJECT FILE')}
+      </Button>,
+      <Button
+        tight
+        key={'logout'}
+        disabled={loading}
+        buttonColor='lightgray'
+        style={styles.button}
+        onPress={logout}>
+        {t('LOGOUT').replace(/[\(\)]/g).toUpperCase()}
       </Button>
     ]
   }
@@ -84,30 +96,34 @@ export default class Dashboard extends Component {
 
   render () {
     const { loading, recentDocuments } = this.props
-    const hasRecentDocuments = recentDocuments.length
+    const hasRecentDocuments = (recentDocuments || []).length
     return (
-      <View style={styles.container}>
-        <WelcomeToPlottr>
-          {hasRecentDocuments ? (
-            <Text fontStyle='light' color='black'>
-              {t('Open one of your most recent projects')}
-            </Text>
-          ) : (
-            <Text fontStyle='light' color='black' center>
-              {t('You may create a new project')}
-            </Text>
-          )}
-        </WelcomeToPlottr>
-        {this.renderRecentDocuments(hasRecentDocuments)}
-        <Animatable.View
-          delay={hasRecentDocuments ? 150 : 100}
-          duration={1000}
-          animation='fadeInUp'
-          easing='ease-out-expo'
-          style={styles.actionButtons}>
-          {loading ? this.renderLoader() : this.renderCTAButtons()}
-        </Animatable.View>
-      </View>
+      <ScrollView contentContainerStyle={styles.scroller}>
+        <TouchableWithoutFeedback>
+          <View style={styles.container}>
+            <WelcomeToPlottr>
+              {hasRecentDocuments ? (
+                <Text fontStyle='light' color='black'>
+                  {t('Open one of your most recent projects')}
+                </Text>
+              ) : (
+                <Text fontStyle='light' color='black' center>
+                  {t('You may create a new project')}
+                </Text>
+              )}
+            </WelcomeToPlottr>
+            {this.renderRecentDocuments(hasRecentDocuments)}
+            <Animatable.View
+              delay={hasRecentDocuments ? 150 : 100}
+              duration={1000}
+              animation='fadeInUp'
+              easing='ease-out-expo'
+              style={styles.actionButtons}>
+              {loading ? this.renderLoader() : this.renderCTAButtons()}
+            </Animatable.View>
+          </View>
+        </TouchableWithoutFeedback>
+      </ScrollView>
     )
   }
 }
