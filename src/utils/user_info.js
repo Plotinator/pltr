@@ -12,6 +12,7 @@ export async function getUserVerification () {
 export async function verifyUser (userInfo) {
   userInfo.verified = true
   if (userInfo.email == TESTR_EMAIL) {
+    userInfo.validLicense = true
     AsyncStorage.setItem(USER_KEY, JSON.stringify(userInfo)) // not await-ing it
     return [true, userInfo]
   }
