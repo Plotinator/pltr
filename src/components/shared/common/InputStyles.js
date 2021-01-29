@@ -41,11 +41,11 @@ export default ScaledSheet.create({
     borderColor: inputBorderWhite,
     borderRadius: cornerRadius * 1.75,
     borderWidth: 1,
-    paddingHorizontal: doubleBaseMargin
   },
   friendlyText: {
     textAlign: 'center',
-    paddingVertical: baseMargin * 1.25
+    paddingVertical: baseMargin * 1.25,
+    paddingHorizontal: doubleBaseMargin
   },
   center: {
     textAlign: 'center'

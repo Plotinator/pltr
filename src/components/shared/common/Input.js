@@ -8,7 +8,7 @@ const { textGray, inputWhiteText } = Colors
 export default class Input extends Component {
   handleOnChangeText = TextValue => {
     const { onChangeText } = this.props
-    onChangeText(TextValue)
+    onChangeText && onChangeText(TextValue)
   }
 
   focus = () => this.refs.input.focus()
