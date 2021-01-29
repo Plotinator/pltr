@@ -132,7 +132,7 @@ class VerificationConfirmation extends Component {
                 buttonColor='blue'
                 style={styles.button}
                 onPress={this.handleResendEmail}>
-                {t(resent && verifying ? 'SENDING...' : 'RESEND EMAIL')}
+                {t(resent && verifying ? 'RESENDING...' : 'RESEND EMAIL')}
               </Button>
               <View style={styles.or}>
                 <Text fontStyle={'bold'}>{t('or')}</Text>

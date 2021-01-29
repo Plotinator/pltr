@@ -234,7 +234,7 @@ export default class Main extends Component {
     )
   }
 
-  renderDashboard () {
+  renderDashboard (bypass) {
     const {
       readDocument,
       createDocument,
@@ -251,6 +251,7 @@ export default class Main extends Component {
       <Dashboard
         logout={logout}
         loading={loading}
+        noLogout={bypass}
         readDocument={readDocument}
         recentDocuments={recentDocuments}
         createDocument={createDocument}
@@ -281,11 +282,12 @@ export default class Main extends Component {
     const { document } = this.state
     const { user = {} } = this.props
     const { verified, validLicense } = user
+    const bypassForDevs = false // __DEV__ // false
 
     // if the user is verified and valid or
     // we are in the development environment
     const userIsVerifiedAndValid =
-      verified && validLicense || __DEV__
+      verified && validLicense || bypassForDevs
 
     // only if a document is loaded we will
     // show the project document for manipulation
@@ -295,7 +297,7 @@ export default class Main extends Component {
     // if the user is verified and valid or
     // we are developing, we show the dashboard
     if(userIsVerifiedAndValid)
-      return this.renderDashboard()
+      return this.renderDashboard(bypassForDevs)
 
     // else we don't know who you are! :-(
     // so lets authenticate you ;-)

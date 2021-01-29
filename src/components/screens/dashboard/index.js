@@ -16,7 +16,7 @@ const { PLOTTR_FILE } = images
 
 export default class Dashboard extends Component {
   renderCTAButtons () {
-    const { createDocument, openDocument, logout, loading } = this.props
+    const { createDocument, openDocument, logout, loading, noLogout } = this.props
 
     return [
       <Button
@@ -36,15 +36,17 @@ export default class Dashboard extends Component {
         onPress={openDocument}>
         {t('SELECT A PROJECT FILE')}
       </Button>,
-      <Button
-        tight
-        key={'logout'}
-        disabled={loading}
-        buttonColor='lightgray'
-        style={styles.button}
-        onPress={logout}>
-        {t('LOGOUT').replace(/[\(\)]/g).toUpperCase()}
-      </Button>
+      !noLogout && (
+        <Button
+          tight
+          key={'logout'}
+          disabled={loading}
+          buttonColor='lightgray'
+          style={styles.button}
+          onPress={logout}>
+          {t('LOGOUT')}
+        </Button>
+      )
     ]
   }
 

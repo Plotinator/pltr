@@ -362,8 +362,8 @@
   "SELECT A PROJECT FILE": {
     "message": "SELECT A PROJECT FILE"
   },
-  "SENDING...": {
-    "message": "SENDING..."
+  "RESENDING...": {
+    "message": "RESENDING..."
   },
   "Series": {
     "message": "Series"
