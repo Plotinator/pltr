@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { View, Image, ScrollView, TouchableWithoutFeedback } from 'react-native'
+import { connect } from 'react-redux'
 import styles from './styles'
 import {
   Text,
@@ -12,22 +13,68 @@ import {
 import images from '../../../images'
 import * as Animatable from 'react-native-animatable'
 import t from 'format-message'
-import { Spinner } from 'native-base'
 
-export default class VerificationConfirmation extends Component {
-  renderLoader () {
-    return (
-      <View style={styles.loader}>
-        <Spinner color='orange' />
-      </View>
-    )
+class VerificationConfirmation extends Component {
+  state = {
+    code: '',
+    submitted: false,
+    resent: false
+  }
+
+  static getDerivedStateFromProps (nextProps, prevState) {
+    const { verifying } = nextProps
+    const { submitted } = prevState
+    if(!verifying && submitted == true)
+      prevState.submitted = false
+    return prevState
+  }
+
+  componentDidUpdate () {
+    const { user, verifying } = this.props
+    if (!verifying && user && user.email && user.verified) {
+      // user is now valid and logged in and
+      // AuthenticatorRoot should now be unmounting
+    }
+  }
+
+  handleCodeText = (code) => this.setState({ code })
+
+  handleCodeValidation = () => {
+    const { code } = this.state
+    const {
+      route: {
+        params: { verifyCode }
+      }
+    } = this.props
+    verifyCode(code)
+    this.setState({ submitted: true })
+  }
+
+  handleResendEmail = () => {
+    const {
+      user: { email },
+      route: {
+        params: { verifyLicense }
+      }
+    } = this.props
+    verifyLicense(email)
+    this.setState({ resent: true })
+  }
+
+  handleDifferentEmail = () => {
+    const { navigation } = this.props
+    navigation.navigate('Verification')
   }
 
   render () {
-    const { loading, recentDocuments } = this.props
-    const hasRecentDocuments = recentDocuments.length
+    const { code, resent, submitted } = this.state
+    const { verifying, user: { email } } = this.props
+    const isValidCode = code && !code.match(/[^0-9]/)
+    console.log('isValidCode', isValidCode, code)
     return (
-      <ScrollView contentContainerStyle={styles.scroller}>
+      <ScrollView
+        contentContainerStyle={styles.scroller}
+        showsVerticalScrollIndicator={false}>
         <TouchableWithoutFeedback>
           <View style={styles.container}>
             <WelcomeToPlottr>
@@ -44,18 +91,23 @@ export default class VerificationConfirmation extends Component {
               animation='fadeInUp'
               easing='ease-out-expo'
               style={styles.formSection}>
-              <Input friendly placeholder={t('CODE')} />
+              <Input
+                friendly
+                value={code}
+                disabled={verifying}
+                keyboardType='numeric'
+                placeholder={t('CODE')}
+                onChangeText={this.handleCodeText} />
               <Button
                 block
-                key='check'
+                disabled={verifying || !isValidCode}
                 buttonColor='green'
                 style={styles.button}
-                onPress={this.create}>
-                {t('VERIFY CODE')}
+                onPress={this.handleCodeValidation}>
+                {t(verifying && submitted ? 'VERIFYING...' : 'VERIFY CODE')}
               </Button>
             </Animatable.View>
             <Animatable.View
-              key={'or'}
               delay={170}
               duration={1000}
               animation='fadeInUp'
@@ -64,8 +116,8 @@ export default class VerificationConfirmation extends Component {
               <Text black fontSize='h4'>
                 {t('A verification code was sent to:')}
               </Text>
-              <Text black fontStyle='bold' fontSize='h4'>
-                cameron@plottr.com
+              <Text black fontStyle='bold' fontSize='h5'>
+                {email}
               </Text>
             </Animatable.View>
             <Animatable.View
@@ -76,20 +128,20 @@ export default class VerificationConfirmation extends Component {
               style={styles.actionButtons}>
               <Button
                 block
-                key='create'
+                disabled={verifying || resent}
                 buttonColor='blue'
                 style={styles.button}
-                onPress={this.create}>
-                {t('RESEND EMAIL')}
+                onPress={this.handleResendEmail}>
+                {t(resent && verifying ? 'SENDING...' : 'RESEND EMAIL')}
               </Button>
               <View style={styles.or}>
                 <Text fontStyle={'bold'}>{t('or')}</Text>
               </View>
               <Button
                 block
-                key={'select'}
+                disabled={verifying}
                 style={styles.button}
-                onPress={this.create}>
+                onPress={this.handleDifferentEmail}>
                 {t('Use a different email').toUpperCase()}
               </Button>
               <GoToPlottrDotCom />
@@ -100,3 +152,9 @@ export default class VerificationConfirmation extends Component {
     )
   }
 }
+
+const mapStateToProps = ({ data: { user, verifying } }) => {
+  return { user, verifying }
+}
+
+export default connect(mapStateToProps)(VerificationConfirmation)

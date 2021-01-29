@@ -7,7 +7,7 @@ const Colors = {
   orange: '#F37B3A',
   borderGray: '#DFDFDF',
   inputBorder: '#AFAFAF',
-  inputWhite: '#F6F6F6',
+  inputWhite: '#E6E6E6',
   inputWhiteText: '#C2C2C2',
   inputBorderWhite: '#D6D6D6',
   darkGray: '#303030',

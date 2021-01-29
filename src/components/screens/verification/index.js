@@ -1,5 +1,12 @@
 import React, { Component } from 'react'
-import { View, Image, ScrollView, TouchableWithoutFeedback } from 'react-native'
+import { connect } from 'react-redux'
+import {
+  View,
+  Image,
+  Linking,
+  ScrollView,
+  TouchableWithoutFeedback
+} from 'react-native'
 import styles from './styles'
 import {
   Text,
@@ -12,22 +19,59 @@ import {
 import images from '../../../images'
 import * as Animatable from 'react-native-animatable'
 import t from 'format-message'
-import { Spinner } from 'native-base'
 
-export default class Verification extends Component {
-  renderLoader () {
-    return (
-      <View style={styles.loader}>
-        <Spinner color='orange' />
-      </View>
-    )
+class Verification extends Component {
+  state = {
+    email: '',
+    submitted: false
   }
 
-  render () {
-    const { loading, recentDocuments } = this.props
-    const hasRecentDocuments = recentDocuments.length
+  componentDidUpdate () {
+    const { user, navigation, verifying } = this.props
+    const { submitted } = this.state
+    if (submitted && !verifying && user && user.email && !user.verified) {
+      // email valid now lets confirm
+      navigation.navigate('VerificationConfirmation')
+      this.setState({ submitted: false })
+    }
+  }
+
+  handleEmailValidation = () => {
+    const { email } = this.state
+    const {
+      route: {
+        params: { verifyLicense }
+      }
+    } = this.props
+    verifyLicense(email)
+    this.setState({ submitted: true })
+  }
+
+  handleEmailText = email => this.setState({ email })
+
+  handleGetLicense () {
+    Linking.openURL('https://plottr.com/pricing/')
+  }
+
+  handleGoToSubscriptions = () => {
+    const { navigation } = this.props
+    navigation.navigate('Subscription')
+  }
+
+  render() {
+    const { email } = this.state
+    const { verifying, route } = this.props
+    const {
+      params: { logout, verifyLicense }
+    } = route
+    const isValidEmail = email && String(email).match(
+      /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
+    )
+
     return (
-      <ScrollView contentContainerStyle={styles.scroller}>
+      <ScrollView
+        contentContainerStyle={styles.scroller}
+        showsVerticalScrollIndicator={false}>
         <TouchableWithoutFeedback>
           <View style={styles.container}>
             <WelcomeToPlottr>
@@ -44,18 +88,26 @@ export default class Verification extends Component {
               animation='fadeInUp'
               easing='ease-out-expo'
               style={styles.formSection}>
-              <Input friendly placeholder={t('EMAIL')} />
+              <Input
+                friendly
+                value={email}
+                disabled={verifying}
+                placeholder={t('Email').toUpperCase()}
+                onChangeText={this.handleEmailText}
+                autoCompleteType='email'
+                autoCapitalize='none'
+                keyboardType='email-address'
+              />
               <Button
                 block
-                key='check'
                 buttonColor='green'
                 style={styles.button}
-                onPress={this.create}>
-                {t('CHECK EMAIL')}
+                disabled={verifying || !isValidEmail}
+                onPress={this.handleEmailValidation}>
+                {t(verifying ? 'CHECKING...' : 'CHECK EMAIL')}
               </Button>
             </Animatable.View>
             <Animatable.View
-              key={'or'}
               delay={170}
               duration={1000}
               animation='fadeInUp'
@@ -73,10 +125,9 @@ export default class Verification extends Component {
               style={styles.actionButtons}>
               <Button
                 block
-                key='create'
                 buttonColor='blue'
                 style={styles.button}
-                onPress={this.create}>
+                onPress={this.handleGetLicense}>
                 {t('GET A LICENSE')}
               </Button>
               <View style={styles.or}>
@@ -84,9 +135,9 @@ export default class Verification extends Component {
               </View>
               <Button
                 block
-                key={'select'}
+                disabled={verifying}
                 style={styles.button}
-                onPress={this.create}>
+                onPress={this.handleGoToSubscriptions}>
                 {t('START MOBILE SUBSCRIPTION')}
               </Button>
               <GoToPlottrDotCom />
@@ -97,3 +148,9 @@ export default class Verification extends Component {
     )
   }
 }
+
+const mapStateToProps = ({ data: { user, verifying } }) => {
+  return { user, verifying }
+}
+
+export default connect(mapStateToProps)(Verification)
