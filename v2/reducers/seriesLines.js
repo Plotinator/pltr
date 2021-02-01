@@ -28,36 +28,45 @@ const initialState = [seriesLine]
 export default function seriesLines(state = initialState, action) {
   switch (action.type) {
     case ADD_SERIES_LINE:
-      return [{
-        id: nextId(state),
-        title: '',
-        color: nextColor(state.length),
-        backgroundColor: nextBackgroundColor(0),
-        position: nextPosition(state),
-        expanded: null,
-      }, ...state]
+      return [
+        {
+          id: nextId(state),
+          title: '',
+          color: nextColor(state.length),
+          backgroundColor: nextBackgroundColor(0),
+          position: nextPosition(state),
+          expanded: null,
+        },
+        ...state,
+      ]
 
     case ADD_SERIES_LINE_WITH_TITLE:
-      return [{
-        id: nextId(state),
-        title: action.title,
-        color: nextColor(state.length),
-        backgroundColor: nextBackgroundColor(0),
-        position: nextPosition(state),
-        expanded: null,
-      }, ...state]
+      return [
+        {
+          id: nextId(state),
+          title: action.title,
+          color: nextColor(state.length),
+          backgroundColor: nextBackgroundColor(0),
+          position: nextPosition(state),
+          expanded: null,
+        },
+        ...state,
+      ]
 
     case ADD_SERIES_LINES_FROM_TEMPLATE:
       const position = nextPosition(state)
-      return [...action.lines.map((l, idx) => {
-        return {
-          id: l.id,
-          title: l.title,
-          color: nextColor(state.length + idx),
-          backgroundColor: nextBackgroundColor(state.length + idx),
-          position: position + idx,
-        }
-      }), ...state]
+      return [
+        ...action.lines.map((l, idx) => {
+          return {
+            id: l.id,
+            title: l.title,
+            color: nextColor(state.length + idx),
+            backgroundColor: nextBackgroundColor(state.length + idx),
+            position: position + idx,
+          }
+        }),
+        ...state,
+      ]
 
     case EDIT_SERIES_LINE:
       return state.map((l) =>
@@ -93,14 +102,16 @@ export default function seriesLines(state = initialState, action) {
     case RESET_TIMELINE:
       if (!action.isSeries) return state
 
-      return [{
-        id: nextId(state),
-        title: i18n('Main Plot'),
-        color: nextColor(0),
-        backgroundColor: nextBackgroundColor(0),
-        position: 0,
-        expanded: null,
-      }]
+      return [
+        {
+          id: nextId(state),
+          title: i18n('Main Plot'),
+          color: nextColor(0),
+          backgroundColor: nextBackgroundColor(0),
+          position: 0,
+          expanded: null,
+        },
+      ]
 
     case RESET:
     case FILE_LOADED:
