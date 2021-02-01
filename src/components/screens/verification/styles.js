@@ -4,7 +4,9 @@ import Metrics from '../../../utils/Metrics'
 const { baseMargin, doubleBaseMargin, section } = Metrics
 
 export default ScaledSheet.create({
-  scroller: {},
+  scroller: {
+    backgroundColor: 'white'
+  },
   container: {
     flex: 1,
     padding: section,

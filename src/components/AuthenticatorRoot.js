@@ -56,7 +56,6 @@ export default class AuthenticatorRoot extends Component {
 
     // update store with latest prop data
     _UpdateData(data)
-    console.log('NEXT STATE FROM PROPS', prevState)
     return prevState
   }
 
@@ -69,8 +68,14 @@ export default class AuthenticatorRoot extends Component {
   setNavigator = ref => _Navigator = ref
 
   render () {
-    const { logout, verifyCode, verifyLicense, user } = this.props
-    const actions = { logout, verifyCode, verifyLicense }
+    const {
+      user,
+      logout,
+      verifyCode,
+      verifyLicense,
+      subscribeUser
+    } = this.props
+    const actions = { logout, verifyCode, verifyLicense, subscribeUser }
     const needConfirmation = user && user.email && !user.verified
     const initialRouteName = needConfirmation
       ? 'VerificationConfirmation'

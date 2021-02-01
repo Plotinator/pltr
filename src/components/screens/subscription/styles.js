@@ -5,13 +5,14 @@ const { baseMargin, section } = Metrics
 
 export default ScaledSheet.create({
   scroller: {
-    flex: 1
+    flex: 1,
   },
   container: {
     flex: 1,
     padding: section,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: 'white'
   },
   actionButtons: {
     minHeight: '150@vs',
@@ -26,5 +27,8 @@ export default ScaledSheet.create({
     height: '80@ms',
     resizeMode: 'contain',
     marginVertical: baseMargin
+  },
+  loader: {
+    height: '68@vs'
   }
 })

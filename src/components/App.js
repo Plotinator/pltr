@@ -11,6 +11,7 @@ import {
   checkForActiveLicense,
   getUserVerification,
   checkStoredLicense,
+  setSubscribedUser,
   verifyUser,
   reset
 } from '../utils/user_info'
@@ -27,7 +28,7 @@ const { IS_ANDROID } = Metrics
 export default class App extends Component {
   state = {
     userInfo: {},
-    verifying: false
+    verifying: false,
   }
 
   componentDidMount () {
@@ -53,6 +54,10 @@ export default class App extends Component {
 
   retrieveUserSession = async () => {
     const userInfo = await getUserVerification()
+    // delete noAutoRedirect flag if in the
+    // rare occurrence it is present due to
+    // reset or app crash on confirmation screen
+    delete userInfo.noAutoRedirect
     this.setUserInfo(userInfo, true)
   }
 
@@ -141,6 +146,13 @@ export default class App extends Component {
     this.setVerifying(false)
   }
 
+  addUserSubscription = (userInfo) => {
+    // setting a subscribed user should
+    // pass validation with `validSubscription`
+    setSubscribedUser(userInfo)
+    this.setUserInfo(userInfo)
+  }
+
   handleAppReset = () => {
     this.setState(
       { userInfo: null, verifying: false },
@@ -154,6 +166,7 @@ export default class App extends Component {
       state: { userInfo, verifying },
       handleLicenseVerification,
       handleCodeVerification,
+      addUserSubscription,
       handleLogout
     } = this
 
@@ -175,7 +188,8 @@ export default class App extends Component {
                   verifying={verifying}
                   logout={handleLogout}
                   verifyCode={handleCodeVerification}
-                  verifyLicense={handleLicenseVerification} />
+                  verifyLicense={handleLicenseVerification}
+                  subscribeUser={addUserSubscription} />
               </AppErrorBoundary>
               <AlertDialog />
             </View>

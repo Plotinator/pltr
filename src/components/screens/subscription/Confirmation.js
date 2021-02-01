@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { View, Image } from 'react-native'
+import { connect } from 'react-redux'
 import styles from './styles'
 import {
   Text,
@@ -10,31 +11,30 @@ import {
 import Images from '../../../images'
 import * as Animatable from 'react-native-animatable'
 import t from 'format-message'
-import { Spinner } from 'native-base'
 
 const { BIRTHDAY_EMOJI } = Images
 
-export default class Subscription extends Component {
-  renderLoader () {
-    return (
-      <View style={styles.loader}>
-        <Spinner color='orange' />
-      </View>
-    )
+class SubscriptionConfirmation extends Component {
+
+  handleGetStarted = () => {
+    const { route: { params: { subscribeUser, User } } } = this.props
+    delete User.noAutoRedirect
+    // set user
+    subscribeUser(User)
   }
 
   render () {
-    const { loading, recentDocuments } = this.props
-    const hasRecentDocuments = recentDocuments.length
+    const { route: { params: { User } } } = this.props
+    const { restored } = User
     return (
       <View style={styles.container}>
         <WelcomeToPlottr>
           <Image source={BIRTHDAY_EMOJI} style={styles.emoji} />
           <Text black fontStyle='bold' fontSize='h3' center>
-            {t('Awesome choice!')}
+            {t(restored ? 'Subscription Restored!' : 'Awesome choice!')}
           </Text>
           <Text black fontSize='h4' center>
-            {t('Now lets get you writing your first plot!')}
+            {t('Now lets get you writing your next great plot!')}
           </Text>
         </WelcomeToPlottr>
         <Animatable.View
@@ -47,7 +47,7 @@ export default class Subscription extends Component {
             block
             buttonColor='green'
             style={styles.button}
-            onPress={this.create}>
+            onPress={this.handleGetStarted}>
             {t('GET STARTED!')}
           </Button>
         </Animatable.View>
@@ -56,3 +56,9 @@ export default class Subscription extends Component {
     )
   }
 }
+
+const mapStateToProps = ({ data: { user, verifying } }) => {
+  return {}
+}
+
+export default connect(mapStateToProps)(SubscriptionConfirmation)

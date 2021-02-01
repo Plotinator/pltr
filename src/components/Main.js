@@ -265,7 +265,8 @@ export default class Main extends Component {
       user,
       verifying,
       verifyCode,
-      verifyLicense
+      verifyLicense,
+      subscribeUser,
     } = this.props
     const { verified } = user
 
@@ -274,29 +275,32 @@ export default class Main extends Component {
         user={user}
         verifying={verifying}
         verifyCode={verifyCode}
-        verifyLicense={verifyLicense} />
+        verifyLicense={verifyLicense}
+        subscribeUser={subscribeUser} />
     )
   }
 
   render() {
     const { document } = this.state
     const { user = {} } = this.props
-    const { verified, validLicense } = user
+    const { verified, validLicense, validSubscription, noAutoRedirect } = user
     const bypassForDevs = false // __DEV__ // false
 
-    // if the user is verified and valid or
-    // we are in the development environment
+    // if the user is verified and valid
+    // or has a valid subscription
+    // or we have a dev bypass (bypassForDevs)
     const userIsVerifiedAndValid =
-      verified && validLicense || bypassForDevs
+      verified && validLicense || validSubscription || bypassForDevs
 
     // only if a document is loaded we will
     // show the project document for manipulation
     if(userIsVerifiedAndValid && document)
       return this.renderProjectDocument()
 
-    // if the user is verified and valid or
-    // we are developing, we show the dashboard
-    if(userIsVerifiedAndValid)
+    // if the user is verified and valid
+    // or we are developing or there isn't
+    // a noAutoRedirect flag, we show the dashboard
+    if(userIsVerifiedAndValid && !noAutoRedirect)
       return this.renderDashboard(bypassForDevs)
 
     // else we don't know who you are! :-(

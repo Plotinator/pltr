@@ -266,8 +266,8 @@
   "Note Details": {
     "message": "Note Details"
   },
-  "Now lets get you writing your first plot!": {
-    "message": "Now lets get you writing your first plot!"
+  "Now lets get you writing your next great plot!": {
+    "message": "Now lets get you writing\n your next great plot!"
   },
   "OK": {
     "message": "OK"
@@ -335,6 +335,9 @@
   "RESEND EMAIL": {
     "message": "RESEND EMAIL"
   },
+  "Restore Purchase": {
+    "message": "Restore Purchase"
+  },
   "Save": {
     "message": "Save"
   },
@@ -379,6 +382,9 @@
   },
   "START MOBILE SUBSCRIPTION": {
     "message": "START MOBILE SUBSCRIPTION"
+  },
+  "Subscription Restored!": {
+    "message": "Subscription Restored!"
   },
   "Success!": {
     "message": "Success!"

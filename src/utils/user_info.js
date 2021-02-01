@@ -9,6 +9,19 @@ export async function getUserVerification () {
   return info ? JSON.parse(info) : null
 }
 
+export async function setSubscribedUser (data) {
+  const {
+    validSubscription,
+    transactionDate,
+    transactionId,
+    productId,
+  } = data
+  const userInfo = newUserInfoTemplate ('', [], transactionId, productId)
+  userInfo.transactionDate = transactionDate
+  userInfo.validSubscription = validSubscription
+  AsyncStorage.setItem(USER_KEY, JSON.stringify(userInfo))
+}
+
 export async function verifyUser (userInfo) {
   userInfo.verified = true
   if (userInfo.email == TESTR_EMAIL) {
