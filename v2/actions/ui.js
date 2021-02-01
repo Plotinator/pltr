@@ -19,6 +19,8 @@ import {
   RECORD_SCROLL_POSITION,
   EDIT_FILENAME,
   SET_TIMELINE_SIZE,
+  OPEN_ATTRIBUTES_DIALOG,
+  CLOSE_ATTRIBUTES_DIALOG,
 } from '../constants/ActionTypes'
 
 export function changeCurrentView(view) {
@@ -107,4 +109,12 @@ export function editFileName(newName) {
 
 export function setTimelineSize(newSize) {
   return { type: SET_TIMELINE_SIZE, newSize }
+}
+
+export function openAttributesDialog() {
+  return { type: OPEN_ATTRIBUTES_DIALOG }
+}
+
+export function closeAttributesDialog() {
+  return { type: CLOSE_ATTRIBUTES_DIALOG }
 }
