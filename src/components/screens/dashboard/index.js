@@ -37,15 +37,13 @@ export default class Dashboard extends Component {
         {t('SELECT A PROJECT FILE')}
       </Button>,
       !noLogout && (
-        <Button
-          tight
+        <ShellButton
           key={'logout'}
           disabled={loading}
-          buttonColor='lightgray'
-          style={styles.button}
+          style={styles.logout}
           onPress={logout}>
-          {t('LOGOUT')}
-        </Button>
+          <Text color='lightgray'>{t('(Logout)')}</Text>
+        </ShellButton>
       )
     ]
   }
@@ -90,7 +88,7 @@ export default class Dashboard extends Component {
           animation='fadeInUp'
           easing='ease-out-expo'
           style={styles.or}>
-            <Text fontStyle={'bold'}>{t('OR')}</Text>
+            <Text fontStyle={'bold'}>{t('or').toUpperCase()}</Text>
         </Animatable.View>
       ]
     ) : null
