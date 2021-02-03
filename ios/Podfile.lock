@@ -316,7 +316,7 @@ PODS:
     - React
   - RNGestureHandler (1.7.0):
     - React
-  - RNIap (5.2.5):
+  - RNIap (5.2.4):
     - React-Core
   - RNReanimated (1.13.0):
     - React
@@ -508,9 +508,9 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 8ca588cc921e70590820ce72b8789b02c67cce38
   React-jsinspector: b14e62ebe7a66e9231e9581279909f2fc3db6606
   react-native-config: 9a061347e0136fdb32d43a34d60999297d672361
-  react-native-document-picker: 47d2771fc553c60a9f2a7c4c4e6f14ec542b9603
-  react-native-safe-area-context: fcece23844742b6f7f0627c3715b806a7deff946
-  react-native-webview: 6ee7868ca8eba635dbf7963986d1ab7959da0391
+  react-native-document-picker: 44ecae7103090b6789cca010f06f5205fd1cb66e
+  react-native-safe-area-context: 955ecfce672683b495d9294d2f154a9ad1d9796b
+  react-native-webview: bfe5436586b214759bd5043658863549fffc8e92
   React-RCTActionSheet: 910163b6b09685a35c4ebbc52b66d1bfbbe39fc5
   React-RCTAnimation: 9a883bbe1e9d2e158d4fb53765ed64c8dc2200c6
   React-RCTBlob: 39cf0ece1927996c4466510e25d2105f67010e13
@@ -521,12 +521,12 @@ SPEC CHECKSUMS:
   React-RCTText: 1b6773e776e4b33f90468c20fe3b16ca3e224bb8
   React-RCTVibration: 4d2e726957f4087449739b595f107c0d4b6c2d2d
   ReactCommon: a0a1edbebcac5e91338371b72ffc66aa822792ce
-  RNCAsyncStorage: 3eea36d9460c5159b592f9ecbe5a77f8aca98006
-  RNCMaskedView: f5c7d14d6847b7b44853f7acb6284c1da30a3459
-  RNDeviceInfo: e841619c3dac5495a095c5455473579ff04908d4
+  RNCAsyncStorage: 2a692bcb9b69b76a2f1a95f33db057129700af64
+  RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f
+  RNDeviceInfo: c5f8f3a456adcbba405ace475254b08febc4c095
   RNFS: 2bd9eb49dc82fa9676382f0585b992c424cd59df
   RNGestureHandler: b6b359bb800ae399a9c8b27032bdbf7c18f08a08
-  RNIap: cf8c027966987fddbc2abed83da2961313057368
+  RNIap: e94081db501c26e56cdacb96fbd83cd344d0fbc4
   RNReanimated: 89f5e0a04d1dd52fbf27e7e7030d8f80a646a3fc
   RNScreens: b748efec66e095134c7166ca333b628cd7e6f3e2
   Yoga: 7740b94929bbacbddda59bf115b5317e9a161598
@@ -534,4 +534,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: b028525156503e12f950f045166c1f50fb3d8d66
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.10.1
