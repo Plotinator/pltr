@@ -4,7 +4,9 @@ import Fonts from '../../../fonts'
 import Colors from '../../../utils/Colors'
 
 const {
+  white,
   textGray,
+  textBlack,
   blackGray,
   inputWhite,
   inputBorderWhite,
@@ -28,6 +30,9 @@ export default ScaledSheet.create({
     fontSize: size.h4,
     flex: 1
   },
+  inputSmall: {
+    fontSize: size.small
+  },
   bordered: {
     borderColor: inputBorder,
     borderRadius: cornerRadius,
@@ -40,7 +45,7 @@ export default ScaledSheet.create({
     backgroundColor: inputWhite,
     borderColor: inputBorderWhite,
     borderRadius: cornerRadius * 1.75,
-    borderWidth: 1,
+    borderWidth: 1
   },
   friendlyText: {
     textAlign: 'center',
@@ -53,5 +58,22 @@ export default ScaledSheet.create({
   icon: {},
   darkMode: {
     color: 'white'
+  },
+  label: {
+    paddingRight: baseMargin / 2
+  },
+  labelText: {
+    ...style.semiBold
+  },
+  inset: {
+    backgroundColor: white,
+    borderColor: inputBorderWhite,
+    borderRadius: cornerRadius,
+    borderWidth: 1,
+    paddingHorizontal: baseMargin
+  },
+  insetText: {
+    paddingVertical: baseMargin,
+    color: textBlack
   }
 })
