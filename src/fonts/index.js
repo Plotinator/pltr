@@ -1,4 +1,4 @@
-import { moderateScale } from 'react-native-size-matters'
+import { moderateVerticalScale, moderateScale } from 'react-native-size-matters'
 
 export const type = {
   light: 'OpenSans-Light',
@@ -23,10 +23,10 @@ export const size = {
   h6: moderateScale(12),
   h7: moderateScale(10),
   h8: moderateScale(8),
-  input: moderateScale(17),
+  input: moderateVerticalScale(17),
   large: moderateScale(20),
   medium: moderateScale(18),
-  regular: moderateScale(16),
+  regular: moderateVerticalScale(16),
   small: moderateScale(12),
   tiny: moderateScale(10),
   micro: moderateScale(8),

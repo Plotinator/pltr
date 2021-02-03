@@ -1,6 +1,7 @@
 const Colors = {
   white: 'white',
   cloud: '#F7F7F7',
+  cloudGray: '#F0F0F0',
   green: '#77BF48',
   blue: '#70ADD4',
   gold: '#FDBC32',
@@ -10,6 +11,8 @@ const Colors = {
   inputWhite: '#E6E6E6',
   inputWhiteText: '#C2C2C2',
   inputBorderWhite: '#D6D6D6',
+  gray: '#E0E0E0',
+  textBlack: '#505050',
   darkGray: '#303030',
   textGray: '#888888',
   lightGray: '#9F9F9F'

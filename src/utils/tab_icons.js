@@ -1,5 +1,4 @@
-
-export function chooseIcon (routeName) {
+export function chooseIcon(routeName) {
   switch (routeName) {
     case 'Project':
       return 'book'
@@ -22,5 +21,5 @@ export function chooseIcon (routeName) {
 
 export const tabBarOptions = {
   activeTintColor: '#ff7f32',
-  keyboardHidesTabBar: true,
+  keyboardHidesTabBar: true
 }
