@@ -11,6 +11,11 @@ import SaveButton from '../../ui/SaveButton'
 import tinycolor from 'tinycolor2'
 import DetailsScrollView from '../shared/DetailsScrollView'
 import ColorPickerModal from '../../tablet/shared/ColorPickerModal'
+import {
+  checkForChanges,
+  addLeaveListener,
+  removeLeaveListener
+} from '../../../utils/Changes'
 
 const isIOS = Platform.OS == 'ios'
 
@@ -32,6 +37,8 @@ class TagDetails extends Component {
   }
 
   componentDidMount () {
+    const { navigation } = this.props
+    addLeaveListener(navigation, this.checkChanges)
     this.setSaveButton()
   }
 
@@ -43,6 +50,17 @@ class TagDetails extends Component {
     this.props.navigation.setOptions({
       headerRight: () => <SaveButton changes={this.state.changes} onPress={this.saveChanges} />
     })
+  }
+
+  componentWillUnmount () {
+    const { navigation } = this.props
+    removeLeaveListener(navigation, this.checkChanges)
+  }
+
+  checkChanges = (event) => {
+    const { changes } = this.state
+    const { navigation } = this.props
+    checkForChanges(event, changes, this.saveChanges, navigation)
   }
 
   saveChanges = () => {

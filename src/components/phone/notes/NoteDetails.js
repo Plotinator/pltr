@@ -11,6 +11,11 @@ import SaveButton from '../../ui/SaveButton'
 import AttachmentList from '../../shared/attachments/AttachmentList'
 import RichTextEditor from '../../shared/RichTextEditor'
 import DetailsScrollView from '../shared/DetailsScrollView'
+import {
+  checkForChanges,
+  addLeaveListener,
+  removeLeaveListener
+} from '../../../utils/Changes'
 
 class NoteDetails extends Component {
   state = {}
@@ -25,7 +30,14 @@ class NoteDetails extends Component {
   }
 
   componentDidMount () {
+    const { navigation } = this.props
     this.setSaveButton()
+    addLeaveListener(navigation, this.checkChanges)
+  }
+
+  componentWillUnmount () {
+    const { navigation } = this.props
+    removeLeaveListener(navigation, this.checkChanges)
   }
 
   componentDidUpdate () {
@@ -36,6 +48,12 @@ class NoteDetails extends Component {
     this.props.navigation.setOptions({
       headerRight: () => <SaveButton changes={this.state.changes} onPress={this.saveChanges} />
     })
+  }
+
+  checkChanges = (event) => {
+    const { changes } = this.state
+    const { navigation } = this.props
+    checkForChanges(event, changes, this.saveChanges, navigation)
   }
 
   saveChanges = () => {

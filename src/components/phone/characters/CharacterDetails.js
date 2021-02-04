@@ -12,6 +12,11 @@ import AttachmentList from '../../shared/attachments/AttachmentList'
 import CategoryPicker from '../../ui/CategoryPicker'
 import RichTextEditor from '../../shared/RichTextEditor'
 import DetailsScrollView from '../shared/DetailsScrollView'
+import {
+  checkForChanges,
+  addLeaveListener,
+  removeLeaveListener
+} from '../../../utils/Changes'
 
 class CharacterDetails extends Component {
   state = {}
@@ -32,11 +37,24 @@ class CharacterDetails extends Component {
   }
 
   componentDidMount () {
+    const { navigation } = this.props
+    addLeaveListener(navigation, this.checkChanges)
     this.setSaveButton()
   }
 
   componentDidUpdate () {
     this.setSaveButton()
+  }
+
+  componentWillUnmount () {
+    const { navigation } = this.props
+    removeLeaveListener(navigation, this.checkChanges)
+  }
+
+  checkChanges = (event) => {
+    const { changes } = this.state
+    const { navigation } = this.props
+    checkForChanges(event, changes, this.saveChanges, navigation)
   }
 
   setSaveButton = () => {

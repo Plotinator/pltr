@@ -11,6 +11,11 @@ import SaveButton from '../../ui/SaveButton'
 import AttachmentList from '../../shared/attachments/AttachmentList'
 import RichTextEditor from '../../shared/RichTextEditor'
 import DetailsScrollView from '../shared/DetailsScrollView'
+import {
+  checkForChanges,
+  addLeaveListener,
+  removeLeaveListener
+} from '../../../utils/Changes'
 
 class PlaceDetails extends Component {
   state = {}
@@ -31,11 +36,24 @@ class PlaceDetails extends Component {
   }
 
   componentDidMount () {
+    const { navigation } = this.props
+    addLeaveListener(navigation, this.checkChanges)
     this.setSaveButton()
   }
 
   componentDidUpdate () {
     this.setSaveButton()
+  }
+
+  componentWillUnmount () {
+    const { navigation } = this.props
+    removeLeaveListener(navigation, this.checkChanges)
+  }
+
+  checkChanges = (event) => {
+    const { changes } = this.state
+    const { navigation } = this.props
+    checkForChanges(event, changes, this.saveChanges, navigation)
   }
 
   setSaveButton = () => {

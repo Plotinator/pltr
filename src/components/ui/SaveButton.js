@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: Metrics.baseMargin / 2,
     paddingVertical: Metrics.baseMargin / 3,
     marginHorizontal: Metrics.baseMargin,
-    borderRadius: Metrics.cornerRadius / 2
+    borderRadius: Metrics.cornerRadius
   },
   activeButton: {
     paddingHorizontal: Metrics.baseMargin,
