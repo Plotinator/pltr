@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
     paddingBottom: 50
   },
   bookWrapper: {
+    paddingLeft: 28,
     alignItems: 'center',
     marginTop: 40,
     marginBottom: -35
