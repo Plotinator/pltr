@@ -6,13 +6,14 @@ import { sortBy } from 'lodash'
 import t from 'format-message'
 import cx from 'classnames'
 import { selectors, actions, cardHelpers, listHelpers, chapterHelpers } from 'pltr/v2'
-import { H3, Icon, Card, CardItem, View, Button } from 'native-base'
+import { H3, Icon, Card, CardItem, View } from 'native-base'
 import { SwipeRow } from 'react-native-swipe-list-view'
 import SceneCard from './SceneCard'
 import { StyleSheet } from 'react-native'
-import { Text } from '../common'
+import { Text, ShellButton } from '../common'
 import Metrics from '../../../utils/Metrics'
 import Colors from '../../../utils/Colors'
+import Fonts from '../../../fonts'
 
 class Chapter extends Component {
 
@@ -74,14 +75,15 @@ class Chapter extends Component {
 
   renderManualSort () {
     if (this.props.chapter.autoOutlineSort) return null
-
-    // TODO: after fixing Ionicons, use ios-close-circle-outline
-
     return (
-      <Button small iconRight warning bordered onPress={this.autoSortChapter} style={{alignSelf: 'center'}}>
-        <Text fontStyle='semiBold'>{t('Manually Sorted')}</Text>
-        <Icon type='FontAwesome5' name='times-circle' style={{fontSize: 16}}/>
-      </Button>
+      <ShellButton
+        onPress={this.autoSortChapter}
+        style={styles.manualSorted}>
+        <Text fontStyle='semiBold' fontSize='small' white>
+          {t('Manually Sorted')}
+        </Text>
+        <Icon type='FontAwesome5' name='times' style={styles.closeIcon} />
+      </ShellButton>
     )
   }
 
@@ -133,6 +135,20 @@ const styles = StyleSheet.create({
   addScene: {
     fontSize: 16,
   },
+  manualSorted: {
+    padding: Metrics.baseMargin,
+    paddingVertical: Metrics.baseMargin / 2,
+    borderRadius: Metrics.buttonRadius,
+    backgroundColor: Colors.orange,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  closeIcon: {
+    marginLeft: Metrics.baseMargin / 2,
+    fontSize: Fonts.size.small,
+    color: Colors.white
+  }
 })
 
 Chapter.propTypes = {

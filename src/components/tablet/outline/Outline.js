@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'react-proptypes'
 import { connect } from 'react-redux'
-import { StyleSheet, FlatList } from 'react-native'
+import { StyleSheet, ScrollView, FlatList, TouchableWithoutFeedback } from 'react-native'
 import { keyBy } from 'lodash'
 import t from 'format-message'
 import cx from 'classnames'
@@ -51,13 +51,13 @@ class Outline extends Component {
 
   renderChapterList (cardMap) {
     const { chapters } = this.props
-    return <View style={styles.chapterList}>
-      <FlatList
-        data={chapters}
-        renderItem={({item, index}) => this.renderMiniChapter(item, index, cardMap)}
-        keyExtractor={item => item.id.toString()}
-      />
-    </View>
+    return (
+      <View style={styles.chapterList}>
+        <ScrollView>
+          {chapters.map((item, index) => this.renderMiniChapter(item, index, cardMap))}
+        </ScrollView>
+      </View>
+    )
   }
 
   renderChapterInner = (chapterTitle, cards, manualSort, navigateToNewCard) => {
@@ -73,25 +73,31 @@ class Outline extends Component {
   }
 
   renderOutlineChapter (chapter, cardMap) {
-    return <ErrorBoundary>
-      <Chapter chapter={chapter} cards={cardMap[chapter.id]}
-        activeFilter={!!this.state.currentLine}
-        navigation={this.props.navigation}
-        render={this.renderChapterInner}
-      />
-    </ErrorBoundary>
+    return (
+      <ErrorBoundary>
+        <TouchableWithoutFeedback>
+          <Chapter chapter={chapter} cards={cardMap[chapter.id]}
+            activeFilter={!!this.state.currentLine}
+            navigation={this.props.navigation}
+            render={this.renderChapterInner}
+          />
+        </TouchableWithoutFeedback>
+      </ErrorBoundary>
+    )
   }
 
   renderOutline (cardMap) {
     const { chapters } = this.props
-    return <FlatList
-      data={chapters}
-      renderItem={({item}) => this.renderOutlineChapter(item, cardMap)}
-      keyExtractor={item => item.id.toString()}
-      contentContainerStyle={styles.outline}
-      ref={(ref) => { this.outlineListRef = ref }}
-      initialNumToRender={2}
-    />
+    return (
+      <FlatList
+        data={chapters}
+        renderItem={({item}) => this.renderOutlineChapter(item, cardMap)}
+        keyExtractor={item => item.id.toString()}
+        contentContainerStyle={styles.outline}
+        ref={(ref) => { this.outlineListRef = ref }}
+        initialNumToRender={2}
+      />
+    )
   }
 
   render () {
@@ -102,7 +108,7 @@ class Outline extends Component {
         <DrawerButton openDrawer={this.props.openDrawer} />
         <SeriesPicker />
       </Toolbar>
-      <Grid style={{flex: 1}}>
+      <Grid>
         <Col size={3}>
           { this.renderChapterList(cardMap) }
         </Col>
@@ -132,6 +138,8 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   chapterTitle: {
+    paddingLeft: 13,
+    paddingRight: 26,
     paddingBottom: 8,
     flexDirection: 'row',
     justifyContent: 'space-between',

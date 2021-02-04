@@ -33,12 +33,6 @@ class Chapter extends Component {
     }
   }
 
-  renderManualSort () {
-    if (this.props.chapter.autoOutlineSort) return null
-
-    return <Text onClick={this.autoSortChapter}>{t('Manually Sorted')}{' '}<Icon name='ios-close-circle-outline'/></Text>
-  }
-
   renderSceneCard = (value) => {
     return <Cell key={value} style={styles.cell}>
       <Text style={styles.text}>{value}</Text>
