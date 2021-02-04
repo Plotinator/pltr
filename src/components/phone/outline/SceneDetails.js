@@ -52,7 +52,7 @@ class SceneDetails extends Component {
   }
 
   componentWillUnmount () {
-    removeLeaveListener(navigation, this.checkChanges)
+    removeLeaveListener(this.props.navigation, this.checkChanges)
   }
 
   componentDidUpdate () {

@@ -16,8 +16,7 @@ const Stack = createStackNavigator()
 const SceneDetailsBounded = withBoundary(SceneDetails)
 const SeriesDetailsBounded = withBoundary(SeriesDetails)
 
-export default function OutlineStack (props) {
-
+export default function OutlineStack(props) {
   const addChapter = () => {
     const store = getStore()
     const state = store.getState()
@@ -28,25 +27,49 @@ export default function OutlineStack (props) {
   }
 
   const addBook = () => {
-    props.navigation.push('SeriesDetails', {isNewBook: true})
+    props.navigation.push('SeriesDetails', { isNewBook: true })
   }
 
-  return <Stack.Navigator>
-    <Stack.Screen name='ProjectHome' component={ProjectHome}
-      options={{
-        title: <Text fontStyle={'bold'} color={null}>{t('Project')}</Text>,
-        headerLeft: () => <DrawerButton openDrawer={props.route?.params?.openDrawer} />,
-      }}
-    />
-    <Stack.Screen name='SeriesDetails' component={SeriesDetailsBounded}/>
-    <Stack.Screen name='OutlineHome' component={OutlineHome}
-      options={{
-        title: <Text fontStyle={'bold'} color={null}>{t('Outline')}</Text>,
-        headerRight: () => <AddButton onPress={addChapter} />,
-      }}
-    />
-    <Stack.Screen name='SceneDetails' component={SceneDetailsBounded} options={{
-        title: <Text fontStyle={'bold'} color={null}>{t('Scene Details')}</Text>
-      }}/>
-  </Stack.Navigator>
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name='ProjectHome'
+        component={ProjectHome}
+        options={{
+          title: (
+            <Text fontStyle={'bold'} color={null}>
+              {t('Project')}
+            </Text>
+          ),
+          headerLeft: () => (
+            <DrawerButton openDrawer={props.route?.params?.openDrawer} />
+          )
+        }}
+      />
+      <Stack.Screen name='SeriesDetails' component={SeriesDetailsBounded} />
+      <Stack.Screen
+        name='OutlineHome'
+        component={OutlineHome}
+        options={{
+          title: (
+            <Text fontStyle={'bold'} color={null}>
+              {t('Outline')}
+            </Text>
+          ),
+          headerRight: () => <AddButton onPress={addChapter} />
+        }}
+      />
+      <Stack.Screen
+        name='SceneDetails'
+        component={SceneDetailsBounded}
+        options={{
+          title: (
+            <Text fontStyle={'bold'} color={null}>
+              {t('Scene Details')}
+            </Text>
+          )
+        }}
+      />
+    </Stack.Navigator>
+  )
 }

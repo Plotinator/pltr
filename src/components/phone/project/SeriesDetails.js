@@ -4,11 +4,16 @@ import PropTypes from 'react-proptypes'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import t from 'format-message'
-import { Container, Content, Form, Input, Label, Item } from 'native-base'
 import { actions, selectors, initialState } from 'pltr/v2'
 import { StyleSheet, Dimensions, View, ScrollView } from 'react-native'
 import SaveButton from '../../ui/SaveButton'
 import DetailsScrollView from '../shared/DetailsScrollView'
+import { Input } from '../../shared/common'
+import {
+  checkForChanges,
+  addLeaveListener,
+  removeLeaveListener
+} from '../../../utils/Changes'
 
 class SeriesDetails extends Component {
   constructor (props) {
@@ -29,23 +34,38 @@ class SeriesDetails extends Component {
       isNewBook: isNewBook,
       changes: isNewBook,
       book: bookObj,
-      id: id,
+      id: id
     }
   }
 
   componentDidMount () {
     const title = this.state.id == 'series' ? t('Series') : t('Book Details')
-    this.props.navigation.setOptions({title})
+    const { navigation } = this.props
+    navigation.setOptions({ title })
     this.setSaveButton()
+    addLeaveListener(navigation, this.checkChanges)
+  }
+
+  componentWillUnmount () {
+    const { navigation } = this.props
+    removeLeaveListener(navigation, this.checkChanges)
   }
 
   componentDidUpdate () {
     this.setSaveButton()
   }
 
+  checkChanges = (event) => {
+    const { changes } = this.state
+    const { navigation } = this.props
+    checkForChanges(event, changes, this.saveChanges, navigation)
+  }
+
   setSaveButton = () => {
     this.props.navigation.setOptions({
-      headerRight: () => <SaveButton changes={this.state.changes} onPress={this.saveChanges} />
+      headerRight: () => (
+        <SaveButton changes={this.state.changes} onPress={this.saveChanges} />
+      )
     })
   }
 
@@ -55,7 +75,7 @@ class SeriesDetails extends Component {
     if (isNewBook) {
       // TODO: need to make adding a plotline/chapter all one action in root
       // this.props.actions.addBook()
-      this.props.navigation.setParams({isNewBook: false})
+      this.props.navigation.setParams({ isNewBook: false })
     } else {
       const attrs = ['genre', 'premise', 'theme']
       const createUpdateObj = (acc, attr) => {
@@ -70,63 +90,89 @@ class SeriesDetails extends Component {
         this.props.actions.editBook(id, updateObj)
       }
     }
-    this.setState({isNewBook: false, changes: false})
+    this.setState({ isNewBook: false, changes: false })
+  }
+
+  handleTitleChange = (title) => {
+    const { book } = this.state
+    const isSeries = this.state.id == 'series'
+    const newTitle = {}
+    newTitle[isSeries ? 'name' : 'title'] = title
+    this.setState({ book: { ...book, ...newTitle }, changes: true })
+  }
+
+  functs = {}
+  setChangeTextCallback = (stateName) => {
+    const { book } = this.state
+    if (!this.functs[stateName]) {
+      this.functs[stateName] = (textValue) => {
+        const toChange = {}
+        toChange[stateName] = textValue
+        const state = { book: { ...book, ...toChange } }
+        state.changes = true
+        this.setState(state)
+      }
+    }
+    return this.functs[stateName]
   }
 
   render () {
     const { id, book } = this.state
-    return <DetailsScrollView>
-      <Item inlineLabel last regular style={styles.label}>
-        <Label>{id == 'series' ? t('Name') : t('Title')}</Label>
-        <Input
-          value={id == 'series' ? book.name : book.title}
-          onChangeText={text => {
-            if (id == 'series') {
-              this.setState({book: {...book, name: text}, changes: true})
-            } else {
-              this.setState({book: {...book, title: text}, changes: true})
-            }
-          }}
-          autoCapitalize='words'
-        />
-      </Item>
-      <Item inlineLabel last regular style={styles.label}>
-        <Label>{t('Genre')}</Label>
-        <Input
-          value={book.genre}
-          onChangeText={text => this.setState({book: {...book, genre: text}, changes: true})}
-          autoCapitalize='sentences'
-        />
-      </Item>
-      <Item inlineLabel last regular style={styles.label}>
-        <Label>{t('Premise')}</Label>
-        <Input
-          value={book.premise}
-          onChangeText={text => this.setState({book: {...book, premise: text}, changes: true})}
-          autoCapitalize='sentences'
-        />
-      </Item>
-      <Item inlineLabel last regular style={styles.label}>
-        <Label>{t('Theme')}</Label>
-        <Input
-          value={book.theme}
-          onChangeText={text => this.setState({book: {...book, theme: text}, changes: true})}
-          autoCapitalize='sentences'
-        />
-      </Item>
-    </DetailsScrollView>
+    const isSeries = id == 'series'
+    const titleValue = book[isSeries ? 'name' : 'title']
+    const titleLabel = t(isSeries ? 'Name' : 'Title')
+    return (
+      <DetailsScrollView>
+        <View style={styles.label}>
+          <Input
+            inset
+            label={titleLabel}
+            value={titleValue}
+            onChangeText={this.handleTitleChange}
+            autoCapitalize='words'
+          />
+        </View>
+        <View style={styles.label}>
+          <Input
+            inset
+            label={t('Genre')}
+            value={book.genre}
+            onChangeText={this.setChangeTextCallback('genre')}
+            autoCapitalize='sentences'
+          />
+        </View>
+        <View style={styles.label}>
+          <Input
+            inset
+            label={t('Premise')}
+            value={book.premise}
+            onChangeText={this.setChangeTextCallback('premise')}
+            autoCapitalize='sentences'
+          />
+        </View>
+        <View style={styles.label}>
+          <Input
+            inset
+            label={t('Theme')}
+            value={book.theme}
+            onChangeText={this.setChangeTextCallback('theme')}
+            autoCapitalize='sentences'
+          />
+        </View>
+      </DetailsScrollView>
+    )
   }
 }
 
 const styles = StyleSheet.create({
   label: {
-    marginBottom: 16,
+    marginBottom: 16
   },
   afterList: {
-    marginTop: 16,
+    marginTop: 16
   },
   badge: {
-    marginRight: 8,
+    marginRight: 8
   }
 })
 
@@ -134,24 +180,21 @@ SeriesDetails.propTypes = {
   series: PropTypes.object.isRequired,
   books: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired,
-  seriesActions: PropTypes.object.isRequired,
+  seriesActions: PropTypes.object.isRequired
 }
 
 function mapStateToProps (state) {
   return {
     series: state.series,
-    books: state.books,
+    books: state.books
   }
 }
 
 function mapDispatchToProps (dispatch) {
   return {
     actions: bindActionCreators(actions.bookActions, dispatch),
-    seriesActions: bindActionCreators(actions.seriesActions, dispatch),
+    seriesActions: bindActionCreators(actions.seriesActions, dispatch)
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SeriesDetails)
+export default connect(mapStateToProps, mapDispatchToProps)(SeriesDetails)

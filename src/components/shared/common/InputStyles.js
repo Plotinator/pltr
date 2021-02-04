@@ -60,10 +60,12 @@ export default ScaledSheet.create({
     color: 'white'
   },
   label: {
-    paddingRight: baseMargin / 2
+    paddingRight: baseMargin / 1.75,
+    paddingVertical: baseMargin * 1.125
   },
   labelText: {
-    ...style.semiBold
+    ...style.semiBold,
+    paddingBottom: 1
   },
   inset: {
     backgroundColor: white,
@@ -73,7 +75,8 @@ export default ScaledSheet.create({
     paddingHorizontal: baseMargin
   },
   insetText: {
-    paddingVertical: baseMargin,
-    color: textBlack
+    paddingVertical: baseMargin * 1,
+    paddingBottom: baseMargin * 1.2,
+    color: textBlack,
   }
 })
