@@ -8,7 +8,7 @@ import { actions } from 'pltr/v2'
 import Toolbar from '../shared/Toolbar'
 import t from 'format-message'
 import { Text, Input, Button } from '../../shared/common'
-import NewBook from '../../shared/project/NewBook'
+import Book from '../../shared/project/Book'
 import DrawerButton from '../../ui/DrawerButton'
 import Metrics from '../../../utils/Metrics'
 import Colors from '../../../utils/Colors'
@@ -47,7 +47,7 @@ class Project extends Component {
 
     return books.allIds.map((id) => {
       return (
-        <NewBook
+        <Book
           key={id}
           book={books[`${id}`]}
           navigateToOutline={this.navigateToTimeline}

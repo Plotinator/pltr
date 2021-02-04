@@ -34,11 +34,13 @@ class Project extends Component {
     this.props.navigation.push('OutlineHome')
   }
 
+  extractKey = (item) => item.id.toString()
+
   renderSeries = (series) => {
     return (
       <SwipeRow rightOpenValue={-75}>
         <View style={styles.hiddenRow}>
-          <Text></Text>
+          <View />
           <EditButton
             onPress={() => this.navigateToDetails(series.id)}
             buttonStyle={{ flex: 0, height: '100%' }}
@@ -66,23 +68,29 @@ class Project extends Component {
 
   renderItem = ({ item }) => {
     if (item.id == 'series') return this.renderSeries(item)
+    const { data } = this.state
+    const lastItem = data[data.length - 1]
+    const isLast = lastItem && lastItem.id === item.id
 
     return (
-      <Book
-        editable
-        book={item}
-        navigateToOutline={this.navigateToOutline}
-        navigateToDetails={this.navigateToDetails}
-      />
+      <View style={[styles.bookWrapper, isLast && styles.lastBook]}>
+        <Book
+          editable
+          book={item}
+          navigateToOutline={this.navigateToOutline}
+          navigateToDetails={this.navigateToDetails}
+        />
+      </View>
     )
   }
 
   render() {
     return (
       <FlatList
+        style={styles.list}
         data={this.state.data}
         renderItem={this.renderItem}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={this.extractKey}
       />
     )
   }
@@ -92,6 +100,17 @@ const styles = StyleSheet.create({
   container: {
     // flex: 1,
     alignItems: 'center'
+  },
+  list: {
+    paddingBottom: 50
+  },
+  bookWrapper: {
+    alignItems: 'center',
+    marginTop: 40,
+    marginBottom: -35
+  },
+  lastBook: {
+    marginBottom: 30
   },
   row: {
     backgroundColor: 'white'
