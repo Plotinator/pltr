@@ -3,6 +3,7 @@ const Colors = {
   cloud: '#F7F7F7',
   cloudGray: '#F0F0F0',
   green: '#77BF48',
+  brightGreen: '#00AA00',
   blue: '#70ADD4',
   gold: '#FDBC32',
   orange: '#F37B3A',

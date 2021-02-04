@@ -1,34 +1,42 @@
 import React from 'react'
-import { Button, Text } from 'native-base'
 import t from 'format-message'
 import { StyleSheet } from 'react-native'
+import { Text, ShellButton } from '../shared/common'
+import Metrics from '../../utils/Metrics'
+import Colors from '../../utils/Colors'
+import Fonts from '../../fonts'
 
-export default function SaveButton (props) {
-  const noop = () => {}
-  const savedText = props.changes ? t('Save') : t('Saved')
-  return <Button success={!props.changes} warning={props.changes}
-      transparent={!props.changes} small={props.changes}
-      onPress={props.onPress ?? noop}
-      style={props.changes ? styles.changes : styles.noChanges}
-    >
-    <Text style={props.changes ? styles.textChanges : styles.textNoChanges}>{savedText}</Text>
-  </Button>
+export default function SaveButton({ changes, onPress = () => {} }) {
+  const savedText = changes ? t('Save') : t('Saved')
+  return (
+    <ShellButton
+      style={[styles.button, changes && styles.activeButton]}
+      disabled={!changes}
+      onPress={onPress}>
+      <Text style={[styles.text, changes && styles.activeText]}>
+        {savedText}
+      </Text>
+    </ShellButton>
+  )
 }
 
 const styles = StyleSheet.create({
-  changes: {
-    marginRight: 16,
-    borderColor: '#ff7f32', //orange
-    backgroundColor: '#ff7f32', //orange
+  button: {
+    backgroundColor: 'transparent',
+    paddingHorizontal: Metrics.baseMargin / 2,
+    paddingVertical: Metrics.baseMargin / 3,
+    marginHorizontal: Metrics.baseMargin,
+    borderRadius: Metrics.cornerRadius / 2
   },
-  noChanges: {
-
+  activeButton: {
+    paddingHorizontal: Metrics.baseMargin,
+    backgroundColor: Colors.orange
   },
-  textChanges: {
-    color: 'white',
-    fontWeight: 'bold',
+  text: {
+    ...Fonts.style.semiBold,
+    color: Colors.brightGreen
   },
-  textNoChanges: {
-    fontSize: 20,
-  },
+  activeText: {
+    color: Colors.white
+  }
 })
