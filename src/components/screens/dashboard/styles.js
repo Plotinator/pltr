@@ -1,7 +1,7 @@
 import { ScaledSheet } from 'react-native-size-matters'
 import Metrics from '../../../utils/Metrics'
 
-const { baseMargin, doubleBaseMargin, section, cornerRadius, screenHeight } = Metrics
+const { baseMargin, doubleBaseMargin, section, cornerRadius } = Metrics
 
 export default ScaledSheet.create({
   scroller: {
