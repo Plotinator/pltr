@@ -239,9 +239,18 @@ class Subscription extends Component {
 
 const buttonColors = ['blue', 'green', 'orange']
 const SubscriptionButton = ({ disabled, subscription, onPress, index }) => {
-  const { price } = subscription
+  const { localizedPrice, subscriptionPeriodUnitIOS } = subscription
   const handleSubscription = () => {
     onPress(subscription)
+  }
+  let buttonText = ''
+  switch (subscriptionPeriodUnitIOS) {
+    case 'MONTH':
+      buttonText = t('{amount} / Monthly', { amount: localizedPrice })
+      break
+    case 'YEAR':
+      buttonText = t('{amount} / Yearly', { amount: localizedPrice })
+      break
   }
   return (
     <Button
@@ -250,7 +259,7 @@ const SubscriptionButton = ({ disabled, subscription, onPress, index }) => {
       style={styles.button}
       onPress={handleSubscription}
       buttonColor={buttonColors[index]}>
-      {t('{amount} / Monthly', { amount: `$${price}` })}
+      {buttonText}
     </Button>
   )
 }
