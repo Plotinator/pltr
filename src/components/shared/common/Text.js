@@ -21,7 +21,7 @@ export default class Text extends Component {
         black,
         gray,
         white,
-        color = '#555555',
+        color = 'textBlack',
         center,
         nobase,
         padded,

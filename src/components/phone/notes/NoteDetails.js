@@ -4,7 +4,7 @@ import PropTypes from 'react-proptypes'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import t from 'format-message'
-import { Container, Content, Form, Input, Label, Item, View } from 'native-base'
+import { Container, Content, Form, View } from 'native-base'
 import { actions, selectors, initialState } from 'pltr/v2'
 import { StyleSheet, Platform } from 'react-native'
 import SaveButton from '../../ui/SaveButton'
@@ -16,6 +16,9 @@ import {
   addLeaveListener,
   removeLeaveListener
 } from '../../../utils/Changes'
+import { Text, Input } from '../../shared/common'
+import Metrics from '../../../utils/Metrics'
+import Fonts from '../../../fonts'
 
 class NoteDetails extends Component {
   state = {}
@@ -83,17 +86,18 @@ class NoteDetails extends Component {
   render () {
     const { note } = this.state
     return <DetailsScrollView>
-      <Item inlineLabel last regular style={styles.label}>
-        <Label>{t('Title')}</Label>
+      <View inlineLabel last regular style={styles.label}>
         <Input
+          inset
+          label={`${t('Title')}:`}
           value={note.title}
           onChangeText={text => this.setState({note: {...note, title: text}, changes: true})}
           autoCapitalize='sentences'
         />
-      </Item>
+    </View>
       { this.renderAttachments() }
       <View style={[styles.afterList, styles.rceView]}>
-        <Label>{t('Content')}</Label>
+        <Text fontStyle='semiBold'>{t('Content')}</Text>
         <RichTextEditor
           initialValue={note.content}
           onChange={val => this.setState({note: {...note, content: val}, changes: true}) }

@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import PropTypes from 'react-proptypes'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Input, Icon, Label, Item, View, Toast } from 'native-base'
+import { Icon, Label, Item, View, Toast } from 'native-base'
 import { selectors, actions, initialState } from 'pltr/v2'
 import { StyleSheet, Platform } from 'react-native'
 import t from 'format-message'
@@ -14,7 +14,9 @@ import AttachmentList from '../../shared/attachments/AttachmentList'
 import DetailsScrollView from '../shared/DetailsScrollView'
 import Colors from '../../../utils/Colors'
 import Metrics from '../../../utils/Metrics'
-import { Text, RichEditor } from '../../shared/common'
+import { Text, Input, RichEditor } from '../../shared/common'
+import RichTextEditor from '../../shared/RichTextEditor'
+import Fonts from '../../../fonts'
 import {
   checkForChanges,
   addLeaveListener,
@@ -33,15 +35,19 @@ class SceneDetails extends Component {
     if (isNewCard) {
       // TODO: confirm description override as well as
       // the new text rich editor with HTML text
-      cardObj = state.card || {...cloneDeep(initialState.card), description: '', chapterId: chapterId}
+      cardObj = state.card || {
+        ...cloneDeep(initialState.card),
+        description: '',
+        chapterId: chapterId
+      }
     } else {
-      cardObj = state.card || cards.find(c => c.id == card.id)
+      cardObj = state.card || cards.find((c) => c.id == card.id)
     }
     return {
       isNewCard: state.isNewCard === undefined ? isNewCard : state.isNewCard,
       chapterId: chapterId,
       card: cardObj,
-      changes: state.changes === undefined ? isNewCard : state.changes,
+      changes: state.changes === undefined ? isNewCard : state.changes
     }
   }
 
@@ -67,7 +73,9 @@ class SceneDetails extends Component {
 
   setSaveButton = () => {
     this.props.navigation.setOptions({
-      headerRight: () => <SaveButton changes={this.state.changes} onPress={this.saveChanges} />
+      headerRight: () => (
+        <SaveButton changes={this.state.changes} onPress={this.saveChanges} />
+      )
     })
   }
 
@@ -79,7 +87,7 @@ class SceneDetails extends Component {
     Toast.show({
       text: errorText,
       duration: 3000,
-      type: 'danger',
+      type: 'danger'
     })
   }
 
@@ -87,7 +95,7 @@ class SceneDetails extends Component {
     const { isSeries } = this.props
     const { changes, isNewCard, card } = this.state
     if (!changes) return
-    if(!card.title) return this.toastError(t('Give your scene a title'))
+    if (!card.title) return this.toastError(t('Give your scene a title'))
     console.log('CARD', card)
     if (isNewCard) {
       if (isSeries) {
@@ -99,21 +107,21 @@ class SceneDetails extends Component {
           return this.plotlineError()
         }
       }
-      this.props.actions.addCard({...card})
-      this.props.navigation.setParams({isNewCard: false})
+      this.props.actions.addCard({ ...card })
+      this.props.navigation.setParams({ isNewCard: false })
     } else {
       this.props.actions.editCard(card.id, card.title, card.description)
     }
-    this.setState({isNewCard: false, changes: false})
+    this.setState({ isNewCard: false, changes: false })
   }
 
   changeChapter = (val) => {
     const { isSeries } = this.props
     const { card } = this.state
     if (isSeries) {
-      this.setState({card: {...card, beatId: val}})
+      this.setState({ card: { ...card, beatId: val } })
     } else {
-      this.setState({card: {...card, chapterId: val}})
+      this.setState({ card: { ...card, chapterId: val } })
     }
     this.props.actions.changeScene(card.id, val, this.props.bookId)
   }
@@ -122,79 +130,101 @@ class SceneDetails extends Component {
     const { isSeries } = this.props
     const { card } = this.state
     if (isSeries) {
-      this.setState({card: {...card, seriesLineId: val}})
+      this.setState({ card: { ...card, seriesLineId: val } })
     } else {
-      this.setState({card: {...card, lineId: val}})
+      this.setState({ card: { ...card, lineId: val } })
     }
     this.props.actions.changeLine(card.id, val, this.props.bookId)
   }
 
   navigateToAttachmentSelector = (type, selectedIds) => {
-    this.props.navigation.navigate('AttachmentSelectorModal', { item: this.state.card, itemType: 'card', type, selectedIds })
+    this.props.navigation.navigate('AttachmentSelectorModal', {
+      item: this.state.card,
+      itemType: 'card',
+      type,
+      selectedIds
+    })
   }
 
-  setScroller = ref => this.detailsScroller = ref
+  setScroller = (ref) => (this.detailsScroller = ref)
 
-  handleDescriptionChange = description => {
+  handleDescriptionChange = (description) => {
     const { card } = this.state
     this.setState({ card: { ...card, description }, changes: true })
   }
 
-  handleTitleChange = title => {
+  handleTitleChange = (title) => {
     const { card } = this.state
     this.setState({ card: { ...card, title }, changes: true })
   }
 
-  handleOnEditorFocus = () => (
+  handleOnEditorFocus = () =>
     this.detailsScroller && this.detailsScroller.getScroller().scrollToEnd()
-  )
 
   renderAttachments () {
     const { card, isNewCard } = this.state
     if (isNewCard) return null
 
-    return <AttachmentList
-      itemType='card'
-      item={card}
-      navigate={this.props.navigation.navigate}
-    />
+    return (
+      <AttachmentList
+        itemType='card'
+        item={card}
+        navigate={this.props.navigation.navigate}
+      />
+    )
   }
 
   render () {
     const { isSeries } = this.props
-    const { card, card: { title, description } } = this.state
+    const {
+      card,
+      card: { title, description }
+    } = this.state
     const chapterId = isSeries ? card.beatId : card.chapterId
     const lineId = isSeries ? card.seriesLineId : card.lineId
     return (
       <DetailsScrollView ref={this.setScroller}>
         <View style={styles.container}>
-          <Item inlineLabel last style={styles.label}>
-            <Text fontStyle='semiBold'>{t('Title')}:</Text>
+          <View inlineLabel last style={styles.label}>
             <Input
+              inset
+              label={`${t('Title')}:`}
               value={title}
               onChangeText={this.handleTitleChange}
               autoCapitalize='sentences'
               placeholder={t('Give your scene a title')}
               placeholderTextColor={Colors.lightGray}
             />
-          </Item>
+          </View>
           <Item fixedLabel style={styles.label}>
-            <Text fontStyle='semiBold'>{t('Chapter')}:</Text>
-            <ChapterPicker selectedId={chapterId} onChange={this.changeChapter} />
+            <Text style={styles.labelText}>{t('Chapter')}:</Text>
+            <ChapterPicker
+              selectedId={chapterId}
+              onChange={this.changeChapter}
+            />
           </Item>
           <Item fixedLabel style={styles.label}>
             <Text fontStyle='semiBold'>{t('Plotline')}:</Text>
             <LinePicker selectedId={lineId} onChange={this.changeLine} />
           </Item>
-          { this.renderAttachments() }
+          {this.renderAttachments()}
           <View style={[styles.afterList, styles.rceView]}>
-            <Text fontStyle='semiBold' style={styles.label}>{t('Description')}:</Text>
+            <Text fontStyle='semiBold' style={styles.label}>
+              {t('Description')}:
+            </Text>
+            <RichTextEditor
+              initialValue={description}
+              placeholder={t('Describe the scene')}
+              onFocus={this.handleOnEditorFocus}
+              onChange={this.handleDescriptionChange}
+            />
+            {/*
             <RichEditor
               initialHTMLText={description}
               placeholder={t('Describe the scene')}
               onFocus={this.handleOnEditorFocus}
               onChange={this.handleDescriptionChange}
-            />
+            />*/}
           </View>
         </View>
       </DetailsScrollView>
@@ -204,20 +234,23 @@ class SceneDetails extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: -Metrics.baseMargin * 1.45
   },
   label: {
-    marginBottom: Metrics.baseMargin,
+    marginBottom: Metrics.baseMargin
   },
   afterList: {
-    marginTop: 16,
+    marginTop: 16
   },
   badge: {
-    marginRight: 8,
+    marginRight: 8
   },
   rceView: {
-    flex: 1,
+    flex: 1
   },
+  labelText: {
+    ...Fonts.style.semiBold,
+    fontSize: Fonts.size.h5
+  }
 })
 
 SceneDetails.propTypes = {
@@ -233,7 +266,7 @@ SceneDetails.propTypes = {
   cards: PropTypes.array.isRequired,
   bookId: PropTypes.number.isRequired,
   navigation: PropTypes.object.isRequired,
-  route: PropTypes.object.isRequired,
+  route: PropTypes.object.isRequired
 }
 
 function mapStateToProps (state) {
@@ -243,18 +276,15 @@ function mapStateToProps (state) {
     isSeries: selectors.isSeriesSelector(state),
     positionOffset: selectors.positionOffsetSelector(state),
     cards: state.cards,
-    bookId: selectors.currentTimelineSelector(state),
+    bookId: selectors.currentTimelineSelector(state)
   }
 }
 
 function mapDispatchToProps (dispatch) {
   return {
     actions: bindActionCreators(actions.cardActions, dispatch),
-    uiActions: bindActionCreators(actions.uiActions, dispatch),
+    uiActions: bindActionCreators(actions.uiActions, dispatch)
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SceneDetails)
+export default connect(mapStateToProps, mapDispatchToProps)(SceneDetails)

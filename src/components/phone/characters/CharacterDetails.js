@@ -4,7 +4,7 @@ import PropTypes from 'react-proptypes'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import t from 'format-message'
-import { Input, Label, Item, View } from 'native-base'
+import { Label, View, Item } from 'native-base'
 import { actions, selectors, initialState } from 'pltr/v2'
 import { StyleSheet } from 'react-native'
 import SaveButton from '../../ui/SaveButton'
@@ -17,22 +17,30 @@ import {
   addLeaveListener,
   removeLeaveListener
 } from '../../../utils/Changes'
+import { Text, Input } from '../../shared/common'
+import Fonts from '../../../fonts'
 
 class CharacterDetails extends Component {
   state = {}
   static getDerivedStateFromProps (props, state) {
     const { route, customAttributes, characters } = props
     const { isNewCharacter, character } = route.params
-    let characterObj = state.character || (isNewCharacter ? cloneDeep(initialState.character) : characters.find(ch => ch.id == character.id))
-    let customAttrs = state.customAttrs || customAttributes.reduce((acc, attr) => {
-      acc[attr.name] = characterObj[attr.name]
-      return acc
-    }, {})
+    let characterObj =
+      state.character ||
+      (isNewCharacter
+        ? cloneDeep(initialState.character)
+        : characters.find((ch) => ch.id == character.id))
+    let customAttrs =
+      state.customAttrs ||
+      customAttributes.reduce((acc, attr) => {
+        acc[attr.name] = characterObj[attr.name]
+        return acc
+      }, {})
     return {
       isNewCharacter: state.isNewCharacter || isNewCharacter,
       customAttrs: customAttrs,
       character: characterObj,
-      changes: state.changes || isNewCharacter,
+      changes: state.changes || isNewCharacter
     }
   }
 
@@ -59,7 +67,9 @@ class CharacterDetails extends Component {
 
   setSaveButton = () => {
     this.props.navigation.setOptions({
-      headerRight: () => <SaveButton changes={this.state.changes} onPress={this.saveChanges} />
+      headerRight: () => (
+        <SaveButton changes={this.state.changes} onPress={this.saveChanges} />
+      )
     })
   }
 
@@ -72,22 +82,22 @@ class CharacterDetails extends Component {
       notes: character.notes,
       categoryId: character.categoryId,
       templates: character.templates,
-      ...customAttrs,
+      ...customAttrs
     }
     if (isNewCharacter) {
       this.props.actions.addCharacterWithValues(values)
-      this.props.navigation.setParams({isNewCharacter: false})
+      this.props.navigation.setParams({ isNewCharacter: false })
     } else {
       this.props.actions.editCharacter(character.id, values)
     }
-    this.setState({isNewCharacter: false, changes: false})
+    this.setState({ isNewCharacter: false, changes: false })
   }
 
   updateTemplateValue = (tId, attr, newValue) => {
     const { character } = this.state
-    const newTemplates = character.templates.map(t => {
+    const newTemplates = character.templates.map((t) => {
       if (t.id == tId) {
-        t.attributes = t.attributes.map(at => {
+        t.attributes = t.attributes.map((at) => {
           if (at.name == attr) {
             at.value = newValue
           }
@@ -97,46 +107,63 @@ class CharacterDetails extends Component {
       return t
     })
 
-    this.setState({character: {...character, templates: newTemplates}, changes: true})
+    this.setState({
+      character: { ...character, templates: newTemplates },
+      changes: true
+    })
   }
 
   changeCategory = (val) => {
-    this.setState({character: {...this.state.character, categoryId: val}, changes: true})
+    this.setState({
+      character: { ...this.state.character, categoryId: val },
+      changes: true
+    })
   }
 
   renderAttachments () {
     const { character, isNewCharacter } = this.state
     if (isNewCharacter) return null
 
-    return <AttachmentList
-      itemType='character'
-      item={character}
-      navigate={this.props.navigation.navigate}
-      only={['bookIds', 'tags']}
-    />
+    return (
+      <AttachmentList
+        itemType='character'
+        item={character}
+        navigate={this.props.navigation.navigate}
+        only={['bookIds', 'tags']}
+      />
+    )
   }
 
   renderTemplates () {
-    return this.state.character.templates.flatMap(t => {
-      return t.attributes.map(attr => {
+    return this.state.character.templates.flatMap((t) => {
+      return t.attributes.map((attr) => {
         if (attr.type == 'paragraph') {
           const height = attr.value ? 100 * attr.value.length : 150
-          return <View key={attr.name} style={[styles.afterList, styles.rceView]}>
-            <Label>{attr.name}</Label>
-            <RichTextEditor
-              initialValue={attr.value}
-              onChange={val => this.updateTemplateValue(t.id, attr.name, val) }
-            />
-          </View>
+          return (
+            <View key={attr.name} style={[styles.afterList, styles.rceView]}>
+              <Text style={styles.labelText}>{attr.name}</Text>
+              <RichTextEditor
+                initialValue={attr.value}
+                onChange={(val) =>
+                  this.updateTemplateValue(t.id, attr.name, val)
+                }
+              />
+            </View>
+          )
         } else {
-          return <Item key={attr.name} inlineLabel last regular style={styles.label}>
-            <Label>{attr.name}</Label>
-            <Input
-              value={attr.value}
-              onChangeText={text => this.updateTemplateValue(t.id, attr.name, text)}
-              autoCapitalize='sentences'
-            />
-          </Item>
+          return (
+            <View key={attr.name} inlineLabel last regular style={styles.label}>
+              <Input
+                inset
+                label={attr.name}
+                value={attr.value}
+                onChangeText={(text) =>
+                  this.updateTemplateValue(t.id, attr.name, text)
+                }
+                autoCapitalize='sentences'
+              />
+            </View>
+          )
         }
       })
     })
@@ -148,75 +175,117 @@ class CharacterDetails extends Component {
     return customAttributes.map((attr, idx) => {
       const { name, type } = attr
       if (type == 'paragraph') {
-        return <View key={idx} style={[styles.afterList, styles.rceView]}>
-          <Label>{name}</Label>
-          <RichTextEditor
-            initialValue={customAttrs[name]}
-            onChange={val => this.setState({customAttrs: {...customAttrs, [name]: val}, changes: true}) }
-          />
-        </View>
+        return (
+          <View key={idx} style={[styles.afterList, styles.rceView]}>
+            <Text style={styles.labelText}>{name}</Text>
+            <RichTextEditor
+              initialValue={customAttrs[name]}
+              onChange={(val) =>
+                this.setState({
+                  customAttrs: { ...customAttrs, [name]: val },
+                  changes: true
+                })
+              }
+            />
+          </View>
+        )
       } else {
-        return <Item key={idx} inlineLabel last regular style={styles.label}>
-          <Label>{name}</Label>
-          <Input
-            value={customAttrs[name]}
-            onChangeText={text => this.setState({customAttrs: {...customAttrs, [name]: text}, changes: true})}
-            autoCapitalize='sentences'
-          />
-        </Item>
+        return (
+          <View key={idx} inlineLabel last regular style={styles.label}>
+            <Input
+              inset
+              label={name}
+              value={customAttrs[name]}
+              onChangeText={(text) =>
+                this.setState({
+                  customAttrs: { ...customAttrs, [name]: text },
+                  changes: true
+                })
+              }
+              autoCapitalize='sentences'
+            />
+          </View>
+        )
       }
     })
   }
 
   render () {
     const { character } = this.state
-    return <DetailsScrollView>
-      <Item inlineLabel last regular style={styles.label}>
-        <Label>{t('Name')}</Label>
-        <Input
-          value={character.name}
-          onChangeText={text => this.setState({character: {...character, name: text}, changes: true})}
-          autoCapitalize='words'
-        />
-      </Item>
-      <Item inlineLabel last regular style={styles.label}>
-        <Label>{t('Description')}</Label>
-        <Input
-          value={character.description}
-          onChangeText={text => this.setState({character: {...character, description: text}, changes: true})}
-          autoCapitalize='sentences'
-        />
-      </Item>
-      <Item fixedLabel style={styles.label}>
-        <Label>{t('Category')}</Label>
-        <CategoryPicker type='characters' selectedId={character.categoryId} onChange={this.changeCategory} />
-      </Item>
-      { this.renderAttachments() }
-      <View style={[styles.afterList, styles.rceView]}>
-        <Label>{t('Notes')}</Label>
-        <RichTextEditor
-          initialValue={character.notes}
-          onChange={val => this.setState({character: {...character, notes: val}, changes: true}) }
-        />
-      </View>
-      { this.renderTemplates() }
-      { this.renderCustomAttributes() }
-    </DetailsScrollView>
+    return (
+      <DetailsScrollView>
+        <View inlineLabel last regular style={styles.label}>
+          <Input
+            inset
+            label={t('Name')}
+            value={character.name}
+            onChangeText={(text) =>
+              this.setState({
+                character: { ...character, name: text },
+                changes: true
+              })
+            }
+            autoCapitalize='words'
+          />
+        </View>
+        <View inlineLabel last regular style={styles.label}>
+          <Input
+            inset
+            label={`${t('Description')}:`}
+            value={character.description}
+            onChangeText={(text) =>
+              this.setState({
+                character: { ...character, description: text },
+                changes: true
+              })
+            }
+            autoCapitalize='sentences'
+          />
+        </View>
+        <Item fixedLabel style={styles.label}>
+          <Text style={styles.labelText}>{t('Category')}</Text>
+          <CategoryPicker
+            type='characters'
+            selectedId={character.categoryId}
+            onChange={this.changeCategory}
+          />
+        </Item>
+        {this.renderAttachments()}
+        <View style={[styles.afterList, styles.rceView]}>
+          <Text style={styles.labelText}>{t('Notes')}</Text>
+          <RichTextEditor
+            initialValue={character.notes}
+            onChange={(val) =>
+              this.setState({
+                character: { ...character, notes: val },
+                changes: true
+              })
+            }
+          />
+        </View>
+        {this.renderTemplates()}
+        {this.renderCustomAttributes()}
+      </DetailsScrollView>
+    )
   }
 }
 
 const styles = StyleSheet.create({
   label: {
-    marginBottom: 16,
+    marginBottom: 16
   },
   afterList: {
-    marginTop: 16,
+    marginTop: 16
   },
   rceView: {
-    marginBottom: 16,
+    marginBottom: 16
   },
   badge: {
-    marginRight: 8,
+    marginRight: 8
+  },
+  labelText: {
+    ...Fonts.style.semiBold,
+    fontSize: Fonts.size.h5
   }
 })
 
@@ -230,7 +299,7 @@ CharacterDetails.propTypes = {
   places: PropTypes.array.isRequired,
   customAttributes: PropTypes.array.isRequired,
   ui: PropTypes.object.isRequired,
-  actions: PropTypes.object.isRequired,
+  actions: PropTypes.object.isRequired
 }
 
 function mapStateToProps (state) {
@@ -239,7 +308,7 @@ function mapStateToProps (state) {
     characters: selectors.charactersSortedAtoZSelector(state),
     places: selectors.placesSortedAtoZSelector(state),
     customAttributes: state.customAttributes.characters,
-    ui: state.ui,
+    ui: state.ui
   }
 }
 
@@ -249,7 +318,4 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CharacterDetails)
+export default connect(mapStateToProps, mapDispatchToProps)(CharacterDetails)
