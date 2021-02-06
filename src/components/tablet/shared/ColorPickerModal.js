@@ -5,6 +5,7 @@ import { DetailsWrapper, DetailsLeft, DetailsRight } from './Details'
 import ColorPickerList from '../../shared/ColorPickerList'
 import tinycolor from 'tinycolor2'
 import t from 'format-message'
+import Metrics from '../../../utils/Metrics'
 
 export default function ColorPickerModal (props) {
   const { expressMode, currentColor, onClose, chooseColor } = props
@@ -19,7 +20,8 @@ export default function ColorPickerModal (props) {
       onDismiss={onClose}
       onRequestClose={onClose}>
       <View style={styles.centered} elevation={10}>
-        <View style={expressMode ? styles.expressWrapper : styles.contentWrapper}>
+        <View
+          style={expressMode ? styles.expressWrapper : styles.contentWrapper}>
           <DetailsWrapper>
             <DetailsLeft>
               <ColorPickerList chooseColor={chooseColor} />
@@ -33,7 +35,9 @@ export default function ColorPickerModal (props) {
                 </View>
                 <View style={styles.formRightItems}>
                   <View style={styles.currentColorWrapper}>
-                    <H3 style={expressMode && styles.currentTitle}>{t('Current Color')}</H3>
+                    <H3 style={expressMode && styles.currentTitle}>
+                      {t('Current Color')}
+                    </H3>
                     <View style={[styles.colorSwatch, currentBackground]} />
                   </View>
                 </View>
@@ -99,5 +103,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold'
   },
-  modal: { position: 'absolute', zIndex: 9, top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.5)'}
+  modal: {
+    position: 'absolute',
+    zIndex: 9,
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0,0,0,0.5)'
+  }
 })
