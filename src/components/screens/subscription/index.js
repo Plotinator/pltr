@@ -36,7 +36,7 @@ class Subscription extends Component {
   componentDidMount () {
     // start In-App Purchasing Session
     startSession((success, reason) => {
-      if(success) {
+      if (success) {
         // get available subscriptions
         getAppSubscriptions((success, subscriptions) => {
           console.log(
@@ -52,7 +52,7 @@ class Subscription extends Component {
         subscribeToPurchaseEvents(this.handlePurchaseEvent)
       } else {
         showAlert({
-          message: reason
+          message: reason || t('Your In-App Purchases seem to be disabled')
         })
       }
       console.log('SESSION STARTED: ', success)
@@ -205,7 +205,7 @@ class Subscription extends Component {
           <View style={styles.container}>
             <WelcomeToPlottr>
               <Text black fontStyle='bold' fontSize='h3' center>
-                {t('Choose a {platform} mobile subscription', {
+                {t('Choose an {platform} mobile subscription', {
                   platform: 'iOS'
                 })}
               </Text>
@@ -221,22 +221,7 @@ class Subscription extends Component {
               style={styles.actionButtons}>
               {isLoading ? this.renderLoader() : this.renderSubscriptions()}
               <Button
-                block
-                disabled
-                buttonColor='blue'
-                style={styles.button}>
-                {t('{amount} / Yearly', { amount: '$299.99' })}
-              </Button>
-              <Button
-                block
-                disabled
-                buttonColor='green'
-                style={styles.button}>
-                {t('{amount} / Lifetime', { amount: '$599.99' })}
-              </Button>
-              <Button
                 tight
-                disabled={isLoading}
                 key={'back'}
                 buttonColor='gray'
                 style={styles.button}
@@ -252,7 +237,7 @@ class Subscription extends Component {
   }
 }
 
-const buttonColors = ['orange', 'blue', 'green', 'gold']
+const buttonColors = ['blue', 'green', 'orange']
 const SubscriptionButton = ({ disabled, subscription, onPress, index }) => {
   const { price } = subscription
   const handleSubscription = () => {

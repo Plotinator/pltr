@@ -5,7 +5,8 @@ import {
   Image,
   Linking,
   ScrollView,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  Platform,
 } from 'react-native'
 import styles from './styles'
 import {
@@ -56,6 +57,23 @@ class Verification extends Component {
   handleGoToSubscriptions = () => {
     const { navigation } = this.props
     navigation.navigate('Subscription')
+  }
+
+  renderSubscriptionButtons(verifying) {
+    if (Platform.OS !== 'ios') return null
+
+    return <>
+      <View style={styles.or}>
+        <Text fontStyle={'bold'}>{t('or')}</Text>
+      </View>
+      <Button
+        block
+        disabled={verifying}
+        style={styles.button}
+        onPress={this.handleGoToSubscriptions}>
+        {t('START MOBILE SUBSCRIPTION')}
+      </Button>
+    </>
   }
 
   render() {
@@ -130,16 +148,7 @@ class Verification extends Component {
                 onPress={this.handleGetLicense}>
                 {t('GET A LICENSE')}
               </Button>
-              <View style={styles.or}>
-                <Text fontStyle={'bold'}>{t('or')}</Text>
-              </View>
-              <Button
-                block
-                disabled={verifying}
-                style={styles.button}
-                onPress={this.handleGoToSubscriptions}>
-                {t('START MOBILE SUBSCRIPTION')}
-              </Button>
+              {this.renderSubscriptionButtons(verifying)}
               <GoToPlottrDotCom />
             </Animatable.View>
           </View>

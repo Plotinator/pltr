@@ -21,5 +21,5 @@ export const SALES_PRODUCT_IDS = [...OLD_PRODUCT_IDS, ...PRO_PRODUCT_IDS]
 export const LICENSE_PRODUCT_IDS = {mac:'11321', windows: '11322', pro: '33345', life: '33347'}
 export const TESTR_EMAIL = 'special_tester_email@getplottr.com'
 export const TESTR_CODE = 735373
-export const AVAILABLE_PRODUCTS_SKU = ['PlottrDemoSubscription']
-export const AVAILABLE_SUBSCRIPTIONS_SKU = ['PlottrDemoSubscription']
+export const AVAILABLE_SUBSCRIPTIONS_SKU = __DEV__ ? ['PlottrDemoSubscription'] : ['PlottrProdMonthlySub', 'PlottrProdYearlySub']
+export const AVAILABLE_PRODUCTS_SKU = AVAILABLE_SUBSCRIPTIONS_SKU

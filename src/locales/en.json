@@ -86,8 +86,8 @@
   "CHECKING...": {
     "message": "CHECKING..."
   },
-  "Choose a {platform} mobile subscription": {
-    "message": "Choose a {platform} mobile subscription"
+  "Choose an {platform} mobile subscription": {
+    "message": "Choose an {platform} mobile subscription"
   },
   "Choose Color": {
     "message": "Choose Color"
@@ -170,8 +170,8 @@
   "Enter Custom Attribute Title": {
     "message": "Enter Custom Attribute Title"
   },
-  "Enter the name of your story": {
-    "message": "Enter the name of your story"
+  "Enter the name of your project": {
+    "message": "Enter the name of your project"
   },
   "Enter your verification code": {
     "message": "Enter your verification code"

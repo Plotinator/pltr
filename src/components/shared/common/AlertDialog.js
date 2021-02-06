@@ -6,6 +6,7 @@ import Text from './Text'
 import ShellButton from './ShellButton'
 import Input from './Input'
 import { Icon } from 'native-base'
+import t from 'format-message'
 
 let MasterAlert
 
@@ -149,7 +150,7 @@ export default class AlertDialog extends Component {
       shadeBase,
       inputText,
       title = 'Plottr',
-      message = 'You have an alert.'
+      message = t('Alert')
     } = this.state
     const shadeStyles = [
       styles.shade,

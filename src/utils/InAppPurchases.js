@@ -31,9 +31,7 @@ export const startSession = async (callback) => {
 // callback is an success first
 export const getAppSubscriptions = async (callback) => {
   try {
-    const DigitalProducts = await RNIap.getSubscriptions(
-      AVAILABLE_SUBSCRIPTIONS_SKU
-    )
+    const DigitalProducts = await RNIap.getSubscriptions(AVAILABLE_SUBSCRIPTIONS_SKU)
     console.log('[IAP]====> Got Subscriptions', DigitalProducts)
     callback(true, DigitalProducts)
   } catch (err) {
@@ -102,7 +100,7 @@ export const requestUserPermissionToSubscribe = async (SKU, callback) => {
 export const subscribeToPurchaseEvents = async (callback) => {
   // internal uses only
   purchaseUpdateSubscription = purchaseUpdatedListener(
-    async (purchase: InAppPurchase | SubscriptionPurchase) => {
+    async (purchase) => {
       const receipt = purchase.transactionReceipt
       if (receipt) {
         console.log('[IAP]====> Attempting to conclude purchase', receipt)
@@ -120,7 +118,7 @@ export const subscribeToPurchaseEvents = async (callback) => {
     }
   )
   // internal uses only
-  purchaseErrorSubscription = purchaseErrorListener((error: PurchaseError) => {
+  purchaseErrorSubscription = purchaseErrorListener((error) => {
     console.log('[IAP]====> purchase Error:', error)
     callback(false, `Purchase Error: ${error.message}`, error)
   })

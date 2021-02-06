@@ -14,7 +14,7 @@ export default class GoToPlottrDotCom extends Component {
           {t('Go to our website to learn more:')}
         </Text>
         <Text color='blue' fontStyle='semiBold' center>
-          getplottr.com
+          plottr.com
         </Text>
       </ShellButton>
     )

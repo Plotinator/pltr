@@ -199,7 +199,7 @@ export default class Main extends Component {
   createDocument = () => {
     showInputAlert({
       title: t('New Project'),
-      message: t('Enter the name of your story'),
+      message: t('Enter the name of your project'),
       actions: [
         {
           name: t('CREATE PROJECT'),
@@ -284,7 +284,7 @@ export default class Main extends Component {
     const { document } = this.state
     const { user = {} } = this.props
     const { verified, validLicense, validSubscription, noAutoRedirect } = user
-    const bypassForDevs = __DEV__ // false
+    const bypassForDevs = false //__DEV__ // false
 
     // if the user is verified and valid
     // or has a valid subscription

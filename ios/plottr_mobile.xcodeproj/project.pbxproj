@@ -28,6 +28,7 @@
 		21B1C2E124EC1C7700DD973F /* PlottrDocumentIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 21B1C2DA24EC1C7700DD973F /* PlottrDocumentIcon.png */; };
 		21B1C2E224EC1C7700DD973F /* PlottrDocumentIcon29.png in Resources */ = {isa = PBXBuildFile; fileRef = 21B1C2DB24EC1C7700DD973F /* PlottrDocumentIcon29.png */; };
 		21B1C2E424EC20B300DD973F /* ReactNativeEventEmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B1C2E324EC20B300DD973F /* ReactNativeEventEmitter.swift */; };
+		21C74E5A25CE01230010F1C3 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21C74E5925CE01230010F1C3 /* StoreKit.framework */; };
 		21F4B479251406E000ECB847 /* Launch Screen2.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 21F4B478251406E000ECB847 /* Launch Screen2.storyboard */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2DCD954D1E0B4F2C00145EB5 /* plottr_mobileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* plottr_mobileTests.m */; };
@@ -114,6 +115,7 @@
 		21B1C2DA24EC1C7700DD973F /* PlottrDocumentIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PlottrDocumentIcon.png; sourceTree = "<group>"; };
 		21B1C2DB24EC1C7700DD973F /* PlottrDocumentIcon29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PlottrDocumentIcon29.png; sourceTree = "<group>"; };
 		21B1C2E324EC20B300DD973F /* ReactNativeEventEmitter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReactNativeEventEmitter.swift; path = plottr_mobile/ReactNativeEventEmitter.swift; sourceTree = "<group>"; };
+		21C74E5925CE01230010F1C3 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		21F4B478251406E000ECB847 /* Launch Screen2.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen2.storyboard"; sourceTree = "<group>"; };
 		25E04417557472983D62CAC3 /* Pods-plottr_mobile-plottr_mobileTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-plottr_mobile-plottr_mobileTests.release.xcconfig"; path = "Target Support Files/Pods-plottr_mobile-plottr_mobileTests/Pods-plottr_mobile-plottr_mobileTests.release.xcconfig"; sourceTree = "<group>"; };
 		270AC610C72A435F880E2F02 /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/native-base/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BA24EE1E3229D40D5B4B980C /* libPods-plottr_mobile.a in Frameworks */,
+				21C74E5A25CE01230010F1C3 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -255,6 +258,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				21C74E5925CE01230010F1C3 /* StoreKit.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				B8B711D0EDAFF2FCB0E25A17 /* libPods-plottr_mobile.a */,
