@@ -6,7 +6,6 @@ import {
   Linking,
   ScrollView,
   TouchableWithoutFeedback,
-  Platform,
 } from 'react-native'
 import styles from './styles'
 import {
@@ -20,6 +19,7 @@ import {
 import images from '../../../images'
 import * as Animatable from 'react-native-animatable'
 import t from 'format-message'
+import Metrics from '../../../utils/Metrics'
 
 class Verification extends Component {
   state = {
@@ -60,7 +60,7 @@ class Verification extends Component {
   }
 
   renderSubscriptionButtons(verifying) {
-    if (Platform.OS !== 'ios') return null
+    if (Metrics.IS_ANDROID) return null
 
     return <>
       <View style={styles.or}>

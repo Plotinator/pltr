@@ -3,16 +3,16 @@
     "message": "(Logout)"
   },
   "{amount} / Weekly": {
-    "message": "{amount} / Weekly"
+    "message": "${amount} / Weekly"
   },
   "{amount} / Monthly": {
-    "message": "{amount} / Monthly"
+    "message": "${amount} / Monthly"
   },
   "{amount} / Yearly": {
-    "message": "{amount} / Yearly"
+    "message": "${amount} / Yearly"
   },
   "{amount} / Lifetime": {
-    "message": "{amount} / Lifetime"
+    "message": "${amount} / Lifetime"
   },
   "A verification code was sent to:": {
     "message": "A verification code was sent to:"

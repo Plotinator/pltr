@@ -14,7 +14,6 @@ import { Spinner } from 'native-base'
 import {
   endSession,
   startSession,
-  getAppProducts,
   getUserPurchases,
   getAppSubscriptions,
   subscribeToPurchaseEvents,
@@ -239,19 +238,16 @@ class Subscription extends Component {
 
 const buttonColors = ['blue', 'green', 'orange']
 const SubscriptionButton = ({ disabled, subscription, onPress, index }) => {
-  const { localizedPrice, subscriptionPeriodUnitIOS } = subscription
+  const { price, productId } = subscription
   const handleSubscription = () => {
     onPress(subscription)
   }
-  let buttonText = ''
-  switch (subscriptionPeriodUnitIOS) {
-    case 'MONTH':
-      buttonText = t('{amount} / Monthly', { amount: localizedPrice })
-      break
-    case 'YEAR':
-      buttonText = t('{amount} / Yearly', { amount: localizedPrice })
-      break
-  }
+  // parse term from product id
+  // warning: keep this pattern or
+  // change this logic if pattern
+  // is changed in the future
+  const termFromId = productId.replace(/(plottrprod|sub)/ig, '')
+  const buttonText = t(`{amount} / ${termFromId}`, { amount: price })
   return (
     <Button
       block
