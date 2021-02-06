@@ -9,6 +9,10 @@ const AnimatableTouchableOpacity = Animatable.createAnimatableComponent(
 const { baseMargin } = Metrics
 
 export default class ShellButton extends Component {
+  handlePress = () => {
+    const { data, onPress } = this.props
+    onPress && onPress(data)
+  }
   render () {
     const {
       style,
@@ -27,7 +31,8 @@ export default class ShellButton extends Component {
       <AnimatableTouchableOpacity
         {...this.props}
         style={stylesArray}
-        disabled={disabled || noninteractive}>
+        disabled={disabled || noninteractive}
+        onPress={this.handlePress}>
         {children}
       </AnimatableTouchableOpacity>
     )
