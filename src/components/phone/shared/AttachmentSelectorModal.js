@@ -7,6 +7,7 @@ import { StyleSheet, FlatList } from 'react-native'
 import { Icon, H1, H3, Container, Content, ListItem, CheckBox, Body, View, Badge } from 'native-base'
 import t from 'format-message'
 import { Text } from '../../shared/common'
+import Metrics from '../../../utils/Metrics'
 
 class AttachmentSelectorModal extends Component {
 
@@ -81,7 +82,7 @@ class AttachmentSelectorModal extends Component {
             </Text>
             { type == 'tags' ? (
               <Badge style={[styles.badge, color]}>
-                <Text>{item.color}</Text>
+                <Text white fontSize='small'>{item.color}</Text>
               </Badge>
             ) : null }
           </View>
@@ -120,19 +121,20 @@ class AttachmentSelectorModal extends Component {
 const styles = StyleSheet.create({
   h1: {
     textAlign: 'center',
-    marginVertical: 20,
+    marginVertical: Metrics.doubleBaseMargin,
   },
   title: {
-    paddingVertical: 4,
+    paddingVertical: Metrics.baseMargin / 2,
   },
   rowView: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingLeft: 10,
+    paddingLeft: Metrics.baseMargin,
   },
   badge: {
-    marginTop: 5,
-    marginLeft: 20,
+    paddingHorizontal: Metrics.baseMargin,
+    marginTop: Metrics.baseMargin / 2,
+    marginLeft: Metrics.doubleBaseMargin,
   },
 })
 

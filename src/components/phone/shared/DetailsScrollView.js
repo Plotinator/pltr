@@ -14,7 +14,7 @@ export default class DetailsScrollView extends Component {
   render () {
     const { children } = this.props
     return (
-      <ScrollView contentContainerStyle={styles.content} ref={this._setRef}>
+      <ScrollView style={styles.scroller} contentContainerStyle={styles.content} ref={this._setRef}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View>{children}</View>
         </TouchableWithoutFeedback>
@@ -24,9 +24,11 @@ export default class DetailsScrollView extends Component {
 }
 
 const styles = StyleSheet.create({
+  scroller: {
+    backgroundColor: 'white'
+  },
   content: {
     flexGrow: 1,
     padding: Metrics.doubleBaseMargin,
-    backgroundColor: 'white'
   }
 })
