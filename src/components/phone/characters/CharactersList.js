@@ -7,17 +7,20 @@ import PropTypes from 'react-proptypes'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { actions, selectors } from 'pltr/v2'
-import { View, ListItem, Icon, Left, Right, H3, Text, Button, H1, Fab, Container, Content, Body } from 'native-base'
+import { View, ListItem, Icon, Left, Right, Button } from 'native-base'
 import t from 'format-message'
+import { Text } from '../../shared/common'
+import Colors from '../../../utils/Colors'
+import Metrics from '../../../utils/Metrics'
 
 class CharactersList extends Component {
   state = { data: [] }
 
-  static getDerivedStateFromProps (props, state) {
+  static getDerivedStateFromProps(props, state) {
     let categories = [...props.categories]
-    categories.push({id: null, name: t('Uncategorized')})
+    categories.push({ id: null, name: t('Uncategorized') })
 
-    const data = categories.map(cat => {
+    const data = categories.map((cat) => {
       let characters = []
       if (props.visibleCharactersByCategory[`${cat.id}`]) {
         characters = props.visibleCharactersByCategory[`${cat.id}`]
@@ -26,7 +29,7 @@ class CharactersList extends Component {
       }
       return {
         title: cat.name,
-        data: characters,
+        data: characters
       }
     })
 
@@ -42,52 +45,92 @@ class CharactersList extends Component {
   }
 
   navigateToCustomAttributes = () => {
-    this.props.navigation.navigate('CustomAttributesModal', {type: 'characters'})
+    this.props.navigation.navigate('CustomAttributesModal', {
+      type: 'characters'
+    })
   }
 
-  renderCharacter = ({item}) => {
-    return <ListItem noIndent button style={styles.row} onPress={() => this.navigateToDetails(item)}>
-      <Left>
-        <H3 style={styles.title}>{item.name || t('New Character')}</H3>
-      </Left>
-      <Right>
-        <Icon type='FontAwesome5' name='chevron-right'/>
-      </Right>
-    </ListItem>
+  renderCharacter = ({ item }) => {
+    return (
+      <ListItem
+        noIndent
+        button
+        style={styles.row}
+        onPress={() => this.navigateToDetails(item)}>
+        <Left>
+          <Text fontSize='h4' fontStyle='semiBold' style={styles.subtitle}>
+            {item.name || t('New Character')}
+          </Text>
+        </Left>
+        <Right style={styles.right}>
+          <Icon type='FontAwesome5' name='chevron-right' />
+        </Right>
+      </ListItem>
+    )
   }
 
-  renderSectionHeader = ({section}) => {
+  renderSectionHeader = ({ section }) => {
     if (!section.data.length) return null
 
-    return <H1 style={styles.sectionHeader}>{section.title}</H1>
+    return (
+      <Text
+        fontSize='h3'
+        fontStyle='bold'
+        style={styles.sectionHeader}
+        style={styles.title}>
+        {section.title}
+      </Text>
+    )
   }
 
   render () {
-    return <View style={{flex: 1}}>
-      <SectionList
-        sections={this.state.data}
-        renderSectionHeader={this.renderSectionHeader}
-        renderItem={this.renderCharacter}
-        keyExtractor={item => item.id}
-        ListEmptyComponent={<H1>{t('No Characters')}</H1>}
-      />
-      <Button full info onPress={this.navigateToCustomAttributes}><Text>{t('Custom Attributes')}</Text></Button>
-    </View>
+    return (
+      <View style={styles.container}>
+        <SectionList
+          sections={this.state.data}
+          renderSectionHeader={this.renderSectionHeader}
+          renderItem={this.renderCharacter}
+          keyExtractor={(item) => item.id}
+          ListEmptyComponent={
+            <Text fontSize='h4' fontStyle='bold' style={styles.title}>
+              {t('No Characters')}
+            </Text>
+          }
+        />
+        <Button full info onPress={this.navigateToCustomAttributes}>
+          <Text white>{t('Custom Attributes')}</Text>
+        </Button>
+      </View>
+    )
   }
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: Colors.cloud
+  },
   row: {
-    backgroundColor: 'white',
+    backgroundColor: 'white'
   },
   title: {
-    paddingVertical: 4,
+    color: Colors.textLightGray,
+    paddingLeft: Metrics.doubleBaseMargin * 0.8,
+    paddingVertical: Metrics.baseMargin,
+    backgroundColor: Colors.cloud
+  },
+  subtitle: {
+    paddingVertical: Metrics.baseMargin / 2,
+    paddingLeft: Metrics.baseMargin * 0.8
   },
   sectionHeader: {
     paddingVertical: 10,
     paddingHorizontal: 6,
-    backgroundColor: DefaultTheme.colors.background,
+    backgroundColor: DefaultTheme.colors.background
   },
+  right: {
+    paddingRight: Metrics.baseMargin / 2
+  }
 })
 
 CharactersList.propTypes = {
@@ -98,28 +141,29 @@ CharactersList.propTypes = {
   customAttributesThatCanChange: PropTypes.array,
   ui: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired,
-  navigation: PropTypes.object.isRequired,
+  navigation: PropTypes.object.isRequired
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
-    visibleCharactersByCategory: selectors.visibleSortedCharactersByCategorySelector(state),
+    visibleCharactersByCategory: selectors.visibleSortedCharactersByCategorySelector(
+      state
+    ),
     filterIsEmpty: selectors.characterFilterIsEmptySelector(state),
     characters: state.characters,
     categories: selectors.sortedCharacterCategoriesSelector(state),
     customAttributes: state.customAttributes.characters,
-    customAttributesThatCanChange: selectors.characterCustomAttributesThatCanChangeSelector(state),
-    ui: state.ui,
+    customAttributesThatCanChange: selectors.characterCustomAttributesThatCanChangeSelector(
+      state
+    ),
+    ui: state.ui
   }
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(actions.characterActions, dispatch),
+    actions: bindActionCreators(actions.characterActions, dispatch)
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CharactersList)
+export default connect(mapStateToProps, mapDispatchToProps)(CharactersList)

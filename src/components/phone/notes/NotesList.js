@@ -6,13 +6,15 @@ import PropTypes from 'react-proptypes'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { actions } from 'pltr/v2'
-import { View, ListItem, Icon, Left, Right, H3, Text, Button } from 'native-base'
+import { View, ListItem, Icon, Left, Right, Button } from 'native-base'
 import t from 'format-message'
 import TrashButton from '../../ui/TrashButton'
 import { askToDelete } from '../../../utils/delete'
+import { Text } from '../../shared/common'
+import Colors from '../../../utils/Colors'
+import Metrics from '../../../utils/Metrics'
 
 class NotesList extends Component {
-
   deleteNote = (note) => {
     askToDelete(note.title, () => this.props.actions.deleteNote(note.id))
   }
@@ -21,38 +23,59 @@ class NotesList extends Component {
     this.props.navigation.navigate('NoteDetails', { note })
   }
 
-  renderNote = ({item}) => {
-    return <ListItem noIndent button style={styles.row} onPress={() => this.navigateToDetails(item)}>
-      <Left>
-        <H3 style={styles.title}>{item.title || t('New Note')}</H3>
-      </Left>
-      <Right>
-        <Icon type='FontAwesome5' name='chevron-right'/>
-      </Right>
-    </ListItem>
+  renderNote = ({ item }) => {
+    return (
+      <ListItem
+        noIndent
+        button
+        style={styles.row}
+        onPress={() => this.navigateToDetails(item)}>
+        <Left>
+          <Text style={styles.title} fontStyle='semiBold' fontSize='h4'>
+            {item.title || t('New Note')}
+          </Text>
+        </Left>
+        <Right style={styles.right}>
+          <Icon type='FontAwesome5' name='chevron-right' />
+        </Right>
+      </ListItem>
+    )
   }
 
-  render () {
+  render() {
     const notes = sortBy(this.props.notes, ['lastEdited'])
-    return <SwipeListView
-      data={notes}
-      renderItem={this.renderNote}
-      renderHiddenItem={ (data, rowMap) => <TrashButton onPress={() => this.deleteNote(data.item)} />}
-      keyExtractor={item => item.id.toString()}
-      leftOpenValue={75}
-    />
+    return (
+      <SwipeListView
+        data={notes}
+        renderItem={this.renderNote}
+        renderHiddenItem={({ item }, rowMap) => (
+          <TrashButton
+            data={item}
+            iconStyle={styles.icon}
+            onPress={this.deleteNote}
+            color='white'
+          />
+        )}
+        keyExtractor={(item) => item.id.toString()}
+        leftOpenValue={75}
+      />
+    )
   }
 }
 
 const styles = StyleSheet.create({
   row: {
-    backgroundColor: 'white',
+    backgroundColor: 'white'
   },
   title: {
-    paddingVertical: 4,
+    paddingVertical: Metrics.baseMargin / 2
   },
-  hiddenRow: {
-
+  hiddenRow: {},
+  icon: {
+    color: Colors.white
+  },
+  right: {
+    paddingRight: Metrics.baseMargin / 2
   }
 })
 
@@ -62,26 +85,23 @@ NotesList.propTypes = {
   characters: PropTypes.array.isRequired,
   places: PropTypes.array.isRequired,
   tags: PropTypes.array.isRequired,
-  ui: PropTypes.object.isRequired,
+  ui: PropTypes.object.isRequired
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
     notes: state.notes,
     characters: state.characters,
     places: state.places,
     tags: state.tags,
-    ui: state.ui,
+    ui: state.ui
   }
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators(actions.noteActions, dispatch)
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(NotesList)
+export default connect(mapStateToProps, mapDispatchToProps)(NotesList)
