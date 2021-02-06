@@ -10,10 +10,11 @@ import PlotlinesStack from './PlotlinesStack'
 import AttachmentSelectorModal from '../shared/AttachmentSelectorModal'
 import ColorPickerScreen from '../shared/ColorPickerScreen'
 import ErrorBoundary from '../../shared/ErrorBoundary'
+import { RenderTitle } from '../../shared/common'
 
 const RootStack = createStackNavigator()
 
-export default function RootPhoneNavigator(props) {
+export default function RootPhoneNavigator (props) {
   const drawerRef = useRef(null)
   const closeDrawer = () => drawerRef.current._root.close()
   const openDrawer = () => drawerRef.current._root.open()
@@ -41,8 +42,8 @@ export default function RootPhoneNavigator(props) {
             name='CustomAttributesModal'
             component={CustomAttributesScreen}
             options={{
-              title: t('Custom Attributes'),
-              headerBackTitle: t('Done')
+              title: RenderTitle('Custom Attributes'),
+              headerBackTitle: RenderTitle('Done')
             }}
           />
           <RootStack.Screen
@@ -50,7 +51,7 @@ export default function RootPhoneNavigator(props) {
             component={AttachmentSelectorModal}
             options={({ route }) => ({
               title: attachmentHeaderTitles(route.params.type),
-              headerBackTitle: t('Done')
+              headerBackTitle: RenderTitle('Done')
             })}
           />
           <RootStack.Screen
@@ -61,7 +62,10 @@ export default function RootPhoneNavigator(props) {
           <RootStack.Screen
             name='ColorPickerModal'
             component={ColorPickerScreen}
-            options={{ title: t('Color Picker'), headerBackTitle: t('Back') }}
+            options={{
+              title: RenderTitle('Color Picker'),
+              headerBackTitle: RenderTitle('Back')
+            }}
           />
         </RootStack.Navigator>
       </Drawer>

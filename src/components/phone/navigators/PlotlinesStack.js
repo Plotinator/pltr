@@ -4,13 +4,30 @@ import t from 'format-message'
 import PlotlinesScreen from '../plotlines/PlotlinesScreen'
 import PlotlineDetails from '../plotlines/PlotlineDetails'
 import withBoundary from '../shared/BoundaryWrapper'
+import { RenderTitle } from '../../shared/common'
 
 const Stack = createStackNavigator()
 const PlotlineDetailsBounded = withBoundary(PlotlineDetails)
 
 export default function PlotlinesStack (props) {
-  return <Stack.Navigator>
-    <Stack.Screen name='PlotlinesHome' component={PlotlinesScreen} options={{ title: t('Plotlines'), headerBackTitle: t('Done') }}/>
-    <Stack.Screen name='PlotlineDetails' component={PlotlineDetailsBounded} options={{ title: t('Plotline Details'), headerBackTitle: t('Back') }} />
-  </Stack.Navigator>
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name='PlotlinesHome'
+        component={PlotlinesScreen}
+        options={{
+          title: RenderTitle('Plotlines'),
+          headerBackTitle: RenderTitle('Done')
+        }}
+      />
+      <Stack.Screen
+        name='PlotlineDetails'
+        component={PlotlineDetailsBounded}
+        options={{
+          title: RenderTitle('Plotline Details'),
+          headerBackTitle: RenderTitle('Back')
+        }}
+      />
+    </Stack.Navigator>
+  )
 }
