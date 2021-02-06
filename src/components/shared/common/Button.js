@@ -15,6 +15,7 @@ export default class Button extends Component {
       style,
       block,
       tight,
+      textColor,
       textStyle,
       buttonText,
       children,
@@ -22,7 +23,7 @@ export default class Button extends Component {
       faded,
       disabled,
       bordered,
-      buttonColor,
+      buttonColor = 'orange',
       wrapperStyle,
       fontStyle = 'bold',
       fontSize = 'regular'
@@ -35,12 +36,23 @@ export default class Button extends Component {
     if (style) stylesArray.push(style)
     if (block) stylesArray.push(styles.block)
     if (textStyle) textStylesArray.push(textStyle)
-    if (bordered) stylesArray.push(styles.bordered)
     if (wrapperStyle) wrapperStylesArray.push(wrapperStyle)
     if (tight) wrapperStylesArray.push(styles.tightWrapper)
     if (disabled || faded) stylesArray.push(styles.faded)
     if (buttonColor) {
       stylesArray.push({ backgroundColor: Colors[buttonColor] || buttonColor })
+    }
+    if (textColor) {
+      textStylesArray.push({ color: Colors[textColor] || textColor })
+    }
+    if (bordered) {
+      stylesArray.push(styles.bordered)
+      stylesArray.push({
+        borderColor: buttonColor,
+        backgroundColor: 'transparent'
+      })
+      !textColor &&
+        textStylesArray.push({ color: buttonColor[textColor] || buttonColor })
     }
 
     return (
