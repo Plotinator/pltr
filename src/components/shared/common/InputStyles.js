@@ -77,6 +77,14 @@ export default ScaledSheet.create({
   insetText: {
     paddingVertical: baseMargin * 1,
     paddingBottom: baseMargin * 1.2,
-    color: textBlack,
+    color: textBlack
+  },
+  labelUp: {
+    marginTop: 0,
+    marginBottom: 0
+  },
+  labelDown: {
+    marginTop: 26,
+    marginBottom: -26
   }
 })

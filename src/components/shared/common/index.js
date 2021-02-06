@@ -4,6 +4,7 @@ import Button from './Button'
 import RichEditor from './RichEditor'
 import ShellButton from './ShellButton'
 import AlertDialog from './AlertDialog'
+import FloatingInput from './FloatingInput'
 import Title, { RenderTitle } from './Title'
 import WelcomeToPlottr from './WelcomeToPlottr'
 import GoToPlottrDotCom from './GoToPlottrDotCom'
@@ -17,6 +18,7 @@ export {
   AlertDialog,
   ShellButton,
   RenderTitle,
+  FloatingInput,
   WelcomeToPlottr,
   GoToPlottrDotCom
 }
