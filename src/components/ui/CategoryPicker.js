@@ -4,19 +4,23 @@ import PropTypes from 'react-proptypes'
 import { connect } from 'react-redux'
 import { selectors } from 'pltr/v2'
 import t from 'format-message'
+import Fonts from '../../fonts'
+import Colors from '../../utils/Colors'
 
 class CategoryPicker extends Component {
-
-  onChange = val => {
+  onChange = (val) => {
     this.props.onChange(val == -1 ? null : val)
   }
 
-  renderItems () {
+  renderItems() {
     const { categories, type } = this.props
 
-    const allCategories = [...categories[type], {id: -1, name: t('Uncategorized')}]
+    const allCategories = [
+      ...categories[type],
+      { id: -1, name: t('Uncategorized') }
+    ]
 
-    return allCategories.map(cat => {
+    return allCategories.map((cat) => {
       return <Picker.Item key={cat.id} label={cat.name} value={cat.id} />
     })
   }
@@ -24,16 +28,34 @@ class CategoryPicker extends Component {
   render() {
     const { selectedId } = this.props
     let val = selectedId ? selectedId : -1
-    return <Picker
-      iosIcon={<Icon type='FontAwesome5' name='chevron-down' style={{fontSize: 12}}/>}
-      iosHeader={t('Category')}
-      placeholder={t('Select a Category')}
-      mode='dialog'
-      selectedValue={val}
-      onValueChange={this.onChange}
-    >
-      { this.renderItems() }
-    </Picker>
+    return (
+      <Picker
+        textStyle={styles.pickerText}
+        itemTextStyle={styles.pickerText}
+        headerBackButtonTextStyle={styles.pickerText}
+        iosIcon={
+          <Icon
+            type='FontAwesome5'
+            name='chevron-down'
+            style={{ fontSize: 12 }}
+          />
+        }
+        iosHeader={t('Category')}
+        placeholder={t('Select a Category')}
+        mode='dialog'
+        selectedValue={val}
+        onValueChange={this.onChange}>
+        {this.renderItems()}
+      </Picker>
+    )
+  }
+}
+
+const styles = {
+  pickerText: {
+    ...Fonts.style.semiBold,
+    fontSize: Fonts.size.h5,
+    // color: Colors.textGray
   }
 }
 
@@ -41,20 +63,17 @@ CategoryPicker.propTypes = {
   categories: PropTypes.array.isRequired,
   type: PropTypes.string.isRequired,
   selectedId: PropTypes.number,
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired
 }
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
   return {
-    categories: state.categories,
+    categories: state.categories
   }
 }
 
-function mapDispatchToProps (dispatch) {
-  return { }
+function mapDispatchToProps(dispatch) {
+  return {}
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CategoryPicker)
+export default connect(mapStateToProps, mapDispatchToProps)(CategoryPicker)

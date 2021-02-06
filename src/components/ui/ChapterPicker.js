@@ -7,6 +7,8 @@ import { isTablet } from 'react-native-device-info'
 import { selectors, chapterHelpers } from 'pltr/v2'
 import t from 'format-message'
 import Popover from 'react-native-popover-view'
+import Fonts from '../../fonts'
+import Colors from '../../utils/Colors'
 
 class ChapterPicker extends Component {
   renderTablet () {
@@ -79,6 +81,9 @@ class ChapterPicker extends Component {
     return (
       <View style={styles.container}>
         <Picker
+          textStyle={styles.pickerText}
+          itemTextStyle={styles.pickerText}
+          headerBackButtonTextStyle={styles.pickerText}
           style={styles.pickerParent}
           iosIcon={
             <Icon
@@ -120,6 +125,10 @@ const styles = StyleSheet.create({
   },
   listItem: {
     width: 200
+  },
+  pickerText: {
+    ...Fonts.style.semiBold,
+    fontSize: Fonts.size.h5
   }
 })
 
