@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { View, Text, Input, Label, Item, Button, Icon } from 'native-base'
 import { selectors, actions, initialState } from 'pltr/v2'
-import { StyleSheet, Modal } from 'react-native'
+import { StyleSheet, Modal, KeyboardAvoidingView } from 'react-native'
 import t from 'format-message'
 import AttachmentList from '../../shared/attachments/AttachmentList'
 import ChapterPicker from '../../ui/ChapterPicker'
@@ -73,51 +73,55 @@ class CardModal extends Component {
 
   render () {
     const { card, changes } = this.state
-    return <Modal visible={true} animationType='slide' transparent={true} onDismiss={this.props.onClose} onRequestClose={this.props.onClose}>
-      <View style={styles.centered} elevation={10}>
-        <View style={styles.contentWrapper}>
-          <DetailsWrapper>
-            <DetailsLeft contentContainerStyle={{flex: 1}}>
-              <Item inlineLabel last style={styles.label}>
-                <Label>{t('Title')}</Label>
-                <Input
-                  value={card.title}
-                  onChangeText={text => this.setState({card: {...card, title: text}, changes: true})}
-                  autoCapitalize='sentences'
-                />
-              </Item>
-              <View style={[styles.afterList, styles.rceView]}>
-                <Label>{t('Description')}</Label>
-                <RichTextEditor
-                  initialValue={card.description}
-                  onChange={val => this.setState({card: {...card, description: val}, changes: true}) }
-                  maxHeight={5000}
-                />
-              </View>
-            </DetailsLeft>
-            <DetailsRight>
-              <View>
-                <View style={styles.buttonWrapper}>
-                  <Button rounded light style={styles.button} onPress={this.props.onClose}><Icon type='FontAwesome5' name='times'/></Button>
-                </View>
-                <View style={styles.formRightItems}>
-                  <View style={styles.label}>
-                    <ChapterPicker selectedId={card.chapterId} onChange={this.changeChapter} />
+    return (
+      <Modal visible={true} animationType='slide' transparent={true} onDismiss={this.props.onClose} onRequestClose={this.props.onClose}>
+        <KeyboardAvoidingView behavior='padding' style={{ flex: 1 }}>
+          <View style={styles.centered} elevation={10}>
+            <View style={styles.contentWrapper}>
+              <DetailsWrapper>
+                <DetailsLeft contentContainerStyle={{flex: 1}}>
+                  <Item inlineLabel last style={styles.label}>
+                    <Label>{t('Title')}</Label>
+                    <Input
+                      value={card.title}
+                      onChangeText={text => this.setState({card: {...card, title: text}, changes: true})}
+                      autoCapitalize='sentences'
+                    />
+                  </Item>
+                  <View style={[styles.afterList, styles.rceView]}>
+                    <Label>{t('Description')}</Label>
+                    <RichTextEditor
+                      initialValue={card.description}
+                      onChange={val => this.setState({card: {...card, description: val}, changes: true}) }
+                      maxHeight={5000}
+                    />
                   </View>
-                  <View style={styles.label}>
-                    <LinePicker selectedId={card.lineId} onChange={this.changeLine} />
+                </DetailsLeft>
+                <DetailsRight>
+                  <View>
+                    <View style={styles.buttonWrapper}>
+                      <Button rounded light style={styles.button} onPress={this.props.onClose}><Icon type='FontAwesome5' name='times'/></Button>
+                    </View>
+                    <View style={styles.formRightItems}>
+                      <View style={styles.label}>
+                        <ChapterPicker selectedId={card.chapterId} onChange={this.changeChapter} />
+                      </View>
+                      <View style={styles.label}>
+                        <LinePicker selectedId={card.lineId} onChange={this.changeLine} />
+                      </View>
+                      { this.renderAttachments() }
+                    </View>
                   </View>
-                  { this.renderAttachments() }
-                </View>
-              </View>
-              <View style={styles.buttonFooter}>
-                <Button block success disabled={!changes} onPress={this.saveChanges}><Text>{t('Save')}</Text></Button>
-              </View>
-            </DetailsRight>
-          </DetailsWrapper>
-        </View>
-      </View>
-    </Modal>
+                  <View style={styles.buttonFooter}>
+                    <Button block success disabled={!changes} onPress={this.saveChanges}><Text>{t('Save')}</Text></Button>
+                  </View>
+                </DetailsRight>
+              </DetailsWrapper>
+            </View>
+          </View>
+        </KeyboardAvoidingView>
+      </Modal>
+    )
   }
 }
 
