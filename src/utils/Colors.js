@@ -17,7 +17,8 @@ const Colors = {
   darkGray: '#303030',
   textGray: '#888888',
   textLightGray: '#A8A8A8',
-  lightGray: '#9F9F9F'
+  lightGray: '#9F9F9F',
+  lighterGray: '#CBCBCB'
 }
 
 export default Colors

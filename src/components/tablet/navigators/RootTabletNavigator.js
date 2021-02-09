@@ -6,7 +6,7 @@ import { Drawer } from 'native-base'
 
 const RootStack = createStackNavigator()
 
-export default function RootTabletNavigator(props) {
+export default function RootTabletNavigator (props) {
   const drawerRef = useRef(null)
   const closeDrawer = () => drawerRef.current._root.close()
   const openDrawer = () => drawerRef.current._root.open()
@@ -22,7 +22,7 @@ export default function RootTabletNavigator(props) {
         />
       }
       onClose={closeDrawer}
-      openDrawerOffset={0.7}>
+      openDrawerOffset={0.4}>
       <RootStack.Navigator mode='modal'>
         <RootStack.Screen
           name='Main'
