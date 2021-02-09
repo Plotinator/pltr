@@ -2,8 +2,9 @@ import { ScaledSheet } from 'react-native-size-matters'
 import Fonts from '../../../fonts'
 import Metrics from '../../../utils/Metrics'
 import { isTablet } from 'react-native-device-info'
+import { ifIphoneX } from 'react-native-iphone-x-helper'
 
-const { baseMargin, footerHeight, IS_IOS } = Metrics
+const { baseMargin, doubleBaseMargin, footerHeight, IS_IOS } = Metrics
 const isIPAD = IS_IOS && isTablet()
 
 const { size, style } = Fonts
@@ -15,7 +16,8 @@ export default ScaledSheet.create({
   },
   tabButton: {
     padding: baseMargin,
-    paddingHorizontal: baseMargin / 2
+    paddingHorizontal: baseMargin / 2,
+    paddingBottom: ifIphoneX(doubleBaseMargin, baseMargin)
   },
   tabLabel: {
     ...style.semiBoldText,
@@ -24,5 +26,10 @@ export default ScaledSheet.create({
   tabIcon: {
     minWidth: 40,
     textAlign: 'center'
+  },
+  buttonFlex: { flex: 1 },
+  buttonTight: {
+    paddingTop: 0,
+    marginBottom: -baseMargin / 2
   }
 })
