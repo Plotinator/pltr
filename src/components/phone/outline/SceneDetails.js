@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import PropTypes from 'react-proptypes'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Icon, Label, Item, View, Toast } from 'native-base'
+import { Icon, Label, Item, View } from 'native-base'
 import { selectors, actions, initialState } from 'pltr/v2'
 import { StyleSheet, Platform } from 'react-native'
 import t from 'format-message'
@@ -22,6 +22,7 @@ import {
   addLeaveListener,
   removeLeaveListener
 } from '../../../utils/Changes'
+import { showAlert } from '../../shared/common/AlertDialog'
 
 // cooresponds to CardDialog in desktop
 
@@ -84,10 +85,8 @@ class SceneDetails extends Component {
   }
 
   toastError (errorText) {
-    Toast.show({
-      text: errorText,
-      duration: 3000,
-      type: 'danger'
+    showAlert({
+      message: errorText
     })
   }
 
@@ -150,6 +149,7 @@ class SceneDetails extends Component {
 
   handleDescriptionChange = (description) => {
     const { card } = this.state
+    console.log('description', description)
     this.setState({ card: { ...card, description }, changes: true })
   }
 
@@ -180,8 +180,8 @@ class SceneDetails extends Component {
       card,
       card: { title, description }
     } = this.state
-    const chapterId = isSeries ? card.beatId : card.chapterId
-    const lineId = isSeries ? card.seriesLineId : card.lineId
+    const chapterId = (isSeries ? card.beatId : card.chapterId) || ''
+    const lineId = (isSeries ? card.seriesLineId : card.lineId) || ''
     return (
       <DetailsScrollView ref={this.setScroller}>
         <View style={styles.container}>
@@ -212,19 +212,19 @@ class SceneDetails extends Component {
             <Text fontStyle='semiBold' style={styles.label}>
               {t('Description')}:
             </Text>
-            <RichTextEditor
+            {/*<RichTextEditor
               initialValue={description}
               placeholder={t('Describe the scene')}
               onFocus={this.handleOnEditorFocus}
               onChange={this.handleDescriptionChange}
-            />
-            {/*
+            />*/}
+
             <RichEditor
               initialHTMLText={description}
               placeholder={t('Describe the scene')}
               onFocus={this.handleOnEditorFocus}
               onChange={this.handleDescriptionChange}
-            />*/}
+            />
           </View>
         </View>
       </DetailsScrollView>
