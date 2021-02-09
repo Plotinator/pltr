@@ -5,14 +5,13 @@ import { isTablet } from 'react-native-device-info'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
 
 const { baseMargin, doubleBaseMargin, footerHeight, IS_IOS } = Metrics
-const isIPAD = IS_IOS && isTablet()
 
 const { size, style } = Fonts
 
 export default ScaledSheet.create({
   tabContainer: {
     height: footerHeight,
-    paddingBottom: isIPAD ? baseMargin : 0
+    paddingBottom: isTablet() ? baseMargin / (IS_IOS ? 1 : 2) : 0
   },
   tabButton: {
     padding: baseMargin,
