@@ -9,6 +9,7 @@ import t from 'format-message'
 import Popover from 'react-native-popover-view'
 import Fonts from '../../fonts'
 import Colors from '../../utils/Colors'
+import { IS_ANDROID } from '../../utils/Metrics'
 
 class LinePicker extends Component {
   renderTablet () {
@@ -48,9 +49,15 @@ class LinePicker extends Component {
   }
 
   renderPhoneItems () {
-    return this.props.lines.map(l => {
+    const items = this.props.lines.map(l => {
       return <Picker.Item key={l.id} label={l.title} value={l.id} />
     })
+    if (IS_ANDROID) {
+      items.unshift(
+        <Picker.Item key={'select'} label={t('Select a Plotline')} value='' />
+      )
+    }
+    return items
   }
 
   renderPhone () {
