@@ -75,13 +75,11 @@ class Outline extends Component {
   renderOutlineChapter (chapter, cardMap) {
     return (
       <ErrorBoundary>
-        <TouchableWithoutFeedback>
-          <Chapter chapter={chapter} cards={cardMap[chapter.id]}
-            activeFilter={!!this.state.currentLine}
-            navigation={this.props.navigation}
-            render={this.renderChapterInner}
-          />
-        </TouchableWithoutFeedback>
+        <Chapter chapter={chapter} cards={cardMap[chapter.id]}
+          activeFilter={!!this.state.currentLine}
+          navigation={this.props.navigation}
+          render={this.renderChapterInner}
+        />
       </ErrorBoundary>
     )
   }

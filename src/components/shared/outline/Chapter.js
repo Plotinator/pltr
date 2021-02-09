@@ -9,7 +9,7 @@ import { selectors, actions, cardHelpers, listHelpers, chapterHelpers } from 'pl
 import { H3, Icon, Card, CardItem, View } from 'native-base'
 import { SwipeRow } from 'react-native-swipe-list-view'
 import SceneCard from './SceneCard'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, TouchableWithoutFeedback } from 'react-native'
 import { Text, ShellButton } from '../common'
 import Metrics from '../../../utils/Metrics'
 import Colors from '../../../utils/Colors'
@@ -108,7 +108,13 @@ class Chapter extends Component {
     const chapterTitle = chapterHelpers.chapterTitle(chapter, positionOffset, isSeries)
     const renderedCards = this.renderCards()
     const manualSort = this.renderManualSort()
-    return this.props.render(chapterTitle, renderedCards, manualSort, this.navigateToNewCard, chapter)
+    return (
+      <TouchableWithoutFeedback>
+        <View>
+          {this.props.render(chapterTitle, renderedCards, manualSort, this.navigateToNewCard, chapter)}
+        </View>
+      </TouchableWithoutFeedback>
+    )
   }
 }
 
