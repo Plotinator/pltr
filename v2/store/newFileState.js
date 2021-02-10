@@ -21,7 +21,7 @@ export const newFileBooks = {
   1: book,
 }
 
-export const newFileBeats = [Object.assign({}, beat, { title: i18n('Beat 1') })]
+export const newFileBeats = [beat]
 
 export const newFileChapters = [{ ...chapter, id: 2 }]
 
