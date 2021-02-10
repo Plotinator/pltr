@@ -1,6 +1,6 @@
 import { sortBy } from 'lodash'
 import { createSelector } from 'reselect'
-import { currentTimelineSelector, isSeriesSelector } from './ui'
+import { currentTimelineSelector } from './ui'
 import { nextId } from '../store/newIds'
 import { beatTitle, beatOneIsPrologue } from '../helpers/beats'
 
