@@ -5,8 +5,14 @@ import { bindActionCreators } from 'redux'
 import { StyleSheet } from 'react-native'
 import t from 'format-message'
 import { selectors, actions } from 'pltr/v2'
-import { Text, List, ListItem, Button, Icon } from 'native-base'
+import { List, ListItem, Button, Icon } from 'native-base'
 import Popover from 'react-native-popover-view'
+import { Text, ShellButton } from '../../shared/common'
+import Metrics from '../../../utils/Metrics'
+import Colors from '../../../utils/Colors'
+import Fonts from '../../../fonts'
+
+const { size: fontSizes, style: fontStyles } = Fonts
 
 class SeriesPicker extends Component {
   state = { open: false }
@@ -48,25 +54,25 @@ class SeriesPicker extends Component {
         isVisible={this.state.open}
         onRequestClose={() => this.setState({ open: false })}
         from={
-          <Button
+          <ShellButton
             bordered
             dark
             iconRight
             style={styles.picker}
             onPress={() => this.setState({ open: true })}>
-            <Text>{selectedTitle}</Text>
+            <Text style={styles.title}>{selectedTitle}</Text>
             <Icon
               type='FontAwesome5'
               name='chevron-down'
-              style={{ fontSize: 12 }}
+              style={styles.caret}
             />
-          </Button>
+          </ShellButton>
         }>
         <List>
           <ListItem
+            noIndent
             style={[styles.listItem, styles.seriesListItem]}
             onPress={() => this.onChange('series')}
-            noIndent
             selected={currentTimeline == 'series'}>
             <Text style={styles.text}>{seriesText}</Text>
           </ListItem>
@@ -79,9 +85,16 @@ class SeriesPicker extends Component {
 
 const styles = StyleSheet.create({
   picker: {
-    borderColor: 'hsl(211, 27%, 70%)', //gray-6
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: Metrics.baseMargin / 1.5,
+    paddingLeft: Metrics.baseMargin * 1.5,
+    paddingRight: Metrics.doubleBaseMargin / 1.5,
+    borderRadius: Metrics.cornerRadius / 2,
+    borderColor: Colors.borderGray,
     backgroundColor: 'white',
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   listItem: {
     width: 400,
@@ -90,8 +103,17 @@ const styles = StyleSheet.create({
   seriesListItem: {
     backgroundColor: 'hsl(210, 36%, 96%)' //gray-9
   },
+  title: {
+    ...fontStyles.bold,
+    paddingRight: Metrics.baseMargin
+  },
+  caret: {
+    fontSize: fontSizes.small,
+    marginTop: 3,
+    color: Colors.textBlack
+  },
   text: {
-    fontSize: 22
+    fontSize: fontSizes.small
   }
 })
 

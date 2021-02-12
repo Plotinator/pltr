@@ -1,30 +1,37 @@
 import React from 'react'
 import { View } from 'native-base'
 import { StyleSheet } from 'react-native'
+import Metrics from '../../../utils/Metrics'
+import Colors from '../../../utils/Colors'
+import Fonts from '../../../fonts'
 
 export default function Toolbar (props) {
-  return <View style={styles.container} elevation={2}>
-    { props.children }
-  </View>
+  return (
+    <View style={styles.container} elevation={2}>
+      {props.children}
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    height: 60,
-    backgroundColor: 'hsl(212, 33%, 89%)', //gray-8
-    alignItems: 'center',
-    paddingHorizontal: 16,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: 'hsl(211, 27%, 70%)', //gray-6
+    paddingTop: Metrics.baseMargin,
+    paddingBottom: Metrics.baseMargin * 1.5,
+    // height: 90,
+    // backgroundColor: 'hsl(212, 33%, 89%)', // gray-8
+    alignItems: 'flex-start',
+    paddingHorizontal: Metrics.doubleBaseMargin,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: Colors.borderGray, // gray-6
     borderRadius: 0,
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 1,
+      height: 1
     },
-    shadowOpacity: 0.20,
+    shadowOpacity: 0.2,
     shadowRadius: 1.41,
-    elevation: 2,
+    elevation: 2
   }
 })

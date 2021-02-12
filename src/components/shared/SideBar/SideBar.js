@@ -56,8 +56,8 @@ export default function SideBar (props) {
   // logout
   menu.push({ name: '(Logout)', type: 'logout', callback: props.logout })
 
-  const renderMenuButton = ({ name, callback, type }) => (
-    <ShellButton style={styles.button} onPress={callback}>
+  const renderMenuButton = ({ name, callback, type }, i) => (
+    <ShellButton key={i} style={styles.button} onPress={callback}>
       <Text style={styles[`${type}Text`]}>{t(name).toUpperCase()}</Text>
     </ShellButton>
   )

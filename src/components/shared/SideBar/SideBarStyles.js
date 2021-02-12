@@ -4,7 +4,7 @@ import Metrics from '../../../utils/Metrics'
 import Colors from '../../../utils/Colors'
 import Fonts from '../../../fonts'
 
-const { baseMargin, doubleBaseMargin, section } = Metrics
+const { baseMargin, doubleBaseMargin, section, buttonRadius } = Metrics
 const { style, size } = Fonts
 const { lightGray, textLightGray, lighterGray } = Colors
 
@@ -14,7 +14,9 @@ export default ScaledSheet.create({
     paddingTop: ifIphoneX(section, 0),
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'hsl(210, 36%, 96%)'
+    backgroundColor: 'hsl(210, 36%, 96%)',
+    borderTopRightRadius: buttonRadius,
+    borderBottomRightRadius: buttonRadius
   },
   closeButton: {
     position: 'absolute',

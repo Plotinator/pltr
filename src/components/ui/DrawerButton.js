@@ -1,24 +1,31 @@
 import React from 'react'
 import { Button, Icon } from 'native-base'
 import { isTablet } from 'react-native-device-info'
-import { StyleSheet } from 'react-native'
+import { ScaledSheet } from 'react-native-size-matters'
+import Metrics from '../../utils/Metrics'
 
 const onTablet = isTablet()
 
 export default function DrawerButton (props) {
-  return <Button transparent={!onTablet} bordered={onTablet} light onPress={props.openDrawer} style={[onTablet ? styles.tabletButton : {}, props.buttonStyle]}>
-    <Icon type='FontAwesome5' name='bars' style={[onTablet ? styles.tabletIcon : {}, props.iconStyle]}/>
-  </Button>
+  return (
+    <Button
+      light
+      transparent
+      onPress={props.openDrawer}
+      style={styles.tabletButton}>
+      <Icon type='FontAwesome5' name='bars' style={styles.tabletIcon} />
+    </Button>
+  )
 }
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   tabletButton: {
+    borderRadius: Metrics.cornerRadius / 2,
     alignSelf: 'center',
-    backgroundColor: 'white',
-    borderColor: 'hsl(211, 27%, 70%)', //gray-6
-    marginRight: 16,
+    backgroundColor: onTablet ? 'white' : 'transparent',
+    marginRight: onTablet ? 20 : 0
   },
   tabletIcon: {
-    color: 'hsl(210, 22%, 49%)', //gray-4
-  },
+    fontSize: '18@ms'
+  }
 })
