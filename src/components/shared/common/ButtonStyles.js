@@ -28,7 +28,7 @@ export default ScaledSheet.create({
     paddingVertical: baseMargin
   },
   bordered: {
-    borderWidth: 1.5,
+    borderWidth: '1@ms',
     borderColor: 'lightgray'
   },
   faded: {

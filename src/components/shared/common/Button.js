@@ -48,7 +48,7 @@ export default class Button extends Component {
     if (bordered) {
       stylesArray.push(styles.bordered)
       stylesArray.push({
-        borderColor: buttonColor,
+        borderColor: Colors[buttonColor] || buttonColor,
         backgroundColor: 'transparent'
       })
       !textColor &&
