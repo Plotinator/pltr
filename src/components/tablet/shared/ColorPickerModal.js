@@ -1,53 +1,67 @@
 import React from 'react'
 import { StyleSheet, Modal } from 'react-native'
-import { View, Text, Button, Icon, H3 } from 'native-base'
+import { View, Button, Icon } from 'native-base'
 import { DetailsWrapper, DetailsLeft, DetailsRight } from './Details'
 import ColorPickerList from '../../shared/ColorPickerList'
 import tinycolor from 'tinycolor2'
 import t from 'format-message'
 import Metrics from '../../../utils/Metrics'
+import { Text } from '../../shared/common'
 
 export default function ColorPickerModal (props) {
-  const { expressMode, currentColor, onClose, chooseColor } = props
+  const {
+    expressMode,
+    currentColor,
+    onClose,
+    chooseColor,
+    visible = true
+  } = props
   const color = tinycolor(currentColor)
   const currentBackground = { backgroundColor: color.toHexString() }
-  return (
-    <View
+  const bodyElement = (
+    <View style={styles.centered} elevation={10}>
+      <View style={expressMode ? styles.expressWrapper : styles.contentWrapper}>
+        <DetailsWrapper>
+          <DetailsLeft>
+            <ColorPickerList chooseColor={chooseColor} />
+          </DetailsLeft>
+          <DetailsRight>
+            <View>
+              <View style={styles.buttonWrapper}>
+                <Button rounded light style={styles.button} onPress={onClose}>
+                  <Icon type='FontAwesome5' name='times' />
+                </Button>
+              </View>
+              <View style={styles.formRightItems}>
+                <View style={styles.currentColorWrapper}>
+                  <Text
+                    fontSize='small'
+                    fontStyle='semiBold'
+                    style={expressMode && styles.currentTitle}>
+                    {t('Current Color')}
+                  </Text>
+                  <View style={[styles.colorSwatch, currentBackground]} />
+                </View>
+              </View>
+            </View>
+            <View style={styles.buttonFooter} />
+          </DetailsRight>
+        </DetailsWrapper>
+      </View>
+    </View>
+  )
+  return expressMode ? (
+    <View style={styles.modal}>{bodyElement}</View>
+  ) : (
+    <Modal
       style={styles.modal}
-      visible
+      visible={visible}
       animationType='slide'
       transparent
       onDismiss={onClose}
       onRequestClose={onClose}>
-      <View style={styles.centered} elevation={10}>
-        <View
-          style={expressMode ? styles.expressWrapper : styles.contentWrapper}>
-          <DetailsWrapper>
-            <DetailsLeft>
-              <ColorPickerList chooseColor={chooseColor} />
-            </DetailsLeft>
-            <DetailsRight>
-              <View>
-                <View style={styles.buttonWrapper}>
-                  <Button rounded light style={styles.button} onPress={onClose}>
-                    <Icon type='FontAwesome5' name='times' />
-                  </Button>
-                </View>
-                <View style={styles.formRightItems}>
-                  <View style={styles.currentColorWrapper}>
-                    <H3 style={expressMode && styles.currentTitle}>
-                      {t('Current Color')}
-                    </H3>
-                    <View style={[styles.colorSwatch, currentBackground]} />
-                  </View>
-                </View>
-              </View>
-              <View style={styles.buttonFooter} />
-            </DetailsRight>
-          </DetailsWrapper>
-        </View>
-      </View>
-    </View>
+      {bodyElement}
+    </Modal>
   )
 }
 
