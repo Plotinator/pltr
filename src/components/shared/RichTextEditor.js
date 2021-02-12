@@ -11,6 +11,14 @@ export default function RichTextEditor (props) {
   const [height, setHeight] = useState(120)
   const showWarning = isAndroid && !props.readOnly
   const maxHeight = props.maxHeight || 1000
+  const uiStyleOverrides = `<style>.btn { padding: 5px 10px !important; border: none !important; } .btn svg { margin: 1px 0px 3px !important; } .btn-primary { background-color: #F37B3A !important; } .slate-editor__editor { border: 1px solid #F0F0F0 !important; }</style>`
+  const fontInject = `
+    var styleDiv = document.createElement('div');
+    styleDiv.innerHTML = "<style>@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');</style>${uiStyleOverrides}";
+    document.body.appendChild(styleDiv);
+    document.body.style.fontFamily = 'Open Sans';
+    document.body.style.color = '#303030';
+  `
   const injectValue = `
     window.injectedText = ${JSON.stringify(props.initialValue)};
     window.isNativeApp = true;
@@ -26,14 +34,25 @@ export default function RichTextEditor (props) {
     true;
   `
 
+  const javascriptInject = `
+  ${heightScript}
+  ${fontInject}
+  `
+
   const displayWarning = () => {
     if (!showWarning) return null
 
-    //yellow-5
-    return <View style={styles.warning}>
-      <Icon type='FontAwesome5' name='exclamation-triangle' style={{fontSize: 14, marginRight: 4, color: 'hsl(44, 92%, 63%)'}}/>
-      <Text note>{t('Compatibility on this device is prone to errors')}</Text>
-    </View>
+    // yellow-5
+    return (
+      <View style={styles.warning}>
+        <Icon
+          type='FontAwesome5'
+          name='exclamation-triangle'
+          style={{ fontSize: 14, marginRight: 4, color: 'hsl(44, 92%, 63%)' }}
+        />
+        <Text note>{t('Compatibility on this device is prone to errors')}</Text>
+      </View>
+    )
   }
 
   const handleMessage = event => {
@@ -54,29 +73,36 @@ export default function RichTextEditor (props) {
     }
   }
 
-  return <View style={{flex: 1}}>
-    { displayWarning() }
-    <WebView
-      containerStyle={{flex: 0, height: height}}
-      style={[styles.webview, props.style]}
-      source={{ uri: RCE_URL }}
-      onMessage={handleMessage}
-      injectedJavaScriptBeforeContentLoaded={injectValue}
-      injectedJavaScript={heightScript}
-      renderLoading={() => <View style={styles.loader}><Spinner color='orange'/></View>}
-      startInLoadingState
-      bounces={false}
-      onError={(syntheticEvent) => {
-        const { nativeEvent } = syntheticEvent
-        console.log('WebView error: ', nativeEvent)
-      }}
-    />
-  </View>
+  return (
+    <View style={{ flex: 1 }}>
+      {displayWarning()}
+      <WebView
+        containerStyle={{ flex: 0, height: height }}
+        style={[styles.webview, props.style]}
+        source={{ uri: RCE_URL }}
+        onMessage={handleMessage}
+        injectedJavaScriptBeforeContentLoaded={injectValue}
+        injectedJavaScript={javascriptInject}
+        renderLoading={() => (
+          <View style={styles.loader}>
+            <Spinner color='orange' />
+          </View>
+        )}
+        startInLoadingState
+        bounces={false}
+        onError={syntheticEvent => {
+          const { nativeEvent } = syntheticEvent
+          console.log('WebView error: ', nativeEvent)
+        }}
+      />
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
   webview: {
     flex: 1,
+    minHeight: 300
   },
   loader: {
     position: 'absolute',
@@ -84,9 +110,9 @@ const styles = StyleSheet.create({
     width: '100%',
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   warning: {
-    flexDirection: 'row',
-  },
+    flexDirection: 'row'
+  }
 })
