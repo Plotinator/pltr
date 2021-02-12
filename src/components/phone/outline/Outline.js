@@ -87,7 +87,7 @@ class Outline extends Component {
 
     showInputAlert({
       title: t('Rename Chapter'),
-      message: t('Enter a new name {for}', { for: chapterName }),
+      message: t('Enter a new name for {chapter}', { chapter: chapterName }),
       inputText: chapterName,
       actions: [{
         chapterId,
