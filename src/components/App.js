@@ -101,7 +101,7 @@ export default class App extends Component {
       )
     } else {
       this.setVerifying(false)
-      const error = t("That email didn't verify. Try again or another email.")
+      const error = t("That email didn't verify. Try again or try another email.")
       const hasMessage = userInfo && userInfo.message
       const message = (hasMessage ? `\n${hasMessage}` : '')
       this.showError(error + message, false)
@@ -141,7 +141,7 @@ export default class App extends Component {
         this.showError(reason)
       }
     } else {
-      this.showError("That code didn't verify. Try again.")
+      this.showError("That code was invalid. Try again.")
     }
     this.setVerifying(false)
   }

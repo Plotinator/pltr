@@ -401,11 +401,11 @@
   "that best suits your style and needs.": {
     "message": "that best suits your style and needs."
   },
-  "That code didn't verify. Try again.": {
-    "message": "That code didn''t verify.\nTry again."
+  "That code was invalid. Try again.": {
+    "message": "That code was invalid.\nTry again."
   },
-  "That email didn't verify. Try again or another email.": {
-    "message": "That email didn't verify.\nTry again or another email."
+  "That email didn't verify. Try again or try another email.": {
+    "message": "That email didn't verify.\nTry again or try another email."
   },
   "Theme": {
     "message": "Theme"
