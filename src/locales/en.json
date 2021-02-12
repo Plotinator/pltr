@@ -68,6 +68,12 @@
   "Delete Chapter": {
     "message": "Delete Chapter"
   },
+  "Delete Plotline": {
+    "message": "Delete Plotline"
+  },
+  "Delete Plotline {name}?": {
+    "message": "Delete Plotline \"{name}\"?"
+  },
   "Default Colors": {
     "message": "Default Colors"
   },
@@ -163,6 +169,9 @@
   },
   "Edit": {
     "message": "Edit"
+  },
+  "Edit Plotline": {
+    "message": "Edit Plotline"
   },
   "Email": {
     "message": "Email"
@@ -352,6 +361,9 @@
   },
   "Saved": {
     "message": "Saved"
+  },
+  "Save Plotline": {
+    "message": "Save Plotline"
   },
   "Scene Details": {
     "message": "Scene Details"

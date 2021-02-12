@@ -2,44 +2,90 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'react-proptypes'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import t from 'format-message'
 import prompt from 'react-native-prompt-android'
 import { selectors, actions } from 'pltr/v2'
 import Cell from '../shared/Cell'
+import { showAlert, showInputAlert } from '../../shared/common/AlertDialog'
+import { Text } from '../../shared/common'
 
 class ChapterTitleCell extends PureComponent {
-  rename = newValue => {
+
+  handleNewChapterName = ({ input }) => {
     const { isSeries, actions, beatActions, chapterId } = this.props
+    const newName = input || 'auto'
     if (isSeries) {
-      beatActions.editBeatTitle(chapterId, newValue)
+      beatActions.editBeatTitle(chapterId, newName)
     } else {
-      actions.editSceneTitle(chapterId, newValue)
+      actions.editSceneTitle(chapterId, newName)
+    }
+  }
+
+  handleDeleteChapter = () => {
+    setTimeout(() => {
+      // delay for 1 sec
+      const { chapterId, chapterTitle, bookId } = this.props
+      showAlert({
+        title: t('Delete Chapter'),
+        message: t('Delete Chapter {name}?', { name: chapterTitle }),
+        actions: [{
+          chapterId,
+          bookId,
+          icon: 'trash',
+          danger: true,
+          name: t('Delete Chapter'),
+          callback: this.deleteChapter
+        },
+        {
+          name: t('Cancel')
+        }]
+      })
+    }, 300)
+  }
+
+  deleteChapter = ({ chapterId, bookId }) => {
+    const { isSeries, actions, beatActions } = this.props
+    if (isSeries) {
+      beatActions.deleteBeat(chapterId, bookId)
+    } else {
+      actions.deleteScene(chapterId, bookId)
     }
   }
 
   askToRename = () => {
     const { chapterTitle, chapter } = this.props
-    // t('(Current title: {chapterName})', {chapterName: chapter.title})
-    prompt(t('Rename {chapterName}', {chapterName: chapterTitle}), null,
-      [
-        {text: t('Cancel'), style: 'cancel'},
-        {text: t('OK'), onPress: this.rename},
-      ],
-      {
-        type: 'plain-text',
-        cancelable: false,
-        defaultValue: chapter.title,
-      }
-    )
+    const chapterName =  chapter.title || 'auto'
+    showInputAlert({
+      title: chapterTitle,
+      message: t('Enter Chapter\'s name or enter'),
+      inputText: chapterName,
+      actions: [
+        {
+          name: t('Rename'),
+          icon: 'pen',
+          positive: true,
+          callback: this.handleNewChapterName
+        },
+        { name: t('Cancel') },
+        {
+          name: t('Delete'),
+          icon: 'trash',
+          danger: 1,
+          callback: this.handleDeleteChapter
+        }
+      ]
+    })
   }
 
   render () {
     const { chapterTitle } = this.props
     // ref is needed
-    return <Cell style={styles.cell} ref={r => this.ref = r} onPress={this.askToRename}>
-      <Text style={styles.text}>{chapterTitle}</Text>
-    </Cell>
+    return (
+      <Cell style={styles.cell} ref={r => this.ref = r} onPress={this.askToRename}>
+        <Text fontStyle='bold' style={styles.text}>{chapterTitle}</Text>
+      </Cell>
+    )
   }
 }
 

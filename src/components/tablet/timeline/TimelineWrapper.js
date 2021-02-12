@@ -14,20 +14,24 @@ import DrawerButton from '../../ui/DrawerButton'
 
 class TimelineWrapper extends Component {
   render () {
-    return <View style={{flex: 1}}>
-      <Toolbar>
-        <DrawerButton openDrawer={this.props.openDrawer} />
-        <SeriesPicker />
-      </Toolbar>
-      <ErrorBoundary>
-        <Timeline navigation={this.props.navigation}/>
-      </ErrorBoundary>
-    </View>
+    return (
+      <View style={styles.container}>
+        <Toolbar>
+          <DrawerButton openDrawer={this.props.openDrawer} />
+          <SeriesPicker />
+        </Toolbar>
+        <ErrorBoundary>
+          <Timeline navigation={this.props.navigation} />
+        </ErrorBoundary>
+      </View>
+    )
   }
 }
 
 const styles = StyleSheet.create({
-
+  container: {
+    flex: 1
+  }
 })
 
 TimelineWrapper.propTypes = {
@@ -37,7 +41,7 @@ TimelineWrapper.propTypes = {
   file: PropTypes.object.isRequired,
   ui: PropTypes.object.isRequired,
   isSeries: PropTypes.bool,
-  navigation: PropTypes.object.isRequired,
+  navigation: PropTypes.object.isRequired
 }
 
 function mapStateToProps (state) {
@@ -47,7 +51,7 @@ function mapStateToProps (state) {
     card2Dmap: selectors.cardMapSelector(state),
     file: state.file,
     ui: state.ui,
-    isSeries: selectors.isSeriesSelector(state),
+    isSeries: selectors.isSeriesSelector(state)
   }
 }
 
