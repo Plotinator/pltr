@@ -213,18 +213,20 @@ class ActionButton extends Component {
     const {
       index,
       disabled,
-      action: { icon, name, positive }
+      action: { icon, name, positive, danger }
     } = this.props
     return (
       <ShellButton
         key={index}
         disabled={disabled}
-        style={[styles.actionButton, positive && styles.positiveButton]}
+        style={[
+          styles.actionButton,
+          positive && styles.positiveButton,
+          danger && styles.dangerButton
+        ]}
         onPress={this.handlePress}>
         {icon && (
-          <View style={styles.actionCircle}>
-            <Icon name={icon} style={styles.actionIcon} />
-          </View>
+          <Icon type='FontAwesome5' name={icon} style={styles.actionIcon} />
         )}
         <Text fontStyle={'bold'} white center>
           {name}

@@ -3,7 +3,7 @@ import Metrics from '../../../utils/Metrics'
 import Fonts from '../../../fonts'
 import Colors from '../../../utils/Colors'
 
-const { borderGray, darkGray, textGray, white, orange, green } = Colors
+const { borderGray, darkGray, textGray, white, orange, green, red } = Colors
 const {
   section,
   baseMargin,
@@ -80,6 +80,7 @@ export default ScaledSheet.create({
     marginBottom: section
   },
   actionButton: {
+    flexDirection: 'row',
     backgroundColor: orange,
     padding: baseMargin,
     paddingHorizontal: doubleBaseMargin * 0.66,
@@ -91,18 +92,14 @@ export default ScaledSheet.create({
   positiveButton: {
     backgroundColor: green
   },
-  actionCircle: {
-    width: '60@ms',
-    height: '60@ms',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 30,
-    borderWidth: 1,
-    borderColor: borderGray,
-    marginBottom: baseMargin
+  dangerButton: {
+    backgroundColor: red
   },
   actionIcon: {
-    color: borderGray,
-    fontSize: size.h2
+    marginRight: baseMargin,
+    color: white,
+    fontSize: size.h5,
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 })
