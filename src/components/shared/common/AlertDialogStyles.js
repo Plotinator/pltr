@@ -51,7 +51,7 @@ export default ScaledSheet.create({
     alignItems: 'center'
   },
   input: {
-    maxWidth: '80%'
+    maxWidth: '55%'
   },
   inputText: {
     ...style.boldItalic
