@@ -212,19 +212,19 @@ class SceneDetails extends Component {
             <Text fontStyle='semiBold' style={styles.label}>
               {t('Description')}:
             </Text>
-            {/*<RichTextEditor
+            <RichTextEditor
               initialValue={description}
               placeholder={t('Describe the scene')}
               onFocus={this.handleOnEditorFocus}
               onChange={this.handleDescriptionChange}
-            />*/}
-
+            />
+            {/*
             <RichEditor
               initialHTMLText={description}
               placeholder={t('Describe the scene')}
               onFocus={this.handleOnEditorFocus}
               onChange={this.handleDescriptionChange}
-            />
+            />*/}
           </View>
         </View>
       </DetailsScrollView>
