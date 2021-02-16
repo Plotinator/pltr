@@ -17,6 +17,7 @@ export default ScaledSheet.create({
   formSection: {
     paddingTop: baseMargin * 1.5,
     width: '90%',
+    maxWidth: '300@ms',
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -29,8 +30,9 @@ export default ScaledSheet.create({
     marginTop: baseMargin
   },
   actionButtons: {
-    minHeight: '150@vs',
+    // minHeight: '150@vs',
     width: '90%',
+    maxWidth: '300@ms',
     justifyContent: 'center',
     alignItems: 'center'
   },

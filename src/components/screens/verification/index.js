@@ -21,6 +21,8 @@ import * as Animatable from 'react-native-animatable'
 import t from 'format-message'
 import Metrics from '../../../utils/Metrics'
 
+const { IS_ANDROID } = Metrics
+
 class Verification extends Component {
   state = {
     email: '',
@@ -60,12 +62,14 @@ class Verification extends Component {
   }
 
   renderSubscriptionButtons(verifying) {
-    if (Metrics.IS_ANDROID) return null
+    if (IS_ANDROID) return null
 
     return <>
-      <View style={styles.or}>
-        <Text fontStyle={'bold'}>{t('or')}</Text>
-      </View>
+      {IS_ANDROID ? (
+        <View style={styles.or}>
+          <Text fontStyle={'bold'}>{t('or')}</Text>
+        </View>
+      ) : null}
       <Button
         block
         disabled={verifying}
@@ -141,15 +145,17 @@ class Verification extends Component {
               animation='fadeInUp'
               easing='ease-out-expo'
               style={styles.actionButtons}>
-              <Button
-                block
-                buttonColor='blue'
-                style={styles.button}
-                onPress={this.handleGetLicense}>
-                {t('GET A LICENSE')}
-              </Button>
+              {IS_ANDROID ? (
+                <Button
+                  block
+                  buttonColor='blue'
+                  style={styles.button}
+                  onPress={this.handleGetLicense}>
+                  {t('GET A LICENSE')}
+                </Button>
+              ) : null}
               {this.renderSubscriptionButtons(verifying)}
-              <GoToPlottrDotCom />
+              {IS_ANDROID ? <GoToPlottrDotCom /> : null}
             </Animatable.View>
           </View>
         </TouchableWithoutFeedback>

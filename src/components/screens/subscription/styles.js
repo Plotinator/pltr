@@ -5,7 +5,7 @@ const { baseMargin, section } = Metrics
 
 export default ScaledSheet.create({
   scroller: {
-    flex: 1,
+    flex: 1
   },
   container: {
     flex: 1,
@@ -17,6 +17,7 @@ export default ScaledSheet.create({
   actionButtons: {
     minHeight: '150@vs',
     width: '90%',
+    maxWidth: '300@ms',
     alignItems: 'center'
   },
   button: {
