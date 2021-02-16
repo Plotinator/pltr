@@ -131,8 +131,12 @@ function salesURL (email) {
 
 function licenseURL (action, license, productId, device) {
   let url = `${BASE_URL}/?edd_action=${action}&item_id=${productId}&license=${license}`
-  if (device) url += `&url=${device}`
+  if (device) url += `&url=${useableDeviceName(device)}`
   return url
+}
+
+function useableDeviceName (name) {
+  return name.replace(/[']/g, '-')
 }
 
 // otherKeys is an array of arrays e.g. [['email', 'me@example.com'], ...]
