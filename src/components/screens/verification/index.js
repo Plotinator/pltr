@@ -155,7 +155,7 @@ class Verification extends Component {
                 </Button>
               ) : null}
               {this.renderSubscriptionButtons(verifying)}
-              {IS_ANDROID ? <GoToPlottrDotCom /> : null}
+              {IS_ANDROID && <GoToPlottrDotCom />}
             </Animatable.View>
           </View>
         </TouchableWithoutFeedback>

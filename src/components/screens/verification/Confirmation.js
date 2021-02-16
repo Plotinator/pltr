@@ -13,6 +13,9 @@ import {
 import images from '../../../images'
 import * as Animatable from 'react-native-animatable'
 import t from 'format-message'
+import Metrics from '../../../utils/Metrics'
+
+const { IS_ANDROID } = Metrics
 
 class VerificationConfirmation extends Component {
   state = {
@@ -144,7 +147,7 @@ class VerificationConfirmation extends Component {
                 onPress={this.handleDifferentEmail}>
                 {t('Use a different email').toUpperCase()}
               </Button>
-              <GoToPlottrDotCom />
+              {IS_ANDROID && <GoToPlottrDotCom />}
             </Animatable.View>
           </View>
         </TouchableWithoutFeedback>

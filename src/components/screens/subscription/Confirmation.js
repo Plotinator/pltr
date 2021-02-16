@@ -11,6 +11,9 @@ import {
 import Images from '../../../images'
 import * as Animatable from 'react-native-animatable'
 import t from 'format-message'
+import Metrics from '../../../utils/Metrics'
+
+const { IS_ANDROID } = Metrics
 
 const { BIRTHDAY_EMOJI } = Images
 
@@ -51,7 +54,7 @@ class SubscriptionConfirmation extends Component {
             {t('GET STARTED!')}
           </Button>
         </Animatable.View>
-        <GoToPlottrDotCom />
+        {IS_ANDROID && <GoToPlottrDotCom />}
       </View>
     )
   }

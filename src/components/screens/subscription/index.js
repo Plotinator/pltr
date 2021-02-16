@@ -20,6 +20,9 @@ import {
   requestUserPermissionToSubscribe
 } from '../../../utils/InAppPurchases'
 import { showAlert } from '../../shared/common/AlertDialog'
+import Metrics from '../../../utils/Metrics'
+
+const { IS_ANDROID } = Metrics
 
 class Subscription extends Component {
   state = {
@@ -227,7 +230,7 @@ class Subscription extends Component {
                 onPress={this.handleGoBack}>
                 {t('Go Back')}
               </Button>
-              <GoToPlottrDotCom />
+              {IS_ANDROID && <GoToPlottrDotCom />}
             </Animatable.View>
           </View>
         </TouchableWithoutFeedback>
