@@ -75,7 +75,7 @@ class Verification extends Component {
         disabled={verifying}
         style={styles.button}
         onPress={this.handleGoToSubscriptions}>
-        {t('START MOBILE SUBSCRIPTION')}
+        {t('Start Mobile Subscription')}
       </Button>
     </>
   }
