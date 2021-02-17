@@ -1,10 +1,16 @@
 import React, { Component } from 'react'
-import { View, ScrollView, TouchableWithoutFeedback } from 'react-native'
+import {
+  View,
+  Linking,
+  ScrollView,
+  TouchableWithoutFeedback
+} from 'react-native'
 import { connect } from 'react-redux'
 import styles from './styles'
 import {
   Text,
   Button,
+  ShellButton,
   WelcomeToPlottr,
   GoToPlottrDotCom
 } from '../../shared/common'
@@ -103,6 +109,12 @@ class Subscription extends Component {
       this.setState({ noValidSubscription: !validSubscription })
     }
   }
+
+  handleGoToTerms = () =>
+    Linking.openURL('https://plottr.com/terms-conditions/')
+
+  handleGoToPrivacy = () =>
+    Linking.openURL('https://plottr.com/privacy-policy/')
 
   handleGoBack = () => {
     const { navigation } = this.props
@@ -231,6 +243,36 @@ class Subscription extends Component {
                 {t('Go Back')}
               </Button>
               {IS_ANDROID && <GoToPlottrDotCom />}
+            </Animatable.View>
+            <Animatable.View
+              delay={150}
+              duration={1000}
+              animation='fadeInUp'
+              easing='ease-out-expo'
+              style={styles.footNote}>
+              <Text fontSize='tiny' color='textLightGray'>
+                {t("By starting a mobile subscription, you agree to Plottr's")}
+                {' '}
+              </Text>
+              <View style={styles.inline}>
+                <ShellButton
+                  style={styles.link}
+                  onPress={this.handleGoToTerms}>
+                  <Text fontSize='tiny' color='orange'>
+                    {t('Terms of Service')}
+                  </Text>
+                </ShellButton>
+                <Text fontSize='tiny' color='textLightGray' style={styles.link}>
+                  {t('and')}
+                </Text>
+                <ShellButton
+                  style={styles.link} 
+                  onPress={this.handleGoToPrivacy}>
+                  <Text fontSize='tiny' color='orange'>
+                    {t('Privacy Policy')}
+                  </Text>
+                </ShellButton>
+              </View>
             </Animatable.View>
           </View>
         </TouchableWithoutFeedback>

@@ -67,12 +67,27 @@ export default ScaledSheet.create({
   },
   version: {
     position: 'absolute',
-    left: doubleBaseMargin,
+    right: doubleBaseMargin,
     bottom: doubleBaseMargin
   },
   versionText: {
     fontSize: size.tiny,
     color: lighterGray,
     letterSpacing: 1
+  },
+  linkText: {
+    fontSize: size.tiny,
+    color: lighterGray,
+    letterSpacing: 1
+  },
+  linkButton: {
+    paddingHorizontal: baseMargin / 2,
+    paddingVertical: baseMargin / 4
+  },
+  terms: {
+    position: 'absolute',
+    bottom: doubleBaseMargin,
+    left: doubleBaseMargin
+    // alignItems: 'flex-end'
   }
 })

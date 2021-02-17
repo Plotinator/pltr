@@ -20,6 +20,9 @@
   "Add": {
     "message": "Add"
   },
+  "and": {
+    "message": "and"
+  },
   "App Version: {version}": {
     "message": "App Version: { version }"
   },
@@ -49,6 +52,9 @@
   },
   "Books": {
     "message": "Books"
+  },
+  "By starting a mobile subscription, you agree to Plottr's": {
+    "message": "By starting a mobile subscription, you agree to Plottr's"
   },
   "Cancel": {
     "message": "Cancel"
@@ -332,6 +338,9 @@
   "Premise": {
     "message": "Premise"
   },
+  "Privacy Policy": {
+    "message": "Privacy Policy"
+  },
   "Project": {
     "message": "Project"
   },
@@ -409,6 +418,9 @@
   },
   "Tag Details": {
     "message": "Tag Details"
+  },
+  "Terms of Service": {
+    "message": "Terms of Service"
   },
   "that best suits your style and needs.": {
     "message": "that best suits your style and needs."

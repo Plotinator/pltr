@@ -31,5 +31,13 @@ export default ScaledSheet.create({
   },
   loader: {
     height: '68@vs'
+  },
+  footNote: {},
+  inline: {
+    flexDirection: 'row',
+    justifyContent: 'center'
+  },
+  link: {
+    padding: baseMargin / 4
   }
 })

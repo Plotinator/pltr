@@ -41,12 +41,22 @@ export default function SideBar (props) {
     Linking.openURL('https://learn.getplottr.com/courses/plottr-101/')
   }
 
+  const goToTerms = () => {
+    Linking.openURL('https://plottr.com/terms-conditions/')
+  }
+
+  const goToPrivacy = () => {
+    Linking.openURL('https://plottr.com/privacy-policy/')
+  }
+
   const menu = [
     { name: 'Dashboard', type: 'button', callback: props.closeFile },
     { name: 'Documentation', type: 'button', callback: goToDocs },
     { name: 'Help', type: 'button', callback: goToHelp },
     { name: 'Learn', type: 'button', callback: goToVideos },
     { name: 'Demos', type: 'button', callback: goToDemos }
+    // { name: 'Terms of Service', type: 'link', callback: goToTerms },
+    // { name: 'Privacy Policy', type: 'link', callback: goToPrivacy }
   ]
 
   if (userInfo && userInfo.email) {
@@ -71,6 +81,14 @@ export default function SideBar (props) {
         <Image source={PLOTTR_VERTICAL} style={styles.logo} />
       </View>
       <View style={styles.menu}>{menu.map(renderMenuButton)}</View>
+      <View style={styles.terms}>
+        <ShellButton style={styles.linkButton} onPress={goToTerms}>
+          <Text style={styles.linkText}>{t('Terms of Service')}</Text>
+        </ShellButton>
+        <ShellButton style={styles.linkButton} onPress={goToPrivacy}>
+          <Text style={styles.linkText}>{t('Privacy Policy')}</Text>
+        </ShellButton>
+      </View>
       <View style={styles.version}>
         <Text style={styles.versionText}>v{getVersion()}</Text>
       </View>
