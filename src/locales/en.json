@@ -209,6 +209,12 @@
   "GET STARTED!": {
     "message": "GET STARTED!"
   },
+  "Get access to all your projects": {
+    "message": "Get access to all your projects"
+  },
+  "with an iOS mobile subscription!": {
+    "message": "with an iOS mobile subscription!"
+  },
   "Give this tag a name": {
     "message": "Give this tag a name"
   },
@@ -334,6 +340,12 @@
   },
   "Plotlines": {
     "message": "Plotlines"
+  },
+  "Plottr Mobile Monthly": {
+    "message": "Plottr Mobile Monthly"
+  },
+  "Plottr Mobile Weekly": {
+    "message": "Plottr Mobile Weekly"
   },
   "Premise": {
     "message": "Premise"

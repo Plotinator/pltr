@@ -195,7 +195,7 @@ class Subscription extends Component {
         subscription={subscription}
         onPress={this.handleSubscribeUser}/>
     ))
-    showRestore && subscribeButtons.unshift(
+    showRestore && subscribeButtons.push(
       <Button
         key='restore'
         block
@@ -219,12 +219,10 @@ class Subscription extends Component {
           <View style={styles.container}>
             <WelcomeToPlottr>
               <Text black fontStyle='bold' fontSize='h3' center>
-                {t('Choose an {platform} mobile subscription', {
-                  platform: 'iOS'
-                })}
+                {t('Get access to all your projects')}
               </Text>
               <Text black fontSize='h4' center>
-                {t('that best suits your style and needs.')}
+                {t('with an iOS mobile subscription!')}
               </Text>
             </WelcomeToPlottr>
             <Animatable.View
@@ -266,7 +264,7 @@ class Subscription extends Component {
                   {t('and')}
                 </Text>
                 <ShellButton
-                  style={styles.link} 
+                  style={styles.link}
                   onPress={this.handleGoToPrivacy}>
                   <Text fontSize='tiny' color='orange'>
                     {t('Privacy Policy')}
