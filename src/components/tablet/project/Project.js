@@ -32,12 +32,12 @@ class Project extends Component {
 
   openEditModal = (id) => {
     // this.props.navigation.push('SeriesDetails', { id })
-    this.props.uiActions.changeCurrentTimeline(id)
+    this.props.ui.changeCurrentTimeline(id)
     this.props.navigation.navigate('Timeline')
   }
 
   navigateToTimeline = (id) => {
-    this.props.uiActions.changeCurrentTimeline(id)
+    this.props.ui.changeCurrentTimeline(id)
     this.props.navigation.navigate('Timeline')
   }
 
@@ -247,9 +247,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(actions.bookActions, dispatch),
+    actions: bindActionCreators(actions.book, dispatch),
     seriesActions: bindActionCreators(actions.seriesActions, dispatch),
-    uiActions: bindActionCreators(actions.uiActions, dispatch)
+    uiActions: bindActionCreators(actions.ui, dispatch)
   }
 }
 

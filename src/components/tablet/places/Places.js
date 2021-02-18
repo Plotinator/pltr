@@ -169,7 +169,7 @@ function mapDispatchToProps (dispatch) {
   return {
     actions: bindActionCreators(actions.placeActions, dispatch),
     customAttributeActions: bindActionCreators(actions.customAttributeActions, dispatch),
-    uiActions: bindActionCreators(actions.uiActions, dispatch),
+    uiActions: bindActionCreators(actions.ui, dispatch),
   }
 }
 

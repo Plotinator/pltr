@@ -534,7 +534,7 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    actions: bindActionCreators(actions.uiActions, dispatch),
+    actions: bindActionCreators(actions.ui, dispatch),
     sceneActions: bindActionCreators(actions.sceneActions, dispatch),
     lineActions: bindActionCreators(actions.lineActions, dispatch),
     cardActions: bindActionCreators(actions.cardActions, dispatch),

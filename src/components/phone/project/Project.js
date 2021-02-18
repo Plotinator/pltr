@@ -22,7 +22,7 @@ class Project extends Component {
   }
 
   deleteBook = (id) => {
-    this.props.bookActions.deleteBook(id)
+    this.props.book.deleteBook(id)
   }
 
   navigateToDetails = (id) => {
@@ -143,8 +143,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(actions.uiActions, dispatch),
-    bookActions: bindActionCreators(actions.bookActions, dispatch)
+    actions: bindActionCreators(actions.ui, dispatch),
+    bookActions: bindActionCreators(actions.book, dispatch)
   }
 }
 
