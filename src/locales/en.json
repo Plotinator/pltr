@@ -200,6 +200,9 @@
   "Error sending email! Check your email and Try again.": {
     "message": "Error sending email! Check your email and Try again."
   },
+  "Error reading file": {
+    "message": "Error reading file"
+  },
   "Genre": {
     "message": "Genre"
   },
