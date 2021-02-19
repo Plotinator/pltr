@@ -329,6 +329,9 @@
   "Places": {
     "message": "Places"
   },
+  "Place Details": {
+    "message": "Place Details"
+  },
   "Please choose a plotline": {
     "message": "Please choose a plotline"
   },

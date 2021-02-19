@@ -4,8 +4,8 @@ import PropTypes from 'react-proptypes'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import t from 'format-message'
-import { Container, Content, Form, Label, View } from 'native-base'
-import { actions, selectors, initialState } from 'pltr/v2'
+import { Container, Content, Form, View } from 'native-base'
+import { actions, selectors, initialState, newIds } from 'pltr/v2'
 import { StyleSheet, Platform } from 'react-native'
 import SaveButton from '../../ui/SaveButton'
 import AttachmentList from '../../shared/attachments/AttachmentList'
@@ -16,30 +16,39 @@ import {
   addLeaveListener,
   removeLeaveListener
 } from '../../../utils/Changes'
-import { Input } from '../../shared/common'
+import { Text, Input } from '../../shared/common'
 import Metrics from '../../../utils/Metrics'
 
 class PlaceDetails extends Component {
   state = {}
   static getDerivedStateFromProps (props, state) {
+    const { places } = props
+    const { isNewPlace, place } = state
+    const oldPlace = (isNewPlace ? {} : places.find((pl) => pl.id == place.id))
+    const { tags = [], bookIds = [] } = oldPlace
+    return {
+      place: { ...place, tags, bookIds }
+    }
+  }
+
+  constructor (props) {
+    super(props)
     const { route, customAttributes, places } = props
     const { isNewPlace, place } = route.params
-    let placeObj =
-      state.place ||
-      (isNewPlace
-        ? cloneDeep(initialState.place)
-        : places.find((pl) => pl.id == place.id))
-    let customAttrs =
-      state.customAttrs ||
+    const statePlace = place || {
+      ...cloneDeep(initialState.place),
+      id: newIds.nextId(places)
+    }
+    const customAttrs =
       customAttributes.reduce((acc, attr) => {
-        acc[attr.name] = placeObj[attr.name]
+        acc[attr.name] = statePlace[attr.name]
         return acc
       }, {})
-    return {
-      isNewPlace: state.isNewPlace || isNewPlace,
-      place: placeObj,
-      customAttrs: customAttrs,
-      changes: state.changes || isNewPlace
+    this.state = {
+      isNewPlace,
+      place: statePlace,
+      changes: isNewPlace,
+      customAttrs
     }
   }
 
@@ -115,7 +124,7 @@ class PlaceDetails extends Component {
       if (type == 'paragraph') {
         return (
           <View key={idx} style={[styles.afterList, styles.rceView]}>
-            <Label>{name}</Label>
+            <Text>{name}</Text>
             <RichTextEditor
               initialValue={customAttrs[name]}
               onChange={(val) =>
@@ -179,7 +188,7 @@ class PlaceDetails extends Component {
         </View>
         {this.renderAttachments()}
         <View style={[styles.afterList, styles.rceView]}>
-          <Label>{t('Notes')}</Label>
+          <Text fontStyle='bold'>{t('Notes')}</Text>
           <RichTextEditor
             initialValue={place.notes}
             onChange={this.handleNotesText}
