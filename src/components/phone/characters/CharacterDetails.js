@@ -4,7 +4,7 @@ import PropTypes from 'react-proptypes'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import t from 'format-message'
-import { Label, View, Item } from 'native-base'
+import { View, Item, Icon } from 'native-base'
 import { actions, selectors, initialState, newIds } from 'pltr/v2'
 import { StyleSheet } from 'react-native'
 import SaveButton from '../../ui/SaveButton'
@@ -17,15 +17,18 @@ import {
   addLeaveListener,
   removeLeaveListener
 } from '../../../utils/Changes'
-import { Text, Input } from '../../shared/common'
+import { Text, ShellButton, Input } from '../../shared/common'
 import Fonts from '../../../fonts'
+import Metrics from '../../../utils/Metrics'
+import Colors from '../../../utils/Colors'
+import { showAlert } from '../../shared/common/AlertDialog'
 
 class CharacterDetails extends Component {
   static getDerivedStateFromProps (props, state) {
     const { characters } = props
     const { isNewCharacter, character } = state
     const oldCharacter = (isNewCharacter ? {} : characters.find((pl) => pl.id == character.id))
-    const { tags = [], bookIds = [] } = oldCharacter
+    const { tags = [], bookIds = [] } = oldCharacter || {}
     return {
       character: { ...character, bookIds, tags }
     }
@@ -126,6 +129,31 @@ class CharacterDetails extends Component {
       character: { ...this.state.character, categoryId: val },
       changes: true
     })
+  }
+
+  handleAskToDelete = () => {
+    const { character: { name } } = this.state
+    showAlert({
+      title: t('Delete Character'),
+      message: t('Are you sure you want to delete {name}?', { name })
+        .replace('delete ', 'delete\n'),
+      actions: [
+        {
+          name: t('Yes, Delete'),
+          danger: true,
+          callback: this.handleDeleteCharacter
+        },
+        {
+          name: t('Cancel')
+        }
+      ]
+    })
+  }
+
+  handleDeleteCharacter = () => {
+    const { character: { id } } = this.state
+    this.props.navigation.goBack()
+    this.props.actions.deleteCharacter(id)
   }
 
   renderAttachments () {
@@ -273,6 +301,14 @@ class CharacterDetails extends Component {
         </View>
         {this.renderTemplates()}
         {this.renderCustomAttributes()}
+        <ShellButton
+          onPress={this.handleAskToDelete}
+          style={styles.trashButton}>
+          <Icon
+            type='FontAwesome5'
+            name='trash'
+            style={{ color: Colors.textGray, fontSize: Fonts.size.regular }} />
+        </ShellButton>
       </DetailsScrollView>
     )
   }
@@ -293,6 +329,10 @@ const styles = StyleSheet.create({
   },
   labelText: {
     ...Fonts.style.bold
+  },
+  trashButton: {
+    alignSelf: 'flex-end',
+    padding: Metrics.baseMargin
   }
 })
 
