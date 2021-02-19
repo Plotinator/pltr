@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import t from 'format-message'
 import { Label, View, Item } from 'native-base'
-import { actions, selectors, initialState } from 'pltr/v2'
+import { actions, selectors, initialState, newIds } from 'pltr/v2'
 import { StyleSheet } from 'react-native'
 import SaveButton from '../../ui/SaveButton'
 import AttachmentList from '../../shared/attachments/AttachmentList'
@@ -21,26 +21,34 @@ import { Text, Input } from '../../shared/common'
 import Fonts from '../../../fonts'
 
 class CharacterDetails extends Component {
-  state = {}
   static getDerivedStateFromProps (props, state) {
+    const { characters } = props
+    const { isNewCharacter, character } = state
+    const oldCharacter = (isNewCharacter ? {} : characters.find((pl) => pl.id == character.id))
+    const { tags = [], bookIds = [] } = oldCharacter
+    return {
+      character: { ...character, bookIds, tags }
+    }
+  }
+
+  constructor (props) {
+    super(props)
     const { route, customAttributes, characters } = props
     const { isNewCharacter, character } = route.params
-    let characterObj =
-      state.character ||
-      (isNewCharacter
-        ? cloneDeep(initialState.character)
-        : characters.find((ch) => ch.id == character.id))
-    let customAttrs =
-      state.customAttrs ||
+    const stateCharacter = character || {
+      ...cloneDeep(initialState.character),
+      id: newIds.nextId(characters)
+    }
+    const customAttrs =
       customAttributes.reduce((acc, attr) => {
-        acc[attr.name] = characterObj[attr.name]
+        acc[attr.name] = stateCharacter[attr.name]
         return acc
       }, {})
-    return {
-      isNewCharacter: state.isNewCharacter || isNewCharacter,
-      customAttrs: customAttrs,
-      character: characterObj,
-      changes: state.changes || isNewCharacter
+    this.state = {
+      isNewCharacter,
+      character: stateCharacter,
+      changes: isNewCharacter,
+      customAttrs
     }
   }
 
@@ -284,8 +292,7 @@ const styles = StyleSheet.create({
     marginRight: 8
   },
   labelText: {
-    ...Fonts.style.semiBold,
-    fontSize: Fonts.size.h5
+    ...Fonts.style.bold
   }
 })
 
