@@ -4,7 +4,7 @@ import PropTypes from 'react-proptypes'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Icon, Label, Item, View } from 'native-base'
-import { selectors, actions, initialState } from 'pltr/v2'
+import { selectors, actions, initialState, newIds } from 'pltr/v2'
 import { StyleSheet, Platform } from 'react-native'
 import t from 'format-message'
 import ChapterPicker from '../../ui/ChapterPicker'
@@ -14,7 +14,7 @@ import AttachmentList from '../../shared/attachments/AttachmentList'
 import DetailsScrollView from '../shared/DetailsScrollView'
 import Colors from '../../../utils/Colors'
 import Metrics from '../../../utils/Metrics'
-import { Text, Input, RichEditor } from '../../shared/common'
+import { Text, ShellButton, Input, RichEditor } from '../../shared/common'
 import RichTextEditor from '../../shared/RichTextEditor'
 import Fonts from '../../../fonts'
 import {
@@ -27,28 +27,30 @@ import { showAlert } from '../../shared/common/AlertDialog'
 // cooresponds to CardDialog in desktop
 
 class SceneDetails extends Component {
-  state = {}
-
   static getDerivedStateFromProps (props, state) {
-    const { route, cards } = props
-    const { isNewCard, card, chapterId } = route.params
-    let cardObj = {}
-    if (isNewCard) {
-      // TODO: confirm description override as well as
-      // the new text rich editor with HTML text
-      cardObj = state.card || {
-        ...cloneDeep(initialState.card),
-        description: '',
-        chapterId: chapterId
-      }
-    } else {
-      cardObj = state.card || cards.find((c) => c.id == card.id)
-    }
+    const { cards } = props
+    const { isNewCard, card } = state
+    const oldCard = isNewCard ? {} : cards.find(c => c.id == card.id)
+    const { tags = [], characters = [], places = [] } = oldCard
     return {
-      isNewCard: state.isNewCard === undefined ? isNewCard : state.isNewCard,
-      chapterId: chapterId,
-      card: cardObj,
-      changes: state.changes === undefined ? isNewCard : state.changes
+      card: { ...card, tags, characters, places }
+    }
+  }
+
+  constructor (props) {
+    super(props)
+    const { route, cards, lines } = props
+    const { isNewCard, card, chapterId } = route.params
+    this.state = {
+      isNewCard,
+      chapterId,
+      card: card || {
+        ...cloneDeep(initialState.card),
+        id: newIds.nextId(cards),
+        beatId: chapterId,
+        lineId: lines[0] && lines[0].id
+      },
+      changes: isNewCard
     }
   }
 
@@ -91,20 +93,13 @@ class SceneDetails extends Component {
   }
 
   saveChanges = () => {
-    const { isSeries } = this.props
     const { changes, isNewCard, card } = this.state
     if (!changes) return
     if (!card.title) return this.toastError(t('Give your scene a title'))
     console.log('CARD', card)
     if (isNewCard) {
-      if (isSeries) {
-        if (!card.seriesLineId) {
-          return this.plotlineError()
-        }
-      } else {
-        if (!card.lineId) {
-          return this.plotlineError()
-        }
+      if (!card.lineId) {
+        return this.plotlineError()
       }
       this.props.actions.addCard({ ...card })
       this.props.navigation.setParams({ isNewCard: false })
@@ -115,24 +110,14 @@ class SceneDetails extends Component {
   }
 
   changeChapter = (val) => {
-    const { isSeries } = this.props
     const { card } = this.state
-    if (isSeries) {
-      this.setState({ card: { ...card, beatId: val } })
-    } else {
-      this.setState({ card: { ...card, chapterId: val } })
-    }
-    this.props.actions.changeScene(card.id, val, this.props.bookId)
+    this.setState({ card: { ...card, beatId: val } })
+    this.props.actions.changeBeat(card.id, val, this.props.bookId)
   }
 
   changeLine = (val) => {
-    const { isSeries } = this.props
     const { card } = this.state
-    if (isSeries) {
-      this.setState({ card: { ...card, seriesLineId: val } })
-    } else {
-      this.setState({ card: { ...card, lineId: val } })
-    }
+    this.setState({ card: { ...card, lineId: val } })
     this.props.actions.changeLine(card.id, val, this.props.bookId)
   }
 
@@ -161,6 +146,31 @@ class SceneDetails extends Component {
   handleOnEditorFocus = () =>
     this.detailsScroller && this.detailsScroller.getScroller().scrollToEnd()
 
+  handleAskToDelete = () => {
+    const { card: { title } } = this.state
+    showAlert({
+      title: t('Delete Scene'),
+      message: t('Are you sure you want to delete {name}?', { name: title })
+        .replace('delete ', 'delete\n'),
+      actions: [
+        {
+          name: t('Yes, Delete'),
+          danger: true,
+          callback: this.handleDeleteScene
+        },
+        {
+          name: t('Cancel')
+        }
+      ]
+    })
+  }
+
+  handleDeleteScene = () => {
+    const { card: { id } } = this.state
+    this.props.actions.deleteCard(id)
+    this.props.navigation.goBack()
+  }
+
   renderAttachments () {
     const { card, isNewCard } = this.state
     if (isNewCard) return null
@@ -175,13 +185,12 @@ class SceneDetails extends Component {
   }
 
   render () {
-    const { isSeries } = this.props
     const {
       card,
       card: { title, description }
     } = this.state
-    const chapterId = (isSeries ? card.beatId : card.chapterId) || ''
-    const lineId = (isSeries ? card.seriesLineId : card.lineId) || ''
+    const chapterId = card.beatId || ''
+    const lineId = card.lineId || ''
     return (
       <DetailsScrollView ref={this.setScroller}>
         <View style={styles.container}>
@@ -225,6 +234,14 @@ class SceneDetails extends Component {
               onFocus={this.handleOnEditorFocus}
               onChange={this.handleDescriptionChange}
             />*/}
+            <ShellButton
+              onPress={this.handleAskToDelete}
+              style={styles.trashButton}>
+              <Icon
+                type='FontAwesome5'
+                name='trash'
+                style={{ color: Colors.textGray, fontSize: Fonts.size.regular }} />
+            </ShellButton>
           </View>
         </View>
       </DetailsScrollView>
@@ -250,6 +267,11 @@ const styles = StyleSheet.create({
   labelText: {
     ...Fonts.style.semiBold,
     fontSize: Fonts.size.h5
+  },
+  trashButton: {
+    alignSelf: 'flex-end',
+    marginTop: Metrics.baseMargin,
+    padding: Metrics.baseMargin
   }
 })
 
@@ -261,7 +283,6 @@ SceneDetails.propTypes = {
   lines: PropTypes.array.isRequired,
   chapters: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired,
-  isSeries: PropTypes.bool.isRequired,
   positionOffset: PropTypes.number.isRequired,
   cards: PropTypes.array.isRequired,
   bookId: PropTypes.number.isRequired,
@@ -271,9 +292,8 @@ SceneDetails.propTypes = {
 
 function mapStateToProps (state) {
   return {
-    chapters: selectors.sortedChaptersByBookSelector(state),
+    chapters: selectors.sortedBeatsByBookSelector(state),
     lines: selectors.sortedLinesByBookSelector(state),
-    isSeries: selectors.isSeriesSelector(state),
     positionOffset: selectors.positionOffsetSelector(state),
     cards: state.cards,
     bookId: selectors.currentTimelineSelector(state)
@@ -282,8 +302,7 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    actions: bindActionCreators(actions.card, dispatch),
-    uiActions: bindActionCreators(actions.ui, dispatch)
+    actions: bindActionCreators(actions.card, dispatch)
   }
 }
 
