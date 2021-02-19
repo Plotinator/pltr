@@ -11,7 +11,7 @@ export default function RichTextEditor (props) {
   const [height, setHeight] = useState(120)
   const showWarning = isAndroid && !props.readOnly
   const maxHeight = props.maxHeight || 1000
-  const uiStyleOverrides = `<style>.btn { padding: 5px 10px !important; border: none !important; } .btn svg { margin: 1px 0px 3px !important; } .btn-primary { background-color: #F37B3A !important; } .slate-editor__editor { border: 1px solid #F0F0F0 !important; }</style>`
+  const uiStyleOverrides = `<style>.btn { padding: 5px 10px !important; border: none !important; } .btn svg { margin: 1px 0px 3px !important; } .btn-primary { background-color: #F37B3A !important; } .slate-editor__editor { border: 1px solid #F0F0F0 !important; } .slate-editor__editor > div { min-height: 170px; } .slate-editor__wrapper { margin-bottom: 5px; }</style>`
   const fontInject = `
     var styleDiv = document.createElement('div');
     styleDiv.innerHTML = "<style>@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');</style>${uiStyleOverrides}";
@@ -102,14 +102,15 @@ export default function RichTextEditor (props) {
 const styles = StyleSheet.create({
   webview: {
     flex: 1,
-    minHeight: 300
+    minHeight: 250
   },
   loader: {
     position: 'absolute',
     top: 0,
     width: '100%',
+    height: 200,
     flex: 1,
-    flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'center'
   },
   warning: {
