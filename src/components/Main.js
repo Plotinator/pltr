@@ -118,10 +118,10 @@ export default class Main extends Component {
       name: projetName,
       url: documentURL
     })
-
     // top 2 or 4
-    this.setState({ recentDocuments: recentDocuments.splice(0, ifIphoneX(4, 2)) })
-    AsyncStorage.setItem('recentDocuments', JSON.stringify(recentDocuments))
+    const newRecent = recentDocuments.slice(0, ifIphoneX(4, 2))
+    this.setState({ recentDocuments: newRecent })
+    AsyncStorage.setItem('recentDocuments', JSON.stringify(newRecent))
   }
 
   showFileProcessingError () {
@@ -163,7 +163,7 @@ export default class Main extends Component {
       })
   }
 
-  readDocument = ({ name, url }) => {
+  readDocument = ({ url }) => {
     this.readDocumentFile(url)
   }
 
