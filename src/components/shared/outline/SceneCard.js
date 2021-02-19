@@ -127,7 +127,7 @@ function mapStateToProps (state, ownProps) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    actions: bindActionCreators(actions.cardActions, dispatch)
+    actions: bindActionCreators(actions.card, dispatch)
   }
 }
 

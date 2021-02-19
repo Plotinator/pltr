@@ -81,13 +81,13 @@ class Timeline extends Component {
     if (this.props.isSeries) {
       this.props.seriesLineActions.addLineWithTitle(title)
     } else {
-      this.props.lineActions.addLineWithTitle(title, this.props.bookId)
+      this.props.line.addLineWithTitle(title, this.props.bookId)
     }
   }
 
   handleAppendChapter = () => {
     if (this.props.isSeries) {
-      this.props.beatActions.addBeat()
+      this.props.beat.addBeat()
     } else {
       this.props.sceneActions.addScene(this.props.bookId)
     }
@@ -143,7 +143,7 @@ class Timeline extends Component {
       })
       Vibration.vibrate()
       // move the card to these coordinates
-      this.props.cardActions.editCardCoordinates(
+      this.props.card.editCardCoordinates(
         droppedCard.id,
         moveToLineId,
         moveToChapterId,
@@ -536,9 +536,9 @@ function mapDispatchToProps (dispatch) {
   return {
     actions: bindActionCreators(actions.ui, dispatch),
     sceneActions: bindActionCreators(actions.sceneActions, dispatch),
-    lineActions: bindActionCreators(actions.lineActions, dispatch),
-    cardActions: bindActionCreators(actions.cardActions, dispatch),
-    beatActions: bindActionCreators(actions.beatActions, dispatch),
+    lineActions: bindActionCreators(actions.line, dispatch),
+    cardActions: bindActionCreators(actions.card, dispatch),
+    beatActions: bindActionCreators(actions.beat, dispatch),
     seriesLineActions: bindActionCreators(actions.seriesLineActions, dispatch)
   }
 }

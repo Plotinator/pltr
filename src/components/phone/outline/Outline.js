@@ -202,7 +202,7 @@ function mapStateToProps (state) {
 function mapDispatchToProps (dispatch) {
   return {
     actions: bindActionCreators(actions.sceneActions, dispatch),
-    beatActions: bindActionCreators(actions.beatActions, dispatch)
+    beatActions: bindActionCreators(actions.beat, dispatch)
   }
 }
 

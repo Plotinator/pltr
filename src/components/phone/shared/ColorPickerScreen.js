@@ -45,8 +45,8 @@ function mapStateToProps (state, ownProps) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    tagActions: bindActionCreators(actions.tagActions, dispatch),
-    lineActions: bindActionCreators(actions.lineActions, dispatch),
+    tagActions: bindActionCreators(actions.tag, dispatch),
+    lineActions: bindActionCreators(actions.line, dispatch),
     seriesLineActions: bindActionCreators(actions.seriesLineActions, dispatch),
   }
 }

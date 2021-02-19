@@ -151,13 +151,13 @@ function mapDispatchToProps (dispatch, ownProps) {
   const { itemType } = ownProps
   switch (itemType) {
     case 'card':
-      return {actions: bindActionCreators(actions.cardActions, dispatch)}
+      return {actions: bindActionCreators(actions.card, dispatch)}
     case 'note':
-      return {actions: bindActionCreators(actions.noteActions, dispatch)}
+      return {actions: bindActionCreators(actions.note, dispatch)}
     case 'character':
-      return {actions: bindActionCreators(actions.characterActions, dispatch)}
+      return {actions: bindActionCreators(actions.character, dispatch)}
     case 'place':
-      return {actions: bindActionCreators(actions.placeActions, dispatch)}
+      return {actions: bindActionCreators(actions.place, dispatch)}
     default:
       break
   }

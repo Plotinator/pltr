@@ -84,9 +84,9 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    actions: bindActionCreators(actions.cardActions, dispatch),
+    actions: bindActionCreators(actions.card, dispatch),
     chapterActions: bindActionCreators(actions.sceneActions, dispatch),
-    beatActions: bindActionCreators(actions.beatActions, dispatch),
+    beatActions: bindActionCreators(actions.beat, dispatch),
   }
 }
 

@@ -206,8 +206,8 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    actions: bindActionCreators(actions.characterActions, dispatch),
-    customAttributeActions: bindActionCreators(actions.customAttributeActions, dispatch),
+    actions: bindActionCreators(actions.character, dispatch),
+    customAttributeActions: bindActionCreators(actions.customAttribute, dispatch),
     uiActions: bindActionCreators(actions.ui, dispatch),
   }
 }
