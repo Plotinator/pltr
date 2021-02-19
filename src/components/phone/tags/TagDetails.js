@@ -79,7 +79,9 @@ class TagDetails extends Component {
     } else {
       this.props.actions.editTag(id, title, color)
     }
-    this.setState({ isNewTag: false, changes: false })
+    this.setState({ isNewTag: false, changes: false }, () => {
+      this.props.navigation.goBack()
+    })
   }
 
   navigateToColorPicker = () => {
