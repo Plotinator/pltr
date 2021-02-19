@@ -74,7 +74,7 @@ class TagDetails extends Component {
     const { changes, isNewTag, id, title, color } = this.state
     if (!changes) return
     if (isNewTag) {
-      this.props.actions.addTagWithValues(title, color)
+      this.props.actions.addCreatedTag({ title, color })
       this.props.navigation.setParams({ isNewTag: false })
     } else {
       this.props.actions.editTag(id, title, color)
