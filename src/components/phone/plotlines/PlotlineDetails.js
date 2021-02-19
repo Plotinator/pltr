@@ -14,9 +14,9 @@ import DetailsScrollView from '../shared/DetailsScrollView'
 class PlotlineDetails extends Component {
   state = {}
   static getDerivedStateFromProps (props, state) {
-    const { route, lines, seriesLines } = props
-    const { line, isSeries } = route.params
-    const lineFromRedux = isSeries ? seriesLines.find(l => l.id == line.id) : lines.find(l => l.id == line.id)
+    const { route, lines } = props
+    const { line } = route.params
+    const lineFromRedux = lines.find(l => l.id == line.id)
     return {
       line: state.changes && state.line ? state.line : lineFromRedux,
       changes: state.changes,
@@ -39,14 +39,10 @@ class PlotlineDetails extends Component {
   }
 
   saveChanges = () => {
-    const { route, seriesLineActions, actions } = this.props
+    const { route, actions } = this.props
     const { changes, line } = this.state
     if (!changes) return
-    if (route.params.isSeries) {
-      seriesLineActions.editLine(line.id, line.title, line.color)
-    } else {
-      actions.editLine(line.id, line.title, line.color)
-    }
+    actions.editLine(line.id, line.title, line.color)
     this.setState({changes: false})
   }
 
@@ -122,22 +118,19 @@ const styles = StyleSheet.create({
 
 PlotlineDetails.propTypes = {
   lines: PropTypes.array.isRequired,
-  seriesLines: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired,
   navigation: PropTypes.object.isRequired,
 }
 
 function mapStateToProps (state) {
   return {
-    lines: state.lines,
-    seriesLines: state.seriesLines,
+    lines: state.lines
   }
 }
 
 function mapDispatchToProps (dispatch) {
   return {
-    actions: bindActionCreators(actions.line, dispatch),
-    seriesLineActions: bindActionCreators(actions.seriesLineActions, dispatch),
+    actions: bindActionCreators(actions.line, dispatch)
   }
 }
 

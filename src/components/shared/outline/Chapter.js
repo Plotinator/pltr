@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux'
 import { sortBy } from 'lodash'
 import t from 'format-message'
 import cx from 'classnames'
-import { selectors, actions, cardHelpers, listHelpers, chapterHelpers } from 'pltr/v2'
+import { selectors, actions, helpers } from 'pltr/v2'
 import { H3, Icon, Card, CardItem, View } from 'native-base'
 import { SwipeRow } from 'react-native-swipe-list-view'
 import SceneCard from './SceneCard'
@@ -20,8 +20,8 @@ class Chapter extends Component {
   state = {sortedCards: []}
 
   static getDerivedStateFromProps (nextProps, nextState) {
-    const { chapter, cards, lines, isSeries } = nextProps
-    const sortedCards = cardHelpers.sortCardsInChapter(chapter.autoOutlineSort, cards, lines, isSeries)
+    const { chapter, cards, lines } = nextProps
+    const sortedCards = helpers.card.sortCardsInBeat(chapter.autoOutlineSort, cards, lines)
     return {sortedCards}
   }
 
@@ -30,45 +30,41 @@ class Chapter extends Component {
   }
 
   autoSortChapter = () => {
-    const { chapterActions, beatActions, chapter, isSeries } = this.props
-    if (isSeries) {
-      beatActions.autoSortBeat(chapter.id)
-    } else {
-      chapterActions.autoSortChapter(chapter.id)
-    }
+    const { beatActions, chapter } = this.props
+    beatActions.autoSortBeat(chapter.id)
   }
 
   reorderCards = ({current, currentIndex, dropped}) => {
     const { sortedCards } = this.state
-    const { isSeries, chapter, actions } = this.props
+    const { chapter, actions } = this.props
     const currentIds = sortedCards.map(c => c.id)
-    const currentLineId = isSeries ? current.seriesLineId : current.lineId
+    const currentLineId = current.lineId
     let newOrderInChapter = []
     let newOrderWithinLine = null
 
     // already in chapter
     if (currentIds.includes(dropped.cardId)) {
       // flip it to manual sort
-      newOrderInChapter = listHelpers.moveToAbove(dropped.index, currentIndex, currentIds)
+      newOrderInChapter = helpers.lists.moveToAbove(dropped.index, currentIndex, currentIds)
       if (dropped.lineId == currentLineId) {
         // if same line, also update positionWithinLine
-        const cardIdsInLine = sortedCards.filter(c => isSeries ? c.seriesLineId == currentLineId : c.lineId == currentLineId).map(c => c.id)
+        const cardIdsInLine = sortedCards.filter(c => c.lineId == currentLineId).map(c => c.id)
         const currentPosition = sortedCards.find(c => c.id == dropped.cardId).positionWithinLine
-        newOrderWithinLine = listHelpers.moveToAbove(currentPosition, current.positionWithinLine, cardIdsInLine)
+        newOrderWithinLine = helpers.lists.moveToAbove(currentPosition, current.positionWithinLine, cardIdsInLine)
       }
-      actions.reorderCardsInChapter(chapter.id, currentLineId, isSeries, newOrderInChapter, newOrderWithinLine)
+      actions.reorderCardsInBeat(chapter.id, currentLineId, newOrderInChapter, newOrderWithinLine)
     } else {
       // dropped in from a different chapter
       if (dropped.lineId == currentLineId) {
         // if same line, can just update positionWithinLine
-        let cardIdsWithinLine = sortedCards.filter(c => isSeries ? c.seriesLineId == currentLineId : c.lineId == currentLineId).map(c => c.id)
+        let cardIdsWithinLine = sortedCards.filter(c => c.lineId == currentLineId).map(c => c.id)
         cardIdsWithinLine.splice(current.positionWithinLine, 0, dropped.cardId)
-        actions.reorderCardsWithinLine(chapter.id, currentLineId, isSeries, cardIdsWithinLine)
+        actions.reorderCardsWithinLine(chapter.id, currentLineId, cardIdsWithinLine)
       } else {
         // flip to manual sort
         newOrderInChapter = currentIds
         newOrderInChapter.splice(currentIndex, 0, dropped.cardId)
-        actions.reorderCardsInChapter(chapter.id, currentLineId, isSeries, newOrderInChapter, null, dropped.cardId)
+        actions.reorderCardsInBeat(chapter.id, currentLineId, newOrderInChapter, null, dropped.cardId)
       }
     }
   }
@@ -102,10 +98,10 @@ class Chapter extends Component {
   }
 
   render () {
-    const { chapter, cards, activeFilter, positionOffset, isSeries } = this.props
+    const { chapter, cards, activeFilter, positionOffset } = this.props
     if (activeFilter && !cards.length) return null
 
-    const chapterTitle = chapterHelpers.chapterTitle(chapter, positionOffset, isSeries)
+    const chapterTitle = helpers.beats.beatTitle(chapter, positionOffset)
     const renderedCards = this.renderCards()
     const manualSort = this.renderManualSort()
     return (
@@ -163,7 +159,6 @@ Chapter.propTypes = {
   activeFilter: PropTypes.bool.isRequired,
   ui: PropTypes.object.isRequired,
   lines: PropTypes.array.isRequired,
-  isSeries: PropTypes.bool.isRequired,
   positionOffset: PropTypes.number.isRequired,
   navigation: PropTypes.object.isRequired,
   render: PropTypes.func.isRequired,
@@ -173,16 +168,14 @@ function mapStateToProps (state) {
   return {
     ui: state.ui,
     lines: selectors.sortedLinesByBookSelector(state),
-    isSeries: selectors.isSeriesSelector(state),
-    positionOffset: selectors.positionOffsetSelector(state),
+    positionOffset: selectors.positionOffsetSelector(state)
   }
 }
 
 function mapDispatchToProps (dispatch) {
   return {
     actions: bindActionCreators(actions.card, dispatch),
-    chapterActions: bindActionCreators(actions.sceneActions, dispatch),
-    beatActions: bindActionCreators(actions.beat, dispatch),
+    beatActions: bindActionCreators(actions.beat, dispatch)
   }
 }
 

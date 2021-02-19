@@ -7,7 +7,7 @@ import { SwipeRow } from 'react-native-swipe-list-view'
 import { View, Button, H3 } from 'native-base'
 import t from 'format-message'
 import cx from 'classnames'
-import { selectors, cardHelpers, actions } from 'pltr/v2'
+import { selectors, helpers, actions } from 'pltr/v2'
 import ErrorBoundary from '../../shared/ErrorBoundary'
 import Chapter from '../../shared/outline/Chapter'
 import TrashButton from '../../ui/TrashButton'
@@ -29,22 +29,12 @@ class Outline extends Component {
   deleteRowReferrer = ref_name => delete this.referrers[ref_name]
 
   renameChapter = ({ chapterId, input: chapterName }) => {
-    const { isSeries, actions, beatActions } = this.props
-
-    if (isSeries) {
-      beatActions.editBeatTitle(chapterId, chapterName)
-    } else {
-      actions.editSceneTitle(chapterId, chapterName)
-    }
+    this.props.beatActions.editBeatTitle(chapterId, chapterName)
   }
 
   deleteChapter = ({ chapterId, input: chapterName, bookId }) => {
-    const { isSeries, actions, beatActions } = this.props
-    if (isSeries) {
-      beatActions.deleteBeat(chapterId, bookId)
-    } else {
-      actions.deleteScene(chapterId, bookId)
-    }
+    const { beatActions } = this.props
+    beatActions.deleteBeat(chapterId, bookId)
     this.deleteRowReferrer(`chapter_row_${chapterId}`)
   }
 
@@ -155,14 +145,14 @@ class Outline extends Component {
 
   render () {
     const { chapters, lines, card2Dmap } = this.props
-    const cardMap = cardHelpers.cardMapping(
+    const cardMap = helpers.card.cardMapping(
       chapters,
       lines,
       card2Dmap,
       this.state.currentLine
     )
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: 'white' }}>
         <FlatList
           data={chapters}
           renderItem={({ item }) => this.renderChapter(item, cardMap)}
@@ -184,24 +174,21 @@ Outline.propTypes = {
   card2Dmap: PropTypes.object.isRequired,
   file: PropTypes.object.isRequired,
   ui: PropTypes.object.isRequired,
-  isSeries: PropTypes.bool,
   navigation: PropTypes.object.isRequired
 }
 
 function mapStateToProps (state) {
   return {
-    chapters: selectors.sortedChaptersByBookSelector(state),
+    chapters: selectors.sortedBeatsByBookSelector(state),
     lines: selectors.sortedLinesByBookSelector(state),
     card2Dmap: selectors.cardMapSelector(state),
     file: state.file,
-    ui: state.ui,
-    isSeries: selectors.isSeriesSelector(state)
+    ui: state.ui
   }
 }
 
 function mapDispatchToProps (dispatch) {
   return {
-    actions: bindActionCreators(actions.sceneActions, dispatch),
     beatActions: bindActionCreators(actions.beat, dispatch)
   }
 }

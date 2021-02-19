@@ -23,7 +23,7 @@ export default function OutlineStack(props) {
     const currentTimeline = state.ui.currentTimeline
 
     // TODO: rename scene to chapter
-    store.dispatch(actions.sceneActions.addScene(currentTimeline))
+    store.dispatch(actions.beat.addBeat(currentTimeline))
   }
 
   const addBook = () => {

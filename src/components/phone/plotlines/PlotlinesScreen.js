@@ -22,29 +22,20 @@ class PlotlinesScreen extends Component {
   state = {text: ''}
 
   navigateToDetails = (line) => {
-    const { isSeries } = this.props
-    this.props.navigation.navigate('PlotlineDetails', { line, isSeries })
+    this.props.navigation.navigate('PlotlineDetails', { line })
   }
 
   add = () => {
     const { text } = this.state
-    const { bookId, actions, seriesLineActions, isSeries } = this.props
+    const { bookId, actions } = this.props
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
-    if (isSeries) {
-      seriesLineActions.addLineWithTitle(text)
-    } else {
-      actions.addLineWithTitle(text, bookId)
-    }
+    actions.addLineWithTitle(text, bookId)
     this.setState({text: ''})
   }
 
   delete = (line) => {
-    const { bookId, actions, seriesLineActions, isSeries } = this.props
-    if (isSeries) {
-      askToDelete(line.title, () => seriesLineActions.deleteLine(line.id))
-    } else {
-      askToDelete(line.title, () => actions.deleteLine(line.id, bookId))
-    }
+    const { bookId, actions } = this.props
+    askToDelete(line.title, () => actions.deleteLine(line.id, bookId))
   }
 
   renderItem = ({ item }) => {
@@ -146,15 +137,13 @@ PlotlinesScreen.propTypes = {
 function mapStateToProps (state, ownProps) {
   return {
     lines: selectors.sortedLinesByBookSelector(state),
-    bookId: selectors.currentTimelineSelector(state),
-    isSeries: selectors.isSeriesSelector(state),
+    bookId: selectors.currentTimelineSelector(state)
   }
 }
 
 function mapDispatchToProps (dispatch) {
   return {
-    actions: bindActionCreators(actions.line, dispatch),
-    seriesLineActions: bindActionCreators(actions.seriesLineActions, dispatch),
+    actions: bindActionCreators(actions.line, dispatch)
   }
 }
 

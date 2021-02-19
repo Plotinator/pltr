@@ -104,27 +104,19 @@ SceneCard.propTypes = {
   ui: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired,
   images: PropTypes.object,
-  isSeries: PropTypes.bool.isRequired,
   navigation: PropTypes.object.isRequired,
 }
 
 function mapStateToProps (state, ownProps) {
   let line = null
-  let isSeries = selectors.isSeriesSelector(state)
-  if (isSeries) {
-    // get the right seriesLines
-    line = state.seriesLines.find(sl => sl.id === ownProps.card.seriesLineId)
-  } else {
-    // get the right lines for state.ui.currentTimeline (bookId)
-    line = state.lines.find(l => l.id == ownProps.card.lineId)
-  }
+  // get the right lines for state.ui.currentTimeline (bookId)
+  line = state.lines.find(l => l.id == ownProps.card.lineId)
   return {
     line: line,
     tags: state.tags,
     characters: state.characters,
     places: state.places,
-    ui: state.ui,
-    isSeries: isSeries,
+    ui: state.ui
   }
 }
 

@@ -9,15 +9,13 @@ import { Container, Content } from 'native-base'
 class ColorPickerScreen extends Component {
 
   chooseColor = (color) => {
-    const { navigation, route, tagActions, lineActions, seriesLineActions } = this.props
+    const { navigation, route, tagActions, lineActions } = this.props
     const { id, type } = route.params
 
     if (type == 'tag') {
       tagActions.changeColor(id, color)
     } else if (type == 'line') {
       lineActions.editLineColor(id, color)
-    } else if (type == 'seriesLine') {
-      seriesLineActions.editLineColor(id, color)
     }
     navigation.pop()
   }
@@ -35,8 +33,7 @@ ColorPickerScreen.propTypes = {
   navigation: PropTypes.object.isRequired,
   route: PropTypes.object.isRequired,
   tagActions: PropTypes.object.isRequired,
-  lineActions: PropTypes.object.isRequired,
-  seriesLineActions: PropTypes.object.isRequired,
+  lineActions: PropTypes.object.isRequired
 }
 
 function mapStateToProps (state, ownProps) {
@@ -46,8 +43,7 @@ function mapStateToProps (state, ownProps) {
 function mapDispatchToProps (dispatch) {
   return {
     tagActions: bindActionCreators(actions.tag, dispatch),
-    lineActions: bindActionCreators(actions.line, dispatch),
-    seriesLineActions: bindActionCreators(actions.seriesLineActions, dispatch),
+    lineActions: bindActionCreators(actions.line, dispatch)
   }
 }
 
