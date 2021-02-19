@@ -38,7 +38,7 @@ class SceneCard extends Component {
     const lineColor = { color: line.color.toLowerCase() }
     if (isOnTablet) {
       return (
-        <Card style={[styles.card, {borderColor: line.color.toLowerCase()}]}>
+        <Card style={[styles.card, { borderColor: line.color.toLowerCase() }]}>
           <View style={styles.paddedTitleBox}>
             <Text style={[styles.tabletLineText, lineColor]}>({line.title})</Text>
           </View>
@@ -68,6 +68,9 @@ const styles = StyleSheet.create({
     marginBottom: Metrics.baseMargin,
     marginLeft: Metrics.doubleBaseMargin,
     marginRight: Metrics.doubleBaseMargin,
+    borderRadius: Metrics.cornerRadius,
+    overflow: 'hidden',
+    borderWidth: 2
   },
   lineText: {
     fontSize: 12,
