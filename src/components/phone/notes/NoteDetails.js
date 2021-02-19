@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import t from 'format-message'
 import { Container, Content, Form, View } from 'native-base'
-import { actions, selectors, initialState } from 'pltr/v2'
+import { actions, selectors, initialState, newIds } from 'pltr/v2'
 import { StyleSheet, Platform } from 'react-native'
 import SaveButton from '../../ui/SaveButton'
 import AttachmentList from '../../shared/attachments/AttachmentList'
@@ -21,14 +21,24 @@ import Metrics from '../../../utils/Metrics'
 import Fonts from '../../../fonts'
 
 class NoteDetails extends Component {
-  state = {}
   static getDerivedStateFromProps (props, state) {
+    const { notes } = props
+    const { isNewNote, note } = state
+    const oldNote = isNewNote ? {} : notes.find(n => n.id == note.id)
+    const { bookIds = [], tags = [], characters = [], places = [] } = oldNote
+    return {
+      note: { ...note, bookIds, tags, characters, places }
+    }
+  }
+
+  constructor (props) {
+    super(props)
     const { route, notes } = props
     const { isNewNote, note } = route.params
-    return {
-      isNewNote: state.isNewNote || isNewNote,
-      note: state.note || (isNewNote ? cloneDeep(initialState.note) : notes.find(n => n.id == note.id)),
-      changes: state.changes || isNewNote,
+    this.state = {
+      isNewNote,
+      note: note || {...cloneDeep(initialState.note), id: newIds.nextId(notes) },
+      changes: isNewNote,
     }
   }
 
@@ -97,7 +107,7 @@ class NoteDetails extends Component {
     </View>
       { this.renderAttachments() }
       <View style={[styles.afterList, styles.rceView]}>
-        <Text fontStyle='semiBold'>{t('Content')}</Text>
+        <Text fontStyle='bold'>{t('Content')}</Text>
         <RichTextEditor
           initialValue={note.content}
           onChange={val => this.setState({note: {...note, content: val}, changes: true}) }
@@ -136,7 +146,7 @@ function mapStateToProps (state) {
     tags: selectors.sortedTagsSelector(state),
     characters: selectors.charactersSortedAtoZSelector(state),
     places: selectors.placesSortedAtoZSelector(state),
-    notes: state.notes,
+    notes: selectors.allNotesSelector(state),
   }
 }
 
