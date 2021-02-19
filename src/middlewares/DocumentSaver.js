@@ -22,6 +22,8 @@ const DocumentSaver = store => next => action => {
   if (BLACKLIST.includes(action.type)) return result
   // var isNewFile = action.type === NEW_FILE
   const state = store.getState()
+  console.log('==================> STATE SAVED <=================')
+  console.log(state)
   const documentData = JSON.stringify(state, null, 2)
 
   saveDocument(documentData)
