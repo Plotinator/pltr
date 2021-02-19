@@ -27,7 +27,7 @@
     "message": "App Version: { version }"
   },
   "Are you sure you want to delete {name}?": {
-    "message": "Are you sure you want to delete { name }?"
+    "message": "Are you sure you want to delete \"{ name }\"?"
   },
   "Attach Books": {
     "message": "Attach Books"
@@ -74,11 +74,20 @@
   "Delete Chapter": {
     "message": "Delete Chapter"
   },
+  "Delete Character": {
+    "message": "Delete Character"
+  },
   "Delete Plotline": {
     "message": "Delete Plotline"
   },
   "Delete Plotline {name}?": {
     "message": "Delete Plotline \"{name}\"?"
+  },
+  "Delete Scene": {
+    "message": "Delete Scene"
+  },
+  "Delete Scene {name}?": {
+    "message": "Delete Scene \"{name}\"?"
   },
   "Default Colors": {
     "message": "Default Colors"
