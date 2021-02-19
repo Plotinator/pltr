@@ -107,8 +107,9 @@ class SeriesDetails extends Component {
     if (!this.functs[stateName]) {
       this.functs[stateName] = (textValue) => {
         const toChange = {}
-        toChange[stateName] = textValue
-        const state = { book: { ...book, ...toChange } }
+        book[stateName] = textValue
+        const state = { book }
+        console.log('BOOK', book)
         state.changes = true
         this.setState(state)
       }
