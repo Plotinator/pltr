@@ -16,17 +16,23 @@ import Colors from '../../../utils/Colors'
 import Fonts from '../../../fonts'
 
 class Chapter extends Component {
-
-  state = {sortedCards: []}
+  state = { sortedCards: [] }
 
   static getDerivedStateFromProps (nextProps, nextState) {
     const { chapter, cards, lines } = nextProps
-    const sortedCards = helpers.card.sortCardsInBeat(chapter.autoOutlineSort, cards, lines)
-    return {sortedCards}
+    const sortedCards = helpers.card.sortCardsInBeat(
+      chapter.autoOutlineSort,
+      cards,
+      lines
+    )
+    return { sortedCards }
   }
 
   navigateToNewCard = () => {
-    this.props.navigation.push('SceneDetails', {isNewCard: true, chapterId: this.props.chapter.id})
+    this.props.navigation.push('SceneDetails', {
+      isNewCard: true,
+      beatId: this.props.chapter.id
+    })
   }
 
   autoSortChapter = () => {
@@ -34,37 +40,65 @@ class Chapter extends Component {
     beatActions.autoSortBeat(chapter.id)
   }
 
-  reorderCards = ({current, currentIndex, dropped}) => {
+  reorderCards = ({ current, currentIndex, dropped }) => {
     const { sortedCards } = this.state
     const { chapter, actions } = this.props
-    const currentIds = sortedCards.map(c => c.id)
+    const currentIds = sortedCards.map((c) => c.id)
     const currentLineId = current.lineId
     let newOrderInChapter = []
     let newOrderWithinLine = null
 
     // already in chapter
-    if (currentIds.includes(dropped.cardId)) {
+    if (currentIds.includes (dropped.cardId)) {
       // flip it to manual sort
-      newOrderInChapter = helpers.lists.moveToAbove(dropped.index, currentIndex, currentIds)
+      newOrderInChapter = helpers.lists.moveToAbove(
+        dropped.index,
+        currentIndex,
+        currentIds
+      )
       if (dropped.lineId == currentLineId) {
         // if same line, also update positionWithinLine
-        const cardIdsInLine = sortedCards.filter(c => c.lineId == currentLineId).map(c => c.id)
-        const currentPosition = sortedCards.find(c => c.id == dropped.cardId).positionWithinLine
-        newOrderWithinLine = helpers.lists.moveToAbove(currentPosition, current.positionWithinLine, cardIdsInLine)
+        const cardIdsInLine = sortedCards
+          .filter((c) => c.lineId == currentLineId)
+          .map((c) => c.id)
+        const currentPosition = sortedCards.find((c) => c.id == dropped.cardId)
+          .positionWithinLine
+        newOrderWithinLine = helpers.lists.moveToAbove(
+          currentPosition,
+          current.positionWithinLine,
+          cardIdsInLine
+        )
       }
-      actions.reorderCardsInBeat(chapter.id, currentLineId, newOrderInChapter, newOrderWithinLine)
+      actions.reorderCardsInBeat(
+        chapter.id,
+        currentLineId,
+        newOrderInChapter,
+        newOrderWithinLine
+      )
     } else {
       // dropped in from a different chapter
       if (dropped.lineId == currentLineId) {
         // if same line, can just update positionWithinLine
-        let cardIdsWithinLine = sortedCards.filter(c => c.lineId == currentLineId).map(c => c.id)
+        let cardIdsWithinLine = sortedCards
+          .filter((c) => c.lineId == currentLineId)
+          .map((c) => c.id)
         cardIdsWithinLine.splice(current.positionWithinLine, 0, dropped.cardId)
-        actions.reorderCardsWithinLine(chapter.id, currentLineId, cardIdsWithinLine)
+        actions.reorderCardsWithinLine(
+          chapter.id,
+          currentLineId,
+          cardIdsWithinLine
+        )
       } else {
         // flip to manual sort
         newOrderInChapter = currentIds
         newOrderInChapter.splice(currentIndex, 0, dropped.cardId)
-        actions.reorderCardsInBeat(chapter.id, currentLineId, newOrderInChapter, null, dropped.cardId)
+        actions.reorderCardsInBeat(
+          chapter.id,
+          currentLineId,
+          newOrderInChapter,
+          null,
+          dropped.cardId
+        )
       }
     }
   }
@@ -72,9 +106,7 @@ class Chapter extends Component {
   renderManualSort () {
     if (this.props.chapter.autoOutlineSort) return null
     return (
-      <ShellButton
-        onPress={this.autoSortChapter}
-        style={styles.manualSorted}>
+      <ShellButton onPress={this.autoSortChapter} style={styles.manualSorted}>
         <Text fontStyle='semiBold' fontSize='small' white>
           {t('Manually Sorted')}
         </Text>
@@ -90,7 +122,13 @@ class Chapter extends Component {
       <View style={styles.cardsContainer}>
         {sortedCards.map((c, idx) => {
           return (
-            <SceneCard key={c.id} card={c} index={idx} reorder={this.reorderCards} navigation={this.props.navigation}/>
+            <SceneCard
+              key={c.id}
+              card={c}
+              index={idx}
+              reorder={this.reorderCards}
+              navigation={this.props.navigation}
+            />
           )
         })}
       </View>
@@ -107,7 +145,13 @@ class Chapter extends Component {
     return (
       <TouchableWithoutFeedback>
         <View>
-          {this.props.render(chapterTitle, renderedCards, manualSort, this.navigateToNewCard, chapter)}
+          {this.props.render(
+            chapterTitle,
+            renderedCards,
+            manualSort,
+            this.navigateToNewCard,
+            chapter
+          )}
         </View>
       </TouchableWithoutFeedback>
     )
@@ -117,11 +161,11 @@ class Chapter extends Component {
 const styles = StyleSheet.create({
   cardsContainer: {
     backgroundColor: Colors.cloud,
-    paddingTop: Metrics.baseMargin,
+    paddingTop: Metrics.baseMargin
   },
   chapterView: {
     backgroundColor: 'white',
-    padding: 8,
+    padding: 8
   },
   sliderRow: {
     flex: 1,
@@ -132,10 +176,10 @@ const styles = StyleSheet.create({
   title: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   addScene: {
-    fontSize: 16,
+    fontSize: 16
   },
   manualSorted: {
     padding: Metrics.baseMargin,
@@ -161,7 +205,7 @@ Chapter.propTypes = {
   lines: PropTypes.array.isRequired,
   positionOffset: PropTypes.number.isRequired,
   navigation: PropTypes.object.isRequired,
-  render: PropTypes.func.isRequired,
+  render: PropTypes.func.isRequired
 }
 
 function mapStateToProps (state) {
@@ -179,7 +223,4 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Chapter)
+export default connect(mapStateToProps, mapDispatchToProps)(Chapter)

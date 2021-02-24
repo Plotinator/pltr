@@ -163,7 +163,7 @@ Outline.propTypes = {
 
 function mapStateToProps (state) {
   return {
-    chapters: selectors.sortedChaptersByBookSelector(state),
+    chapters: selectors.sortedBeatsByBookSelector(state),
     lines: selectors.sortedLinesByBookSelector(state),
     card2Dmap: selectors.cardMapSelector(state),
     file: state.file,

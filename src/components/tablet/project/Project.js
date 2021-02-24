@@ -32,12 +32,12 @@ class Project extends Component {
 
   openEditModal = (id) => {
     // this.props.navigation.push('SeriesDetails', { id })
-    this.props.ui.changeCurrentTimeline(id)
+    this.props.uiActions.changeCurrentTimeline(id)
     this.props.navigation.navigate('Timeline')
   }
 
   navigateToTimeline = (id) => {
-    this.props.ui.changeCurrentTimeline(id)
+    this.props.uiActions.changeCurrentTimeline(id)
     this.props.navigation.navigate('Timeline')
   }
 

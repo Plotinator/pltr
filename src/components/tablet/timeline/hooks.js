@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react'
 
-export function useRegisterCoordinates (registerFN, chapterId, lineId, isBlank, positionWithinLine, title) {
+export function useRegisterCoordinates (registerFN, beatId, lineId, isBlank, positionWithinLine, title) {
   const cellRef = useRef(null)
 
   useEffect(() => {
@@ -10,7 +10,7 @@ export function useRegisterCoordinates (registerFN, chapterId, lineId, isBlank, 
     } else {
       setTimeout(() => measure(), 0)
     }
-  }, [cellRef, chapterId, lineId])
+  }, [cellRef, beatId, lineId])
 
   const measure = () => {
     if (positionWithinLine != 0) return // only register the first scene position in each stack
@@ -19,7 +19,7 @@ export function useRegisterCoordinates (registerFN, chapterId, lineId, isBlank, 
     if (root) {
       root.measure((x, y, width, height, px, py) => {
         if (!px || !py) return
-        registerFN({x: px, y: py, chapterId, lineId, isBlank, title})
+        registerFN({x: px, y: py, beatId, lineId, isBlank, title})
       })
     }
   }

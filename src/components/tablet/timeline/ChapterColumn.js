@@ -12,25 +12,21 @@ import Cell from '../shared/Cell'
 
 class Chapter extends Component {
 
-  state = {sortedCards: []}
+  state = { sortedCards: [] }
 
   static getDerivedStateFromProps (nextProps, nextState) {
-    const { chapter, cards, lines, isSeries } = nextProps
-    const sortedCards = cardHelpers.sortCardsInChapter(chapter.autoOutlineSort, cards, lines, isSeries)
+    const { chapter, cards, lines } = nextProps
+    const sortedCards = cardHelpers.sortCardsInChapter(chapter.autoOutlineSort, cards, lines)
     return {sortedCards}
   }
 
   navigateToNewCard = () => {
-    this.props.navigation.push('SceneDetails', {isNewCard: true, chapterId: this.props.chapter.id})
+    this.props.navigation.push('SceneDetails', {isNewCard: true, beatId: this.props.chapter.id})
   }
 
   autoSortChapter = () => {
-    const { chapterActions, beatActions, chapter, isSeries } = this.props
-    if (isSeries) {
-      beatActions.autoSortBeat(chapter.id)
-    } else {
-      chapterActions.autoSortChapter(chapter.id)
-    }
+    const { beatActions, chapter } = this.props
+    beatActions.autoSortBeat(chapter.id)
   }
 
   renderSceneCard = (value) => {
@@ -44,7 +40,7 @@ class Chapter extends Component {
   }
 
   render () {
-    const { chapter, ui, cards, activeFilter, positionOffset, isSeries } = this.props
+    const { chapter, ui, cards, activeFilter, positionOffset } = this.props
     if (activeFilter && !cards.length) return null
 
     const klasses = cx('outline__scene-title', {darkmode: ui.darkMode})
@@ -68,7 +64,6 @@ Chapter.propTypes = {
   activeFilter: PropTypes.bool.isRequired,
   ui: PropTypes.object.isRequired,
   lines: PropTypes.array.isRequired,
-  isSeries: PropTypes.bool.isRequired,
   positionOffset: PropTypes.number.isRequired,
   navigation: PropTypes.object.isRequired,
 }
@@ -77,7 +72,6 @@ function mapStateToProps (state) {
   return {
     ui: state.ui,
     lines: selectors.sortedLinesByBookSelector(state),
-    isSeries: selectors.isSeriesSelector(state),
     positionOffset: selectors.positionOffsetSelector(state),
   }
 }
@@ -85,7 +79,6 @@ function mapStateToProps (state) {
 function mapDispatchToProps (dispatch) {
   return {
     actions: bindActionCreators(actions.card, dispatch),
-    chapterActions: bindActionCreators(actions.sceneActions, dispatch),
     beatActions: bindActionCreators(actions.beat, dispatch),
   }
 }

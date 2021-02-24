@@ -20,7 +20,7 @@ export default function CardCell (props) {
   const [panResponder, setResponder] = useState(null)
   const [cellRef, measure] = useRegisterCoordinates(
     props.register,
-    card.chapterId,
+    card.beatId,
     card.lineId,
     false,
     card.positionWithinLine,

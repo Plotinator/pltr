@@ -35,23 +35,19 @@ const styles = StyleSheet.create({
 })
 
 TimelineWrapper.propTypes = {
-  chapters: PropTypes.array.isRequired,
   lines: PropTypes.array.isRequired,
   card2Dmap: PropTypes.object.isRequired,
   file: PropTypes.object.isRequired,
   ui: PropTypes.object.isRequired,
-  isSeries: PropTypes.bool,
   navigation: PropTypes.object.isRequired
 }
 
 function mapStateToProps (state) {
   return {
-    chapters: selectors.sortedChaptersByBookSelector(state),
     lines: selectors.sortedLinesByBookSelector(state),
     card2Dmap: selectors.cardMapSelector(state),
     file: state.file,
-    ui: state.ui,
-    isSeries: selectors.isSeriesSelector(state)
+    ui: state.ui
   }
 }
 

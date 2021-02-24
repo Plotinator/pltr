@@ -12,30 +12,26 @@ import { Text } from '../../shared/common'
 
 class ChapterTitleCell extends PureComponent {
 
-  handleNewChapterName = ({ input }) => {
-    const { isSeries, actions, beatActions, chapterId } = this.props
+  handleNewBeatName = ({ input }) => {
+    const { actions, beatActions, beatId } = this.props
     const newName = input || 'auto'
-    if (isSeries) {
-      beatActions.editBeatTitle(chapterId, newName)
-    } else {
-      actions.editSceneTitle(chapterId, newName)
-    }
+    actions.editBeatTitle(beatId, newName)
   }
 
-  handleDeleteChapter = () => {
+  handleDeleteBeat = () => {
     setTimeout(() => {
       // delay for 1 sec
-      const { chapterId, chapterTitle, bookId } = this.props
+      const { beatId, beatTitle, bookId } = this.props
       showAlert({
         title: t('Delete Chapter'),
-        message: t('Delete Chapter {name}?', { name: chapterTitle }),
+        message: t('Delete Chapter {name}?', { name: beatTitle }),
         actions: [{
-          chapterId,
+          beatId,
           bookId,
           icon: 'trash',
           danger: true,
           name: t('Delete Chapter'),
-          callback: this.deleteChapter
+          callback: this.deleteBeat
         },
         {
           name: t('Cancel')
@@ -44,46 +40,42 @@ class ChapterTitleCell extends PureComponent {
     }, 300)
   }
 
-  deleteChapter = ({ chapterId, bookId }) => {
-    const { isSeries, actions, beatActions } = this.props
-    if (isSeries) {
-      beatActions.deleteBeat(chapterId, bookId)
-    } else {
-      actions.deleteScene(chapterId, bookId)
-    }
+  deleteBeat = ({ beatId, bookId }) => {
+    const { actions, beatActions } = this.props
+    actions.deleteBeat(beatId, bookId)
   }
 
   askToRename = () => {
-    const { chapterTitle, chapter } = this.props
-    const chapterName =  chapter.title || 'auto'
+    const { beatTitle, beat } = this.props
+    const beatName =  beat.title || 'auto'
     showInputAlert({
-      title: chapterTitle,
+      title: beatTitle,
       message: t('Enter Chapter\'s name or enter'),
-      inputText: chapterName,
+      inputText: beatName,
       actions: [
         {
           name: t('Rename'),
           icon: 'pen',
           positive: true,
-          callback: this.handleNewChapterName
+          callback: this.handleNewBeatName
         },
         { name: t('Cancel') },
         {
           name: t('Delete'),
           icon: 'trash',
           danger: 1,
-          callback: this.handleDeleteChapter
+          callback: this.handleDeleteBeat
         }
       ]
     })
   }
 
   render () {
-    const { chapterTitle } = this.props
+    const { beatTitle } = this.props
     // ref is needed
     return (
       <Cell style={styles.cell} ref={r => this.ref = r} onPress={this.askToRename}>
-        <Text fontStyle='bold' style={styles.text}>{chapterTitle}</Text>
+        <Text fontStyle='bold' style={styles.text}>{beatTitle}</Text>
       </Cell>
     )
   }
@@ -100,28 +92,22 @@ const styles = StyleSheet.create({
 })
 
 ChapterTitleCell.propTypes = {
-  chapterId: PropTypes.number.isRequired,
+  beatId: PropTypes.number.isRequired,
   actions: PropTypes.object.isRequired,
-  beatActions: PropTypes.object.isRequired,
-  chapters: PropTypes.array.isRequired,
-  chapter: PropTypes.object.isRequired,
   ui: PropTypes.object.isRequired,
-  isSeries: PropTypes.bool,
-  chapterTitle: PropTypes.string.isRequired,
+  beatTitle: PropTypes.string.isRequired,
   positionOffset: PropTypes.number.isRequired,
 }
 
 const makeMapState = (state) => {
-  const uniqueChapterSelector = selectors.makeChapterSelector()
-  const uniqueChapterTitleSelector = selectors.makeChapterTitleSelector()
+  const uniqueBeatSelector = selectors.makeBeatSelector()
+  const uniqueBeatTitleSelector = selectors.makeBeatTitleSelector()
 
   return function mapStateToProps (state, ownProps) {
     return {
-      chapters: state.chapters,
-      chapter: uniqueChapterSelector(state, ownProps.chapterId),
+      beat: uniqueBeatSelector(state, ownProps.beatId),
       ui: state.ui,
-      isSeries: selectors.isSeriesSelector(state),
-      chapterTitle: uniqueChapterTitleSelector(state, ownProps.chapterId),
+      beatTitle: uniqueBeatTitleSelector(state, ownProps.beatId),
       positionOffset: selectors.positionOffsetSelector(state),
     }
   }
@@ -129,8 +115,7 @@ const makeMapState = (state) => {
 
 function mapDispatchToProps (dispatch) {
   return {
-    actions: bindActionCreators(actions.sceneActions, dispatch),
-    beatActions: bindActionCreators(actions.beat, dispatch),
+    actions: bindActionCreators(actions.beat, dispatch)
   }
 }
 

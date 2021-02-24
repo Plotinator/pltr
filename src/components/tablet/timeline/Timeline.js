@@ -78,31 +78,24 @@ class Timeline extends Component {
 
   handleAppendLine = () => {
     const title = t('New Plotline')
-    if (this.props.isSeries) {
-      this.props.seriesLineActions.addLineWithTitle(title)
-    } else {
-      this.props.line.addLineWithTitle(title, this.props.bookId)
-    }
+    this.props.lineActions.addLineWithTitle(title, this.props.bookId)
   }
 
-  handleAppendChapter = () => {
-    if (this.props.isSeries) {
-      this.props.beat.addBeat()
-    } else {
-      this.props.sceneActions.addScene(this.props.bookId)
-    }
+  handleAppendBeat = () => {
+    const { bookId, beatActions } = this.props
+    beatActions.addBeat(bookId)
   }
 
   registerDropCoordinate = (cell) => {
     // ignore ids of 'new'
-    if (cell.chapterId == 'new' || cell.lineId == 'new') return
+    if (cell.beatId == 'new' || cell.lineId == 'new') return
     this.dropCoordinates.push(cell)
   }
 
   dropCard = (x, y, droppedCard) => {
     const trueX = x + this.scrollX
     const trueY = y + this.scrollY
-    let moveToChapterId = null
+    let moveToBeatId = null
     let moveToLineId = null
     let moveToIsBlank = false
     const success = this.dropCoordinates.some((coord) => {
@@ -111,10 +104,10 @@ class Timeline extends Component {
       if (this.isWithinCell (trueX, trueY, coord)) {
         // do nothing for dropping on itself
         if (
-          coord.chapterId != droppedCard.chapterId ||
+          coord.beatId != droppedCard.beatId ||
           coord.lineId != droppedCard.lineId
         ) {
-          moveToChapterId = coord.chapterId
+          moveToBeatId = coord.beatId
           moveToLineId = coord.lineId
           moveToIsBlank = coord.isBlank
           return true
@@ -129,13 +122,13 @@ class Timeline extends Component {
       this.dropCoordinates = this.dropCoordinates.filter((coord) => {
         // TODO: remove duplicates
         if (
-          droppedCard.chapterId == coord.chapterId &&
+          droppedCard.beatId == coord.beatId &&
           droppedCard.lineId == coord.lineId
         )
           return false
         if (
           moveToIsBlank &&
-          moveToChapterId == coord.chapterId &&
+          moveToBeatId == coord.beatId &&
           moveToLineId == coord.lineId
         )
           return false
@@ -143,10 +136,10 @@ class Timeline extends Component {
       })
       Vibration.vibrate()
       // move the card to these coordinates
-      this.props.card.editCardCoordinates(
+      this.props.cardActions.editCardCoordinates(
         droppedCard.id,
         moveToLineId,
-        moveToChapterId,
+        moveToBeatId,
         this.props.bookId
       )
     }
@@ -277,10 +270,10 @@ class Timeline extends Component {
     return <Cell key='corner-cell' style={styles.cornerCell} />
   }
 
-  renderChapterColumn = (section) => {
-    let { item: chapter } = section
+  renderBeatColumn = (section) => {
+    let { item: beat } = section
     let cells = []
-    if (chapter.new) {
+    if (beat.new) {
       cells = [<Cell key='+'></Cell>]
     } else {
       const { lineMap, cardMap, linesMaxCards } = this.props
@@ -288,9 +281,9 @@ class Timeline extends Component {
       cells = lineMapKeys.reduce((acc, linePosition) => {
         const line = lineMap[linePosition]
         const lineMaxCards = linesMaxCards[line.id]
-        const cards = cardMap[`${line.id}-${chapter.id}`]
+        const cards = cardMap[`${line.id}-${beat.id}`]
         const key = `${cards ? 'card' : 'blank'}-${
-          chapter.position
+          beat.position
         }-${linePosition}`
         if (cards) {
           cards.forEach((c, idx) =>
@@ -318,7 +311,7 @@ class Timeline extends Component {
               color={line.color}
               register={this.registerDropCoordinate}
               lineId={line.id}
-              chapterId={chapter.id}
+              beatId={beat.id}
               handleDrop={this.dropCard}
               navigation={this.props.navigation}
             />
@@ -339,12 +332,12 @@ class Timeline extends Component {
     return <View style={styles.column}>{cells}</View>
   }
 
-  renderChapterTitles () {
-    const { chapters, bookId } = this.props
-    let cols = chapters.map((ch) => (
-      <ChapterTitleCell key={ch.id} chapterId={ch.id} bookId={bookId} />
+  renderBeatTitles () {
+    const { beats, bookId } = this.props
+    let cols = beats.map((ch) => (
+      <ChapterTitleCell key={ch.id} beatId={ch.id} bookId={bookId} />
     ))
-    cols.push(this.renderPlusButton('new-chapter', this.handleAppendChapter))
+    cols.push(this.renderPlusButton('new-chapter', this.handleAppendBeat))
 
     return (
       <View style={styles.header}>
@@ -453,8 +446,8 @@ class Timeline extends Component {
   }
 
   renderBody () {
-    const { chapters } = this.props
-    const cells = [...chapters, { id: 'new' }] // 'new' is needed to show the + chapter cell
+    const { beats } = this.props
+    const cells = [...beats, { id: 'new' }] // 'new' is needed to show the + chapter cell
 
     return (
       <View>
@@ -463,7 +456,7 @@ class Timeline extends Component {
           style={styles.body}
           horizontal={true}
           data={cells}
-          renderItem={this.renderChapterColumn}
+          renderItem={this.renderBeatColumn}
           keyExtractor={(item) => item.id.toString()}
           stickyHeaderIndices={[0]}
           onScroll={this.scrollEvent}
@@ -485,7 +478,7 @@ class Timeline extends Component {
 
     return (
       <View style={styles.container}>
-        {this.renderChapterTitles()}
+        {this.renderBeatTitles()}
         {this.renderColorPicker()}
         <FlatList
           data={data}
@@ -499,9 +492,8 @@ class Timeline extends Component {
 }
 
 Timeline.propTypes = {
-  chapters: PropTypes.array,
   lineMap: PropTypes.object.isRequired,
-  nextChapterId: PropTypes.number,
+  nextBeatId: PropTypes.number,
   beats: PropTypes.array,
   lines: PropTypes.array,
   seriesLines: PropTypes.array,
@@ -512,22 +504,17 @@ Timeline.propTypes = {
 }
 
 function mapStateToProps (state) {
-  let nextChapterId = -1
+  let nextBeatId = -1
   const bookId = selectors.currentTimelineSelector(state)
-  if (bookId == 'series') {
-    nextChapterId = newIds.nextId(state.beats)
-  } else {
-    nextChapterId = newIds.nextId(state.chapters)
-  }
+  nextBeatId = newIds.nextId(state.beats)
   return {
-    chapters: selectors.sortedChaptersByBookSelector(state),
+    beats: selectors.sortedBeatsByBookSelector(state),
     lineMap: selectors.linePositionMappingSelector(state),
     linesMaxCards: selectors.lineMaxCardsSelector(state),
-    nextChapterId: nextChapterId,
+    nextBeatId: nextBeatId,
     lines: selectors.sortedLinesByBookSelector(state),
     cardMap: selectors.cardMapSelector(state),
     ui: state.ui,
-    isSeries: selectors.isSeriesSelector(state),
     bookId: bookId
   }
 }
@@ -535,11 +522,9 @@ function mapStateToProps (state) {
 function mapDispatchToProps (dispatch) {
   return {
     actions: bindActionCreators(actions.ui, dispatch),
-    sceneActions: bindActionCreators(actions.sceneActions, dispatch),
     lineActions: bindActionCreators(actions.line, dispatch),
     cardActions: bindActionCreators(actions.card, dispatch),
-    beatActions: bindActionCreators(actions.beat, dispatch),
-    seriesLineActions: bindActionCreators(actions.seriesLineActions, dispatch)
+    beatActions: bindActionCreators(actions.beat, dispatch)
   }
 }
 

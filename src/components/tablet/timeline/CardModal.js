@@ -19,10 +19,10 @@ class CardModal extends Component {
   state = {}
 
   static getDerivedStateFromProps (props, state) {
-    const { cards, card, isNewCard, chapterId, lineId } = props
+    const { cards, card, isNewCard, beatId, lineId } = props
     let cardObj = {}
     if (isNewCard) {
-      cardObj = state.card || {...cloneDeep(initialState.card), chapterId, lineId}
+      cardObj = state.card || {...cloneDeep(initialState.card), beatId, lineId}
     } else {
       const cardFromRedux = cards.find(c => c.id == card.id)
       cardObj = state.changes ? state.card : (cardFromRedux || state.card)
@@ -47,8 +47,8 @@ class CardModal extends Component {
   }
 
   changeChapter = (val) => {
-    this.setState({card: {...this.state.card, chapterId: val}})
-    this.props.actions.changeScene(this.state.card.id, val, this.props.bookId)
+    this.setState({card: {...this.state.card, beatId: val}})
+    this.props.actions.changeBeat(this.state.card.id, val, this.props.bookId)
   }
 
   changeLine = (val) => {
@@ -104,7 +104,7 @@ class CardModal extends Component {
                     </View>
                     <View style={styles.formRightItems}>
                       <View style={styles.label}>
-                        <ChapterPicker selectedId={card.chapterId} onChange={this.changeChapter} />
+                        <ChapterPicker selectedId={card.beatId} onChange={this.changeChapter} />
                       </View>
                       <View style={styles.label}>
                         <LinePicker selectedId={card.lineId} onChange={this.changeLine} />
@@ -167,13 +167,12 @@ const styles = StyleSheet.create({
 
 CardModal.propTypes = {
   card: PropTypes.object,
-  chapterId: PropTypes.number.isRequired,
+  beatId: PropTypes.number.isRequired,
   lineId: PropTypes.number.isRequired,
   closeDialog: PropTypes.func,
   lines: PropTypes.array.isRequired,
   chapters: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired,
-  isSeries: PropTypes.bool.isRequired,
   positionOffset: PropTypes.number.isRequired,
   cards: PropTypes.array.isRequired,
   bookId: PropTypes.number.isRequired,
@@ -183,12 +182,11 @@ CardModal.propTypes = {
 
 function mapStateToProps (state) {
   return {
-    chapters: selectors.sortedChaptersByBookSelector(state),
-    lines: selectors.sortedLinesByBookSelector(state),
-    isSeries: selectors.isSeriesSelector(state),
     positionOffset: selectors.positionOffsetSelector(state),
-    cards: state.cards,
+    chapters: selectors.sortedBeatsByBookSelector(state),
+    lines: selectors.sortedLinesByBookSelector(state),
     bookId: selectors.currentTimelineSelector(state),
+    cards: state.cards
   }
 }
 
