@@ -15,8 +15,8 @@ import DrawerButton from '../../ui/DrawerButton'
 
 class Tags extends Component {
 
-  createTag = (name) => {
-    this.props.actions.addTagWithValues(name, null)
+  createTag = (title) => {
+    this.props.actions.addCreatedTag({ title })
   }
 
   promptToCreate = () => {

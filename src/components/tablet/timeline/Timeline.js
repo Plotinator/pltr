@@ -12,7 +12,7 @@ import {
 } from 'react-native'
 import { bindActionCreators } from 'redux'
 import t from 'format-message'
-import { actions, selectors, newIds, cardHelpers } from 'pltr/v2'
+import { actions, selectors, newIds } from 'pltr/v2'
 import ChapterTitleCell from './ChapterTitleCell'
 import { BlankCell } from './BlankCell'
 import Cell from '../shared/Cell'

@@ -10,7 +10,7 @@ import t from 'format-message'
 import { attachmentItemText } from '../../../utils/attachment_titles'
 
 class AttachmentSelector extends Component {
-
+  state = { selected: []}
   static getDerivedStateFromProps (props, state) {
     const { type, item, itemType } = props
     const connectedItem = props[`${itemType}s`].find(things => things.id == item.id)
@@ -27,6 +27,7 @@ class AttachmentSelector extends Component {
         return actions.addPlace(item.id, id)
       case 'tags':
         return actions.addTag(item.id, id)
+      case 'books':
       case 'bookIds':
         return actions.addBook(item.id, id)
       default:
@@ -43,6 +44,7 @@ class AttachmentSelector extends Component {
         return actions.removePlace(this.state.item.id, id)
       case 'tags':
         return actions.removeTag(this.state.item.id, id)
+      case 'books':
       case 'bookIds':
         return actions.removeBook(this.state.item.id, id)
       default:
@@ -137,11 +139,13 @@ AttachmentSelector.propTypes = {
 }
 
 function mapStateToProps (state) {
+  console.log('BOOKS', state.books)
   return {
     characters: selectors.charactersSortedAtoZSelector(state),
     places: selectors.placesSortedAtoZSelector(state),
     tags: selectors.sortedTagsSelector(state),
     books: state.books,
+    bookIds: state.books,
     cards: state.cards,
     notes: state.notes,
   }

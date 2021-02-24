@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux'
 import { sortBy } from 'lodash'
 import t from 'format-message'
 import cx from 'classnames'
-import { selectors, actions, cardHelpers, listHelpers, chapterHelpers } from 'pltr/v2'
+import { selectors, actions, helpers } from 'pltr/v2'
 import { H3, Icon, Card, CardItem, View, Button, Text } from 'native-base'
 import { StyleSheet } from 'react-native'
 import Cell from '../shared/Cell'
@@ -16,7 +16,7 @@ class Chapter extends Component {
 
   static getDerivedStateFromProps (nextProps, nextState) {
     const { chapter, cards, lines } = nextProps
-    const sortedCards = cardHelpers.sortCardsInChapter(chapter.autoOutlineSort, cards, lines)
+    const sortedCards = helpers.card.sortCardsInChapter(chapter.autoOutlineSort, cards, lines)
     return {sortedCards}
   }
 
