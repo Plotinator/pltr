@@ -145,7 +145,7 @@ function mapStateToProps (state) {
     places: selectors.placesSortedAtoZSelector(state),
     tags: selectors.sortedTagsSelector(state),
     books: state.books,
-    bookIds: state.books,
+    // bookIds: state.books,
     cards: state.cards,
     notes: state.notes,
   }
