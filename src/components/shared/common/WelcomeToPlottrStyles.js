@@ -26,6 +26,6 @@ export default ScaledSheet.create({
     width: '70@ms',
     height: '30@ms',
     resizeMode: 'contain',
-    marginLeft: 7
+    marginLeft: '7@ms'
   }
 })

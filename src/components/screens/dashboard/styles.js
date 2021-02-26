@@ -31,8 +31,8 @@ export default ScaledSheet.create({
     width: '80%'
   },
   or: {
-    marginTop: baseMargin,
-    marginBottom: -baseMargin
+    marginTop: baseMargin * 1.5,
+    marginBottom: baseMargin * 1.5
   },
   project: {
     width: '50%',
@@ -47,14 +47,14 @@ export default ScaledSheet.create({
     resizeMode: 'contain'
   },
   actionButtons: {
-    minHeight: '150@vs',
+    // minHeight: 150,
     width: '90%',
     maxWidth: 400,
     justifyContent: 'center',
     alignItems: 'center'
   },
   button: {
-    marginTop: doubleBaseMargin
+    marginBottom: doubleBaseMargin
   },
   logout: {
     paddingTop: doubleSection
