@@ -14,6 +14,7 @@ const Colors = {
   inputWhiteText: '#C2C2C2',
   inputBorderWhite: '#D6D6D6',
   gray: '#E0E0E0',
+  grayBlack: '#353535',
   textBlack: '#505050',
   darkGray: '#303030',
   textGray: '#888888',

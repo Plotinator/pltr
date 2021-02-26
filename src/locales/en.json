@@ -2,17 +2,17 @@
   "(Logout)": {
     "message": "(Logout)"
   },
-  "{amount} / Weekly": {
-    "message": "${amount} / Weekly"
+  "{amount} Weekly": {
+    "message": "${amount}\nWeekly"
   },
-  "{amount} / Monthly": {
-    "message": "${amount} / Monthly"
+  "{amount} Monthly": {
+    "message": "${amount}\nMonthly"
   },
-  "{amount} / Yearly": {
-    "message": "${amount} / Yearly"
+  "{amount} Yearly": {
+    "message": "${amount}\nYearly"
   },
-  "{amount} / Lifetime": {
-    "message": "${amount} / Lifetime"
+  "{amount} Lifetime": {
+    "message": "${amount}\nLifetime"
   },
   "A verification code was sent to:": {
     "message": "A verification code was sent to:"
@@ -359,8 +359,11 @@
   "Plottr Mobile Monthly": {
     "message": "Plottr Mobile Monthly"
   },
-  "Plottr Mobile Weekly": {
-    "message": "Plottr Mobile Weekly"
+  "Plottr Mobile Yearly": {
+    "message": "Plottr Mobile Yearly"
+  },
+  "Plottr Mobile": {
+    "message": "Plottr Mobile"
   },
   "Premise": {
     "message": "Premise"

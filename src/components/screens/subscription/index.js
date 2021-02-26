@@ -27,6 +27,7 @@ import {
 } from '../../../utils/InAppPurchases'
 import { showAlert } from '../../shared/common/AlertDialog'
 import Metrics from '../../../utils/Metrics'
+import Colors from '../../../utils/Colors'
 
 const { IS_ANDROID } = Metrics
 
@@ -290,16 +291,25 @@ const SubscriptionButton = ({ disabled, subscription, onPress, index }) => {
   // change this logic if pattern
   // is changed in the future
   const termFromId = productId.replace(/(plottrprod|sub)/ig, '')
-  const buttonText = t(`{amount} / ${termFromId}`, { amount: price })
+  const termText = termFromId.toUpperCase()
+  const buttonStyles = [
+    styles.subButton,
+    { backgroundColor: Colors[buttonColors[index]] }
+  ]
   return (
-    <Button
+    <ShellButton
       block
       disabled={disabled}
-      style={styles.button}
-      onPress={handleSubscription}
-      buttonColor={buttonColors[index]}>
-      {buttonText}
-    </Button>
+      style={buttonStyles}
+      onPress={handleSubscription}>
+      <View style={styles.buttonText}>
+        <Text white fontStyle='bold'>{t(`Plottr Mobile ${termFromId}`)}</Text>
+      </View>
+      <View style={styles.badge}>
+        <Text white fontStyle='bold'>${price}</Text>
+        <Text white fontStyle='bold' style={styles.termText}>{termText}</Text>
+      </View>
+    </ShellButton>
   )
 }
 
