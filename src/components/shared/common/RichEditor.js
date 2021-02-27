@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { View } from 'react-native'
 import styles from './RichEditorStyles'
-import Colors from '../../../utils/Colors'
 import { actions, RichEditor, RichToolbar } from 'react-native-pell-rich-editor';
 import { moderateScale } from 'react-native-size-matters';
 import Text from './Text'
+import { Colors, HTMLToSlate, SlateToHTML } from '../../../utils'
 
 export default class RichTextEditor extends Component {
 
@@ -16,8 +16,14 @@ export default class RichTextEditor extends Component {
     //
   }
 
+  handleOnChange = (HTML) => {
+    const { onChange } = this.props
+    const SLATE = HTMLToSlate(HTML)
+    onChange && onChange(SLATE)
+  }
+
   renderTitleIcons = title => ({ tintColor }) => (
-    <Text fontSize={16} fontStyle={'bold'} color={tintColor}>{title}</Text>
+    <Text fontSize={16} fontStyle={'bold'} style={{color:tintColor}}>{title}</Text>
   )
 
   render () {
@@ -25,7 +31,6 @@ export default class RichTextEditor extends Component {
       style,
       value,
       onFocus,
-      onChange,
       placeholder,
       editorStyle,
       toolbarStyle,
@@ -42,7 +47,9 @@ export default class RichTextEditor extends Component {
     editorStyles.push(editorStyle)
 
     const placeholderText = placeholder || ''
-    const initialText = typeof initialHTMLText == 'object' ? '' : initialHTMLText
+    const initialText = typeof initialHTMLText == 'object'
+      ? SlateToHTML(initialHTMLText)
+      : initialHTMLText
     return (
       <View style={containerStyles}>
         <RichEditor
@@ -53,7 +60,7 @@ export default class RichTextEditor extends Component {
           placeholder={placeholderText}
           onFocus={onFocus}
           initialContentHTML={initialText}
-          onChange={onChange}
+          onChange={this.handleOnChange}
           editorInitializedCallback={this.handleEditorInitialized}
         />
         <RichToolbar

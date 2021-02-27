@@ -19,6 +19,7 @@
     "@react-navigation/native": "^5.7.3",
     "@react-navigation/stack": "^5.9.0",
     "classnames": "^2.2.6",
+    "dom-parser": "^0.1.6",
     "format-message": "^6.2.3",
     "native-base": "^2.13.14",
     "pltr": "https://github.com/Plotinator/pltr.git#v2.2.17",
@@ -44,6 +45,7 @@
     "react-proptypes": "^1.0.0",
     "react-redux": "^4.4.10",
     "redux": "^3.5.2",
+    "slate-hyperscript": "^0.59.0",
     "tinycolor2": "^1.4.1"
   },
   "devDependencies": {
