@@ -13,6 +13,7 @@ export default function HTMLToSlate (html) {
 }
 
 export function deserialize (el) {
+  console.log('nodeType', el.nodeType)
   if (el.nodeType === 3) {
     // if it's only a bunch of white space, ignore it
     if (
@@ -22,49 +23,52 @@ export function deserialize (el) {
     ) {
       return null
     }
-
     return { text: el.textContent.replace(/[\n]/g, ' ') }
   } else if (el.nodeType !== 1) {
     return null
   }
-
   const children = Array.from(el.childNodes)
     .map(deserialize)
     .flat()
 
   switch (el.nodeName) {
-    case 'BODY':
+    case 'div':
       return jsx('fragment', {}, children)
-    case 'BR':
+    case 'br':
       return jsx('element', { type: 'paragraph' }, [{ text: '' }])
-    case 'BLOCKQUOTE':
+    case 'blockquote':
       return jsx('element', { type: 'block-quote' }, children)
-    case 'P':
+    case 'p':
       return jsx('element', { type: 'paragraph' }, children)
-    case 'H1':
+    case 'h1':
+    case 'h2':
       return jsx('element', { type: 'heading-one' }, children)
-    case 'H3':
-    case 'H4':
-    case 'H5':
-    case 'H6':
-    case 'H2':
+    case 'h3':
+    case 'h4':
+    case 'h5':
+    case 'h6':
+    case 'h7':
       return jsx('element', { type: 'heading-two' }, children)
-    case 'UL':
+    case 'ul':
+      console.log('ululul', children)
       return jsx('element', { type: 'bulleted-list' }, children)
-    case 'LI':
+    case 'li':
+      console.log('li', children)
       return jsx('element', { type: 'list-item' }, children)
-    case 'OL':
+    case 'ol':
+      console.log('ol', children)
       return jsx('element', { type: 'numbered-list' }, children)
-    case 'EM':
-    case 'I':
+    case 'em':
+    case 'i':
       return jsx('text', { italic: true, text: el.textContent })
-    case 'STRONG':
+    case 'b':
+    case 'strong':
       return jsx('text', { bold: true, text: el.textContent })
-    case 'U':
+    case 'u':
       return jsx('text', { underline: true, text: el.textContent })
-    case 'DEL':
+    case 'del':
       return jsx('text', { strike: true, text: el.textContent })
-    case 'IMG':
+    case 'img':
       let childrenNodes =
         children && children.length ? children : [{ text: '' }]
       return jsx(
@@ -72,13 +76,13 @@ export function deserialize (el) {
         { type: 'image-link', url: el.getAttribute('src') },
         childrenNodes
       )
-    case 'A':
+    case 'a':
       return jsx(
         'element',
         { type: 'link', url: el.getAttribute('href') },
         children
       )
     default:
-      return el.textContent
+      return { text: el.textContent }
   }
 }

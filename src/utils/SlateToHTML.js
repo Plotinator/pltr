@@ -2,22 +2,21 @@ export default function SlateToHTML (slate) {
   let HTML = ``
   if (typeof slate === 'object') {
     slate.map(obj => {
-      console.log('SLATE OBJECT', obj)
       switch (obj.type) {
         case 'heading-one':
-          HTML += `<h1>${obj.text}</h1>\n`
+          HTML += `<h1>${SlateToHTML(obj.children)}</h1>\n`
           break
         case 'heading-two':
-          HTML += `<h2>${obj.text}</h2>\n`
+          HTML += `<h2>${SlateToHTML(obj.children)}</h2>\n`
           break
         case 'link':
-          HTML += `<a href="${obj.url}">${obj.text}</a>\n`
+          HTML += `<a href="${obj.url}">${SlateToHTML(obj.children)}</a>\n`
           break
         case 'image-link':
           HTML += `<img src="${obj.url}"/>\n`
           break
         case 'list-item':
-          HTML += `<li>${obj.text}</li>\n`
+          HTML += `<li>${SlateToHTML(obj.children)}</li>\n`
           break
         case 'numbered-list':
           HTML += `<ol>${SlateToHTML(obj.children)}</ol>\n`
