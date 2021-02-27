@@ -103,11 +103,11 @@ export default class Dashboard extends Component {
           <View style={styles.container}>
             <WelcomeToPlottr>
               {hasRecentDocuments ? (
-                <Text fontStyle='light' color='black'>
+                <Text fontStyle='light' color='black' style={styles.welcomeText}>
                   {t('Open one of your most recent projects')}
                 </Text>
               ) : (
-                <Text fontStyle='light' color='black' center>
+                <Text fontStyle='light' color='black' center style={styles.welcomeText}>
                   {t('You may create a new project')}
                 </Text>
               )}

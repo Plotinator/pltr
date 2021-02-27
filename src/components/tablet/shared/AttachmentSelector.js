@@ -220,10 +220,6 @@ AttachmentSelector.propTypes = {
 }
 
 function mapStateToProps (state) {
-  console.log('BOOKS', state.books)
-  console.log('TAGS', state.tags)
-  console.log('PLACES', state.places)
-  console.log('CHARACTERS', state.characters)
   const { books = [] } = state
   const bookIds = {}
   Object.keys(books).map((key, index) => {
@@ -231,7 +227,6 @@ function mapStateToProps (state) {
     bookIds[index] = { ...books[key] }
     // }
   })
-  console.log('bookIds', bookIds)
   return {
     characters: selectors.charactersSortedAtoZSelector(state),
     places: selectors.placesSortedAtoZSelector(state),

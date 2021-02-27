@@ -43,7 +43,7 @@ export default class AuthenticatorRoot extends Component {
       verifying
     }
     const wasVerifying = !verifying && prevState.verifying
-    const isVerified = user.verified && !prevState.user.verified
+    const isVerified = user && user.verified && !prevState.user.verified
 
     // go to confirmation
     if(wasVerifying && user) {

@@ -30,6 +30,9 @@ export default ScaledSheet.create({
     marginTop: baseMargin,
     width: '80%'
   },
+  welcomeText: {
+    marginBottom: doubleBaseMargin
+  },
   or: {
     marginTop: baseMargin * 1.5,
     marginBottom: baseMargin * 1.5
