@@ -24,7 +24,7 @@ export default class RichTextEditor extends Component {
 
   renderTitleIcons = (
     title,
-    size = 'h4',
+    size = 18,
     style = 'bold',
     props = {}
   ) => ({ tintColor, selected }) => {
@@ -86,11 +86,11 @@ export default class RichTextEditor extends Component {
         />
         <RichToolbar
           style={toolbarStyles}
-          iconSize={moderateScale(20)}
+          iconSize={20}
           iconMap={{
-            bold: this.renderTitleIcons('B', 'h3'),
-            italic: this.renderTitleIcons('I', 'h2', 'semiBoldItalic'),
-            underline: this.renderTitleIcons('U', 'h3', 'semiBold', { underlined: true }),
+            bold: this.renderTitleIcons('B', 20),
+            italic: this.renderTitleIcons('I', 20, 'semiBoldItalic'),
+            underline: this.renderTitleIcons('U', 18, 'semiBold', { underlined: true }),
             heading2: this.renderTitleIcons('H1'),
             heading3: this.renderTitleIcons('H2')
           }}

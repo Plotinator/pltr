@@ -10,8 +10,8 @@ import t from 'format-message'
 import AttachmentList from '../../shared/attachments/AttachmentList'
 import ChapterPicker from '../../ui/ChapterPicker'
 import LinePicker from '../../ui/LinePicker'
-import RichTextEditor from '../../shared/RichTextEditor'
 import { DetailsWrapper, DetailsRight, DetailsLeft } from '../shared/Details'
+import { Text, Input, Button, RichEditor, ShellButton } from '../../shared/common'
 
 // cooresponds to CardDialog in desktop
 
@@ -90,7 +90,7 @@ class CardModal extends Component {
                   </Item>
                   <View style={[styles.afterList, styles.rceView]}>
                     <Label>{t('Description')}</Label>
-                    <RichTextEditor
+                    <RichEditor
                       initialValue={card.description}
                       onChange={val => this.setState({card: {...card, description: val}, changes: true}) }
                       maxHeight={5000}
