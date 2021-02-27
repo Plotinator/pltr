@@ -1,6 +1,7 @@
 const Colors = {
   white: 'white',
   cloud: '#F7F7F7',
+  cloudWhite: '#FAFAFA',
   cloudGray: '#F0F0F0',
   green: '#77BF48',
   red: '#BF4848',

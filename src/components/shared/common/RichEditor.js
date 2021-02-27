@@ -22,9 +22,22 @@ export default class RichTextEditor extends Component {
     onChange && onChange(SLATE)
   }
 
-  renderTitleIcons = title => ({ tintColor }) => (
-    <Text fontSize={16} fontStyle={'bold'} style={{color:tintColor}}>{title}</Text>
-  )
+  renderTitleIcons = (
+    title,
+    size = 'h4',
+    style = 'bold',
+    props = {}
+  ) => ({ tintColor, selected }) => {
+    return (
+      <Text
+        {...props}
+        fontSize={size}
+        fontStyle={style}
+        style={{ color: selected ? Colors.orange : tintColor }}>
+        {title}
+      </Text>
+    )
+  }
 
   render () {
     const {
@@ -34,6 +47,7 @@ export default class RichTextEditor extends Component {
       placeholder,
       editorStyle,
       toolbarStyle,
+      initialValue,
       initialHTMLText
     } = this.props
 
@@ -47,16 +61,23 @@ export default class RichTextEditor extends Component {
     editorStyles.push(editorStyle)
 
     const placeholderText = placeholder || ''
-    const initialText = typeof initialHTMLText == 'object'
-      ? SlateToHTML(initialHTMLText)
-      : initialHTMLText
+    const html = initialHTMLText || initialValue
+    const initialText = typeof html == 'object'
+      ? SlateToHTML(html)
+      : html
+    const contentCSSText = `font-family: "Open Sans" !important; font-size: 18px; padding: 5px 15px 15px;`
+    const cssText = `@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');`
     return (
       <View style={containerStyles}>
         <RichEditor
           pasteAsPlainText
           ref={this.setEditor}
           style={editorStyles}
-          editorStyle={{ color: Colors.darkGray }}
+          editorStyle={{
+            color: Colors.darkGray,
+            cssText,
+            contentCSSText
+          }}
           placeholder={placeholderText}
           onFocus={onFocus}
           initialContentHTML={initialText}
@@ -67,8 +88,11 @@ export default class RichTextEditor extends Component {
           style={toolbarStyles}
           iconSize={moderateScale(20)}
           iconMap={{
+            bold: this.renderTitleIcons('B', 'h3'),
+            italic: this.renderTitleIcons('I', 'h2', 'semiBoldItalic'),
+            underline: this.renderTitleIcons('U', 'h3', 'semiBold', { underlined: true }),
             heading2: this.renderTitleIcons('H1'),
-            heading3: this.renderTitleIcons('H3'),
+            heading3: this.renderTitleIcons('H2')
           }}
           editor={this.richText}
           getEditor={this.getEditor}
@@ -78,16 +102,10 @@ export default class RichTextEditor extends Component {
             actions.setItalic,
             actions.setUnderline,
             actions.setStrikethrough,
-            // actions.alignLeft,
-            // actions.alignCenter,
-            // actions.alignRight,
             actions.heading2,
             actions.heading3,
             actions.insertOrderedList,
-            actions.insertBulletsList,
-            // actions.removeFormat,
-            // actions.undo,
-            // actions.redo,
+            actions.insertBulletsList
           ]}
         />
       </View>
