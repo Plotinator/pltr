@@ -15,7 +15,6 @@ import DetailsScrollView from '../shared/DetailsScrollView'
 import Colors from '../../../utils/Colors'
 import Metrics from '../../../utils/Metrics'
 import { Text, ShellButton, Input, RichEditor } from '../../shared/common'
-import RichTextEditor from '../../shared/RichTextEditor'
 import Fonts from '../../../fonts'
 import {
   checkForChanges,
@@ -221,7 +220,7 @@ class SceneDetails extends Component {
             <Text fontStyle='semiBold' style={styles.label}>
               {t('Description')}:
             </Text>
-            <RichTextEditor
+            <RichEditor
               initialValue={description}
               placeholder={t('Describe the scene')}
               onFocus={this.handleOnEditorFocus}

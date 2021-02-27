@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import PropTypes from 'react-proptypes'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { View, Text, Input, Label, Item, Button, Icon } from 'native-base'
+import { View, Label, Item, Icon } from 'native-base'
 import { selectors, actions, initialState } from 'pltr/v2'
 import { StyleSheet, Modal, KeyboardAvoidingView } from 'react-native'
 import t from 'format-message'
@@ -11,7 +11,7 @@ import AttachmentList from '../../shared/attachments/AttachmentList'
 import ChapterPicker from '../../ui/ChapterPicker'
 import LinePicker from '../../ui/LinePicker'
 import { DetailsWrapper, DetailsRight, DetailsLeft } from '../shared/Details'
-import { Text, Input, Button, RichEditor, ShellButton } from '../../shared/common'
+import { Input, Text, Button, RichEditor, ShellButton } from '../../shared/common'
 
 // cooresponds to CardDialog in desktop
 
@@ -79,17 +79,17 @@ class CardModal extends Component {
           <View style={styles.centered} elevation={10}>
             <View style={styles.contentWrapper}>
               <DetailsWrapper>
-                <DetailsLeft contentContainerStyle={{flex: 1}}>
-                  <Item inlineLabel last style={styles.label}>
-                    <Label>{t('Title')}</Label>
-                    <Input
-                      value={card.title}
-                      onChangeText={text => this.setState({card: {...card, title: text}, changes: true})}
-                      autoCapitalize='sentences'
-                    />
-                  </Item>
-                  <View style={[styles.afterList, styles.rceView]}>
-                    <Label>{t('Description')}</Label>
+                <DetailsLeft contentContainerStyle={styles.left}>
+                  <Input
+                    small
+                    inset
+                    label={t('Title')}
+                    value={card.title}
+                    onChangeText={text => this.setState({card: {...card, title: text}, changes: true})}
+                    autoCapitalize='sentences'
+                  />
+                  <View style={styles.editor}>
+                    <Text fontStyle='semiBold' fontSize='tiny'>{' '}{t('Description')}</Text>
                     <RichEditor
                       initialValue={card.description}
                       onChange={val => this.setState({card: {...card, description: val}, changes: true}) }
@@ -100,7 +100,7 @@ class CardModal extends Component {
                 <DetailsRight>
                   <View>
                     <View style={styles.buttonWrapper}>
-                      <Button rounded light style={styles.button} onPress={this.props.onClose}><Icon type='FontAwesome5' name='times'/></Button>
+                      <ShellButton padded style={styles.closeButton} onPress={this.props.onClose}><Icon type='FontAwesome5' name='times'/></ShellButton>
                     </View>
                     <View style={styles.formRightItems}>
                       <View style={styles.label}>
@@ -113,7 +113,7 @@ class CardModal extends Component {
                     </View>
                   </View>
                   <View style={styles.buttonFooter}>
-                    <Button block success disabled={!changes} onPress={this.saveChanges}><Text>{t('Save')}</Text></Button>
+                    <Button tight disabled={!changes} onPress={this.saveChanges}>{t('Save')}</Button>
                   </View>
                 </DetailsRight>
               </DetailsWrapper>
@@ -126,6 +126,16 @@ class CardModal extends Component {
 }
 
 const styles = StyleSheet.create({
+  closeButton: {
+    borderRadius: 50,
+    marginBottom: 20
+  },
+  left: {
+    paddingTop: 20
+  },
+  editor: {
+    paddingTop: 20
+  },
   centered: {
     flex: 1,
     justifyContent: 'center',

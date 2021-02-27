@@ -9,14 +9,13 @@ import { actions, selectors, initialState, newIds } from 'pltr/v2'
 import { StyleSheet, Platform } from 'react-native'
 import SaveButton from '../../ui/SaveButton'
 import AttachmentList from '../../shared/attachments/AttachmentList'
-import RichTextEditor from '../../shared/RichTextEditor'
 import DetailsScrollView from '../shared/DetailsScrollView'
 import {
   checkForChanges,
   addLeaveListener,
   removeLeaveListener
 } from '../../../utils/Changes'
-import { Text, Input } from '../../shared/common'
+import { Text, Input, RichEditor } from '../../shared/common'
 import Metrics from '../../../utils/Metrics'
 
 class PlaceDetails extends Component {
@@ -125,7 +124,7 @@ class PlaceDetails extends Component {
         return (
           <View key={idx} style={[styles.afterList, styles.rceView]}>
             <Text>{name}</Text>
-            <RichTextEditor
+            <RichEditor
               initialValue={customAttrs[name]}
               onChange={(val) =>
                 this.setState({
@@ -189,7 +188,7 @@ class PlaceDetails extends Component {
         {this.renderAttachments()}
         <View style={[styles.afterList, styles.rceView]}>
           <Text fontStyle='bold'>{t('Notes')}</Text>
-          <RichTextEditor
+          <RichEditor
             initialValue={place.notes}
             onChange={this.handleNotesText}
           />

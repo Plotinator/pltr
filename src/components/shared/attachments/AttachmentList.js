@@ -47,7 +47,9 @@ export default function AttachmentList (props) {
             onPress={() => navigateToAttachmentSelector(type)}>
             <Left style={styles.left}>
               <Badge info style={styles.badge}>
-                <Text white>{item[type].length}</Text>
+                <Text fontSize='h5' fontStyle='semiBold' white>
+                  {item[type].length}
+                </Text>
               </Badge>
               <Text fontStyle='semiBold'>{attachmentItemText(type)}</Text>
             </Left>

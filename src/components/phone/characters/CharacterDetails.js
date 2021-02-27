@@ -10,14 +10,13 @@ import { StyleSheet } from 'react-native'
 import SaveButton from '../../ui/SaveButton'
 import AttachmentList from '../../shared/attachments/AttachmentList'
 import CategoryPicker from '../../ui/CategoryPicker'
-import RichTextEditor from '../../shared/RichTextEditor'
 import DetailsScrollView from '../shared/DetailsScrollView'
 import {
   checkForChanges,
   addLeaveListener,
   removeLeaveListener
 } from '../../../utils/Changes'
-import { Text, ShellButton, Input } from '../../shared/common'
+import { Text, RichEditor, ShellButton, Input } from '../../shared/common'
 import Fonts from '../../../fonts'
 import Metrics from '../../../utils/Metrics'
 import Colors from '../../../utils/Colors'
@@ -178,7 +177,7 @@ class CharacterDetails extends Component {
           return (
             <View key={attr.name} style={[styles.afterList, styles.rceView]}>
               <Text style={styles.labelText}>{attr.name}</Text>
-              <RichTextEditor
+              <RichEditor
                 initialValue={attr.value}
                 onChange={(val) =>
                   this.updateTemplateValue(t.id, attr.name, val)
@@ -214,7 +213,7 @@ class CharacterDetails extends Component {
         return (
           <View key={idx} style={[styles.afterList, styles.rceView]}>
             <Text style={styles.labelText}>{name}</Text>
-            <RichTextEditor
+            <RichEditor
               initialValue={customAttrs[name]}
               onChange={(val) =>
                 this.setState({
@@ -289,7 +288,7 @@ class CharacterDetails extends Component {
         {this.renderAttachments()}
         <View style={[styles.afterList, styles.rceView]}>
           <Text style={styles.labelText}>{t('Notes')}</Text>
-          <RichTextEditor
+          <RichEditor
             initialValue={character.notes}
             onChange={(val) =>
               this.setState({

@@ -9,14 +9,13 @@ import { actions, selectors, initialState, newIds } from 'pltr/v2'
 import { StyleSheet, Platform } from 'react-native'
 import SaveButton from '../../ui/SaveButton'
 import AttachmentList from '../../shared/attachments/AttachmentList'
-import RichTextEditor from '../../shared/RichTextEditor'
 import DetailsScrollView from '../shared/DetailsScrollView'
 import {
   checkForChanges,
   addLeaveListener,
   removeLeaveListener
 } from '../../../utils/Changes'
-import { Text, Input } from '../../shared/common'
+import { Text, Input, RichEditor } from '../../shared/common'
 import Metrics from '../../../utils/Metrics'
 import Fonts from '../../../fonts'
 
@@ -81,6 +80,11 @@ class NoteDetails extends Component {
     this.setState({isNewNote: false, changes: false})
   }
 
+  handleDescriptionChange = content => {
+    const { note } = this.state
+    this.setState({ note: {...note, content }, changes: true })
+  }
+
   renderAttachments () {
     const { note, isNewNote } = this.state
     if (isNewNote) return null
@@ -108,10 +112,10 @@ class NoteDetails extends Component {
       { this.renderAttachments() }
       <View style={[styles.afterList, styles.rceView]}>
         <Text fontStyle='bold'>{t('Content')}</Text>
-        <RichTextEditor
-          initialValue={note.content}
-          onChange={val => this.setState({note: {...note, content: val}, changes: true}) }
-          maxHeight={5000}
+        <RichEditor
+          initialHTMLText={note.content}
+          placeholder={t('Add some notes')}
+          onChange={this.handleDescriptionChange}
         />
       </View>
     </DetailsScrollView>
