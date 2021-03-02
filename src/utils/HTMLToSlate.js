@@ -50,13 +50,10 @@ export function deserialize (el) {
     case 'h7':
       return jsx('element', { type: 'heading-two' }, children)
     case 'ul':
-      console.log('ululul', children)
       return jsx('element', { type: 'bulleted-list' }, children)
     case 'li':
-      console.log('li', children)
       return jsx('element', { type: 'list-item' }, children)
     case 'ol':
-      console.log('ol', children)
       return jsx('element', { type: 'numbered-list' }, children)
     case 'em':
     case 'i':

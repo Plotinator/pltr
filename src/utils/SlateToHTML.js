@@ -18,6 +18,9 @@ export default function SlateToHTML (slate) {
         case 'list-item':
           HTML += `<li>${SlateToHTML(obj.children)}</li>\n`
           break
+        case 'paragraph':
+          HTML += `<p>${SlateToHTML(obj.children)}</p>\n`
+          break
         case 'numbered-list':
           HTML += `<ol>${SlateToHTML(obj.children)}</ol>\n`
           break
