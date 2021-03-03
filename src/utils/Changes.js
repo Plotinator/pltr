@@ -1,6 +1,23 @@
 import t from 'format-message'
 import { showAlert } from '../components/shared/common/AlertDialog'
 
+let autoSaveCallback = null
+
+export const setAutoSaveCallback = callback => {
+  console.log('====> setting autosave', callback)
+  autoSaveCallback = callback
+}
+
+export const clearAutoSaveCallback = () => {
+  console.log('====> clearing autosave', autoSaveCallback)
+  autoSaveCallback = null
+}
+
+export const triggerAutoSaveCallback = () => {
+  console.log('====> autosaving', autoSaveCallback)
+  if (autoSaveCallback) autoSaveCallback()
+}
+
 export const checkForChanges = (
   event,
   changes,
@@ -32,10 +49,16 @@ export const checkForChanges = (
   })
 }
 
-export const addLeaveListener = (navigation, leaveCallback) => {
+export const addLeaveListener = (
+  navigation,
+  leaveCallback,
+  _autoSaveCallback
+) => {
   navigation.addListener('beforeRemove', leaveCallback)
+  if (_autoSaveCallback) setAutoSaveCallback(_autoSaveCallback)
 }
 
 export const removeLeaveListener = (navigation, leaveCallback) => {
   navigation.removeListener('beforeRemove', leaveCallback)
+  clearAutoSaveCallback()
 }

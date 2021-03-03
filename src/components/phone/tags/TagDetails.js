@@ -43,7 +43,7 @@ class TagDetails extends Component {
 
   componentDidMount() {
     const { navigation } = this.props
-    addLeaveListener(navigation, this.checkChanges)
+    addLeaveListener(navigation, this.checkChanges, this.saveChanges)
     this.setSaveButton()
   }
 

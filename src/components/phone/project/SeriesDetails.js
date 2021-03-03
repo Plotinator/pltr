@@ -43,7 +43,7 @@ class SeriesDetails extends Component {
     const { navigation } = this.props
     navigation.setOptions({ title })
     this.setSaveButton()
-    addLeaveListener(navigation, this.checkChanges)
+    addLeaveListener(navigation, this.checkChanges, this.saveChanges)
   }
 
   componentWillUnmount () {

@@ -44,7 +44,7 @@ class NoteDetails extends Component {
   componentDidMount () {
     const { navigation } = this.props
     this.setSaveButton()
-    addLeaveListener(navigation, this.checkChanges)
+    addLeaveListener(navigation, this.checkChanges, this.saveChanges)
   }
 
   componentWillUnmount () {

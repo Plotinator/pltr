@@ -1,5 +1,6 @@
 import React, { useEffect, useState, Component } from 'react'
 import { Provider } from 'react-redux'
+import { AppState } from 'react-native'
 import DocumentRoot from './DocumentRoot'
 import AuthenticatorRoot from './AuthenticatorRoot'
 import { configureStore } from '../store/configureStore'
@@ -12,12 +13,14 @@ import { showAlert, showInputAlert } from './shared/common/AlertDialog'
 import AsyncStorage from '@react-native-community/async-storage'
 import { setDocumentURL } from '../middlewares/DocumentSaver'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
+import { Changes } from '../utils'
 
 let store = configureStore({})
 
 export default class Main extends Component {
   state = {
     document: null,
+    appState: 'active',
     loading: false,
     isSubscribed: false,
     recentDocuments: []
@@ -36,12 +39,46 @@ export default class Main extends Component {
   }
 
   componentDidMount () {
+    console.log('Changes', Changes)
     this.getRecentDocuments()
+    // set app state
+    AppState.addEventListener('change', this.handleAppState)
   }
 
-  handleDocumentOpened = (data) => {
+  componentWillUnmount () {
+    // clean up
+    AppState.removeEventListener('change', this.handleAppState)
+  }
+
+  handleAppState = newState => {
+    const { document, appState } = this.state
+    const state = { appState: newState }
+    const isInActive = newState !== 'active' && appState === 'active'
+    const wasInActive = newState === 'active' && appState !== 'active'
+    const hasDocument = document && document.documentURL
+
+    if (hasDocument) {
+      // document is loaded
+
+      if (isInActive) {
+        // app going into the background
+        Changes.triggerAutoSaveCallback()
+      }
+
+      if (wasInActive) {
+        // app resuming from background
+        // reload document file
+        console.log('reloading document', document.documentURL)
+        this.readDocumentFile(document.documentURL)
+      }
+    }
+    // track app state
+    this.setState(state)
+  }
+
+  handleDocumentOpened = (data, setRecent = true) => {
     this.setDocument(data)
-    this.addRecentDocument(data)
+    if (setRecent) this.addRecentDocument(data)
     this.setLoading(false)
   }
 
@@ -148,7 +185,7 @@ export default class Main extends Component {
     this.setLoading(false)
   }
 
-  readDocumentFile (uri) {
+  readDocumentFile (uri, setRecent = true) {
     this.setLoading(true)
     rnfs.readFile(decodeURI(uri), 'utf8')
       .then((data) => {
@@ -156,7 +193,7 @@ export default class Main extends Component {
           data,
           documentURL: uri
         }
-        this.handleDocumentOpened(document)
+        this.handleDocumentOpened(document, setRecent)
       })
       .catch((err) => {
         this.showFileProcessingError()

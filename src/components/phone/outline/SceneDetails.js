@@ -56,7 +56,7 @@ class SceneDetails extends Component {
   componentDidMount () {
     this.setSaveButton()
     const { navigation } = this.props
-    addLeaveListener(navigation, this.checkChanges)
+    addLeaveListener(navigation, this.checkChanges, this.saveChanges)
   }
 
   componentWillUnmount () {
