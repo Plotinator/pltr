@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { View } from 'react-native'
 import styles from './RichEditorStyles'
-import { actions, RichEditor, RichToolbar } from 'react-native-pell-rich-editor';
-import { moderateScale } from 'react-native-size-matters';
+import { actions, RichEditor, RichToolbar } from 'react-native-pell-rich-editor'
+import { moderateScale } from 'react-native-size-matters'
 import Text from './Text'
 import { Colors, HTMLToSlate, SlateToHTML } from '../../../utils'
 
@@ -18,7 +18,9 @@ export default class RichTextEditor extends Component {
 
   handleOnChange = (HTML) => {
     const { onChange } = this.props
+    console.log('gozinta', HTML)
     const SLATE = HTMLToSlate(HTML)
+    console.log('comes outa', SLATE)
     onChange && onChange(SLATE)
   }
 
@@ -62,9 +64,7 @@ export default class RichTextEditor extends Component {
 
     const placeholderText = placeholder || ''
     const html = initialHTMLText || initialValue
-    const initialText = typeof html == 'object'
-      ? SlateToHTML(html)
-      : html
+    const initialText = typeof html == 'object' ? SlateToHTML(html) : html
     const contentCSSText = `font-family: "Open Sans" !important; font-size: 18px; padding: 5px 15px 15px;`
     const cssText = `@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');`
     return (
