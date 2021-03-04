@@ -20,7 +20,7 @@ export const saveDocument = (documentData, successCallback, errorCallback) => {
     if (Platform.OS === 'ios') {
       DocumentViewController.updateDocument(documentURL, documentData)
     } else if (Platform.OS === 'android') {
-      NativeModules.AndroidDocument.saveDocument(state.file.fileName, documentData)
+      NativeModules.AndroidDocument.saveDocument(documentURL, documentData)
     }
   }
 }
