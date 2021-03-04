@@ -1,7 +1,13 @@
 import { ScaledSheet } from 'react-native-size-matters'
 import Metrics from '../../../utils/Metrics'
 
-const { baseMargin, doubleBaseMargin, section, screenHeight } = Metrics
+const {
+  baseMargin,
+  doubleBaseMargin,
+  section,
+  screenHeight,
+  buttonRadius
+} = Metrics
 
 export default ScaledSheet.create({
   scroller: {
@@ -42,5 +48,28 @@ export default ScaledSheet.create({
   },
   button: {
     marginTop: baseMargin * 1.5
+  },
+  licenseButton: {
+    width: '100%',
+    marginTop: doubleBaseMargin,
+    borderRadius: buttonRadius,
+    borderWidth: 2
+  },
+  licenseHead: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: baseMargin,
+    paddingVertical: baseMargin / 2
+  },
+  licenseRow: {
+    paddingVertical: baseMargin / 2,
+    paddingHorizontal: baseMargin,
+    backgroundColor: 'white',
+    borderTopWidth: 2
+  },
+  licenseSelect: {
+    alignItems: 'center',
+    paddingVertical: baseMargin
   }
 })

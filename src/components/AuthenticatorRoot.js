@@ -6,6 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import t from 'format-message'
 import Verification from './screens/verification'
 import VerificationConfirmation from './screens/verification/Confirmation'
+import VerificationLicenses from './screens/verification/Licenses'
 import Subscription from './screens/subscription'
 import SubscriptionConfirmation from './screens/subscription/Confirmation'
 import ErrorBoundary from './shared/ErrorBoundary'
@@ -73,9 +74,10 @@ export default class AuthenticatorRoot extends Component {
       logout,
       verifyCode,
       verifyLicense,
-      subscribeUser
+      subscribeUser,
+      sendVerificationEmail
     } = this.props
-    const actions = { logout, verifyCode, verifyLicense, subscribeUser }
+    const actions = { logout, verifyCode, verifyLicense, subscribeUser, sendVerificationEmail }
     const needConfirmation = user && user.email && !user.verified
     const initialRouteName = needConfirmation
       ? 'VerificationConfirmation'
@@ -88,6 +90,12 @@ export default class AuthenticatorRoot extends Component {
               <AuthStack.Screen
                 name='Verification'
                 component={Verification}
+                options={noHeader}
+                initialParams={actions}
+              />
+              <AuthStack.Screen
+                name='VerificationLicenses'
+                component={VerificationLicenses}
                 options={noHeader}
                 initialParams={actions}
               />

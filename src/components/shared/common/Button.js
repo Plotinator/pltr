@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { TouchableOpacity, View } from 'react-native'
+import { TouchableOpacity, Keyboard, View } from 'react-native'
 import styles from './ButtonStyles'
 import Text from './Text'
 import Colors from '../../../utils/Colors'
@@ -10,6 +10,12 @@ const AnimatableTouchableOpacity = Animatable.createAnimatableComponent(
 )
 
 export default class Button extends Component {
+  handlePress = () => {
+    Keyboard.dismiss()
+    const { data, onPress } = this.props
+    onPress && onPress(data)
+  }
+
   render () {
     const {
       style,
@@ -59,7 +65,7 @@ export default class Button extends Component {
       <AnimatableTouchableOpacity
         {...this.props}
         style={stylesArray}
-        onPress={onPress}
+        onPress={this.handlePress}
         disabled={disabled}>
         <View style={wrapperStylesArray}>
           <Text

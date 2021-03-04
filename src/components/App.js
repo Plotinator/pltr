@@ -22,6 +22,7 @@ import AlertDialog, { showAlert } from './shared/common/AlertDialog'
 import Metrics from '../utils/Metrics'
 import Main from './Main'
 import { cloneDeep } from 'lodash'
+import { TESTR_EMAIL } from '../utils/constants'
 
 const { IS_ANDROID } = Metrics
 
@@ -89,23 +90,32 @@ export default class App extends Component {
     this.setUserInfo(null)
   }
 
-  handleLicenseVerification = async (email) => {
+  handleEmailVerification = async (email) => {
     this.setVerifying(true)
     const [success, userInfo] = await checkForActiveLicense(email)
     if (success) {
-      this.setUserInfo(userInfo)
-      sendVerificationEmail(
-        email,
-        userInfo.idToVerify,
-        this.handleEmailConfirmation
-      )
+      this.handleSendVerificationEmail(userInfo)
     } else {
       this.setVerifying(false)
-      const error = t("That email didn't verify. Try again or try another email.")
+      const error = t("Your email didn't verify. Try again or try another email.")
       const hasMessage = userInfo && userInfo.message
       const message = (hasMessage ? `\n${hasMessage}` : '')
       this.showError(error + message, false)
     }
+  }
+
+  handleSendVerificationEmail = async (userInfo) => {
+    this.setVerifying(true)
+    this.setUserInfo(userInfo)
+    const { email } = userInfo
+    if (email !== TESTR_EMAIL) {
+      await sendVerificationEmail(
+        email,
+        userInfo.idToVerify,
+        this.handleEmailConfirmation
+      )
+    }
+    this.setVerifying(false)
   }
 
   handleEmailConfirmation = (error) => {
@@ -164,9 +174,11 @@ export default class App extends Component {
     const flexContainer = { flex: 1 }
     const {
       state: { userInfo, verifying },
-      handleLicenseVerification,
+      handleSendVerificationEmail,
+      handleEmailVerification,
       handleCodeVerification,
       addUserSubscription,
+      handleSetUserInfo,
       handleLogout
     } = this
 
@@ -188,7 +200,8 @@ export default class App extends Component {
                   verifying={verifying}
                   logout={handleLogout}
                   verifyCode={handleCodeVerification}
-                  verifyLicense={handleLicenseVerification}
+                  verifyByEmail={handleEmailVerification}
+                  sendVerificationEmail={handleSendVerificationEmail}
                   subscribeUser={addUserSubscription} />
               </AppErrorBoundary>
               <AlertDialog />
