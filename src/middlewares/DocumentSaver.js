@@ -1,5 +1,7 @@
 import { ActionTypes } from 'pltr/v2'
-import rnfs from 'react-native-fs'
+// import rnfs from 'react-native-fs'
+import { Platform, NativeModules } from 'react-native'
+const { DocumentViewController } = NativeModules
 
 const { FILE_SAVED, FILE_LOADED, NEW_FILE, EDIT_CARD_DETAILS } = ActionTypes
 const BLACKLIST = [FILE_SAVED, FILE_LOADED, EDIT_CARD_DETAILS] // card details because it edits details and then coordinates and 2 like that screw up iOS
@@ -10,10 +12,16 @@ export const setDocumentURL = URL => (documentURL = decodeURI(URL))
 export const saveDocument = (documentData, successCallback, errorCallback) => {
   if (documentURL) {
     // only if doc url was set
-    rnfs
-      .writeFile(documentURL, documentData, 'utf8')
-      .then(() => successCallback && successCallback())
-      .catch(err => errorCallback && errorCallback(err.message))
+    // rnfs
+    //   .writeFile(documentURL, documentData, 'utf8')
+    //   .then(() => successCallback && successCallback())
+    //   .catch(err => errorCallback && errorCallback(err.message))
+
+    if (Platform.OS === 'ios') {
+      DocumentViewController.updateDocument(documentURL, documentData)
+    } else if (Platform.OS === 'android') {
+      NativeModules.AndroidDocument.saveDocument(documentURL, documentData)
+    }
   }
 }
 

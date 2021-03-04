@@ -1,33 +1,39 @@
 export default function SlateToHTML (slate) {
-  let HTML = ``
+  let HTML = ''
   if (typeof slate === 'object') {
     slate.map(obj => {
       switch (obj.type) {
         case 'heading-one':
-          HTML += `<h1>${SlateToHTML(obj.children)}</h1>\n`
+          HTML += `<h1>${SlateToHTML(obj.children)}</h1>`
           break
         case 'heading-two':
-          HTML += `<h2>${SlateToHTML(obj.children)}</h2>\n`
+          HTML += `<h2>${SlateToHTML(obj.children)}</h2>`
           break
         case 'link':
-          HTML += `<a href="${obj.url}">${SlateToHTML(obj.children)}</a>\n`
+          HTML += `<a href="${obj.url}">${SlateToHTML(obj.children)}</a>`
           break
         case 'image-link':
-          HTML += `<img src="${obj.url}"/>\n`
+          HTML += `<img src="${obj.url}"/>`
           break
         case 'list-item':
-          HTML += `<li>${SlateToHTML(obj.children)}</li>\n`
+          HTML += `<li>${SlateToHTML(obj.children)}</li>`
           break
         case 'paragraph':
           HTML += `<p>${SlateToHTML(obj.children)}</p>\n`
           break
         case 'numbered-list':
-          HTML += `<ol>${SlateToHTML(obj.children)}</ol>\n`
+          HTML += `<ol>${SlateToHTML(obj.children)}</ol>`
           break
         case 'bulleted-list':
-          HTML += `<ul>${SlateToHTML(obj.children)}</ul>\n`
+          HTML += `<ul>${SlateToHTML(obj.children)}</ul>`
+          break
+        case 'paragraph':
+          HTML += `<div>${SlateToHTML(obj.children)}</div>`
           break
         default:
+          if (obj.text == '') {
+            HTML += '<div><br/></div>'
+          }
           if (obj.text || typeof obj === 'string') {
             HTML += SlateTextToHTML(obj)
           }
@@ -42,7 +48,7 @@ export default function SlateToHTML (slate) {
 }
 
 export function SlateTextToHTML (slate) {
-  const { text, strike, bold, strong, paragraph, underline, italic } = slate
+  const { text, strike, bold, strong, underline, italic } = slate
   const HTMLText = typeof slate === 'string' ? slate : text
   let HTML = `<span>${HTMLText}</span>`
   if (bold || strong) {
@@ -56,9 +62,6 @@ export function SlateTextToHTML (slate) {
   }
   if (strike) {
     HTML = `<del>${HTML}</del>`
-  }
-  if (paragraph) {
-    HTML = `<p>${HTML}</p>`
   }
   return HTML
 }

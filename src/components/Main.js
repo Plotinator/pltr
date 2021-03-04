@@ -1,4 +1,5 @@
 import React, { useEffect, useState, Component } from 'react'
+import { NativeModules, NativeEventEmitter } from 'react-native'
 import { Provider } from 'react-redux'
 import { AppState } from 'react-native'
 import DocumentRoot from './DocumentRoot'
@@ -6,6 +7,7 @@ import AuthenticatorRoot from './AuthenticatorRoot'
 import { configureStore } from '../store/configureStore'
 import MainErrorBoundary from './MainErrorBoundary'
 import t from 'format-message'
+import Metrics from '../utils/Metrics'
 import Dashboard from './screens/dashboard'
 import DocumentPicker from 'react-native-document-picker'
 import rnfs, { DocumentDirectoryPath } from 'react-native-fs'
@@ -14,6 +16,17 @@ import AsyncStorage from '@react-native-community/async-storage'
 import { setDocumentURL } from '../middlewares/DocumentSaver'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
 import { Changes } from '../utils'
+
+const {
+  DocumentViewController,
+  ReactNativeEventEmitter,
+  DocumentBrowser,
+  AndroidDocumentBrowser,
+} = NativeModules
+const { IS_IOS } = Metrics
+const DocumentEvents = new NativeEventEmitter(
+  IS_IOS ? ReactNativeEventEmitter : AndroidDocumentBrowser
+)
 
 let store = configureStore({})
 
@@ -36,10 +49,13 @@ export default class Main extends Component {
   closeDocument = () => {
     this.setDocument(null)
     store = configureStore({})
+    console.log('CLOSING DOCUMENT')
+    if (IS_IOS) DocumentViewController.closeDocument()
   }
 
   componentDidMount () {
     console.log('Changes', Changes)
+    DocumentEvents.addListener('onOpenDocument', this.handleDocumentOpened)
     this.getRecentDocuments()
     // set app state
     AppState.addEventListener('change', this.handleAppState)
@@ -77,8 +93,13 @@ export default class Main extends Component {
   }
 
   handleDocumentOpened = (data, setRecent = true) => {
+    if (IS_IOS) DocumentBrowser.closeBrowser()
     this.setDocument(data)
-    if (setRecent) this.addRecentDocument(data)
+    if (setRecent) {
+      if (!IS_IOS || (IS_IOS && data.isInDocuments)) {
+        this.addRecentDocument(data)
+      }
+    }
     this.setLoading(false)
   }
 
@@ -87,13 +108,14 @@ export default class Main extends Component {
     const fileName = String(input || 'New Story')
       .replace(/\s+/gi, '_')
       .replace(/[^a-zA-Z0-9_\-]/gi)
-    const filePath = DocumentDirectoryPath + `/${fileName}.pltr`;
+    const filePath = DocumentDirectoryPath + `/${fileName}.pltr`
     const fileData = `{"storyName": "${input}", "newFile": true}`
     const writeProjectFile = () => {
       rnfs.writeFile(filePath, fileData, 'utf8')
         .then(() => this.handleDocumentOpened({
           data: fileData,
-          documentURL: filePath
+          documentURL: filePath,
+          isInDocuments: true,
         }))
         .catch((err) => {
           this.showCreateFileError()
@@ -126,6 +148,9 @@ export default class Main extends Component {
   }
 
   getRecentDocuments () {
+    // used to reset recents
+    // AsyncStorage.setItem('recentDocuments', JSON.stringify([]))
+
     AsyncStorage.getItem('recentDocuments').then(data => {
       if(data) {
         try {
@@ -187,6 +212,10 @@ export default class Main extends Component {
 
   readDocumentFile (uri, setRecent = true) {
     this.setLoading(true)
+    // if (IS_IOS) {
+    //   DocumentViewController.readDocument(decodeURI(uri))
+    // } else {
+    // }
     rnfs.readFile(decodeURI(uri), 'utf8')
       .then((data) => {
         const document = {
@@ -196,6 +225,7 @@ export default class Main extends Component {
         this.handleDocumentOpened(document, setRecent)
       })
       .catch((err) => {
+        console.error(err)
         this.showFileProcessingError()
       })
   }
@@ -204,32 +234,48 @@ export default class Main extends Component {
     this.readDocumentFile(url)
   }
 
+  // selectDocument = () => {
+  //   try {
+  //     DocumentPicker.pick({
+  //       mode: 'open',
+  //       type: [
+  //         'public.pltr',
+  //         'com.clouiss.plottr.pltr',
+  //       ],
+  //     }).then((res) => {
+  //       this.setLoading(true)
+  //       const { uri, fileCopyUri, name } = res
+  //       if(name.match('.pltr')) {
+  //         this.readDocumentFile(uri)
+  //       } else {
+  //         this.showInValidFileError()
+  //         this.setLoading(false)
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       if(!String(error).match(/canceled/i)) {
+  //         this.showFileProcessingError()
+  //       }
+  //     })
+  //   } catch (err) {
+  //     this.showFileProcessingError()
+  //     this.setLoading(false)
+  //   }
+  // }
   selectDocument = () => {
+    if (IS_IOS) {
+      DocumentBrowser.openBrowser()
+    } else {
+      this.androidOpenCommand('open')
+    }
+    // this.setLoading(true)
+  }
+
+  androidOpenCommand(type) {
     try {
-      DocumentPicker.pick({
-        mode: 'open',
-        // type: [
-        //   'public.pltr',
-        //   'public.json',
-        // ],
-      }).then((res) => {
-        this.setLoading(true)
-        const { uri, fileCopyUri, name } = res
-        if(name.match('.pltr')) {
-          this.readDocumentFile(uri)
-        } else {
-          this.showInValidFileError()
-          this.setLoading(false)
-        }
-      })
-      .catch((error) => {
-        if(!String(error).match(/canceled/i)) {
-          this.showFileProcessingError()
-        }
-      })
-    } catch (err) {
-      this.showFileProcessingError()
-      this.setLoading(false)
+      AndroidDocumentBrowser.openBrowser(type)
+    } catch (error) {
+      console.log(error)
     }
   }
 

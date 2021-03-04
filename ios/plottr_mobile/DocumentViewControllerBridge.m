@@ -14,7 +14,9 @@
 
 @interface RCT_EXTERN_MODULE(DocumentViewController, NSObject)
 
-RCT_EXTERN_METHOD(updateDocument:(NSString *)data)
+RCT_EXTERN_METHOD(updateDocument:(NSString *)fileURL withData:(NSString *)data)
+
+RCT_EXTERN_METHOD(readDocument:(NSString *)fileURL)
 
 RCT_EXTERN_METHOD(closeDocument)
 

@@ -7,6 +7,8 @@
 
 import Foundation
 import UIKit
+import UniformTypeIdentifiers
+import CoreServices
 
 #if DEBUG
 #if FB_SONARKIT_ENABLED
@@ -20,7 +22,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
   var bridge: RCTBridge!
   var reactViewController: UIViewController!
-  var browserViewController: UIViewController = DocumentBrowserViewController(forOpeningFilesWithContentTypes: nil)
+  var browserViewController: UIViewController
+
+  override init() {
+    if #available(iOS 14.0, *) {
+      let types: [UTType] = UTTypeReference.types(tag: "pltr", tagClass: UTTagClass.filenameExtension.rawValue, conformingTo: nil)
+      var utiStrings: [String] = []
+      for type in types {
+        utiStrings.append(type.identifier)
+      }
+      print("TYPES: \(utiStrings)")
+      self.browserViewController = DocumentBrowserViewController(forOpeningFilesWithContentTypes: utiStrings)
+    } else {
+      // Fallback on earlier versions
+      let cfArray = UTTypeCreateAllIdentifiersForTag(
+        kUTTagClassFilenameExtension,
+        "pltr" as CFString,
+        nil
+      )?.takeRetainedValue()
+      let utis:[String] = cfArray as? [String] ?? []
+      print("UTIS: \(utis)")
+      self.browserViewController = DocumentBrowserViewController(forOpeningFilesWithContentTypes: utis)
+    }
+  }
 
   func sourceURL() -> URL {
     #if DEBUG
@@ -108,11 +132,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       // option 1
 //      window.rootViewController?.show(self.browserViewController, sender: self.reactViewController)
       // option 2
-//      window.rootViewController = self.browserViewController
+      window.rootViewController = self.browserViewController
       // option 3
-      UIView.transition(with: window, duration: 0.5, options: .transitionCurlDown, animations: {
-        window.rootViewController = self.browserViewController
-      }, completion:nil)
+//      UIView.transition(with: window, duration: 0.5, options: .transitionCurlDown, animations: {
+//        window.rootViewController = self.browserViewController
+//      }, completion:nil)
     }
   }
   
