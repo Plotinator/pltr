@@ -13,7 +13,6 @@ export default function HTMLToSlate (html) {
 }
 
 export function deserialize (el) {
-  console.log('nodeType', el.nodeType)
   if (el.nodeType === 3) {
     // if it's only a bunch of white space, ignore it
     if (
