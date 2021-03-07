@@ -369,7 +369,7 @@ export default class Main extends Component {
     const { document } = this.state
     const { user = {} } = this.props
     const { verified, validLicense, validSubscription, noAutoRedirect } = user
-    const bypassForDevs = false // __DEV__ // false
+    const bypassForDevs = __DEV__ // false
 
     // if the user is verified and valid
     // or has a valid subscription

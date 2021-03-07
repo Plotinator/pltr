@@ -125,21 +125,32 @@ class Characters extends Component {
     </ErrorBoundary>
   }
 
+  navigateToCustomAttributes = () => {
+    this.props.navigation.navigate('CustomAttributesModal', {
+      type: 'characters'
+    })
+  }
+
   render () {
-    return <View style={{flex: 1}}>
-      <Toolbar>
-        <DrawerButton openDrawer={this.props.openDrawer} />
-        <NewButton onPress={this.createNewCharacter}/>
-      </Toolbar>
-      <Grid style={{flex: 1}}>
-        <Col size={4}>
-          { this.renderCharacterList() }
-        </Col>
-        <Col size={10}>
-          { this.renderCharacterDetail() }
-        </Col>
-      </Grid>
-    </View>
+    return (
+      <View style={{flex: 1}}>
+        <Toolbar>
+          <DrawerButton openDrawer={this.props.openDrawer} />
+          <NewButton onPress={this.createNewCharacter}/>
+        </Toolbar>
+        <Grid style={{flex: 1}}>
+          <Col size={4}>
+            { this.renderCharacterList() }
+          </Col>
+          <Col size={10}>
+            { this.renderCharacterDetail() }
+          </Col>
+        </Grid>
+        <Button full info onPress={this.navigateToCustomAttributes}>
+          <Text white>{t('Custom Attributes')}</Text>
+        </Button>
+      </View>
+    )
   }
 }
 
