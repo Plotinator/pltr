@@ -157,7 +157,7 @@ class VerificationConfirmation extends Component {
 }
 
 const mapStateToProps = ({ data: { user, verifying } }) => {
-  return { user, verifying }
+  return { user: user || {}, verifying }
 }
 
 export default connect(mapStateToProps)(VerificationConfirmation)

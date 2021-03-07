@@ -549,7 +549,7 @@
     "message": "Your email didn't verify.\nTry again or try another email."
   },
   "Your selected license failed verification. Try another one.": {
-    "message": "Your selected license failed verification.\nTry another one."
+    "message": "Your selected license failed verification. Try another one."
   },
   "Reds": {
     "message": "Reds"

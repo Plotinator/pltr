@@ -164,7 +164,7 @@ export async function getLicenses (email, callback) {
         if (userValidProducts.length && sale.licenses) {
           const userProductIds = sale.products.map(product => product.id)
           const isOldProducts = isOneOfOldProducts(userProductIds)
-          const validLicenses = sale.licenses.filter(isValidActiveLicense)
+          const validLicenses = sale.licenses.filter(isValidLicense)
           userLicenses.push({ ...sale, licenses: validLicenses })
         }
       })
@@ -185,10 +185,6 @@ function isValidLicense (license) {
     ['active', 'inactive'].includes(license.status) &&
     !license.name.includes('Bundle')
   )
-}
-
-function isValidActiveLicense (license) {
-  return license.status === 'active' && !license.name.includes('Bundle')
 }
 
 function isActiveLicense (body) {

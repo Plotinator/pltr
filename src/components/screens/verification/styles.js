@@ -50,6 +50,7 @@ export default ScaledSheet.create({
     marginTop: baseMargin * 1.5
   },
   licenseButton: {
+    overflow: 'hidden',
     width: '100%',
     marginTop: doubleBaseMargin,
     borderRadius: buttonRadius,
@@ -63,13 +64,21 @@ export default ScaledSheet.create({
     paddingVertical: baseMargin / 2
   },
   licenseRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     paddingVertical: baseMargin / 2,
     paddingHorizontal: baseMargin,
     backgroundColor: 'white',
     borderTopWidth: 2
   },
   licenseSelect: {
+    paddingHorizontal: baseMargin,
     alignItems: 'center',
-    paddingVertical: baseMargin
+    borderRadius: buttonRadius / 2,
+    paddingVertical: baseMargin / 2
+  },
+  selectText: {
+    color: 'white'
   }
 })

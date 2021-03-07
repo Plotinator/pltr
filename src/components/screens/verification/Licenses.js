@@ -23,6 +23,7 @@ import Metrics from '../../../utils/Metrics'
 import Colors from '../../../utils/Colors'
 import { checkLicense } from '../../../utils/user_info'
 import { showAlert } from '../../shared/common/AlertDialog'
+import { cloneDeep } from 'lodash'
 
 const { IS_ANDROID } = Metrics
 
@@ -43,10 +44,17 @@ class Verification extends Component {
 
   handleUseLicense = async (license) => {
     // use license only logic
+    const { index } = license
+    const selectedLicense = cloneDeep(license)
+    const { licenses } = selectedLicense
     const { navigation, verifying, route: { params: { sendVerificationEmail } } } = this.props
     this.setState({ verifying: true, submitted: license })
-
-    const [success, userInfo] = await checkLicense(license)
+    // extract selected license only
+    selectedLicense.licenses = [].concat(licenses.splice(index, 1))
+    console.log('license', license)
+    console.log('selectedLicense', selectedLicense)
+    console.log('selectedLicense', selectedLicense)
+    const [success, userInfo] = await checkLicense(selectedLicense)
     if (success) {
       await sendVerificationEmail(userInfo)
       navigation.navigate('VerificationConfirmation')
@@ -56,9 +64,7 @@ class Verification extends Component {
       const message = (hasMessage ? `\n${hasMessage}` : '')
       this.showError(error + message, false)
     }
-
     this.setState({ verifying: false, submitted: null })
-    console.log('license', license)
   }
 
   handleGoBack = () => {
@@ -76,32 +82,33 @@ class Verification extends Component {
       { borderColor: color, backgroundColor: color }
     ]
     return (
-      <ShellButton
-        data={license}
-        key={i}
+      <View
         block
-        disabled={verifying}
-        style={buttonStyles}
-        onPress={this.handleUseLicense}>
+        key={i}
+        style={buttonStyles}>
         <View style={styles.licenseHead}>
           <Text white fontStyle='bold' fontSize='h3'>License #{i+1}</Text>
           <Text white fontStyle='semiBold'>
             {String(license.date).substring(0, 10)}
           </Text>
         </View>
-        {licenses.map(({ name }) => (
-          <View style={[styles.licenseRow, { borderTopColor: color }]}>
+        {licenses.map(({ name }, l) => (
+          <View key={l} style={[styles.licenseRow, { borderTopColor: color }]}>
             <Text center color={color} fontSize='small' fontStyle='bold'>
-              {name.replace('&#8211;', '–')}
+              {(name || t('Plottr')).replace('&#8211;', '–')}
             </Text>
+            <ShellButton
+              style={[styles.licenseSelect, { backgroundColor: color }]}
+              disabled={verifying}
+              data={{...license, index: l }}
+              onPress={this.handleUseLicense}>
+              <Text white fontStyle='semiBold' fontSize='h5'>
+                {isSubmitted && submitted.index == l ? t('CHECKING...') : t('SELECT')}
+              </Text>
+            </ShellButton>
           </View>
         ))}
-        <View style={styles.licenseSelect}>
-          <Text white fontStyle='bold' fontSize='h3'>
-            {isSubmitted ? t('CHECKING...') : t('SELECT')}
-          </Text>
-        </View>
-      </ShellButton>
+      </View>
     )
   }
 
