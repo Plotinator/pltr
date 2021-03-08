@@ -54,7 +54,7 @@ export async function checkForActiveLicense (email) {
   }
   const url = salesURL(email)
   try {
-    let response = await fetch(url)
+    let response = await fetch(url, {cache: 'no-cache'})
     let json = await response.json()
     let validSalesId = null
     let validKeys = []
@@ -207,7 +207,8 @@ async function checkIfActiveLicense (license, productId, device) {
   const url = licenseURL('check_license', license, productId, device)
   try {
     let response = await fetch(url, {
-      headers: { 'User-Agent': 'mobile;mobile-app' }
+      headers: { 'User-Agent': 'mobile;mobile-app' },
+      cache: 'no-cache',
     })
     let json = await response.json()
     if (json.success) return { ...json, key: license, productId }
@@ -299,7 +300,8 @@ export async function activateLicense (userInfo, index) {
     )
     try {
       let response = await fetch(url, {
-        headers: { 'User-Agent': 'mobile;mobile-app' }
+        headers: { 'User-Agent': 'mobile;mobile-app' },
+        cache: 'no-cache',
       })
       let json = await response.json()
       const isActive = isActiveLicense(json)
