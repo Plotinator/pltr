@@ -2,15 +2,49 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'react-proptypes'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, Animated, PanResponder } from 'react-native'
 import t from 'format-message'
 import prompt from 'react-native-prompt-android'
 import { selectors, actions } from 'pltr/v2'
 import Cell from '../shared/Cell'
 import { showAlert, showInputAlert } from '../../shared/common/AlertDialog'
-import { Text } from '../../shared/common'
+import { Text, ShellButton } from '../../shared/common'
+import { CELL_WIDTH } from '../../../utils/constants'
 
 class ChapterTitleCell extends PureComponent {
+  state = {
+    offsetX: 0
+  }
+  _panResponder = PanResponder.create({
+    onStartShouldSetPanResponder: (evt, gestureState) => true,
+    onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
+    onMoveShouldSetPanResponder: (evt, gestureState) => true,
+    onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
+    onPanResponderRelease: (event, { dx }) => {
+      const { beat, beat: { position }, beatTitle } = this.props
+      const HALF_WIDTH = CELL_WIDTH / 2
+      const willChange = dx < -HALF_WIDTH || dx > HALF_WIDTH
+      const multiplier = (dx < -1 ? -1 : 1)
+      if (willChange) {
+        const Position = Number(String(dx).replace('-', ''))
+        const MovePosition = Math.ceil(
+          (Position - HALF_WIDTH) / CELL_WIDTH
+        ) * multiplier
+        const NewPosition = position + MovePosition
+        this.props.moveBeat(NewPosition, beat)
+      }
+      this.setState({ offsetX: 0 })
+      if (dx === 0) {
+        // click
+        this.askToRename()
+      }
+    },
+    onPanResponderMove: (event, gestureState) => {
+      this.setState({
+        offsetX: gestureState.dx
+      })
+    }
+  });
 
   handleNewBeatName = ({ input }) => {
     const { actions, beatActions, beatId } = this.props
@@ -71,12 +105,23 @@ class ChapterTitleCell extends PureComponent {
   }
 
   render () {
+    const { offsetX } = this.state
     const { beatTitle } = this.props
     // ref is needed
+    const moveStyles = {
+      left: offsetX,
+      zIndex: offsetX != 0 ? 9 : 0
+    }
     return (
-      <Cell style={styles.cell} ref={r => this.ref = r} onPress={this.askToRename}>
-        <Text fontStyle='bold' style={styles.text}>{beatTitle}</Text>
-      </Cell>
+      <View
+        {...this._panResponder.panHandlers}
+        style={moveStyles}>
+        <Cell style={styles.cell}
+          onPress={this.askToRename}
+          ref={r => this.ref = r}>
+          <Text fontStyle='bold' style={styles.text}>{beatTitle}</Text>
+        </Cell>
+      </View>
     )
   }
 }
@@ -84,10 +129,14 @@ class ChapterTitleCell extends PureComponent {
 const styles = StyleSheet.create({
   cell: {
     justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row'
   },
   text: {
     textAlign: 'center',
     fontSize: 18,
+    paddingHorizontal: 10,
+    backgroundColor: 'hsl(210, 36%, 96%)'
   },
 })
 

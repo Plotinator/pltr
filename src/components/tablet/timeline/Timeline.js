@@ -12,7 +12,7 @@ import {
 } from 'react-native'
 import { bindActionCreators } from 'redux'
 import t from 'format-message'
-import { actions, selectors, newIds } from 'pltr/v2'
+import { actions, selectors, helpers, newIds } from 'pltr/v2'
 import ChapterTitleCell from './ChapterTitleCell'
 import { BlankCell } from './BlankCell'
 import Cell from '../shared/Cell'
@@ -28,6 +28,9 @@ import ColorPickerModal from '../shared/ColorPickerModal'
 import { Text, Input, Button, ShellButton, ModalBox } from '../../shared/common'
 import styles from './TimelineStyles'
 import { showAlert } from '../../shared/common/AlertDialog'
+import { cloneDeep } from 'lodash'
+
+const { lists: { reorderList, positionReset } } = helpers
 
 class Timeline extends Component {
   constructor (props) {
@@ -89,6 +92,12 @@ class Timeline extends Component {
   registerDropCoordinate = (cell) => {
     // ignore ids of 'new'
     if (cell.beatId == 'new' || cell.lineId == 'new') return
+    // this offset is important for
+    // mid scrolling updates
+    if (this.scrollX)
+      cell.x = Number(this.scrollX) + Number(cell.x)
+    if (this.scrollY)
+      cell.y = Number(this.scrollY) + Number(cell.y)
     this.dropCoordinates.push(cell)
   }
 
@@ -248,6 +257,29 @@ class Timeline extends Component {
     this.setState({ currentLine: {} })
   }
 
+  handleMoveBeat = (NewPosition, beat) => {
+    const { beats, bookId } = this.props
+    const { position } = beat
+    const maxBeats = beats.length-1
+    const NewBeatPosition = NewPosition < 0 ? 0 : (
+      NewPosition > maxBeats
+        ? maxBeats
+        : NewPosition
+    )
+    const SortedBeats = cloneDeep(beats).sort(
+      (beatA, beatB) => beatA.position > beatB ? -1 : 1
+    )
+    // const CloneBeats = cloneDeep(beats)
+    const PreBeats = SortedBeats.slice(0, position)
+    const PostBeats = SortedBeats.slice(position + 1, beats.length)
+    console.log('PreBeats', PreBeats)
+    console.log('PostBeats', PostBeats)
+    const NewBeats = [].concat(PreBeats).concat(PostBeats)
+    NewBeats.splice(NewPosition, 0, cloneDeep(beat))
+    console.log('NewBeats', NewBeats)
+    this.props.beatActions.reorderBeats(NewBeats, bookId)
+  }
+
   setPlotModalRef = (ref) => (this._PlotModal = ref)
 
   renderBlankLineTitleCell (key) {
@@ -335,7 +367,12 @@ class Timeline extends Component {
   renderBeatTitles () {
     const { beats, bookId } = this.props
     let cols = beats.map((ch) => (
-      <ChapterTitleCell key={ch.id} beatId={ch.id} bookId={bookId} />
+      <ChapterTitleCell
+        beat={ch}
+        key={ch.id}
+        beatId={ch.id}
+        bookId={bookId}
+        moveBeat={this.handleMoveBeat} />
     ))
     cols.push(this.renderPlusButton('new-chapter', this.handleAppendBeat))
 
