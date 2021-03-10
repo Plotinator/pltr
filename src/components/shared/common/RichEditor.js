@@ -18,9 +18,7 @@ export default class RichTextEditor extends Component {
 
   handleOnChange = (HTML) => {
     const { onChange } = this.props
-    console.log('gozinta', HTML)
     const SLATE = HTMLToSlate(HTML)
-    console.log('comes outa', SLATE)
     onChange && onChange(SLATE)
   }
 
