@@ -1,5 +1,5 @@
 import { ActionTypes } from 'pltr/v2'
-// import rnfs from 'react-native-fs'
+import rnfs, { DocumentDirectoryPath } from 'react-native-fs'
 import { Platform, NativeModules } from 'react-native'
 const { DocumentViewController } = NativeModules
 
@@ -12,15 +12,17 @@ export const setDocumentURL = URL => (documentURL = decodeURI(URL))
 export const saveDocument = (documentData, successCallback, errorCallback) => {
   if (documentURL) {
     // only if doc url was set
-    // rnfs
-    //   .writeFile(documentURL, documentData, 'utf8')
-    //   .then(() => successCallback && successCallback())
-    //   .catch(err => errorCallback && errorCallback(err.message))
-
     if (Platform.OS === 'ios') {
       DocumentViewController.updateDocument(documentURL, documentData)
     } else if (Platform.OS === 'android') {
-      NativeModules.AndroidDocument.saveDocument(documentURL, documentData)
+      if (documentURL.includes(DocumentDirectoryPath)) {
+        rnfs
+          .writeFile(documentURL, documentData, 'utf8')
+          .then(() => successCallback && successCallback())
+          .catch(err => errorCallback && errorCallback(err.message))
+      } else {
+        NativeModules.AndroidDocument.saveDocument(documentURL, documentData)
+      }
     }
   }
 }
