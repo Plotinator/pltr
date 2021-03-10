@@ -1,4 +1,4 @@
-const MOBILE_VERIFY_URL = 'https://plothookinator-sparrowhawk.vercel.app/api/mobile_verify'
+const MOBILE_VERIFY_URL = 'https://api.plottr.com/api/mobile/email_verification'
 
 export async function sendVerificationEmail (email, code, cb) {
   try {
