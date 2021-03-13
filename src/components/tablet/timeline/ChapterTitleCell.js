@@ -21,7 +21,7 @@ class ChapterTitleCell extends PureComponent {
     onMoveShouldSetPanResponder: (evt, gestureState) => true,
     onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
     onPanResponderRelease: (event, { dx }) => {
-      const { beat, beat: { position }, beatTitle } = this.props
+      const { beat, beat: { position } } = this.props
       const HALF_WIDTH = CELL_WIDTH / 2
       const willChange = dx < -HALF_WIDTH || dx > HALF_WIDTH
       const multiplier = (dx < -1 ? -1 : 1)
