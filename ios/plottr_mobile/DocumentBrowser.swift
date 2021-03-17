@@ -22,7 +22,7 @@ class DocumentBrowserViewController: UIDocumentBrowserViewController, UIDocument
     allowsDocumentCreation = true
     allowsPickingMultipleItems = false
     shouldShowFileExtensions = false
-    localizedCreateDocumentActionTitle = "New Story"
+    localizedCreateDocumentActionTitle = "New Project"
 
     // Update the style of the UIDocumentBrowserViewController
     //  browserUserInterfaceStyle = .dark
@@ -49,13 +49,13 @@ class DocumentBrowserViewController: UIDocumentBrowserViewController, UIDocument
     
 //    print("IN DOCUMENT BROWSER: didRequestDocumentCreationWithHandler")
     // Make sure the importHandler is always called, even if the user cancels the creation request.
-    let alert = UIAlertController(title: "What is the story's name?", message: nil, preferredStyle: .alert)
+    let alert = UIAlertController(title: "What is the project's name?", message: nil, preferredStyle: .alert)
     alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
       importHandler(nil, .none)
     }))
 
     alert.addTextField(configurationHandler: { textField in
-      textField.placeholder = "Story name..."
+      textField.placeholder = "Project name..."
     })
 
     alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in

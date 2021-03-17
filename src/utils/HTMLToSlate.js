@@ -5,25 +5,16 @@ const parser = new DomParser()
 
 export default function HTMLToSlate (html) {
   const parsed = parser.parseFromString(`<div id="_body">${html}</div>`)
-  const slate = deserialize(parsed.getElementById('_body'))
-  if (!slate.length) {
+  const slate = parsed.getElementById('_body').childNodes.map(deserialize)
+  if (Array.isArray(slate) && !slate.length) {
     slate.push({ type: 'paragraph', children: [{ text: '' }] })
   }
-  return slate
+  return jsx('fragment', {}, slate)
 }
 
 export function deserialize (el) {
-  console.log('nodeType', el.nodeType)
   if (el.nodeType === 3) {
-    // if it's only a bunch of white space, ignore it
-    if (
-      el.textContent == '\n' ||
-      el.textContent == '\n\n' ||
-      el.textContent == '\n\n\n'
-    ) {
-      return null
-    }
-    return { text: el.textContent.replace(/[\n]/g, ' ') }
+    return { text: el.textContent }
   } else if (el.nodeType !== 1) {
     return null
   }
@@ -33,9 +24,13 @@ export function deserialize (el) {
 
   switch (el.nodeName) {
     case 'div':
-      return jsx('fragment', {}, children)
-    case 'br':
-      return jsx('element', { type: 'paragraph' }, [{ text: '' }])
+      // if it's only child is a br
+      if (el.childNodes.length == 1 && el.childNodes[0].nodeName == 'br') {
+        return jsx('element', { type: 'paragraph' }, [{ text: '' }])
+      }
+      return jsx('element', { type: 'paragraph' }, children)
+    // case 'br':
+    //   return jsx('element', { type: 'paragraph' }, [{ text: '' }])
     case 'blockquote':
       return jsx('element', { type: 'block-quote' }, children)
     case 'p':
@@ -50,13 +45,10 @@ export function deserialize (el) {
     case 'h7':
       return jsx('element', { type: 'heading-two' }, children)
     case 'ul':
-      console.log('ululul', children)
       return jsx('element', { type: 'bulleted-list' }, children)
     case 'li':
-      console.log('li', children)
       return jsx('element', { type: 'list-item' }, children)
     case 'ol':
-      console.log('ol', children)
       return jsx('element', { type: 'numbered-list' }, children)
     case 'em':
     case 'i':

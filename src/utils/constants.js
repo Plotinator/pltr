@@ -14,7 +14,7 @@ export const LEFT_COLUMN_WIDTH = 150
 
 // licensing
 export const USER_KEY = '@user_info'
-export const BASE_URL = 'https://getplottr.com'
+export const BASE_URL = 'https://my.plottr.com'
 export const OLD_PRODUCT_IDS = [12772, 12768, 11325, 11538, 14460, 29035]
 export const PRO_PRODUCT_IDS = [33345, 33347]
 export const SALES_PRODUCT_IDS = [...OLD_PRODUCT_IDS, ...PRO_PRODUCT_IDS]

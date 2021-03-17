@@ -54,6 +54,12 @@ class Places extends Component {
     askToDelete(place.name || t('New Place'), () => this.props.actions.deletePlace(place.id))
   }
 
+  navigateToCustomAttributes = () => {
+    this.props.navigation.navigate('CustomAttributesModal', {
+      type: 'places'
+    })
+  }
+
   renderPlaceItem = ({item}) => {
     const isActive = item.id == this.state.activePlaceId
     return <Grid style={[{flex: 1}, styles.placeItem, isActive ? styles.activeItem : {}]}>
@@ -106,6 +112,9 @@ class Places extends Component {
           { this.renderPlaceDetail() }
         </Col>
       </Grid>
+      <Button full info onPress={this.navigateToCustomAttributes}>
+        <Text white>{t('Custom Attributes')}</Text>
+      </Button>
     </View>
   }
 }

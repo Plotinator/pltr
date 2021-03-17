@@ -1,7 +1,7 @@
 import InAppPurchases from './InAppPurchases'
 import HTMLToSlate from './HTMLToSlate'
 import SlateToHTML from './SlateToHTML'
-import Changes from './Changes'
+import * as Changes from './Changes'
 import Colors from './Colors'
 import Metrics from './Metrics'
 import Delete from './delete'

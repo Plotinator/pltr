@@ -27,6 +27,10 @@ export default ScaledSheet.create({
     paddingHorizontal: baseMargin * 1.5,
     paddingVertical: baseMargin
   },
+  tightWrapper: {
+    paddingHorizontal: baseMargin * 1.5,
+    paddingVertical: baseMargin * 0.8
+  },
   bordered: {
     borderWidth: '1@ms',
     borderColor: 'lightgray'

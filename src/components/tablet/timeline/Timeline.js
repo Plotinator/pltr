@@ -12,15 +12,12 @@ import {
 } from 'react-native'
 import { bindActionCreators } from 'redux'
 import t from 'format-message'
-import { actions, selectors, newIds } from 'pltr/v2'
+import { actions, selectors, helpers, newIds } from 'pltr/v2'
 import ChapterTitleCell from './ChapterTitleCell'
 import { BlankCell } from './BlankCell'
 import Cell from '../shared/Cell'
 import CardCell from './CardCell'
-import {
-  CELL_HEIGHT,
-  CELL_WIDTH
-} from '../../../utils/constants'
+import { CELL_HEIGHT, CELL_WIDTH } from '../../../utils/constants'
 import { Icon } from 'native-base'
 import tinycolor from 'tinycolor2'
 import LineTitleCell from './LineTitleCell'
@@ -28,6 +25,11 @@ import ColorPickerModal from '../shared/ColorPickerModal'
 import { Text, Input, Button, ShellButton, ModalBox } from '../../shared/common'
 import styles from './TimelineStyles'
 import { showAlert } from '../../shared/common/AlertDialog'
+import { cloneDeep } from 'lodash'
+
+const {
+  lists: { reorderList, positionReset }
+} = helpers
 
 class Timeline extends Component {
   constructor (props) {
@@ -89,6 +91,10 @@ class Timeline extends Component {
   registerDropCoordinate = (cell) => {
     // ignore ids of 'new'
     if (cell.beatId == 'new' || cell.lineId == 'new') return
+    // this offset is important for
+    // mid scrolling updates
+    if (this.scrollX) cell.x = Number(this.scrollX) + Number(cell.x)
+    if (this.scrollY) cell.y = Number(this.scrollY) + Number(cell.y)
     this.dropCoordinates.push(cell)
   }
 
@@ -163,11 +169,9 @@ class Timeline extends Component {
     }
   }
 
-  handleHideColorPicker = () =>
-    this.setState({ showColorPicker: false })
+  handleHideColorPicker = () => this.setState({ showColorPicker: false })
 
-  handleShowColorPicker = () =>
-    this.setState({ showColorPicker: true })
+  handleShowColorPicker = () => this.setState({ showColorPicker: true })
 
   handleEditPlotLine = (line) => {
     this.setState(
@@ -208,24 +212,28 @@ class Timeline extends Component {
   }
 
   handleDeletePlotline = () => {
-    const { currentLine: { title, id, bookId } } = this.state
+    const {
+      currentLine: { title, id, bookId }
+    } = this.state
     this._PlotModal.hide()
     setTimeout(() => {
       // delay for 1 sec
       showAlert({
         title: t('Delete Plotline'),
         message: t('Delete Plotline {name}?', { name: title }),
-        actions: [{
-          id,
-          bookId,
-          icon: 'trash',
-          danger: true,
-          name: t('Yes, Delete'),
-          callback: this.handleDeleteLine
-        },
-        {
-          name: t('Cancel')
-        }]
+        actions: [
+          {
+            id,
+            bookId,
+            icon: 'trash',
+            danger: true,
+            name: t('Yes, Delete'),
+            callback: this.handleDeleteLine
+          },
+          {
+            name: t('Cancel')
+          }
+        ]
       })
     }, 300)
   }
@@ -238,7 +246,9 @@ class Timeline extends Component {
   }
 
   handleSavePlotline = () => {
-    const { currentLine: { id, title, color } } = this.state
+    const {
+      currentLine: { id, title, color }
+    } = this.state
     const { lineActions } = this.props
     lineActions.editLine(id, title, color)
     this._PlotModal.hide()
@@ -246,6 +256,85 @@ class Timeline extends Component {
 
   handleClearCurrentLine = () => {
     this.setState({ currentLine: {} })
+  }
+
+  handleMoveBeat = (NewPosition, beat) => {
+    const { beats, bookId } = this.props
+    const { position } = beat
+    const maxBeats = beats.length - 1
+    const NewBeatPosition =
+      NewPosition < 0 ? 0 : NewPosition > maxBeats ? maxBeats : NewPosition
+    const SortedBeats = cloneDeep(beats).sort((beatA, beatB) =>
+      beatA.position > beatB ? -1 : 1
+    )
+    // const CloneBeats = cloneDeep(beats)
+    const PreBeats = SortedBeats.slice(0, position)
+    const PostBeats = SortedBeats.slice(position + 1, beats.length)
+    console.log('PreBeats', PreBeats)
+    console.log('PostBeats', PostBeats)
+    const NewBeats = [].concat(PreBeats).concat(PostBeats)
+    NewBeats.splice(NewPosition, 0, cloneDeep(beat))
+    console.log('NewBeats', NewBeats)
+    this.props.beatActions.reorderBeats(NewBeats, bookId)
+  }
+
+  handleMoveLine = (NewPosition, line) => {
+    const { lines, bookId, linesMaxCards } = this.props
+    const sizeMultiplier = this.getMaxCards(line.id)
+    const { position } = line
+    const maxlines = lines.length - 1
+    const Sortedlines = cloneDeep(lines).sort((lineA, lineB) =>
+      lineA.position > lineB ? -1 : 1
+    )
+    const NewlinePosition =
+      NewPosition < 0 ? 0 : NewPosition > maxlines ? maxlines : NewPosition
+    const isNegative = position > NewPosition
+    let TruePosition = NewPosition - sizeMultiplier
+    let lastPosition = NewlinePosition
+    let Moves = isNegative
+      ? position - TruePosition - sizeMultiplier
+      : TruePosition - position
+    let InsertPosition = 0
+    console.log('isNegative', InsertPosition)
+
+    if (isNegative) {
+      const prePosition = position - 1
+      lastPosition -= 1
+      for (let i = prePosition; i > lastPosition; i--) {
+        const lineId = lines[i]?.id
+        const multiplier = this.getMaxCards(lineId)
+        lastPosition += multiplier
+        Moves -= multiplier
+      }
+      InsertPosition = position - Moves < 0 ? 0 : position - Moves
+    } else {
+      const postPosition = position + 1
+      console.log('postPosition', postPosition)
+      console.log('lastPosition', lastPosition)
+      for (let i = postPosition; i < lastPosition; i++) {
+        const lineId = lines[i]?.id
+        const multiplier = this.getMaxCards(lineId)
+        console.log('multiplier', multiplier)
+        lastPosition -= multiplier
+        Moves -= multiplier
+      }
+      InsertPosition = position + Moves
+    }
+    console.log('Moves', Moves)
+    console.log('InsertPosition', InsertPosition)
+    const Prelines = Sortedlines.slice(0, position)
+    const Postlines = Sortedlines.slice(position + 1, lines.length)
+    const Newlines = [].concat(Prelines).concat(Postlines)
+    console.log('Prelines', Prelines)
+    console.log('Postlines', Postlines)
+    Newlines.splice(InsertPosition, 0, cloneDeep(line))
+    Newlines.map((line, o) => (line.position = o))
+    this.props.lineActions.reorderLines(Newlines, bookId)
+  }
+
+  getMaxCards (id) {
+    const { linesMaxCards } = this.props
+    return (linesMaxCards[id] || 1) - 1
   }
 
   setPlotModalRef = (ref) => (this._PlotModal = ref)
@@ -335,7 +424,13 @@ class Timeline extends Component {
   renderBeatTitles () {
     const { beats, bookId } = this.props
     let cols = beats.map((ch) => (
-      <ChapterTitleCell key={ch.id} beatId={ch.id} bookId={bookId} />
+      <ChapterTitleCell
+        beat={ch}
+        key={ch.id}
+        beatId={ch.id}
+        bookId={bookId}
+        moveBeat={this.handleMoveBeat}
+      />
     ))
     cols.push(this.renderPlusButton('new-chapter', this.handleAppendBeat))
 
@@ -348,9 +443,7 @@ class Timeline extends Component {
           scrollEnabled={false}
           scrollEventThrottle={16}>
           <TouchableWithoutFeedback>
-            <View style={styles.table}>
-              {cols}
-            </View>
+            <View style={styles.table}>{cols}</View>
           </TouchableWithoutFeedback>
         </ScrollView>
       </View>
@@ -365,6 +458,7 @@ class Timeline extends Component {
           key={line.id}
           line={line}
           editPlotLine={this.handleEditPlotLine}
+          moveLine={this.handleMoveLine}
         />
       )
       // start at 1 because the first cell is the title cell
@@ -379,7 +473,9 @@ class Timeline extends Component {
   }
 
   renderPlotlineModal () {
-    const { currentLine: { title, color } } = this.state
+    const {
+      currentLine: { title, color }
+    } = this.state
     return (
       <ModalBox
         title={t('Edit Plotline')}
@@ -402,7 +498,8 @@ class Timeline extends Component {
             label={t('Color')}
             style={styles.input}
             value={color}
-            onChangeText={this.handleSetPlotColor} />
+            onChangeText={this.handleSetPlotColor}
+          />
           <ShellButton
             style={[
               styles.colorSwatch,
@@ -434,7 +531,10 @@ class Timeline extends Component {
   }
 
   renderColorPicker () {
-    const { showColorPicker, currentLine: { color = 'red' } } = this.state
+    const {
+      showColorPicker,
+      currentLine: { color = 'red' }
+    } = this.state
     return (
       <ColorPickerModal
         visible={showColorPicker}
@@ -485,7 +585,7 @@ class Timeline extends Component {
           renderItem={this.renderMainRow}
           onScroll={this.verticalScrollEvent}
         />
-      {this.renderPlotlineModal()}
+        {this.renderPlotlineModal()}
       </View>
     )
   }
