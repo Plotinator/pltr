@@ -64,7 +64,7 @@ class CardModal extends Component {
       this.props.actions.editCard(card.id, card.title, card.description, [], {})
     }
     this.setState({ isNewCard: false, changes: false })
-    // this.props.onClose()
+    this.props.onClose()
   }
 
   changeChapter = (val) => {
