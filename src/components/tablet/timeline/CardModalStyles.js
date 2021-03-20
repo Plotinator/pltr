@@ -71,10 +71,13 @@ export default ScaledSheet.create({
     borderRadius: cornerRadius
   },
   crumb: {
+    // flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: baseMargin,
-    paddingVertical: baseMargin
+    paddingVertical: baseMargin,
+    paddingRight: doubleBaseMargin,
+    maxWidth: '50%'
   },
   chapterText: {
     ...style.bold,

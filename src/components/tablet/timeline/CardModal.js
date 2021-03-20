@@ -98,7 +98,8 @@ class CardModal extends Component {
   }
 
   renderBeatMenuItem = (beat, i) => {
-    const { positionOffset, card = {} } = this.props
+    const { positionOffset } = this.props
+    const { card = {} } = this.state
     const isSelected = card.beatId == beat.id
     const color = isSelected ? 'orange' : 'textGray'
     const fontStyle = isSelected ? 'bold' : 'semiBold'
@@ -116,7 +117,7 @@ class CardModal extends Component {
   }
 
   renderLineMenuItem = (line, i) => {
-    const { card = {} } = this.props
+    const { card = {} } = this.state
     const isSelected = card.lineId == line.id
     const color = isSelected ? 'orange' : 'textGray'
     const fontStyle = isSelected ? 'bold' : 'semiBold'
@@ -131,6 +132,15 @@ class CardModal extends Component {
         </Text>
       </ShellButton>
     )
+  }
+
+  renderLineTitle () {
+    const { lines = [] } = this.props
+    const { card } = this.state
+    const { lineId } = card
+    const line = lines.filter(line => line.id == lineId)[0]
+    const lineTitle = line && line.title || 'Unnamed Plotline'
+    return lineTitle
   }
 
   render () {
@@ -171,7 +181,9 @@ class CardModal extends Component {
                   placement={PopoverPlacement.RIGHT}
                   from={
                     <ShellButton style={styles.crumb}>
-                      <Text style={styles.chapterText}>
+                      <Text
+                        numberOfLines={1}
+                        style={styles.chapterText}>
                         {helpers.beats.beatTitle(beat, positionOffset)}
                       </Text>
                       <Icon
@@ -188,10 +200,14 @@ class CardModal extends Component {
                 <View style={styles.divider} />
                 <Popover
                   popoverStyle={styles.menuPopover}
-                  placement={PopoverPlacement.RIGHT}
+                  // placement={PopoverPlacement.RIGHT}
                   from={
                     <ShellButton style={styles.crumb}>
-                      <Text style={styles.chapterText}>Main Plot</Text>
+                      <Text
+                        numberOfLines={1}
+                        style={styles.chapterText}>
+                        {this.renderLineTitle()}
+                      </Text>
                       <Icon
                         style={styles.crumbIcon}
                         type='FontAwesome5'
@@ -315,15 +331,14 @@ class CardModal extends Component {
                 </View>
               </View>
             </ScrollView>
-            <View style={styles.actions}>
+            <Collapsible style={styles.actions} collapsed={!changes}>
               <Button
                 tight
                 style={styles.action}
-                disabled={!changes}
                 onPress={this.handleSaveChanges}>
                 Save
               </Button>
-            </View>
+            </Collapsible>
           </View>
         </KeyboardAvoidingView>
       </Modal>
